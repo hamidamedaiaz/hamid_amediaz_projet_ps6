@@ -1,0 +1,10 @@
+<div>
+    <div>{{question.titre}}</div>
+    <button>Rejouer la musique</button>
+</div>
+<div *ngIf="question">
+    <div *ngFor="let reponse of question.answer">
+        <input type="radio" [value]="reponse.id" name="reponse" (change)="onReponseChange(reponse.id)">
+        {{reponse}}
+    </div>
+</div>

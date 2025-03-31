@@ -1,0 +1,29 @@
+.gamemode-name{
+    width: 50vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 100px;
+    font-family: monospace;
+    font-weight: bold;
+    transition: all 0.3s ease-in-out;
+    color: white;
+}
+
+.multiplayer{
+    background-color: #424242;
+}
+.solo{
+    background-color: #a88800;
+}
+.multiplayer:hover{
+    cursor: pointer;
+    background-color: white;
+    color: #424242;
+}
+.solo:hover{
+    cursor: pointer;
+    background-color: white;
+    color: #a88800;
+}

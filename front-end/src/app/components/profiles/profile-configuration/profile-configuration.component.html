@@ -1,0 +1,56 @@
+<section class="profile-information-section">
+    <div>
+        {{profile?.name}}
+    </div>
+    <div>
+        {{profile?.lastName}}
+    </div>
+</section>
+<section class=" profile-configuration-section">
+    <h1>Configuration</h1>
+    <hr>
+    <label for="hint-timer-selector">
+        Temps avant d'afficher les indices
+        <select name="hint-timer-selector" id="#hint-timer-selector" class="configuration-select">
+            <option value="default" selected>30 secondes</option>
+            <option value="15">15 secondes</option>
+            <option value="10">10 secondes</option>
+            <option value="0">Afficher directement</option>
+        </select>
+    </label>
+    <label for="relaunch-timer-selector">
+        Temps avant de relancer le joueur
+        <select name="relaunch-timer-selector" id="#relaunch-timer-selector" class="configuration-select">
+            <option value="default" selected>30 secondes</option>
+            <option value="15">15 secondes</option>
+            <option value="10">10 secondes</option>
+            <option value="0">Jamais</option>
+        </select>
+    </label>
+    <label for="hintTimerSelector">
+        Temps avant d'enlever un réponse
+        <select name="remove-answer-timer-selector" id="#remove-answer-timer-selector" class="configuration-select">
+            <option value="default">30 secondes</option>
+            <option value="15">15 secondes</option>
+            <option value="10">10 secondes</option>
+            <option value="0">Afficher directement</option>
+        </select>
+    </label>
+    <label for="hintTimerSelector">
+        Nombre d'indices affichés
+        <select name="remove-answer-timer-selector" id="#remove-answer-timer-selector" class="configuration-select">
+            <option value="all">Tous</option>
+            <option value="2">2</option>
+            <option value="1">1</option>
+            <option value="0">Aucun</option>
+        </select>
+    </label>
+    <label for="hintTimerSelector">
+        Nombre de réponses affichées
+        <select name="remove-answer-timer-selector" id="#remove-answer-timer-selector" class="configuration-select">
+            <option value="all">Toutes</option>
+            <option value="3">3</option>
+            <option value="2">2</option>
+        </select>
+    </label>
+</section>

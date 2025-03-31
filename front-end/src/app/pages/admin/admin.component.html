@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Octave - Admin</title>
+</head>
+
+<body>
+  <div class="admin-container">
+
+    <nav class="sidebar">
+      <button class="sidebar-btn" (click)="setSection('stats')"><img class="logo" ngSrc="assets/icons/stats.png"
+          height="512" width="512">Statistiques</button>
+      <button class="sidebar-btn" (click)="setSection('quiz')"><img class="logo" ngSrc="assets/icons/quiz-logo.png"
+          height="512" width="512">Quiz</button>
+      <button class="sidebar-btn" (click)="setSection('acceuilli')"><img class="logo" ngSrc="assets/icons/user.png"
+          height="512" width="512">Acceuilli</button>
+      <button class="sidebar-btn home-btn" routerLink="/">Retour</button>
+    </nav>
+    <main class="content">
+
+      <div *ngIf="activeSection === 'home'">
+        <p>
+          c'est le home
+        </p>
+      </div>
+      <div *ngIf="activeSection === 'stats'">
+        <p>
+          raah ouais tu veux des stats
+        </p>
+      </div>
+      <div *ngIf="activeSection === 'quiz'">
+        <app-quiz-app></app-quiz-app>
+      </div>
+      <div *ngIf="activeSection === 'acceuilli'" class="acceuilli-selection">
+        <app-profile-list class="profile-list-container" (click)="setSubSection('true')" [context]="context"></app-profile-list>
+        <app-profile-configuration *ngIf="activeSubSection === 'true'"></app-profile-configuration>
+      </div>
+    </main>
+  </div>
+</body>
+
+</html>

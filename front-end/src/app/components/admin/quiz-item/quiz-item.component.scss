@@ -1,0 +1,15 @@
+.quiz-item {
+  width: 350px;
+  min-height: 150px;
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
+  border: 1px solid #ddd;
+  background-color: #f8f9fa;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.quiz-item:hover {
+  background-color: #f2f2f2;
+  border: 1px solid #f2f2f2;
+}

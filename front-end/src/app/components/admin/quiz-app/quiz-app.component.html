@@ -1,0 +1,14 @@
+<div class="quiz-container">
+  <!-- Le NgModel permet de faire en sorte que si on modifie la valeur alors la variable dans le ts soit instant mise a jour comme
+   ça on a un affiche de la liste qui est en direct et pas quand on presse Enter-->
+  <input type="text" placeholder="Rechercher un quiz..." [(ngModel)]="searchQuery" class="search-bar">
+
+  <div class="quiz-list">
+    <!-- Le ngFor permet de boucler dans chaque quizz en fonction de la barre de search-->
+    <!-- le [quiz]= ... permet de rentrer l'input que le quizz-item demande-->
+    <app-quiz-item
+      *ngFor="let quiz of filteredQuizzes()"
+      [quiz]="quiz">
+    </app-quiz-item>
+  </div>
+</div>
