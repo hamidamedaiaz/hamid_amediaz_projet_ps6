@@ -14,10 +14,6 @@ export class GamemodeComponent {
   @Output()
   gamemodeSelected: EventEmitter<Boolean> = new EventEmitter<Boolean>();
 
-  constructor() { }
-
-  ngOnInit() { }
-
   selectGamemode() {
     this.gamemodeSelected.emit(true);
   }

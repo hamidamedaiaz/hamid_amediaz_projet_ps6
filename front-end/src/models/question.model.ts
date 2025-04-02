@@ -1,8 +1,10 @@
+import { Answer } from "./answer.model";
+
 export interface Question{
     questionId: number;
     question: string;
-    answers: string[];
-    correctAnswer: string;
-    hints: string[];
+    answers: Answer[];
+    correctAnswer: Answer[];
+    hints?: string[];
     musicPath: string;
 }

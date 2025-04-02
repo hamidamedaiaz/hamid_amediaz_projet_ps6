@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Gamemode } from 'src/models/gamemode.model';
 import { GamemodeService } from 'src/services/gamemode.service';
 
@@ -8,7 +8,7 @@ import { GamemodeService } from 'src/services/gamemode.service';
   templateUrl: './gamemode-list.component.html',
   styleUrl: './gamemode-list.component.scss'
 })
-export class GamemodeListComponent implements OnInit {
+export class GamemodeListComponent {
 
   public gamemodeList: Gamemode[] = [];
 
@@ -17,8 +17,6 @@ export class GamemodeListComponent implements OnInit {
       this.gamemodeList = gamemodes;
     });
   }
-
-  ngOnInit() {}
 
   gamemodeSelected(name: string) {
     if(name === 'Solo'){

@@ -4,9 +4,11 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+
 import { GamemodeComponent } from './components/gamemodes/gamemode/gamemode.component';
 import { GamemodeListComponent } from './components/gamemodes/gamemode-list/gamemode-list.component';
 import { GamemodeSelectionComponent } from './pages/gamemode-selection-page/gamemode-selection-page.component';
+import { ReactiveFormsModule } from "@angular/forms";
 
 
 @NgModule({
@@ -14,14 +16,13 @@ import { GamemodeSelectionComponent } from './pages/gamemode-selection-page/game
     AppComponent,
     GamemodeComponent,
     GamemodeListComponent,
-    GamemodeSelectionComponent,
-
-
+    GamemodeSelectionComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

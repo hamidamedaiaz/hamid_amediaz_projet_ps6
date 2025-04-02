@@ -1,10 +1,26 @@
-<div>
-    <div>{{question.titre}}</div>
-    <button>Rejouer la musique</button>
-</div>
-<div *ngIf="question">
-    <div *ngFor="let reponse of question.answer">
-        <input type="radio" [value]="reponse.id" name="reponse" (change)="onReponseChange(reponse.id)">
-        {{reponse}}
+<section class="question-header-section">
+    <div class="question-title">{{getTitle()}}</div>
+    <div class="button-section">
+        <button class="replay-btn">Rejouer la musique</button>
+        <section class="volume-section">
+            <button class="volume-btn" (click)="decreaseVolume()">-</button>
+            <input value="{{getVolume()}}">
+            <button class="volume-btn" (click)="increaseVolume()">+</button>
+        </section>
     </div>
+</section>
+
+<section *ngIf="getAnswers()" class="questions-section">
+    <div class="answers-container" *ngFor="let answer of getAnswers()">
+        <app-quiz-answer [answer]="answer" (selectedAnswer)=answerSelected(answer)></app-quiz-answer>
+    </div>
+</section>
+
+<div>
+    <section class="hint-section">
+        <div class="hints-container" *ngFor="let hint of getHints()">
+            <app-quiz-hint [hint]="hint" class="hint"></app-quiz-hint>
+        </div>
+    </section>
+    <button class="next-question-btn">Question suivante</button>
 </div>

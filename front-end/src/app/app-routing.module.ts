@@ -5,7 +5,7 @@ import { MultiplayerGameSetupComponent } from "./pages/multiplayer-game-setup/mu
 import { HomeComponent } from "./pages/home/home.component";
 import { AdminComponent } from "./pages/admin/admin.component";
 import { GamemodeSelectionComponent } from "./pages/gamemode-selection-page/gamemode-selection-page.component";
-import { SingleplayerPageComponent } from './pages/singleplayer-page/singleplayer-page.component';
+import { SingleplayerGamePageComponent } from './pages/singleplayer-game-page/singleplayer-game-page.component';
 
 const routes: Routes = [
   {path:'', component:HomeComponent},
@@ -13,7 +13,7 @@ const routes: Routes = [
   {path:'quiz-creation', component: QuizCreationComponent},
   {path:'multiplayer-game-setup', component : MultiplayerGameSetupComponent},
   {path:'gamemode-selection', component: GamemodeSelectionComponent},
-  {path:'singleplayer-game',component: SingleplayerPageComponent}
+  {path:'singleplayer-game',component: SingleplayerGamePageComponent}
   //{path:'multiplayer-page',component: }
 
 ];

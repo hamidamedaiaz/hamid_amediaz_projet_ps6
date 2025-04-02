@@ -13,3 +13,17 @@
   background-color: #f2f2f2;
   border: 1px solid #f2f2f2;
 }
+
+button{
+  margin-top: 10px;
+  border: none;
+  background: none;
+  padding: 5px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+button:hover{
+  background: #d7d7d7;
+}
+

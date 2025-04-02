@@ -37,6 +37,9 @@
         <app-profile-list class="profile-list-container" (click)="setSubSection('true')" [context]="context"></app-profile-list>
         <app-profile-configuration *ngIf="activeSubSection === 'true'"></app-profile-configuration>
       </div>
+      <div *ngIf="activeSection === 'quiz-details'">
+        <app-quiz-details *ngIf="activeQuiz" [quiz]="activeQuiz"></app-quiz-details>
+      </div>
     </main>
   </div>
 </body>
