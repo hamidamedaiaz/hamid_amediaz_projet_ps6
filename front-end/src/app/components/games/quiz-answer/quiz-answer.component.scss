@@ -1,0 +1,14 @@
+.answer-item{
+    background-color: #333;
+    color: white;
+    border-radius: 10px;
+    padding: 70px 125px;
+    transition: transform 0.2s ease-in-out;
+    font-size: 2vw;
+    font-family: monospace;
+}
+
+.answer-item:hover{
+    cursor: pointer;
+    transform: scale(1.06);
+}

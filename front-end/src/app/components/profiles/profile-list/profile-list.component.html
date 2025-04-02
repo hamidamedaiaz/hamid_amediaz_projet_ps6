@@ -1,7 +1,4 @@
-<!-- <app-profile-searchbar></app-profile-searchbar> -->
 <input type="text" id="search-bar" class="search-input" [(ngModel)]="searchQuery"  placeholder="Rechercher un joueur...">
 <div>
     <div class="profile-list-container" *ngFor="let profile of filteredProfiles()">
-        <app-profile-item [profile]="profile" (profileSelected)="profileSelected(profile, context)"></app-profile-item>
-    </div>
-</div>
+        <app-profile-item [profile]="profile" (profileSelected)="profileSelectedHandler(profile)"></app-profile-item></div>

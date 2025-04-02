@@ -6,5 +6,5 @@ export interface Question{
     answers: Answer[];
     correctAnswer: Answer[];
     hints?: string[];
-    musicPath: string;
+    audioPath: string;
 }

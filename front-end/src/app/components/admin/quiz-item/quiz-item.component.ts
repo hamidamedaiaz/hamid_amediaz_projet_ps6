@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {QuizService} from "../../../../services/quiz-list.service";
 import {NgOptimizedImage} from "@angular/common";
 import {Quiz} from "../../../../models/quiz.model";
@@ -14,11 +14,23 @@ import {Quiz} from "../../../../models/quiz.model";
 })
 
 export class QuizItemComponent {
+
   @Input() quiz!:Quiz;
+
+  @Output()
+  launchMultiGameEmitter: EventEmitter<Quiz> = new EventEmitter<Quiz>();
 
   constructor(private quizService: QuizService) {}
 
   onEditClick(){
     this.quizService.selectQuizForEdition(this.quiz)
+  }
+
+  onDeleteClick(){
+    console.log("Delete Quiz")
+  }
+
+  launchMultiGame(){
+    return this.launchMultiGameEmitter.emit(this.quiz);
   }
 }

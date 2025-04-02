@@ -6,6 +6,9 @@ import { HomeComponent } from "./pages/home/home.component";
 import { AdminComponent } from "./pages/admin/admin.component";
 import { GamemodeSelectionComponent } from "./pages/gamemode-selection-page/gamemode-selection-page.component";
 import { SingleplayerGamePageComponent } from './pages/singleplayer-game-page/singleplayer-game-page.component';
+import { MultiplayerGamePageComponent } from './pages/multiplayer-game-page/multiplayer-game-page.component';
+import { MultiplayerGameLoginPageComponent } from './multiplayer-game-login-page/multiplayer-game-login-page.component';
+
 
 const routes: Routes = [
   {path:'', component:HomeComponent},
@@ -13,8 +16,9 @@ const routes: Routes = [
   {path:'quiz-creation', component: QuizCreationComponent},
   {path:'multiplayer-game-setup', component : MultiplayerGameSetupComponent},
   {path:'gamemode-selection', component: GamemodeSelectionComponent},
-  {path:'singleplayer-game',component: SingleplayerGamePageComponent}
-  //{path:'multiplayer-page',component: }
+  {path:'singleplayer-game',component: SingleplayerGamePageComponent},
+  {path:'multiplayer-game-login', component: MultiplayerGameLoginPageComponent},
+  {path:'multiplayer-game',component: MultiplayerGamePageComponent},
 
 ];
 

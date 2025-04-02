@@ -8,7 +8,7 @@
     <!-- le [quiz]= ... permet de rentrer l'input que le quizz-item demande-->
     <app-quiz-item
       *ngFor="let quiz of filteredQuizzes()"
-      [quiz]="quiz">
+      [quiz]="quiz" (launchMultiGameEmitter)="launchMultiGame(quiz)">
     </app-quiz-item>
   </div>
 </div>

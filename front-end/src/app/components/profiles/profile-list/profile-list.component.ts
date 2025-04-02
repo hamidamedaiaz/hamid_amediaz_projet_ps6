@@ -1,13 +1,12 @@
-import { Component, EventEmitter, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Profile } from 'src/models/profile.model';
 import { ProfileService } from 'src/services/profile.service';
 import { ProfileItemComponent } from '../profile-item/profile-item.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ProfileSearchbarComponent } from 'src/app/components/profiles/profile-searchbar/profile-searchbar.component'
+import { ProfileSearchbarComponent } from 'src/app/components/profiles/profile-searchbar/profile-searchbar.component';
 import { CurrentProfileService } from 'src/services/currentProfile.service';
-
 
 @Component({
   selector: 'app-profile-list',
@@ -18,14 +17,12 @@ import { CurrentProfileService } from 'src/services/currentProfile.service';
     ProfileSearchbarComponent, FormsModule],
 })
 
-
 export class ProfileListComponent {
-
   public profileList: Profile[] = [];
-
   private router: Router;
-
-  profileSelectedEmitter: EventEmitter<Profile> = new EventEmitter<Profile>();
+  
+  @Output()
+  profileSelected: EventEmitter<Profile> = new EventEmitter<Profile>();
 
   public searchQuery: String = '';
 
@@ -53,17 +50,13 @@ export class ProfileListComponent {
     console.log("ProfileListComponent initialized");
   }
 
-  profileSelected(profile: Profile, context: String) {
-    if (context == 'home') {
+  profileSelectedHandler(profile: Profile) {
+    if (this.context === 'home') {
       this.currentProfileService.setCurrentProfile(profile);
       this.router.navigate(['/gamemode-selection']);
-    }
-
-    else if (context == 'admin') {
+    } else if (this.context === 'admin') {
       console.log("Profile selected from admin: ", profile.name);
+      this.profileSelected.emit(profile);
     }
   }
-
-
-
 }

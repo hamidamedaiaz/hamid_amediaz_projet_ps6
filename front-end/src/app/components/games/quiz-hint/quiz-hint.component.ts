@@ -10,6 +10,6 @@ import { Component, Input } from '@angular/core';
 export class QuizHintComponent {
 
   @Input()
-  hint:any;
+  hint: String |any;
 
 }

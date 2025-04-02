@@ -1,3 +1,2 @@
-<button class="setting-btn" (click)="accessToSettings()">Paramètres</button>
-<app-quiz-question></app-quiz-question>
-<button (click)="leaveQuiz()" class="leave-btn">Quitter</button>
+<app-quiz-question class="quiz-question" [gamemode]="'solo'"></app-quiz-question>
+<button class="leave-btn button" (click)="leaveQuiz()" >Quitter</button>

@@ -1,0 +1,11 @@
+<section class="join-game-section">
+    <div class="join-game-container">
+        <p class="join-game-title">Rejoindre une partie</p>
+        <hr class="separator">
+        <div class="input-section">
+            <input class="join-game-code-input" type="text" placeholder="Entrez le code de la partie" value="{{code}}">
+            <input class="join-game-submit button" type="submit" value="Rejoindre la partie" (click)="joinGame('code')">
+        </div>
+        <button (click)="leave()" class="button leave-btn">Quitter</button>
+    </div>
+</section>

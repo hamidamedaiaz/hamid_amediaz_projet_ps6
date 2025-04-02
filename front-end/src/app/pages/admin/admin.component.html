@@ -8,35 +8,55 @@
 
 <body>
   <div class="admin-container">
-
     <nav class="sidebar">
-      <button class="sidebar-btn" (click)="setSection('stats')"><img class="logo" ngSrc="assets/icons/stats.png"
-          height="512" width="512">Statistiques</button>
-      <button class="sidebar-btn" (click)="setSection('quiz')"><img class="logo" ngSrc="assets/icons/quiz-logo.png"
-          height="512" width="512">Quiz</button>
-      <button class="sidebar-btn" (click)="setSection('acceuilli')"><img class="logo" ngSrc="assets/icons/user.png"
-          height="512" width="512">Acceuilli</button>
-      <button class="sidebar-btn home-btn" routerLink="/">Retour</button>
+      <button class="sidebar-btn" (click)="setSection('stats')">
+        <img class="logo" ngSrc="assets/icons/stats.png" height="512" width="512">
+        <span>Statistiques</span>
+      </button>
+      <button class="sidebar-btn" (click)="setSection('quiz')">
+        <img class="logo" ngSrc="assets/icons/quiz-logo.png" height="512" width="512">
+        <span>Quiz</span>
+      </button>
+      <button class="sidebar-btn" (click)="setSection('acceuilli')">
+        <img class="logo" ngSrc="assets/icons/user.png" height="512" width="512">
+        <span>Acceuilli</span>
+      </button>
+      <button class="sidebar-btn home-btn" routerLink="/">
+        <span>Retour</span>
+      </button>
     </nav>
+    
     <main class="content">
-
       <div *ngIf="activeSection === 'home'">
-        <p>
-          c'est le home
-        </p>
+        <p>c'est le home</p>
       </div>
+      
       <div *ngIf="activeSection === 'stats'">
-        <p>
-          raah ouais tu veux des stats
-        </p>
+        <p>raah ouais tu veux des stats</p>
       </div>
+      
       <div *ngIf="activeSection === 'quiz'">
         <app-quiz-app></app-quiz-app>
       </div>
-      <div *ngIf="activeSection === 'acceuilli'" class="acceuilli-selection">
-        <app-profile-list class="profile-list-container" (click)="setSubSection('true')" [context]="context"></app-profile-list>
-        <app-profile-configuration *ngIf="activeSubSection === 'true'"></app-profile-configuration>
+      
+      <div *ngIf="activeSection === 'acceuilli'" class="acceuilli-section">
+        <div class="profiles-panel" [ngClass]="{'collapsed': selectedProfile}">
+          <h2 class="section-title">Liste des Joueurs</h2>
+          <app-profile-list
+            class="profile-list-container"
+            (profileSelected)="onProfileSelect($event)"
+            [context]="context">
+          </app-profile-list>
+        </div>
+        
+        <div *ngIf="selectedProfile" class="config-panel" [@slideInOut]>
+          <app-profile-configuration
+            [profile]="selectedProfile"
+            (closeConfigPanel)="closeConfigPanel()">
+          </app-profile-configuration>
+        </div>
       </div>
+      
       <div *ngIf="activeSection === 'quiz-details'">
         <app-quiz-details *ngIf="activeQuiz" [quiz]="activeQuiz"></app-quiz-details>
       </div>

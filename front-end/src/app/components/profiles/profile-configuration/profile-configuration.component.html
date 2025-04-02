@@ -1,56 +1,84 @@
-<section class="profile-information-section">
-    <div>
-        {{profile?.name}}
+<div class="profile-configuration">
+    <div class="header">
+        <h2 class="title">Configuration du joueur</h2>
+        <button class="close-button" (click)="closeConfiguration()" aria-label="Fermer">
+            <svg viewBox="0 0 24 24" width="24" height="24">
+                <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+        </button>
     </div>
-    <div>
-        {{profile?.lastName}}
+    
+    <div class="profile-card">
+        <div class="profile-avatar">
+            {{ getInitials() }}
+        </div>
+        <div class="profile-info">
+            <h3 class="profile-name">{{profile?.name}} {{profile?.lastName}}</h3>
+            <p class="profile-id">ID: {{profile?.id}}</p>
+        </div>
     </div>
-</section>
-<section class=" profile-configuration-section">
-    <h1>Configuration</h1>
-    <hr>
-    <label for="hint-timer-selector">
-        Temps avant d'afficher les indices
-        <select name="hint-timer-selector" id="#hint-timer-selector" class="configuration-select">
-            <option value="default" selected>30 secondes</option>
-            <option value="15">15 secondes</option>
-            <option value="10">10 secondes</option>
-            <option value="0">Afficher directement</option>
-        </select>
-    </label>
-    <label for="relaunch-timer-selector">
-        Temps avant de relancer le joueur
-        <select name="relaunch-timer-selector" id="#relaunch-timer-selector" class="configuration-select">
-            <option value="default" selected>30 secondes</option>
-            <option value="15">15 secondes</option>
-            <option value="10">10 secondes</option>
-            <option value="0">Jamais</option>
-        </select>
-    </label>
-    <label for="hintTimerSelector">
-        Temps avant d'enlever un réponse
-        <select name="remove-answer-timer-selector" id="#remove-answer-timer-selector" class="configuration-select">
-            <option value="default">30 secondes</option>
-            <option value="15">15 secondes</option>
-            <option value="10">10 secondes</option>
-            <option value="0">Afficher directement</option>
-        </select>
-    </label>
-    <label for="hintTimerSelector">
-        Nombre d'indices affichés
-        <select name="remove-answer-timer-selector" id="#remove-answer-timer-selector" class="configuration-select">
-            <option value="all">Tous</option>
-            <option value="2">2</option>
-            <option value="1">1</option>
-            <option value="0">Aucun</option>
-        </select>
-    </label>
-    <label for="hintTimerSelector">
-        Nombre de réponses affichées
-        <select name="remove-answer-timer-selector" id="#remove-answer-timer-selector" class="configuration-select">
-            <option value="all">Toutes</option>
-            <option value="3">3</option>
-            <option value="2">2</option>
-        </select>
-    </label>
-</section>
+    
+    <div class="configuration-section">
+        <h3 class="section-title">Paramètres de jeu</h3>
+        
+        <div class="settings-group">
+            <div class="setting-item">
+                <label for="hint-timer-selector">Temps avant d'afficher les indices</label>
+                <select id="hint-timer-selector" class="configuration-select">
+                    <option value="default" selected>30 secondes</option>
+                    <option value="15">15 secondes</option>
+                    <option value="10">10 secondes</option>
+                    <option value="0">Afficher directement</option>
+                </select>
+            </div>
+            
+            <div class="setting-item">
+                <label for="relaunch-timer-selector">Temps avant de relancer le joueur</label>
+                <select id="relaunch-timer-selector" class="configuration-select">
+                    <option value="default" selected>30 secondes</option>
+                    <option value="15">15 secondes</option>
+                    <option value="10">10 secondes</option>
+                    <option value="0">Jamais</option>
+                </select>
+            </div>
+            
+            <div class="setting-item">
+                <label for="remove-answer-timer-selector">Temps avant d'enlever une réponse</label>
+                <select id="remove-answer-timer-selector" class="configuration-select">
+                    <option value="default">30 secondes</option>
+                    <option value="15">15 secondes</option>
+                    <option value="10">10 secondes</option>
+                    <option value="0">Afficher directement</option>
+                </select>
+            </div>
+            <div class="setting-item">
+                <label for="hint-count-selector">Nombre d'indices affichés</label>
+                <select id="hint-count-selector" class="configuration-select">
+                    <option value="all">Tous</option>
+                    <option value="2">2</option>
+                    <option value="1">1</option>
+                    <option value="0">Aucun</option>
+                </select>
+            </div>
+            
+            <div class="setting-item">
+                <label for="answer-count-selector">Nombre de réponses affichées</label>
+                <select id="answer-count-selector" class="configuration-select">
+                    <option value="all">Toutes</option>
+                    <option value="3">3</option>
+                    <option value="2">2</option>
+                </select>
+            </div>
+        </div>
+        
+        <h3 class="section-title">Options d'affichage</h3>
+        
+        <div class="settings-group">
+        </div>
+    </div>
+    
+    <div class="action-buttons">
+        <button class="save-button" (click)="saveConfiguration()">Enregistrer</button>
+        <button class="cancel-button" (click)="closeConfiguration()">Annuler</button>
+    </div>
+</div>

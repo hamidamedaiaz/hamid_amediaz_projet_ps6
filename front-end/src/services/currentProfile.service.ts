@@ -24,4 +24,9 @@ export class CurrentProfileService {
     getCurrentProfile(){
         return this.current_profile;
     }
+
+    resetCurrentProfile(){
+        console.log("Current Profile has been reset successfully")
+        this.current_profile=GUEST_PROFILE;
+    }
 }

@@ -4,6 +4,7 @@ import {QuizItemComponent} from "../quiz-item/quiz-item.component";
 import { FormsModule } from '@angular/forms';
 import {Quiz} from "../../../../models/quiz.model";
 import {QuizService} from "src/services/quiz-list.service";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-quiz-app',
@@ -20,7 +21,7 @@ export class QuizAppComponent implements OnInit {
   searchQuery: string = '';
   quizzes:Quiz[] = [];
 
-  constructor(private quizService: QuizService) {
+  constructor(private quizService: QuizService, private router:Router) {
     console.log("Quizzes chargés :", this.quizzes);
   }
 
@@ -33,6 +34,10 @@ export class QuizAppComponent implements OnInit {
     return this.quizzes.filter(quiz =>
       quiz.title.toLowerCase().includes(this.searchQuery.toLowerCase())
     );
+  }
+
+  launchMultiGame(quiz:Quiz){
+    this.router.navigate(['/multiplayer-game-setup'])
   }
 
 }

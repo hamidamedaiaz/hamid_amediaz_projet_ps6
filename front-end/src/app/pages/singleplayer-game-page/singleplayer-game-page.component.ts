@@ -1,4 +1,3 @@
-import { query } from '@angular/animations';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -26,6 +25,7 @@ export class SingleplayerGamePageComponent {
   }
   
   public leaveQuiz(){
+    this.currentProfileService.resetCurrentProfile();
     this.router.navigate(["/"]);
   }
 
@@ -35,4 +35,6 @@ export class SingleplayerGamePageComponent {
       this.router.navigate(["/settings"])
     }
   }
+
+
 }

@@ -24,6 +24,6 @@ export class GamemodeService {
 
     playMulti(){
       console.log(this.currentProfileService.getCurrentProfile(), " is playing multiplayer");
-      this.router.navigate(['/multiplayer-game']);
+      this.router.navigate(['/multiplayer-game-login']);
     }
 }
