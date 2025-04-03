@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
   <meta charset="UTF-8">
   <title>Octave - Admin</title>
@@ -49,7 +48,7 @@
           </app-profile-list>
         </div>
         
-        <div *ngIf="selectedProfile" class="config-panel" [@slideInOut]>
+        <div *ngIf="selectedProfile" class="config-panel">
           <app-profile-configuration
             [profile]="selectedProfile"
             (closeConfigPanel)="closeConfigPanel()">
@@ -63,5 +62,4 @@
     </main>
   </div>
 </body>
-
 </html>

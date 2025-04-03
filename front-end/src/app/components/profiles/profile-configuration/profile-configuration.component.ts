@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, ChangeDetectorRef } from '@angular/core';
 import { Profile } from 'src/models/profile.model';
 
 @Component({
@@ -8,12 +8,23 @@ import { Profile } from 'src/models/profile.model';
   templateUrl: './profile-configuration.component.html',
   styleUrl: './profile-configuration.component.scss'
 })
-export class ProfileConfigurationComponent {
+export class ProfileConfigurationComponent implements OnChanges {
   @Input()
   profile: Profile | undefined;
 
   @Output()
   closeConfigPanel = new EventEmitter<void>();
+
+  constructor(private cdr: ChangeDetectorRef) {}
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['profile'] && changes['profile'].currentValue) {
+      console.log('Profile configuration changed to:', this.profile?.name);
+      setTimeout(() => {
+        this.cdr.detectChanges();
+      }, 0);
+    }
+  }
 
   getInitials(): string {
     if (!this.profile) return '';
@@ -25,6 +36,7 @@ export class ProfileConfigurationComponent {
   }
 
   closeConfiguration() {
+    console.log('Fermeture du panneau de configuration');
     this.closeConfigPanel.emit();
   }
   

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ChangeDetectorRef } from '@angular/core';
 import { Profile } from 'src/models/profile.model';
 import { ProfileService } from 'src/services/profile.service';
 import { ProfileItemComponent } from '../profile-item/profile-item.component';
@@ -13,30 +13,35 @@ import { CurrentProfileService } from 'src/services/currentProfile.service';
   templateUrl: './profile-list.component.html',
   styleUrl: './profile-list.component.scss',
   standalone: true,
-  imports: [ProfileItemComponent, CommonModule,
-    ProfileSearchbarComponent, FormsModule],
+  imports: [
+    ProfileItemComponent,
+    CommonModule,
+    ProfileSearchbarComponent,
+    FormsModule
+  ],
 })
 
 export class ProfileListComponent {
   public profileList: Profile[] = [];
-  private router: Router;
   
   @Output()
   profileSelected: EventEmitter<Profile> = new EventEmitter<Profile>();
 
   public searchQuery: String = '';
 
-  private currentProfileService: CurrentProfileService;
-
   @Input()
-  public context: any;
+  public context: string = '';
 
-  constructor(public profileService: ProfileService, router: Router, currentProfileService: CurrentProfileService) {
-    this.currentProfileService = currentProfileService;
-    this.router = router;
+  constructor(
+    public profileService: ProfileService,
+    private router: Router,
+    private currentProfileService: CurrentProfileService,
+    private cdr: ChangeDetectorRef
+  ) {
     this.profileService.profiles$.subscribe((profiles) => {
       this.profileList = profiles;
-      console.log("Profile list updated: ", this.profileList);
+      console.log("Liste de profils mise à jour:", this.profileList.length, "profils");
+      this.cdr.detectChanges();
     });
   }
 
@@ -47,16 +52,20 @@ export class ProfileListComponent {
   }
 
   ngOnInit() {
-    console.log("ProfileListComponent initialized");
+    console.log("ProfileListComponent initialisé avec contexte:", this.context);
   }
 
   profileSelectedHandler(profile: Profile) {
-    if (this.context === 'home') {
-      this.currentProfileService.setCurrentProfile(profile);
-      this.router.navigate(['/gamemode-selection']);
-    } else if (this.context === 'admin') {
-      console.log("Profile selected from admin: ", profile.name);
-      this.profileSelected.emit(profile);
-    }
+    console.log("Profil sélectionné dans contexte:", this.context, profile.name);
+    
+    setTimeout(() => {
+      if (this.context === 'home') {
+        this.currentProfileService.setCurrentProfile(profile);
+      } else {
+        this.profileSelected.emit(profile);
+        console.log("Événement profileSelected émis pour:", profile.name);
+      }
+      this.cdr.detectChanges();
+    }, 0);
   }
 }
