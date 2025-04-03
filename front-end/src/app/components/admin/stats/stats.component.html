@@ -1,117 +1,124 @@
-<div class="stats-dashboard">
-    <div class="dashboard-header">
-      <div class="global-stats">
-        <div class="stat-card">
-          <h3>Utilisateurs Total</h3>
-          <p>{{ stats?.totalUsers }}</p>
-        </div>
-        <div class="stat-card">
-          <h3>Quiz Disponibles</h3>
-          <p>{{ stats?.totalQuizzes }}</p>
-        </div>
-        <div class="stat-card">
-          <h3>Parties Jouées</h3>
-          <p>{{ stats?.totalGamesPlayed }}</p>
+<div class="stats-container">
+  <div class="stats-sidebar">
+    <div class="stats-buttons">
+      <button 
+        class="stats-btn" 
+        [class.active]="currentView === 'accueilli'"
+        (click)="showAccueilliStats()">
+        Statistiques Accueillis
+      </button>
+      <button 
+        class="stats-btn" 
+        [class.active]="currentView === 'quiz'"
+        (click)="showQuizStats()">
+        Statistiques Quiz
+      </button>
+    </div>
+  </div>
+
+  <div class="stats-content">
+    <!-- Vue des Accueillis -->
+    <div *ngIf="currentView === 'accueilli'" class="accueilli-section">
+      <h2>Liste des Accueillis</h2>
+      <table class="stats-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Quiz Joués</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let profile of profiles">
+            <td>{{ profile.id }}</td>
+            <td>{{ profile.lastName }}</td>
+            <td>{{ profile.name }}</td>
+            <td>{{ getQuizCountForProfile(profile) }}</td>
+            <td>
+              <button class="action-btn" (click)="viewProfileDetails(profile)">
+                Détails
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Vue des Quiz -->
+    <div *ngIf="currentView === 'quiz'" class="quiz-section">
+      <h2>Liste des Quiz</h2>
+      <table class="stats-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Titre</th>
+            <th>Description</th>
+            <th>Nombre de Questions</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let quiz of quizzes">
+            <td>{{ quiz.id }}</td>
+            <td>{{ quiz.title }}</td>
+            <td>{{ quiz.description }}</td>
+            <td>{{ quiz.questions.length }}</td>
+            <td>
+              <button class="action-btn" (click)="viewQuizDetails(quiz)">
+                Détails
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Modal de détails du profil -->
+    <div *ngIf="selectedProfile" class="modal profile-details-modal">
+      <div class="modal-content">
+        <span class="close-btn" (click)="closeProfileDetails()">&times;</span>
+        <h2>Détails du Profil</h2>
+        <div class="profile-details">
+          <p><strong>ID:</strong> {{ selectedProfile.id }}</p>
+          <p><strong>Nom:</strong> {{ selectedProfile.lastName }}</p>
+          <p><strong>Prénom:</strong> {{ selectedProfile.name }}</p>
+          
+          <h3>Statistiques de Jeu</h3>
+          <div class="game-stats">
+            <p><strong>Total Quiz Joués:</strong> {{ getQuizCountForProfile(selectedProfile) }}</p>
+            <p><strong>Meilleur Score:</strong> {{ getBestScore(selectedProfile) }}%</p>
+            <p><strong>Score Moyen:</strong> {{ getAverageScore(selectedProfile) }}%</p>
+          </div>
         </div>
       </div>
     </div>
-  
-    <div class="dashboard-content">
-      <div class="stats-grid">
-        <!-- Top Utilisateurs -->
-        <div class="stats-section user-stats">
-          <h2>Top Utilisateurs</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Nom</th>
-                <th>Quiz Joués</th>
-                <th>Score Moyen</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let user of stats?.userStats.mostActiveUsers">
-                <td>{{ user.name }} {{ user.lastName }}</td>
-                <td>{{ user.totalQuizzesTaken }}</td>
-                <td>{{ user.averageScore | number:'1.1-1' }}%</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-  
-        <!-- Top Quiz -->
-        <div class="stats-section quiz-stats">
-          <h2>Quiz Populaires</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Titre</th>
-                <th>Parties</th>
-                <th>Difficulté</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let quiz of stats?.quizStats.mostPlayedQuizzes">
-                <td>{{ quiz.title }}</td>
-                <td>{{ quiz.totalPlays }}</td>
-                <td>
-                  <span 
-                    class="difficulty" 
-                    [ngClass]="{
-                      'easy': quiz.difficulty === 'Easy', 
-                      'medium': quiz.difficulty === 'Medium', 
-                      'hard': quiz.difficulty === 'Hard'
-                    }">
-                    {{ quiz.difficulty }}
-                  </span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-  
-        <!-- Répartition des Catégories -->
-        <div class="stats-section category-distribution">
-          <h2>Répartition des Catégories</h2>
-          <div class="category-bars">
-            <div 
-              *ngFor="let category of stats?.quizStats.categoriesDistribution" 
-              class="category-bar" 
-              [style.width.%]="category.percentage"
-              [title]="category.category + ': ' + category.count + ' quiz'">
-              {{ category.category }} ({{ category.percentage }}%)
-            </div>
+
+    <!-- Modal de détails du quiz -->
+    <div *ngIf="selectedQuiz" class="modal quiz-details-modal">
+      <div class="modal-content">
+        <span class="close-btn" (click)="closeQuizDetails()">&times;</span>
+        <h2>Détails du Quiz</h2>
+        <div class="quiz-details">
+          <p><strong>Titre:</strong> {{ selectedQuiz.title }}</p>
+          <p><strong>Description:</strong> {{ selectedQuiz.description }}</p>
+          
+          <h3>Statistiques du Quiz</h3>
+          <div class="quiz-stats">
+            <p><strong>Nombre de Questions:</strong> {{ selectedQuiz.questions.length }}</p>
+            <p><strong>Parties Jouées:</strong> {{ getQuizPlayCount(selectedQuiz) }}</p>
+            <p><strong>Score Moyen:</strong> {{ getQuizAverageScore(selectedQuiz) }}%</p>
           </div>
-        </div>
-  
-        <!-- Séries Temporelles -->
-        <div class="stats-section time-series">
-          <h2>Activité Quotidienne</h2>
-          <div class="time-series-charts">
-            <div class="chart-container">
-              <h3>Utilisateurs Actifs</h3>
-              <div class="custom-line-chart">
-                <div 
-                  *ngFor="let point of stats?.timeSeriesData.dailyActiveUsers" 
-                  class="chart-point"
-                  [style.height.%]="calculateChartHeight(stats?.timeSeriesData.dailyActiveUsers)"
-                  [title]="point.value.toString()">
-                </div>
-              </div>
-            </div>
-            <div class="chart-container">
-              <h3>Quiz Joués</h3>
-              <div class="custom-line-chart">
-                <div 
-                  *ngFor="let point of stats?.timeSeriesData.dailyQuizzesTaken" 
-                  class="chart-point"
-                  [style.height.%]="calculateChartHeight(stats?.timeSeriesData.dailyQuizzesTaken)"
-                  [title]="point.value.toString()">
-                </div>
-              </div>
-            </div>
-          </div>
+
+          <h3>Liste des Questions</h3>
+          <ul class="question-list">
+            <li *ngFor="let question of selectedQuiz.questions">
+              {{ question.question }}
+            </li>
+          </ul>
         </div>
       </div>
     </div>
   </div>
+</div>
