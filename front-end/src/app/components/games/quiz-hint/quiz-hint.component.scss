@@ -1,5 +1,42 @@
-.hint-item{
-    color: white;
-    font-size: 15px;
-    font-family: monospace;
-}
+.hint-container {
+    background-color: #f0f0f0;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  
+    .hint-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      
+      .hint-number {
+        font-weight: bold;
+        color: #666;
+        font-size: 16px;
+      }
+  
+      .hint-context {
+        font-size: 14px;
+        color: #888;
+        background-color: #e0e0e0;
+        padding: 3px 8px;
+        border-radius: 6px;
+      }
+    }
+  
+    .hint-text {
+      color: #333;
+      font-size: 18px;
+      line-height: 1.5;
+      font-family: 'OpenDyslexic', Arial, sans-serif;
+      word-spacing: 2px;
+    }
+  
+    // Animation douce
+    &:hover {
+      transform: scale(1.02);
+      box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+    }
+  }
