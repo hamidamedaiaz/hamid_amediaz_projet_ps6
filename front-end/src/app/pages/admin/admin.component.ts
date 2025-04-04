@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router, RouterLink, RouterOutlet } from "@angular/router";
 import { CommonModule, NgOptimizedImage } from '@angular/common';
-import { StatsComponent } from "../../components/admin/stats/stats.component";
+import { StatsAccueilliComponent } from "../../components/admin/stats-stats-accueilli/stats-accueilli.component";
 import { ProfileListComponent } from 'src/app/components/profiles/profile-list/profile-list.component';
 import { QuizAppComponent } from "../../components/admin/quiz-app/quiz-app.component";
 import { ProfileConfigurationComponent } from 'src/app/components/profiles/profile-configuration/profile-configuration.component';
@@ -17,7 +17,7 @@ import { Profile } from 'src/models/profile.model';
     RouterLink,
     RouterOutlet,
     CommonModule,
-    StatsComponent,
+    StatsAccueilliComponent,
     NgOptimizedImage,
     ProfileListComponent,
     QuizAppComponent,
@@ -31,6 +31,7 @@ export class AdminComponent implements OnInit {
   activeSection: string = 'home';
   activeQuiz: Quiz | null = null;
   selectedProfile: Profile | null = null;
+  showStatsSubmenu: boolean = false;
 
   @Input()
   public context: string = "admin";
@@ -47,6 +48,10 @@ export class AdminComponent implements OnInit {
         this.activeQuiz = quiz;
       }
     });
+  }
+
+  toggleStatsMenu() {
+    this.showStatsSubmenu = !this.showStatsSubmenu;
   }
 
   setSection(section: string) {

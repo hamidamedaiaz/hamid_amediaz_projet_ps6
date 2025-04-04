@@ -20,6 +20,25 @@
     <!-- Vue des Accueillis -->
     <div *ngIf="currentView === 'accueilli'" class="accueilli-section">
       <h2>Liste des Accueillis</h2>
+      
+      <div class="stats-header">
+        <div class="stats-search">
+          <input
+            type="text"
+            placeholder="Rechercher un accueilli..."
+            [(ngModel)]="accueilliSearchQuery"
+            class="search-input"
+          />
+        </div>
+        <div class="stats-filters">
+          <select [(ngModel)]="accueilliSortBy" class="filter-select">
+            <option value="name">Trier par nom</option>
+            <option value="count">Trier par quiz joués</option>
+            <option value="score">Trier par score moyen</option>
+          </select>
+        </div>
+      </div>
+      
       <table class="stats-table">
         <thead>
           <tr>
@@ -27,15 +46,19 @@
             <th>Nom</th>
             <th>Prénom</th>
             <th>Quiz Joués</th>
+            <th>Score Moyen</th>
+            <th>Dernier Quiz</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let profile of profiles">
+          <tr *ngFor="let profile of filteredProfiles()" [class.highlighted]="selectedProfile?.id === profile.id">
             <td>{{ profile.id }}</td>
             <td>{{ profile.lastName }}</td>
             <td>{{ profile.name }}</td>
             <td>{{ getQuizCountForProfile(profile) }}</td>
+            <td>{{ getAverageScore(profile) }}%</td>
+            <td>{{ getLastPlayedDate(profile) }}</td>
             <td>
               <button class="action-btn" (click)="viewProfileDetails(profile)">
                 Détails
@@ -44,27 +67,69 @@
           </tr>
         </tbody>
       </table>
+      
+      <!-- Pagination pour les accueillis -->
+      <div class="pagination">
+        <button 
+          [disabled]="currentAccueilliPage === 1" 
+          (click)="changePage('accueilli', currentAccueilliPage - 1)"
+          class="page-btn"
+        >
+          &laquo;
+        </button>
+        <span class="page-info">{{ currentAccueilliPage }} / {{ getAccueilliTotalPages() }}</span>
+        <button 
+          [disabled]="currentAccueilliPage === getAccueilliTotalPages()" 
+          (click)="changePage('accueilli', currentAccueilliPage + 1)"
+          class="page-btn"
+        >
+          &raquo;
+        </button>
+      </div>
     </div>
 
     <!-- Vue des Quiz -->
     <div *ngIf="currentView === 'quiz'" class="quiz-section">
       <h2>Liste des Quiz</h2>
+      
+      <div class="stats-header">
+        <div class="stats-search">
+          <input
+            type="text"
+            placeholder="Rechercher un quiz..."
+            [(ngModel)]="quizSearchQuery"
+            class="search-input"
+          />
+        </div>
+        <div class="stats-filters">
+          <select [(ngModel)]="quizSortBy" class="filter-select">
+            <option value="title">Trier par titre</option>
+            <option value="plays">Trier par nombre de parties jouées</option>
+            <option value="score">Trier par score moyen</option>
+          </select>
+        </div>
+      </div>
+      
       <table class="stats-table">
         <thead>
           <tr>
             <th>ID</th>
             <th>Titre</th>
             <th>Description</th>
-            <th>Nombre de Questions</th>
+            <th>Parties Jouées</th>
+            <th>Score Moyen</th>
+            <th>Dernière Partie</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let quiz of quizzes">
+          <tr *ngFor="let quiz of filteredQuizzes()" [class.highlighted]="selectedQuiz?.id === quiz.id">
             <td>{{ quiz.id }}</td>
             <td>{{ quiz.title }}</td>
-            <td>{{ quiz.description }}</td>
-            <td>{{ quiz.questions.length }}</td>
+            <td class="description-cell">{{ truncateDescription(quiz.description) }}</td>
+            <td>{{ getQuizPlayCount(quiz) }}</td>
+            <td>{{ getQuizAverageScore(quiz) }}%</td>
+            <td>{{ getLastPlayedDateForQuiz(quiz) }}</td>
             <td>
               <button class="action-btn" (click)="viewQuizDetails(quiz)">
                 Détails
@@ -73,23 +138,89 @@
           </tr>
         </tbody>
       </table>
+      
+      <!-- Pagination pour les quiz -->
+      <div class="pagination">
+        <button 
+          [disabled]="currentQuizPage === 1" 
+          (click)="changePage('quiz', currentQuizPage - 1)"
+          class="page-btn"
+        >
+          &laquo;
+        </button>
+        <span class="page-info">{{ currentQuizPage }} / {{ getQuizTotalPages() }}</span>
+        <button 
+          [disabled]="currentQuizPage === getQuizTotalPages()" 
+          (click)="changePage('quiz', currentQuizPage + 1)"
+          class="page-btn"
+        >
+          &raquo;
+        </button>
+      </div>
     </div>
 
     <!-- Modal de détails du profil -->
     <div *ngIf="selectedProfile" class="modal profile-details-modal">
       <div class="modal-content">
-        <span class="close-btn" (click)="closeProfileDetails()">&times;</span>
-        <h2>Détails du Profil</h2>
+        <div class="modal-header">
+          <h2>Profil de l'Accueilli</h2>
+          <span class="close-btn" (click)="closeProfileDetails()">&times;</span>
+        </div>
+        
         <div class="profile-details">
-          <p><strong>ID:</strong> {{ selectedProfile.id }}</p>
-          <p><strong>Nom:</strong> {{ selectedProfile.lastName }}</p>
-          <p><strong>Prénom:</strong> {{ selectedProfile.name }}</p>
+          <div class="profile-card">
+            <div class="profile-avatar">
+              {{ getInitials(selectedProfile) }}
+            </div>
+            <div class="profile-info">
+              <h3 class="profile-name">{{ selectedProfile.name }} {{ selectedProfile.lastName }}</h3>
+              <p class="profile-id">ID: {{ selectedProfile.id }}</p>
+            </div>
+          </div>
           
-          <h3>Statistiques de Jeu</h3>
-          <div class="game-stats">
-            <p><strong>Total Quiz Joués:</strong> {{ getQuizCountForProfile(selectedProfile) }}</p>
-            <p><strong>Meilleur Score:</strong> {{ getBestScore(selectedProfile) }}%</p>
-            <p><strong>Score Moyen:</strong> {{ getAverageScore(selectedProfile) }}%</p>
+          <div class="stats-overview">
+            <div class="stat-item">
+              <span class="stat-value">{{ getQuizCountForProfile(selectedProfile) }}</span>
+              <span class="stat-label">Quiz Joués</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">{{ getBestScore(selectedProfile) }}%</span>
+              <span class="stat-label">Meilleur Score</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">{{ getAverageScore(selectedProfile) }}%</span>
+              <span class="stat-label">Score Moyen</span>
+            </div>
+          </div>
+          
+          <h3>Historique des Parties</h3>
+          <table class="history-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Quiz</th>
+                <th>Score</th>
+                <th>Temps</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let game of getProfileGameHistory(selectedProfile)">
+                <td>{{ game.date }}</td>
+                <td>{{ game.quizTitle }}</td>
+                <td>{{ game.score }}%</td>
+                <td>{{ game.time }}</td>
+              </tr>
+            </tbody>
+          </table>
+          
+          <h3>Progression</h3>
+          <div class="progress-chart">
+            <div *ngFor="let month of getProfileProgress(selectedProfile); let i = index" 
+                 class="progress-bar" 
+                 [style.height.%]="month.score">
+              <span class="progress-label">{{ month.score }}%</span>
+              <span class="month-label">{{ month.month }}</span>
+            </div>
           </div>
         </div>
       </div>
@@ -98,25 +229,86 @@
     <!-- Modal de détails du quiz -->
     <div *ngIf="selectedQuiz" class="modal quiz-details-modal">
       <div class="modal-content">
-        <span class="close-btn" (click)="closeQuizDetails()">&times;</span>
-        <h2>Détails du Quiz</h2>
+        <div class="modal-header">
+          <h2>Détails du Quiz</h2>
+          <span class="close-btn" (click)="closeQuizDetails()">&times;</span>
+        </div>
+        
         <div class="quiz-details">
-          <p><strong>Titre:</strong> {{ selectedQuiz.title }}</p>
-          <p><strong>Description:</strong> {{ selectedQuiz.description }}</p>
+          <h3 class="quiz-title">{{ selectedQuiz.title }}</h3>
+          <p class="quiz-description">{{ selectedQuiz.description }}</p>
           
-          <h3>Statistiques du Quiz</h3>
-          <div class="quiz-stats">
-            <p><strong>Nombre de Questions:</strong> {{ selectedQuiz.questions.length }}</p>
-            <p><strong>Parties Jouées:</strong> {{ getQuizPlayCount(selectedQuiz) }}</p>
-            <p><strong>Score Moyen:</strong> {{ getQuizAverageScore(selectedQuiz) }}%</p>
+          <div class="stats-overview">
+            <div class="stat-item">
+              <span class="stat-value">{{ selectedQuiz.questions.length }}</span>
+              <span class="stat-label">Questions</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">{{ getQuizPlayCount(selectedQuiz) }}</span>
+              <span class="stat-label">Parties Jouées</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">{{ getQuizAverageScore(selectedQuiz) }}%</span>
+              <span class="stat-label">Score Moyen</span>
+            </div>
           </div>
-
-          <h3>Liste des Questions</h3>
-          <ul class="question-list">
-            <li *ngFor="let question of selectedQuiz.questions">
-              {{ question.question }}
-            </li>
-          </ul>
+          
+          <h3>Répartition des Réponses</h3>
+          <div class="answer-distribution">
+            <div class="chart-container">
+              <div class="chart-bar correct" [style.width.%]="getQuizCorrectAnswerRate(selectedQuiz)">
+                <span>{{ getQuizCorrectAnswerRate(selectedQuiz) }}%</span>
+              </div>
+              <div class="chart-bar incorrect" [style.width.%]="100 - getQuizCorrectAnswerRate(selectedQuiz)">
+                <span>{{ 100 - getQuizCorrectAnswerRate(selectedQuiz) }}%</span>
+              </div>
+            </div>
+            <div class="chart-legend">
+              <div class="legend-item">
+                <div class="legend-color correct"></div>
+                <span>Réponses correctes</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-color incorrect"></div>
+                <span>Réponses incorrectes</span>
+              </div>
+            </div>
+          </div>
+          
+          <h3>Questions du Quiz</h3>
+          <div class="question-list">
+            <div *ngFor="let question of selectedQuiz.questions; let i = index" class="question-item">
+              <div class="question-header">
+                <span class="question-number">Question {{ i + 1 }}</span>
+                <span class="question-difficulty">{{ getQuestionDifficulty(question) }}</span>
+              </div>
+              <p class="question-text">{{ question.question }}</p>
+              <div class="question-stats">
+                <span class="stat-label">Taux de réussite:</span>
+                <span class="stat-value">{{ getQuestionSuccessRate(question) }}%</span>
+              </div>
+            </div>
+          </div>
+          
+          <h3>Meilleurs Joueurs</h3>
+          <table class="history-table">
+            <thead>
+              <tr>
+                <th>Joueur</th>
+                <th>Score</th>
+                <th>Date</th>
+                <th>Temps</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let player of getQuizTopPlayers(selectedQuiz)">
+                <td>{{ player.name }} {{ player.lastName }}</td>
+                <td>{{ player.score }}%</td>
+                <td>{{ player.date }}</td>
+                <td>{{ player.time }}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

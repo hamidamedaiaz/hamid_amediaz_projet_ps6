@@ -8,10 +8,21 @@
 <body>
   <div class="admin-container">
     <nav class="sidebar">
-      <button class="sidebar-btn" (click)="setSection('stats')">
+      <button class="sidebar-btn" (click)="toggleStatsMenu()">
         <img class="logo" ngSrc="assets/icons/stats.png" height="512" width="512">
         <span>Statistiques</span>
       </button>
+      
+      <!-- Sous-menu des statistiques -->
+      <div class="submenu" [class.open]="showStatsSubmenu">
+        <button class="sidebar-btn submenu-btn" (click)="setSection('stats-accueilli')">
+          <span>Statistiques Accueillis</span>
+        </button>
+        <button class="sidebar-btn submenu-btn" (click)="setSection('stats-quiz')">
+          <span>Statistiques Quiz</span>
+        </button>
+      </div>
+      
       <button class="sidebar-btn" (click)="setSection('quiz')">
         <img class="logo" ngSrc="assets/icons/quiz-logo.png" height="512" width="512">
         <span>Quiz</span>
@@ -30,8 +41,8 @@
         <p>c'est le home</p>
       </div>
       
-      <div *ngIf="activeSection === 'stats'">
-        <app-stats></app-stats>
+      <div *ngIf="activeSection === 'stats-accueilli'">
+        <app-stats-accueilli></app-stats-accueilli>
       </div>
       
       <div *ngIf="activeSection === 'quiz'">
