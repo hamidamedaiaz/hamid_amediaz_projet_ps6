@@ -1,0 +1,145 @@
+<div class="player-stats-details-container" *ngIf="profile">
+    <div class="header-section">
+      <button class="back-button" (click)="goBack()">
+        <i class="fa fa-arrow-left"></i> Retour
+      </button>
+      <h1 class="page-title">Statistiques de l'Accueilli</h1>
+    </div>
+  
+    <div class="profile-section">
+      <div class="profile-card">
+        <div class="profile-avatar">
+          {{ getInitials(profile) }}
+        </div>
+        <div class="profile-info">
+          <h2 class="profile-name">{{ profile.name }} {{ profile.lastName }}</h2>
+          <p class="profile-id">ID: {{ profile.id }}</p>
+        </div>
+      </div>
+    </div>
+  
+    <div class="stats-metrics-section">
+      <h2 class="section-title">Métriques Thérapeutiques</h2>
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-icon games-icon">
+            <i class="fa fa-gamepad"></i>
+          </div>
+          <div class="metric-content">
+            <span class="metric-value">{{ totalGames }}</span>
+            <span class="metric-label">Parties jouées</span>
+          </div>
+        </div>
+        
+        <div class="metric-card">
+          <div class="metric-icon success-icon">
+            <i class="fa fa-check-circle"></i>
+          </div>
+          <div class="metric-content">
+            <span class="metric-value">{{ successRate }}%</span>
+            <span class="metric-label">Taux de réussite</span>
+          </div>
+        </div>
+        
+        <div class="metric-card">
+          <div class="metric-icon time-icon">
+            <i class="fa fa-clock-o"></i>
+          </div>
+          <div class="metric-content">
+            <span class="metric-value">{{ avgResponseTime }}s</span>
+            <span class="metric-label">Temps de réponse moyen</span>
+          </div>
+        </div>
+        
+        <div class="metric-card">
+          <div class="metric-icon hints-icon">
+            <i class="fa fa-lightbulb-o"></i>
+          </div>
+          <div class="metric-content">
+            <span class="metric-value">{{ avgHintsUsed }}</span>
+            <span class="metric-label">Indices utilisés en moyenne</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Section spécifique pour les métriques thérapeutiques demandées -->
+    <div class="therapy-metrics-section">
+      <h2 class="section-title">Détails Thérapeutiques</h2>
+      <div class="therapy-metrics-grid">
+        <!-- Nombre d'indices utilisés -->
+        <div class="therapy-metric-card">
+          <h3 class="therapy-metric-title">Indices Utilisés</h3>
+          <div class="therapy-metric-value">{{ totalHintsUsed }}</div>
+          <div class="therapy-metric-description">Nombre total d'indices utilisés sur l'ensemble des parties</div>
+        </div>
+        
+        <!-- Temps moyen entre les réponses -->
+        <div class="therapy-metric-card">
+          <h3 class="therapy-metric-title">Temps Entre Réponses</h3>
+          <div class="therapy-metric-value">{{ avgTimeBetweenAnswers }}s</div>
+          <div class="therapy-metric-description">Temps moyen entre chaque réponse donnée</div>
+        </div>
+        
+        <!-- Nombre de bonnes réponses sélectionnées -->
+        <div class="therapy-metric-card">
+          <h3 class="therapy-metric-title">Bonnes Réponses</h3>
+          <div class="therapy-metric-value">{{ totalCorrectAnswers }}</div>
+          <div class="therapy-metric-description">Nombre total de bonnes réponses sélectionnées</div>
+        </div>
+        
+        <!-- Nombre de mauvaises réponses sélectionnées -->
+        <div class="therapy-metric-card">
+          <h3 class="therapy-metric-title">Mauvaises Réponses</h3>
+          <div class="therapy-metric-value">{{ totalIncorrectAnswers }}</div>
+          <div class="therapy-metric-description">Nombre total de mauvaises réponses sélectionnées</div>
+        </div>
+      </div>
+      
+      <!-- Graphique en secteurs pour les réponses correctes/incorrectes -->
+      <div class="answers-distribution">
+        <h3 class="answers-distribution-title">Distribution des Réponses</h3>
+        <div class="answers-chart">
+          <div class="answer-segment correct" [style.width.%]="correctAnswersPercent">
+            <span class="segment-label">{{ correctAnswersPercent }}% Correctes</span>
+          </div>
+          <div class="answer-segment incorrect" [style.width.%]="incorrectAnswersPercent">
+            <span class="segment-label">{{ incorrectAnswersPercent }}% Incorrectes</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="progress-section">
+      <h2 class="section-title">Progression</h2>
+      
+      <div class="tabs-container">
+        <button class="tab-btn" [class.active]="activeTab === 'score'" (click)="setActiveTab('score')">
+          Score global
+        </button>
+        <button class="tab-btn" [class.active]="activeTab === 'hints'" (click)="setActiveTab('hints')">
+          Utilisation des indices
+        </button>
+        <button class="tab-btn" [class.active]="activeTab === 'time'" (click)="setActiveTab('time')">
+          Temps de réponse
+        </button>
+        <button class="tab-btn" [class.active]="activeTab === 'accuracy'" (click)="setActiveTab('accuracy')">
+          Précision
+        </button>
+      </div>
+      
+      <div class="chart-container">
+        <div class="progress-chart">
+          <div *ngFor="let item of getCurrentData()" class="progress-bar" 
+              [style.height.%]="getHeightPercentage(item.value)">
+            <span class="progress-value">{{ getValueDisplay(item.value) }}</span>
+            <span class="progress-label">{{ item.month }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="loading-message" *ngIf="!profile">
+    Chargement des données du joueur...
+  </div>

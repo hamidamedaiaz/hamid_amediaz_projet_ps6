@@ -1,3 +1,4 @@
+// src/app/app-routing.module.ts
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { QuizCreationComponent } from "./pages/quiz-creation/quiz-creation.component";
@@ -10,6 +11,7 @@ import { MultiplayerGamePageComponent } from './pages/multiplayer-game-page/mult
 import { MultiplayerGameLoginPageComponent } from './pages/multiplayer-game-login-page/multiplayer-game-login-page.component';
 import { MultiplayerGameAdminViewComponent } from './pages/multiplayer-game-admin-view/multiplayer-game-admin-view.component';
 import { WaitingStartPageComponent } from './pages/waiting-start-page/waiting-start-page.component';
+import { PlayerStatsDetailsComponent } from './pages/player-stats-details/player-stats-details.component';
 
 
 const routes: Routes = [
@@ -23,7 +25,7 @@ const routes: Routes = [
   {path:'multiplayer-game',component: MultiplayerGamePageComponent},
   {path:'multiplayer-game-admin-view',component: MultiplayerGameAdminViewComponent},
   {path:'waiting-start', component:WaitingStartPageComponent},
-
+  {path:'player-stats-details/:id', component: PlayerStatsDetailsComponent},
 ];
 
 @NgModule({
