@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router, RouterLink, RouterOutlet } from "@angular/router";
 import { CommonModule, NgOptimizedImage } from '@angular/common';
-import { StatsAccueilliComponent } from "../../components/admin/stats-stats-accueilli/stats-accueilli.component";
+import { StatsComponent } from "../../components/admin/stats/stats.component";
 import { ProfileListComponent } from 'src/app/components/profiles/profile-list/profile-list.component';
 import { QuizAppComponent } from "../../components/admin/quiz-app/quiz-app.component";
 import { ProfileConfigurationComponent } from 'src/app/components/profiles/profile-configuration/profile-configuration.component';
@@ -9,6 +9,8 @@ import { QuizService } from "../../../services/quiz-list.service";
 import { Quiz } from "../../../models/quiz.model";
 import { QuizDetailsComponent } from "../../components/admin/quiz-details/quiz-details.component";
 import { Profile } from 'src/models/profile.model';
+import { StatsAccueilliComponent } from "../../components/admin/stats-stats-accueilli/stats-accueilli.component";
+
 
 @Component({
   selector: 'app-admin',
@@ -17,12 +19,14 @@ import { Profile } from 'src/models/profile.model';
     RouterLink,
     RouterOutlet,
     CommonModule,
-    StatsAccueilliComponent,
+    StatsComponent,
     NgOptimizedImage,
     ProfileListComponent,
     QuizAppComponent,
     ProfileConfigurationComponent,
-    QuizDetailsComponent
+    QuizDetailsComponent,
+    StatsAccueilliComponent
+
   ],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss'
@@ -32,7 +36,6 @@ export class AdminComponent implements OnInit {
   activeQuiz: Quiz | null = null;
   selectedProfile: Profile | null = null;
   showStatsSubmenu: boolean = false;
-
   @Input()
   public context: string = "admin";
 
@@ -40,7 +43,7 @@ export class AdminComponent implements OnInit {
     private quizService: QuizService,
     private cdr: ChangeDetectorRef
   ) {}
-  
+
   ngOnInit() {
     this.quizService.selectedEditQuiz$.subscribe((quiz) => {
       if (quiz !== null) {
@@ -49,7 +52,6 @@ export class AdminComponent implements OnInit {
       }
     });
   }
-
   toggleStatsMenu() {
     this.showStatsSubmenu = !this.showStatsSubmenu;
   }
@@ -57,7 +59,7 @@ export class AdminComponent implements OnInit {
   setSection(section: string) {
     this.activeSection = section;
     console.log('admin - setSection() :', this.activeSection);
-    
+
     if (section !== 'acceuilli') {
       this.selectedProfile = null;
     }
@@ -65,7 +67,7 @@ export class AdminComponent implements OnInit {
 
   onProfileSelect(profile: Profile) {
     console.log('Profil sélectionné:', profile.name, profile.lastName);
-    
+
     setTimeout(() => {
       this.selectedProfile = profile;
       this.cdr.detectChanges();

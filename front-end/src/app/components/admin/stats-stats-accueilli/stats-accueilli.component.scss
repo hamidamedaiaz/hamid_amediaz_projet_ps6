@@ -5,6 +5,10 @@
     position: relative;
     overflow: hidden;
   
+
+
+
+    
     .stats-content {
       flex-grow: 1;
       padding: 20px;
@@ -176,7 +180,10 @@
       }
     }
   
-    // Styles pour les modaux
+
+
+
+
     .modal {
       position: fixed;
       top: 0;
@@ -230,7 +237,12 @@
       }
     }
   
-    // Profile Details Styles
+
+
+
+
+
+
     .profile-details {
       padding: 25px;
       
@@ -391,7 +403,9 @@
     to { transform: translateY(0); opacity: 1; }
   }
   
-  // Responsive adjustments
+
+
+
   @media (max-width: 992px) {
     .stats-container {    
       .stats-content {

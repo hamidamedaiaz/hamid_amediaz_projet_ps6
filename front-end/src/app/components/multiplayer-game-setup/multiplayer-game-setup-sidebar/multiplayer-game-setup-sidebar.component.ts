@@ -20,7 +20,9 @@ export class MultiplayerGameSetupSidebarComponent {
     questions: [QUESTION] 
   }
 
-  public gameCode: number = 1;
+  //génère un code aléatoire en hexadecimal sur 5 caractères
+  public gameCode: string = (Math.random() * 0x10000 | 0).toString(16).padStart(5, '0').toUpperCase();
+
 
   constructor(private router:Router){
 
@@ -28,7 +30,7 @@ export class MultiplayerGameSetupSidebarComponent {
 
   public launchGame(){
     console.log("Game Launched");
-    this.router.navigate(["/multiplayer-game"])
+    this.router.navigate(["/multiplayer-game-admin-view"])
   }
 
   public leaveSetup(){

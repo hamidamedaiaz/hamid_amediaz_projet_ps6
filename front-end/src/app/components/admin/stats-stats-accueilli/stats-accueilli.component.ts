@@ -26,22 +26,29 @@ interface MonthProgress {
   styleUrl: './stats-accueilli.component.scss'
 })
 export class StatsAccueilliComponent implements OnInit {
-  // Listes de données
-  profiles: Profile[] = [];
+
+
+    profiles: Profile[] = [];
   quizzes: Quiz[] = [];
 
-  // Élément sélectionné pour le modal
+
+
   selectedProfile: Profile | null = null;
 
-  // Pagination
+
+
   readonly ITEMS_PER_PAGE = 5;
   currentPage = 1;
 
-  // Recherche et tri
+
+
+
   searchQuery = '';
   sortBy = 'name';
 
-  // Pour simulation des données
+
+
+
   private readonly months = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sep', 'Oct', 'Nov', 'Déc'];
 
   constructor(
@@ -50,19 +57,17 @@ export class StatsAccueilliComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // Charger les profils
     this.profileService.profiles$.subscribe(profiles => {
       this.profiles = profiles;
       console.log('Profils chargés:', this.profiles.length);
     });
 
-    // Charger les quiz pour les références
+
     this.quizService.quiz$.subscribe(quizzes => {
       this.quizzes = quizzes;
     });
   }
 
-  // Méthodes pour les profils
   viewProfileDetails(profile: Profile) {
     this.selectedProfile = profile;
     console.log('Détails du profil ouverts pour:', profile.name, profile.lastName);
@@ -72,11 +77,13 @@ export class StatsAccueilliComponent implements OnInit {
     this.selectedProfile = null;
   }
 
-  // Méthodes de filtrage et pagination
+
+
   filteredProfiles() {
     let filtered = [...this.profiles];
     
-    // Appliquer le filtre de recherche
+
+
     if (this.searchQuery) {
       const query = this.searchQuery.toLowerCase();
       filtered = filtered.filter(profile => 
@@ -85,7 +92,8 @@ export class StatsAccueilliComponent implements OnInit {
       );
     }
     
-    // Appliquer le tri
+
+
     filtered.sort((a, b) => {
       switch (this.sortBy) {
         case 'name':
@@ -99,7 +107,6 @@ export class StatsAccueilliComponent implements OnInit {
       }
     });
     
-    // Pagination
     const startIndex = (this.currentPage - 1) * this.ITEMS_PER_PAGE;
     return filtered.slice(startIndex, startIndex + this.ITEMS_PER_PAGE);
   }
@@ -122,29 +129,25 @@ export class StatsAccueilliComponent implements OnInit {
     return Math.ceil(filteredProfiles.length / this.ITEMS_PER_PAGE);
   }
 
-  // Méthodes utilitaires
   getInitials(profile: Profile): string {
     return (profile.name.charAt(0) + profile.lastName.charAt(0)).toUpperCase();
   }
 
-  // Méthodes de calcul pour les profils (simulées)
   getQuizCountForProfile(profile: Profile): number {
-    // Fonction de simulation de données - À remplacer par une fonction réelle
     return Math.floor(Math.random() * 20) + 1;
   }
 
   getBestScore(profile: Profile): number {
-    // Fonction de simulation de données - À remplacer par une fonction réelle
     return Math.floor(Math.random() * 30) + 70;
   }
 
   getAverageScore(profile: Profile): number {
-    // Fonction de simulation de données - À remplacer par une fonction réelle
     return Math.floor(Math.random() * 20) + 60;
   }
 
   getLastPlayedDate(profile: Profile): string {
-    // Fonction de simulation de données - À remplacer par une fonction réelle
+
+
     const now = new Date();
     const daysAgo = Math.floor(Math.random() * 30);
     const date = new Date(now.getTime() - daysAgo * 24 * 60 * 60 * 1000);
@@ -152,7 +155,6 @@ export class StatsAccueilliComponent implements OnInit {
   }
 
   getProfileGameHistory(profile: Profile): GameHistory[] {
-    // Fonction de simulation de données - À remplacer par une fonction réelle
     const history: GameHistory[] = [];
     const historyCount = Math.floor(Math.random() * 5) + 3;
     
@@ -172,7 +174,7 @@ export class StatsAccueilliComponent implements OnInit {
       });
     }
     
-    // Trier par date décroissante
+
     return history.sort((a, b) => {
       const dateA = new Date(a.date.split('/').reverse().join('-'));
       const dateB = new Date(b.date.split('/').reverse().join('-'));
@@ -181,7 +183,8 @@ export class StatsAccueilliComponent implements OnInit {
   }
 
   getProfileProgress(profile: Profile): MonthProgress[] {
-    // Fonction de simulation de données - À remplacer par une fonction réelle
+
+
     const progress: MonthProgress[] = [];
     const now = new Date();
     const currentMonth = now.getMonth();

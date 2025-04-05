@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 import { GamemodeComponent } from './components/gamemodes/gamemode/gamemode.component';
 import { GamemodeListComponent } from './components/gamemodes/gamemode-list/gamemode-list.component';
 import { GamemodeSelectionComponent } from './pages/gamemode-selection-page/gamemode-selection-page.component';
-import { ReactiveFormsModule } from "@angular/forms";
+import {FormsModule } from "@angular/forms";
 
 
 @NgModule({
@@ -22,7 +22,7 @@ import { ReactiveFormsModule } from "@angular/forms";
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

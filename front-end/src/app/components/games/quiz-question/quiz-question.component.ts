@@ -8,7 +8,6 @@ import { Answer } from 'src/models/answer.model';
 import { CurrentProfileService } from 'src/services/currentProfile.service';
 import { Router } from '@angular/router';
 import { Profile } from 'src/models/profile.model';
-
 @Component({
   selector: 'app-quiz-question',
   standalone: true,
@@ -22,52 +21,52 @@ export class QuizQuestionComponent {
   @ViewChild('audio') audio!: ElementRef<HTMLAudioElement>;
 
   @Input()
-  gamemode: String | null = null;
+  context: String | null = null;
 
   private volume: number = 50;
 
   private question: Question = QUESTION;
-  
+
   private currentProfile: Profile | undefined;
 
-  constructor(private router: Router, private currentProfileService: CurrentProfileService){
-      this.currentProfileService.current_profile$.subscribe((currentProfile) => {
-        this.currentProfile = currentProfile;
-      })
-    }
+  constructor(private router: Router, private currentProfileService: CurrentProfileService) {
+    this.currentProfileService.current_profile$.subscribe((currentProfile) => {
+      this.currentProfile = currentProfile;
+    })
+  }
 
-  public setVolume(newVolume: number){
+  public setVolume(newVolume: number) {
     this.volume = newVolume;
   }
 
-  public getVolume(){
+  public getVolume() {
     return this.volume;
   }
 
-  public getHints(){
+  public getHints() {
     return this.question.hints;
   }
 
-  public getAnswers(){
+  public getAnswers() {
     return this.question.answers.concat(this.question.correctAnswer);
   }
 
-  public getTitle(){
+  public getTitle() {
     return this.question.question;
   }
 
-  public getAudioPath(){
+  public getAudioPath() {
     return this.question.audioPath;
   }
-  
-  public increaseVolume(){
+
+  public increaseVolume() {
     if (this.volume < 100) {
       this.volume += 10;
       console.log("increasing the volume");
     }
   }
 
-  public decreaseVolume(){
+  public decreaseVolume() {
     if (this.volume > 0) {
       this.volume -= 10;
       console.log("decreasing the volume");
@@ -76,25 +75,30 @@ export class QuizQuestionComponent {
 
   public answerSelected(answer: Answer) {
     if (this.question.correctAnswer.includes(answer)) {
-        console.log("Bonne Réponse");
+      console.log("Bonne Réponse");
     } else {
-        const index = this.question.answers.indexOf(answer);
-        if (index !== -1) {
-            this.question.answers.splice(index, 1);
-        }
+      const index = this.question.answers.indexOf(answer);
+      if (index !== -1) {
+        this.question.answers.splice(index, 1);
+      }
     }
-}
+  }
 
-  public accessToSettings(){
-    if(this.currentProfile){
+
+
+  public accessToSettings() {
+    if (this.currentProfile) {
       console.log(this.currentProfile);
       this.router.navigate(["/settings"])
     }
   }
 
-  public restartMusic(){
+  public restartMusic() {
     console.log("restarting the music...");
   }
 
-}
+  public getAnswersPercents(){
+    return [15,50,25,10];
+  }
 
+}

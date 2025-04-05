@@ -12,7 +12,9 @@
 
 .quiz-description {
     line-height: 2;
+    font-size: 10px;
     width: 80%;
+    font-size: 13px;
     color: #ecf0f1;
     font-family: monospace;
 }
@@ -20,22 +22,35 @@
 .quiz-container {
     padding: 5vh 0px;
     background-color: #333;
-    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 100px;
+    height: 100%;
 }
 
 .button{
     width: 60%;
-    height: 50px;
+    height: 60px;
     color: #ffffff;
     border: none;
     border-radius: 10px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: all 0.3s ease-in-out ;
     font-size: 20px;
+}
+
+.button:hover{
+    transform: scale(1.03)
 }
 
 #launch-game-btn{
     background-color: #e4b800;
+}
+
+#launch-game-btn:hover{
+    background-color: #b3910b;
 }
 
 #back-btn{
@@ -43,16 +58,28 @@
     color: #333;
 }
 
+#back-btn:hover{
+    background-color: #d3d4d4;
+}
+
 .button-section{
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 20px;
+    width: 100%;
 }
 
 .game-code-label, #game-code{
     font-size: 25px;
     color: #ecf0f1;
     font-weight: bold;
-    font-family: monospace;
+    font-family: "Arial", sans-serif;
+}
+
+.quiz-information-section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
 }

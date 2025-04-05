@@ -1,27 +1,41 @@
 <div id="container">
-
-  <div id = "quiz-creation-left-container">
-    <div id="quiz-create">
-      <h2 class="title-quiz-template">Question :</h2>
-      <input type="text" class="question-input" placeholder="Entrez la question...">
-
-      <select name="music-select" id="question-music-select" class="question-input">
-      </select>
-      <h2 class="title-quiz-template">Reponses :</h2>
-      <p id="button-info">Cochez la case à côté de la réponse pour indiquer qu'elle est juste </p>
-
-      <button id="add-answer" class="simple-btn">+ Ajouter réponse</button>
-      <button id="add-question" class="simple-btn">Ajouter la question au quiz</button>
-    </div>
-
-  </div>
-  <div id = "quiz-creation-right-container">
-    <div id = "question-list">
+  <!-- Section de la liste des questions -->
+  <div id="quiz-creation-right-container">
+    <div id="question-list">
       <h2 class="title-quiz-template">Liste des questions :</h2>
+      <div *ngFor="let question of quiz.questions; let i = index">
+        <button class="sidebar-btn" (click)="selectQuestion(i)">
+          {{ question.question }}
+        </button>
+      </div>
+      <button id="add-listQ" class="simple-btn" (click)="addQuestion()" >+ Ajouter question</button>
+      <button id="end-quiz" class="simple-btn" (click)="saveQuiz()">Enregistrer ce quiz</button>
+    </div>
+  </div>
 
-      <button id="add-listQ" class="simple-btn">+ Ajouter questions</button>
-      <button id="end-quiz" class="simple-btn">Enregistrer ce quiz</button>
+  <!-- Section de création de question et de réponses -->
+  <div id="quiz-creation-left-container">
+    <div id="quiz-creation-section">
+      <!-- Section de création de question -->
+      <div id="question-section">
+        <h2 class="title-quiz-template">Question :</h2>
+        <input type="text" class="question-input" placeholder="Entrez la question..." [(ngModel)]="selectedQuestionTitle"  (ngModelChange)="updateQuestionTitle()">
+      </div>
 
+      <!-- Section de création de réponses -->
+      <div id="answer-section">
+        <h2 class="title-quiz-template">Réponses :</h2>
+        <div *ngFor="let answer of selectedQuestionAnswers; let j = index">
+          <app-answer [answer]="answer.answerContent"
+                      [isCorrect]="isCorrect(answer)"
+                      (answerChange)="updateAnswerText(j, $event)"
+                      (deleteEvent)="deleteAnswer(j)">
+
+          </app-answer>
+        </div>
+        <p id="button-info">Cochez la case à côté de la réponse pour indiquer qu'elle est juste</p>
+        <button id="add-answer" class="simple-btn" (click)="addAnswer()">+ Ajouter réponse</button>
+      </div>
     </div>
   </div>
 </div>

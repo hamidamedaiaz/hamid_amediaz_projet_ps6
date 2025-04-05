@@ -1,104 +1,190 @@
-#container{
-  width:100%;
-  height:90vh;
+#container {
+  width: 100%;
+  height: 90vh;
+  display: flex;
+  font-family: 'Arial', sans-serif;
+  background-color: #f0f0f0;
 }
-#quiz-creation-left-container{
-  float: left;
-  width: 66%;
-  height: 100%;
-}
-#quiz-creation-right-container{
 
-  float:right;
+#quiz-creation-right-container {
   width: 34%;
   height: 100%;
-  background-color: lightgrey;
+  background-color: #ffffff;
+  padding: 2%;
+  box-sizing: border-box;
+  border-right: 2px solid #ddd;
+  position: relative;
 }
 
-#question-list{
-  margin-left: 10%;
-  margin-top: 10%;
-  width: 80%;
+#quiz-creation-left-container {
+  width: 66%;
+  height: 100%;
+  padding: 2%;
+  box-sizing: border-box;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+}
+
+#quiz-creation-section {
+  width: 100%;
+  height: 100%;
+}
+
+#question-section {
+  margin-bottom: 40px;
+}
+
+#answer-section {
+  display: flex;
+  flex-direction: column;
+}
+
+#question-list {
+  margin-top: 5%;
+  width: 100%;
   height: 80%;
+  overflow-y: auto;
+  padding-right: 10px;
 }
 
-.title-quiz-template{
-  margin-left:5%;
+.title-quiz-template {
+  font-size: 1.5em;
+  color: #444;
+  border-bottom: 2px solid #1abc9c;
+  display: inline-block;
+  padding-bottom: 5px;
+  margin-bottom: 20px;
 }
 
-.question-input {
-  width: 50%;
-  height: 35px;
-  margin-left:10%;
+.question-input, .answer-input {
+  width: calc(100% - 30px);
+  height: 40px;
   border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 5px 10px;
+  border-radius: 6px;
+  padding: 10px;
   outline: none;
   font-size: 14px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  margin-bottom: 15px;
+  background-color: #f9f9f9;
 }
 
-input:focus {
-  border-color: #aaa;
+.question-input:focus, .answer-input:focus {
+  border-color: #1abc9c;
+  box-shadow: 0 0 5px rgba(26, 188, 156, 0.5);
 }
 
-
-#add-answer{
-  display:flex;
-  margin-top: 50px;
-  margin-left:10%;
+.answer-checkbox {
+  width: 20px;
+  height: 20px;
+  margin-left: 10px;
+  cursor: pointer;
 }
 
-#add-question{
-  background-color: limegreen;
-  border-color: limegreen;
-  display:flex;
-  margin-top: 10%;
-  margin-left:5%;
+.correct {
+  background: green;
 }
 
-#add-question:hover{
+.incorrect {
+  background: red;
+}
+
+.sidebar-btn {
+  width: 100%;
+  padding: 15px;
+  margin-bottom: 10px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1.1em;
+  text-align: left;
+  transition: background-color 0.3s, color 0.3s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar-btn:hover {
+  background-color: #f0f0f0;
+}
+
+.sidebar-btn.selected {
   background-color: #1abc9c;
+  color: white;
+  border-color: #1abc9c;
+}
+
+#add-listQ {
+  background: #2c3e50;
+  color: white;
+  font-weight: bold;
+  width: 100%;
+  padding: 15px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#add-listQ:hover {
+  background-color: #34495e;
+}
+
+#end-quiz {
+  position: absolute;
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  padding: 15px;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1.1em;
+  transition: background-color 0.3s;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#end-quiz:hover {
+  background-color: #f0f0f0;
 }
 
 .simple-btn {
   background: #ddd;
   border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 8px 16px;
+  border-radius: 6px;
+  padding: 10px 20px;
   color: #333;
   cursor: pointer;
   font-size: 14px;
-
+  transition: background-color 0.3s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .simple-btn:hover {
-  background-color: #f8f8f8;
+  background-color: #e0e0e0;
 }
 
-#button-info{
-  color:#bbb;
+#button-info {
+  color: #777;
   font-style: italic;
-  margin-left: 10%;
+  margin-top: 10px;
 }
 
-#add-listQ{
-  background: #2c3e50;
-  color:white;
-  font-weight: bold;
+#add-answer {
+  align-self: flex-start;
+  margin-top: 20px;
 }
 
-#end-quiz{
-  position:absolute;
-  top: 80%;
-  width: 250px;
-  height: 50px;
-  background: white;
+#add-question {
+  background-color: #1abc9c;
+  border-color: #1abc9c;
+  margin-top: 20px;
+  align-self: flex-start;
 }
 
-#quiz-create{
-  padding-top:5%;
-}
-
-#question-music-select{
-  width: 52%;
+#add-question:hover {
+  background-color: #16a085;
 }

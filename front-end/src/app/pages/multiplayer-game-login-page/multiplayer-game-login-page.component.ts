@@ -17,7 +17,7 @@ export class MultiplayerGameLoginPageComponent {
 
   public joinGame(code:String){
     console.log("Game joined with the code: ", code);
-    this.router.navigate(["/multiplayer-game"]);
+    this.router.navigate(["/waiting-start"]);
   }
 
   public leave(){

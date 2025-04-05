@@ -1,9 +1,9 @@
 <div class="question-container">
     <div class="question-left-side">
-        <audio id="audio" preload controls *ngIf="gamemode === 'solo'" src="{{getAudioPath()}}"></audio>
+        <audio id="audio" preload controls *ngIf="context === 'solo' || context === 'admin'" src="{{getAudioPath()}}"></audio>
         <section class="question-header-section">
             <div class="question-title">{{getTitle()}}</div>
-            <div class="button-section" *ngIf="gamemode === 'solo'">
+            <div class="button-section" *ngIf="context === 'solo' || context === 'admin'">
                 <button id="replay-btn" class="button music-button" (click)="restartMusic()">Rejouer la musique</button>
                 <p id="volume">Volume</p>
                 <section class="volume-section">
@@ -14,10 +14,15 @@
             </div>
         </section>
         <hr class="left-side-separator">
-        <section *ngIf="getAnswers()" class="answers-section">
+        <section *ngIf="getAnswers() && context !== 'admin'" class="answers-section">
             <div class="answers-container" *ngFor="let answer of getAnswers()">
-                <app-quiz-answer [answer]="answer"
+                <app-quiz-answer [answer]="answer" [context]="'user'"
                     (answerSelected)=answerSelected(answer)></app-quiz-answer>
+            </div>
+        </section>
+        <section *ngIf="getAnswers() && context === 'admin'" class="answers-section-admin-view">
+            <div class="answers-container" *ngFor="let percent of getAnswersPercents()">
+                <app-quiz-answer [percent]="percent" [context]="'admin'"></app-quiz-answer>
             </div>
         </section>
     </div>
@@ -31,6 +36,6 @@
             </div>
             <p class="next-hint-in">Prochain indice dans ...</p>
         </section>
-        <button *ngIf="gamemode==='solo'" class="next-question-btn button">Question suivante</button>
+        <button *ngIf="context==='solo' || context ==='admin'" class="next-question-btn button">Question suivante</button>
     </div>
 </div>
