@@ -6,8 +6,8 @@
 
 .button{
     padding: 10px 20px;
-    background-color: #e4b800;
-    color: #ffffff;
+    background-color: #2c3e50;
+    color: #ecf0f1;
     border: none;
     border-radius: 10px;
     cursor: pointer;
@@ -16,12 +16,9 @@
 }
 
 .join-game-section{
-    background: linear-gradient(135deg, #1a1a1a, #2e2e2e, #424242);
-    background-size: 400% 400%;
-    animation: gradientAnimation 20s ease infinite;
+    background-color:#ecf0f1;
     height: 100vh;
     width: 100%;
-    color: #333;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -40,7 +37,7 @@
   }
 
 .join-game-container{
-    background-color: #ececec;
+    background-color: rgba(72, 165, 167, 0.3411764706);
     border-radius: 10px;
     text-align: center;
     font-family: monospace;
@@ -60,11 +57,11 @@
 }
 
 .join-game-code-input{
-    height: 40px;
+    height: 50px;
     font-size: 20Px;
     padding-left: 10px;
     border-radius: 10px;
-    border: 1px solid  #aaa
+    border: none;
 
 }
 
@@ -72,11 +69,21 @@
     width: 50%;
     margin: 0px;
     font-weight: bold;
+    color: #ecf0f1;
 }
 
 .separator{
     height: 1px;
-    color: #333;
-    background-color: #333;
+    color: #ecf0f1;
+    background-color: #ecf0f1;
     width: 80%;
+}
+
+
+.join-game-submit{
+    height: 50px;
+}
+
+.button:hover{
+    background-color: #5f88af;
 }

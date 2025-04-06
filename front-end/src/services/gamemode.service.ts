@@ -19,7 +19,7 @@ export class GamemodeService {
     
     playSolo(){
       console.log(this.currentProfileService.getCurrentProfile(), " is playing singleplayer");
-      this.router.navigate(['/singleplayer-game']);
+      this.router.navigate(['/select-quiz']);
     }
 
     playMulti(){

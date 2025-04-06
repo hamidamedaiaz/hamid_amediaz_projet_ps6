@@ -5,7 +5,18 @@ import { ProfileService } from 'src/services/profile.service';
 import { QuizService } from 'src/services/quiz-list.service';
 import { Profile } from 'src/models/profile.model';
 import { Quiz } from 'src/models/quiz.model';
-import { Router } from '@angular/router';
+
+interface GameHistory {
+  date: string;
+  quizTitle: string;
+  score: number;
+  time: string;
+}
+
+interface MonthProgress {
+  month: string;
+  score: number;
+}
 
 @Component({
   selector: 'app-stats-accueilli',
@@ -15,48 +26,64 @@ import { Router } from '@angular/router';
   styleUrl: './stats-accueilli.component.scss'
 })
 export class StatsAccueilliComponent implements OnInit {
-  // Listes de données
-  profiles: Profile[] = [];
+
+
+    profiles: Profile[] = [];
   quizzes: Quiz[] = [];
 
-  // Pagination
+
+
+  selectedProfile: Profile | null = null;
+
+
+
   readonly ITEMS_PER_PAGE = 5;
   currentPage = 1;
 
-  // Recherche et tri
+
+
+
   searchQuery = '';
   sortBy = 'name';
 
+
+
+
+  private readonly months = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sep', 'Oct', 'Nov', 'Déc'];
+
   constructor(
     private profileService: ProfileService,
-    private quizService: QuizService,
-    private router: Router
+    private quizService: QuizService
   ) {}
 
   ngOnInit() {
-    // Charger les profils
     this.profileService.profiles$.subscribe(profiles => {
       this.profiles = profiles;
       console.log('Profils chargés:', this.profiles.length);
     });
 
-    // Charger les quiz pour les références
+
     this.quizService.quiz$.subscribe(quizzes => {
       this.quizzes = quizzes;
     });
   }
 
-  // Méthode modifiée pour rediriger vers la page de détails
   viewProfileDetails(profile: Profile) {
-    console.log('Navigation vers les détails du profil:', profile.name, profile.lastName);
-    this.router.navigate(['/player-stats-details', profile.id]);
+    this.selectedProfile = profile;
+    console.log('Détails du profil ouverts pour:', profile.name, profile.lastName);
   }
 
-  // Méthodes de filtrage et pagination
+  closeProfileDetails() {
+    this.selectedProfile = null;
+  }
+
+
+
   filteredProfiles() {
     let filtered = [...this.profiles];
     
-    // Appliquer le filtre de recherche
+
+
     if (this.searchQuery) {
       const query = this.searchQuery.toLowerCase();
       filtered = filtered.filter(profile => 
@@ -65,7 +92,8 @@ export class StatsAccueilliComponent implements OnInit {
       );
     }
     
-    // Appliquer le tri
+
+
     filtered.sort((a, b) => {
       switch (this.sortBy) {
         case 'name':
@@ -79,7 +107,6 @@ export class StatsAccueilliComponent implements OnInit {
       }
     });
     
-    // Pagination
     const startIndex = (this.currentPage - 1) * this.ITEMS_PER_PAGE;
     return filtered.slice(startIndex, startIndex + this.ITEMS_PER_PAGE);
   }
@@ -102,27 +129,74 @@ export class StatsAccueilliComponent implements OnInit {
     return Math.ceil(filteredProfiles.length / this.ITEMS_PER_PAGE);
   }
 
-  // Méthodes utilitaires
   getInitials(profile: Profile): string {
     return (profile.name.charAt(0) + profile.lastName.charAt(0)).toUpperCase();
   }
 
-  // Méthodes de calcul pour les profils (simulées)
   getQuizCountForProfile(profile: Profile): number {
-    // Fonction de simulation de données - À remplacer par une fonction réelle
     return Math.floor(Math.random() * 20) + 1;
   }
 
+  getBestScore(profile: Profile): number {
+    return Math.floor(Math.random() * 30) + 70;
+  }
+
   getAverageScore(profile: Profile): number {
-    // Fonction de simulation de données - À remplacer par une fonction réelle
     return Math.floor(Math.random() * 20) + 60;
   }
 
   getLastPlayedDate(profile: Profile): string {
-    // Fonction de simulation de données - À remplacer par une fonction réelle
+
+
     const now = new Date();
     const daysAgo = Math.floor(Math.random() * 30);
     const date = new Date(now.getTime() - daysAgo * 24 * 60 * 60 * 1000);
     return date.toLocaleDateString();
+  }
+
+  getProfileGameHistory(profile: Profile): GameHistory[] {
+    const history: GameHistory[] = [];
+    const historyCount = Math.floor(Math.random() * 5) + 3;
+    
+    for (let i = 0; i < historyCount; i++) {
+      const now = new Date();
+      const daysAgo = Math.floor(Math.random() * 60);
+      const date = new Date(now.getTime() - daysAgo * 24 * 60 * 60 * 1000);
+      
+      const randomQuizIndex = Math.floor(Math.random() * this.quizzes.length);
+      const quizTitle = this.quizzes[randomQuizIndex]?.title || 'Quiz Années 80';
+      
+      history.push({
+        date: date.toLocaleDateString(),
+        quizTitle: quizTitle,
+        score: Math.floor(Math.random() * 30) + 60,
+        time: `${Math.floor(Math.random() * 5) + 1}:${Math.floor(Math.random() * 60).toString().padStart(2, '0')}`
+      });
+    }
+    
+
+    return history.sort((a, b) => {
+      const dateA = new Date(a.date.split('/').reverse().join('-'));
+      const dateB = new Date(b.date.split('/').reverse().join('-'));
+      return dateB.getTime() - dateA.getTime();
+    });
+  }
+
+  getProfileProgress(profile: Profile): MonthProgress[] {
+
+
+    const progress: MonthProgress[] = [];
+    const now = new Date();
+    const currentMonth = now.getMonth();
+    
+    for (let i = 5; i >= 0; i--) {
+      const monthIndex = (currentMonth - i + 12) % 12;
+      progress.push({
+        month: this.months[monthIndex],
+        score: Math.floor(Math.random() * 30) + 60
+      });
+    }
+    
+    return progress;
   }
 }

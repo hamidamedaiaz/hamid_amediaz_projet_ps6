@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input } from '@angular/core';
 import {CommonModule}  from "@angular/common";
 import {QuizItemComponent} from "../quiz-item/quiz-item.component";
 import { FormsModule } from '@angular/forms';
 import {Quiz} from "../../../../models/quiz.model";
 import {QuizService} from "src/services/quiz-list.service";
 import { Router } from '@angular/router';
+import { CurrentPageService } from 'src/services/currentPage.service';
 
 @Component({
   selector: 'app-quiz-app',
@@ -20,8 +21,12 @@ import { Router } from '@angular/router';
 export class QuizAppComponent implements OnInit {
   searchQuery: string = '';
   quizzes:Quiz[] = [];
+  currentPage=this.currentPageService.getCurrentPage();
 
-  constructor(private quizService: QuizService, private router:Router) {
+  @Input()
+  context:String|undefined;
+
+  constructor(private quizService: QuizService, private router:Router, private currentPageService:CurrentPageService) {
     console.log("Quizzes chargés :", this.quizzes);
   }
 
@@ -38,6 +43,11 @@ export class QuizAppComponent implements OnInit {
 
   launchMultiGame(quiz:Quiz){
     this.router.navigate(['/multiplayer-game-setup'])
+  }
+
+  launchSoloGame(quiz:Quiz){
+    console.log("Launching this quiz in singleplayer mode ", quiz);
+    this.router.navigate(["/singleplayer-game"])
   }
 
 }

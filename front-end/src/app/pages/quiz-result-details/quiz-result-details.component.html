@@ -1,0 +1,109 @@
+<div class="quiz-result-container" *ngIf="quiz && profile">
+    <div class="header-section">
+      <button class="back-button" (click)="navigateBack()">
+        <i class="fa fa-arrow-left"></i> Retour
+      </button>
+      <h1 class="page-title">Résultat du Quiz</h1>
+    </div>
+    
+    <!-- Section d'information générale -->
+    <div class="info-section">
+      <div class="quiz-profile-info">
+        <h2 class="quiz-title">{{ quiz.title }}</h2>
+        <p class="quiz-date">{{ quizDate }}</p>
+        <p class="profile-name">Joueur: {{ profile.name }} {{ profile.lastName }}</p>
+      </div>
+      
+      <div class="score-summary">
+        <div class="score-badge" [ngClass]="percentageCorrect >= 70 ? 'high-score' : (percentageCorrect >= 50 ? 'medium-score' : 'low-score')">
+          <span class="score-value">{{ score }}/{{ totalQuestions }}</span>
+          <span class="score-percentage">{{ percentageCorrect }}%</span>
+        </div>
+        
+        <div class="stats-details">
+          <div class="stat-item">
+            <span class="stat-icon time-icon"></span>
+            <span class="stat-label">Temps moyen:</span>
+            <span class="stat-value">{{ averageTimePerQuestion }}s par question</span>
+          </div>
+          
+          <div class="stat-item">
+            <span class="stat-icon hint-icon"></span>
+            <span class="stat-label">Indices utilisés:</span>
+            <span class="stat-value">{{ totalHintsUsed }} au total</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Graphique de performance -->
+    <div class="performance-section">
+      <h2 class="section-title">Performance par Question</h2>
+      
+      <div class="performance-graph">
+        <div class="question-performance-item" *ngFor="let result of questionResults; let i = index">
+          <div class="question-number">Q{{ i + 1 }}</div>
+          <div class="question-result-bar">
+            <div class="result-track">
+              <div class="result-progress" [ngClass]="getScoreClass(result.isCorrect)" [style.width]="result.isCorrect ? '100%' : '0%'"></div>
+            </div>
+          </div>
+          <div class="question-stats">
+            <span class="time-stat">{{ result.timeSpent }}s</span>
+            <span class="hints-stat" *ngIf="result.hintsUsed > 0">{{ result.hintsUsed }} indice<span *ngIf="result.hintsUsed > 1">s</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Liste détaillée des questions -->
+    <div class="questions-section">
+      <h2 class="section-title">Détail des Réponses</h2>
+      
+      <div class="questions-list">
+        <div class="question-item" *ngFor="let result of questionResults; let i = index" [ngClass]="getScoreClass(result.isCorrect)">
+          <div class="question-header">
+            <span class="question-number">Question {{ i + 1 }}</span>
+            <span class="question-result-badge" [ngClass]="getScoreClass(result.isCorrect)">
+              {{ result.isCorrect ? 'Correct' : 'Incorrect' }}
+            </span>
+          </div>
+          
+          <div class="question-content">
+            <p class="question-text">{{ result.question }}</p>
+            
+            <div class="answers-container">
+              <div class="answer-item correct-answer">
+                <span class="answer-label">Réponse correcte:</span>
+                <span class="answer-text">{{ result.correctAnswer }}</span>
+              </div>
+              
+              <div class="answer-item user-answer" [ngClass]="getScoreClass(result.isCorrect)">
+                <span class="answer-label">Votre réponse:</span>
+                <span class="answer-text">{{ result.userAnswer }}</span>
+              </div>
+            </div>
+            
+            <div class="question-metrics">
+              <div class="metric-item">
+                <span class="metric-icon time-small"></span>
+                <span class="metric-label">Temps:</span>
+                <span class="metric-value">{{ result.timeSpent }}s</span>
+              </div>
+              
+              <div class="metric-item">
+                <span class="metric-icon hint-small"></span>
+                <span class="metric-label">Indices:</span>
+                <span class="metric-value">{{ result.hintsUsed }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="loading-container" *ngIf="!quiz || !profile">
+    <div class="spinner"></div>
+    <p class="loading-text">Chargement des résultats...</p>
+  </div>

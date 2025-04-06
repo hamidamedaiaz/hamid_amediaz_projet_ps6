@@ -1,9 +1,9 @@
 <div class="quiz-item">
   <h3>{{ quiz.title }}</h3>
   <p>{{ quiz.description }}</p>
-  <section class="button-section">
+  <section class="button-section" *ngIf="currentPage==='admin'">
     <button class="button"><img ngSrc="assets/icons/edit.svg" height="30" width="30" (click)="onEditClick()"></button>
     <button class="button"><img ngSrc="assets/icons/xmark.svg" height="30" width="30" (click)="onDeleteClick()"></button>
   </section>
-  <button class="launch-multi-game-btn" (click)="launchMultiGame()">Lancer en multijoueur</button>
+  <button *ngIf="currentPage==='admin'" class="launch-multi-game-btn" (click)="launchMultiGame()">Lancer en multijoueur</button>
 </div>

@@ -1,67 +1,131 @@
 <div class="stats-container">
-  <div class="stats-content">
-    <h2>Statistiques des Accueillis</h2>
-    
-    <div class="stats-header">
-      <div class="stats-search">
-        <input
-          type="text"
-          placeholder="Rechercher un accueilli..."
-          [(ngModel)]="searchQuery"
-          class="search-input"
-        />
+    <div class="stats-content">
+      <h2>Statistiques des Accueillis</h2>
+      
+      <div class="stats-header">
+        <div class="stats-search">
+          <input
+            type="text"
+            placeholder="Rechercher un accueilli..."
+            [(ngModel)]="searchQuery"
+            class="search-input"
+          />
+        </div>
+        <div class="stats-filters">
+          <select [(ngModel)]="sortBy" class="filter-select">
+            <option value="name">Trier par nom</option>
+            <option value="count">Trier par quiz joués</option>
+            <option value="score">Trier par score moyen</option>
+          </select>
+        </div>
       </div>
-      <div class="stats-filters">
-        <select [(ngModel)]="sortBy" class="filter-select">
-          <option value="name">Trier par nom</option>
-          <option value="count">Trier par quiz joués</option>
-          <option value="score">Trier par score moyen</option>
-        </select>
+      
+      <table class="stats-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Quiz Joués</th>
+            <th>Score Moyen</th>
+            <th>Dernier Quiz</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let profile of filteredProfiles()" [class.highlighted]="selectedProfile?.id === profile.id" class="table-item" (click)="viewProfileDetails(profile)">
+            <td>{{ profile.id }}</td>
+            <td>{{ profile.lastName }}</td>
+            <td>{{ profile.name }}</td>
+            <td>{{ getQuizCountForProfile(profile) }}</td>
+            <td>{{ getAverageScore(profile) }}%</td>
+            <td>{{ getLastPlayedDate(profile) }}</td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <!-- Pagination -->
+      <div class="pagination">
+        <button 
+          [disabled]="currentPage === 1" 
+          (click)="changePage(currentPage - 1)"
+          class="page-btn"
+        >
+          &laquo;
+        </button>
+        <span class="page-info">{{ currentPage }} / {{ getTotalPages() }}</span>
+        <button 
+          [disabled]="currentPage === getTotalPages()" 
+          (click)="changePage(currentPage + 1)"
+          class="page-btn"
+        >
+          &raquo;
+        </button>
       </div>
     </div>
-    
-    <table class="stats-table">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Nom</th>
-          <th>Prénom</th>
-          <th>Quiz Joués</th>
-          <th>Score Moyen</th>
-          <th>Dernier Quiz</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let profile of filteredProfiles()" 
-            (click)="viewProfileDetails(profile)"
-            class="profile-row">
-          <td>{{ profile.id }}</td>
-          <td>{{ profile.lastName }}</td>
-          <td>{{ profile.name }}</td>
-          <td>{{ getQuizCountForProfile(profile) }}</td>
-          <td>{{ getAverageScore(profile) }}%</td>
-          <td>{{ getLastPlayedDate(profile) }}</td>
-        </tr>
-      </tbody>
-    </table>
-    
-    <!-- Pagination -->
-    <div class="pagination">
-      <button 
-        [disabled]="currentPage === 1" 
-        (click)="changePage(currentPage - 1)"
-        class="page-btn"
-      >
-        &laquo;
-      </button>
-      <span class="page-info">{{ currentPage }} / {{ getTotalPages() }}</span>
-      <button 
-        [disabled]="currentPage === getTotalPages()" 
-        (click)="changePage(currentPage + 1)"
-        class="page-btn"
-      >
-        &raquo;
-      </button>
+  
+    <div *ngIf="selectedProfile" class="modal profile-details-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Profil de l'Accueilli</h2>
+          <span class="close-btn" (click)="closeProfileDetails()">&times;</span>
+        </div>
+        
+        <div class="profile-details">
+          <div class="profile-card">
+            <div class="profile-avatar">
+              {{ getInitials(selectedProfile) }}
+            </div>
+            <div class="profile-info">
+              <h3 class="profile-name">{{ selectedProfile.name }} {{ selectedProfile.lastName }}</h3>
+              <p class="profile-id">ID: {{ selectedProfile.id }}</p>
+            </div>
+          </div>
+          
+          <div class="stats-overview">
+            <div class="stat-item">
+              <span class="stat-value">{{ getQuizCountForProfile(selectedProfile) }}</span>
+              <span class="stat-label">Quiz Joués</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">{{ getBestScore(selectedProfile) }}%</span>
+              <span class="stat-label">Meilleur Score</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">{{ getAverageScore(selectedProfile) }}%</span>
+              <span class="stat-label">Score Moyen</span>
+            </div>
+          </div>
+          
+          <h3>Historique des Parties</h3>
+          <table class="history-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Quiz</th>
+                <th>Score</th>
+                <th>Temps</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let game of getProfileGameHistory(selectedProfile)">
+                <td>{{ game.date }}</td>
+                <td>{{ game.quizTitle }}</td>
+                <td>{{ game.score }}%</td>
+                <td>{{ game.time }}</td>
+              </tr>
+            </tbody>
+          </table>
+          
+          <h3>Progression</h3>
+          <div class="progress-chart">
+            <div *ngFor="let month of getProfileProgress(selectedProfile); let i = index" 
+                 class="progress-bar" 
+                 [style.height.%]="month.score">
+              <span class="progress-label">{{ month.score }}%</span>
+              <span class="month-label">{{ month.month }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-</div>

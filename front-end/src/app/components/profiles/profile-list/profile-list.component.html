@@ -1,10 +1,22 @@
-<input type="text" id="search-bar" class="search-input" [(ngModel)]="searchQuery" placeholder="Rechercher un joueur...">
-<div>
-    <div class="profile-list-container" *ngFor="let profile of filteredProfiles()">
-        <app-profile-item 
-            [profile]="profile" 
-            [context]="context"
-            (profileSelected)="profileSelectedHandler(profile)">
-        </app-profile-item>
-    </div>
-</div>
+<section *ngIf="currentPage!=='home'">
+    <input type="text" id="search-bar" class="search-input" [(ngModel)]="searchQuery"
+        placeholder="Rechercher un joueur...">
+    <section class="profile-list-section">
+        <div class="profile-list-container" *ngFor="let profile of filteredProfiles()">
+            <app-profile-item [profile]="profile" [context]="context"
+                (profileSelected)="profileSelectedHandler(profile)">
+            </app-profile-item>
+        </div>
+    </section>
+</section>
+<section *ngIf="currentPage==='home'">
+    <input type="text" id="search-bar" class="search-input" [(ngModel)]="searchQuery"
+        placeholder="Rechercher un joueur..." (click)="showProfileList()">
+    <section *ngIf="isProfileListActivated" class="profile-list-section">
+        <div class="profile-list-container" *ngFor="let profile of filteredProfiles()">
+            <app-profile-item [profile]="profile" [context]="context"
+                (profileSelected)="profileSelectedHandler(profile)">
+            </app-profile-item>
+        </div>
+    </section>
+</section>

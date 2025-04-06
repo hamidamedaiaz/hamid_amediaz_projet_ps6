@@ -1,11 +1,14 @@
-<div class="waiting-container">
-    <section class="wainting-section">
-        <span class="waiting-message">En attente du début de la partie</span>
-        <section class="dot-section">
-            <span class="dot">.</span>
-            <span class="dot">.</span>
-            <span class="dot">.</span>
+<div class="global-container">
+    <section class="waiting-section">
+        <section>
+            <span class="waiting-message">En attente du début de la partie</span>
+            <section class="dot-section">
+                <span class="dot">.</span>
+                <span class="dot">.</span>
+                <span class="dot">.</span>
+            </section>
         </section>
+        <button (click)='redirectToOnlineGame()' id="continue-btn" class="button">Continuer</button>
+        <button (click)='leaveQueue()' id="leave-btn" class="button">Annuler</button>
     </section>
-    <button (click)='redirectToOnlineGame()' class="button">Continuer</button>
 </div>

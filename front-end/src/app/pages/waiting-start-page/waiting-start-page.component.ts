@@ -18,4 +18,8 @@ export class WaitingStartPageComponent {
   public redirectToOnlineGame(){
     this.router.navigate(['/multiplayer-game']);
   }
+
+  public leaveQueue(){
+    this.router.navigate(['/multiplayer-game-login'])
+  }
 }

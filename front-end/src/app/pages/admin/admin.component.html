@@ -13,6 +13,7 @@
         <span>Statistiques</span>
       </button>
       
+      <!-- Sous-menu des statistiques -->
       <div class="submenu" [class.open]="showStatsSubmenu">
         <button class="sidebar-btn submenu-btn" (click)="setSection('stats-accueilli')">
           <span>Statistiques Accueillis</span>
@@ -45,7 +46,7 @@
       </div>
       
       <div *ngIf="activeSection === 'quiz'">
-        <app-quiz-app></app-quiz-app>
+        <app-quiz-app [context]="'admin'"></app-quiz-app>
       </div>
       
       <div *ngIf="activeSection === 'acceuilli'" class="acceuilli-section">

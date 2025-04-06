@@ -13,4 +13,6 @@ import { MultiplayerGameSetupSidebarComponent } from 'src/app/components/multipl
   styleUrl: './multiplayer-game-setup.component.scss'
 })
 
-export class MultiplayerGameSetupComponent {}
+export class MultiplayerGameSetupComponent {
+  public nbPlayer:number = 5;
+}

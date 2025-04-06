@@ -3,12 +3,18 @@
    ça on a un affiche de la liste qui est en direct et pas quand on presse Enter-->
   <input type="text" placeholder="Rechercher un quiz..." [(ngModel)]="searchQuery" class="search-bar">
 
-  <div class="quiz-list">
+  <div class="quiz-list" *ngIf="context==='admin'">
     <!-- Le ngFor permet de boucler dans chaque quizz en fonction de la barre de search-->
     <!-- le [quiz]= ... permet de rentrer l'input que le quizz-item demande-->
     <app-quiz-item
       *ngFor="let quiz of filteredQuizzes()"
       [quiz]="quiz" (launchMultiGameEmitter)="launchMultiGame(quiz)">
+    </app-quiz-item>
+  </div>
+  <div class="quiz-list" *ngIf="context==='solo'">
+    <app-quiz-item  [context]="'solo'"
+      *ngFor="let quiz of filteredQuizzes()"
+      [quiz]="quiz" (click)="launchSoloGame(quiz)" class="solo-selection-quiz-item">
     </app-quiz-item>
   </div>
 </div>

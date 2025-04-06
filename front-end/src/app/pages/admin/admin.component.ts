@@ -10,6 +10,7 @@ import { Quiz } from "../../../models/quiz.model";
 import { QuizDetailsComponent } from "../../components/admin/quiz-details/quiz-details.component";
 import { Profile } from 'src/models/profile.model';
 import { StatsAccueilliComponent } from "../../components/admin/stats-stats-accueilli/stats-accueilli.component";
+import { CurrentPageService } from 'src/services/currentPage.service';
 
 
 @Component({
@@ -26,8 +27,8 @@ import { StatsAccueilliComponent } from "../../components/admin/stats-stats-accu
     ProfileConfigurationComponent,
     QuizDetailsComponent,
     StatsAccueilliComponent
-
   ],
+
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss'
 })
@@ -41,8 +42,10 @@ export class AdminComponent implements OnInit {
 
   constructor(
     private quizService: QuizService,
-    private cdr: ChangeDetectorRef
-  ) {}
+    private cdr: ChangeDetectorRef,private currentPageService: CurrentPageService
+  ) {
+    this.currentPageService.setCurrentPage("admin");
+   }
 
   ngOnInit() {
     this.quizService.selectedEditQuiz$.subscribe((quiz) => {
@@ -59,7 +62,6 @@ export class AdminComponent implements OnInit {
   setSection(section: string) {
     this.activeSection = section;
     console.log('admin - setSection() :', this.activeSection);
-
     if (section !== 'acceuilli') {
       this.selectedProfile = null;
     }

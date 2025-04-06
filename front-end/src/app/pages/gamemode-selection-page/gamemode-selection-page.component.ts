@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CurrentPageService } from 'src/services/currentPage.service';
 
 @Component({
   selector: 'app-gamemode-selection-page',
@@ -6,4 +7,10 @@ import { Component } from '@angular/core';
   styleUrl: './gamemode-selection-page.component.scss'
 })
 
-export class GamemodeSelectionComponent {}
+export class GamemodeSelectionComponent {
+
+  constructor(private currentPageService:CurrentPageService){
+    this.currentPageService.setCurrentPage("select-quiz");
+  }
+
+}

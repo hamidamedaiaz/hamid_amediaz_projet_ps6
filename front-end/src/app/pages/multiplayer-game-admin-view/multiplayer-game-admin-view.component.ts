@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { QuizQuestionComponent } from 'src/app/components/games/quiz-question/quiz-question.component';
+import { QuizQuestionComponent } from 'src/app/components/quizzes/quiz-question/quiz-question.component';
 
 @Component({
   selector: 'app-multiplayer-game-admin-view',

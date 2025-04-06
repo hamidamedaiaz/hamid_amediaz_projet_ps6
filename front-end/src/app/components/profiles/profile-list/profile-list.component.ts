@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ProfileSearchbarComponent } from 'src/app/components/profiles/profile-searchbar/profile-searchbar.component';
 import { CurrentProfileService } from 'src/services/currentProfile.service';
+import { CurrentPageService } from 'src/services/currentPage.service';
 
 @Component({
   selector: 'app-profile-list',
@@ -23,7 +24,11 @@ import { CurrentProfileService } from 'src/services/currentProfile.service';
 
 export class ProfileListComponent {
   public profileList: Profile[] = [];
-  
+
+  public isProfileListActivated: Boolean = false;
+
+  public currentPage: String = this.currentPageService.getCurrentPage();
+
   @Output()
   profileSelected: EventEmitter<Profile> = new EventEmitter<Profile>();
 
@@ -36,13 +41,15 @@ export class ProfileListComponent {
     public profileService: ProfileService,
     private router: Router,
     private currentProfileService: CurrentProfileService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private currentPageService: CurrentPageService
   ) {
     this.profileService.profiles$.subscribe((profiles) => {
       this.profileList = profiles;
       console.log("Liste de profils mise à jour:", this.profileList.length, "profils");
-      this.cdr.detectChanges();
+      //this.cdr.detectChanges();
     });
+
   }
 
   filteredProfiles() {
@@ -57,7 +64,7 @@ export class ProfileListComponent {
 
   profileSelectedHandler(profile: Profile) {
     console.log("Profil sélectionné dans contexte:", this.context, profile.name);
-    
+
     setTimeout(() => {
       if (this.context === 'home') {
         this.currentProfileService.setCurrentProfile(profile);
@@ -67,5 +74,9 @@ export class ProfileListComponent {
       }
       this.cdr.detectChanges();
     }, 0);
+  }
+
+  public showProfileList() {
+    this.isProfileListActivated = !this.isProfileListActivated;
   }
 }

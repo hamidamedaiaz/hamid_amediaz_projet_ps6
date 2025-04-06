@@ -97,9 +97,11 @@ export class PlayerStatsDetailsComponent implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['/admin']);
+    // Rediriger spécifiquement vers la section Statistiques Accueillis
+    this.router.navigate(['/admin'], { 
+      queryParams: { section: 'stats-accueilli' } 
+    });
   }
-
   setActiveTab(tab: 'score' | 'hints' | 'time' | 'accuracy') {
     this.activeTab = tab;
   }
