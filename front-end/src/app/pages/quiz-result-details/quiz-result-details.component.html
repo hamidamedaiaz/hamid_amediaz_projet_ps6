@@ -73,14 +73,20 @@
             <p class="question-text">{{ result.question }}</p>
             
             <div class="answers-container">
-              <div class="answer-item correct-answer">
-                <span class="answer-label">Réponse correcte:</span>
-                <span class="answer-text">{{ result.correctAnswer }}</span>
-              </div>
-              
-              <div class="answer-item user-answer" [ngClass]="getScoreClass(result.isCorrect)">
-                <span class="answer-label">Votre réponse:</span>
-                <span class="answer-text">{{ result.userAnswer }}</span>
+              <!-- Toutes les réponses possibles avec pourcentages -->
+              <div *ngFor="let answerOption of result.allAnswerPercentages" class="answer-item" 
+                   [ngClass]="{'selected-answer': answerOption.answer === result.userAnswer, 
+                               'correct-answer': answerOption.isCorrect}">
+                <div class="answer-content">
+                  <span class="answer-text">{{ answerOption.answer }}</span>
+                  <div class="answer-percentage-bar" [style.width.%]="answerOption.percent"></div>
+                  <span class="answer-percentage">{{ answerOption.percent }}%</span>
+                </div>
+                <div class="answer-indicator">
+                  <i *ngIf="answerOption.answer === result.userAnswer && result.isCorrect" class="fa fa-check correct-icon"></i>
+                  <i *ngIf="answerOption.answer === result.userAnswer && !result.isCorrect" class="fa fa-times incorrect-icon"></i>
+                  <i *ngIf="answerOption.isCorrect && answerOption.answer !== result.userAnswer" class="fa fa-check-circle correct-answer-icon"></i>
+                </div>
               </div>
             </div>
             

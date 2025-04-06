@@ -15,6 +15,8 @@ interface QuestionResult {
   isCorrect: boolean;
   timeSpent: number;
   hintsUsed: number;
+  userAnswerPercentage: number; // % des joueurs qui ont choisi cette réponse
+  allAnswerPercentages: { answer: string, percent: number, isCorrect: boolean }[];
 }
 
 @Component({
@@ -25,7 +27,8 @@ interface QuestionResult {
   styleUrl: './quiz-result-details.component.scss'
 })
 export class QuizResultDetailsComponent implements OnInit {
-  quizId: number | null = null;
+  quizId: number = 0;
+  profileId: number = 0;
   quiz: Quiz | null = null;
   profile: Profile | null = null;
   
@@ -49,28 +52,37 @@ export class QuizResultDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.quizId = Number(params['id']);
-      if (this.quizId) {
-        this.loadQuizData();
+      this.profileId = Number(params['profileId']);
+      this.quizId = Number(params['quizId']);
+      
+      if (this.profileId && this.quizId) {
         this.loadProfileData();
-        this.loadQuizResults();
+        this.loadQuizData();
+        this.generateQuizResultsData();
       } else {
         this.router.navigate(['/admin']);
       }
     });
   }
   
+  loadProfileData() {
+    this.profileService.profiles$.subscribe(profiles => {
+      this.profile = profiles.find(p => p.id === this.profileId) || null;
+      if (!this.profile) {
+        this.router.navigate(['/admin']);
+      }
+    });
+  }
+  
   loadQuizData() {
-    if (!this.quizId) return;
-    
     this.quizService.quiz$.subscribe(quizzes => {
       this.quiz = quizzes.find(q => q.id === this.quizId) || null;
       if (!this.quiz) {
         // Si on ne trouve pas le quiz, on génère des données fictives pour démonstration
         this.quiz = {
           id: this.quizId,
-          title: "Quiz Années 80",
-          description: "Les meilleurs hits des années 80",
+          title: "Quiz Exemple",
+          description: "Quiz généré pour démonstration",
           questions: this.generateMockQuestions()
         };
       }
@@ -78,21 +90,11 @@ export class QuizResultDetailsComponent implements OnInit {
     });
   }
   
-  loadProfileData() {
-    // Pour la démo, on utilise un ID fixe, mais dans une application réelle,
-    // cette information viendrait probablement d'un service ou d'un état global
-    const profileId = 1; 
-    
-    this.profileService.profiles$.subscribe(profiles => {
-      this.profile = profiles.find(p => p.id === profileId) || null;
-    });
-  }
-  
-  loadQuizResults() {
-    // Génération de données fictives pour la démo
-    this.quizDate = new Date().toLocaleDateString();
-    this.score = Math.floor(Math.random() * 10) + 10; // Score entre 10 et 20
-    this.totalQuestions = 20;
+  generateQuizResultsData() {
+    // Génération de données simulées pour la démonstration
+    this.quizDate = this.getRandomDate();
+    this.totalQuestions = Math.floor(Math.random() * 5) + 10; // 10-15 questions
+    this.score = Math.floor(Math.random() * (this.totalQuestions - 5)) + 5; // Score entre 5 et totalQuestions
     this.percentageCorrect = Math.round((this.score / this.totalQuestions) * 100);
     this.averageTimePerQuestion = Math.floor(Math.random() * 10) + 5; // 5-15 seconds
     this.totalHintsUsed = Math.floor(Math.random() * 10); // 0-10 hints
@@ -103,7 +105,7 @@ export class QuizResultDetailsComponent implements OnInit {
   generateMockQuestions(): Question[] {
     const questions: Question[] = [];
     
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 10; i++) {
       const correctAnswer: Answer = {
         questionId: i,
         answerId: 1,
@@ -121,7 +123,8 @@ export class QuizResultDetailsComponent implements OnInit {
         question: `Question ${i + 1}: Quel est le titre de cette chanson des années 80?`,
         answers: answers,
         correctAnswer: [correctAnswer],
-        audioPath: "/assets/musics/sample.mp3"
+        audioPath: "/assets/musics/sample.mp3",
+        hints: ["Indice 1", "Indice 2", "Indice 3"]
       });
     }
     
@@ -130,15 +133,75 @@ export class QuizResultDetailsComponent implements OnInit {
   
   generateMockQuestionResults(): QuestionResult[] {
     const results: QuestionResult[] = [];
+    const questions = this.quiz?.questions || this.generateMockQuestions();
     
-    for (let i = 0; i < this.totalQuestions; i++) {
+    for (let i = 0; i < questions.length; i++) {
       const isCorrect = Math.random() > 0.3; // 70% de chance d'avoir une réponse correcte
+      const question = questions[i];
+      const correctAnswerContent = question.correctAnswer[0]?.answerContent || "Réponse correcte";
+      
+      // Générer des pourcentages de réponses aléatoires (total 100%)
+      const percentages = this.generateRandomPercentages(4);
+      const allAnswers = [...question.answers, ...question.correctAnswer];
+      
+      const allAnswerPercentages = allAnswers.map((answer, idx) => {
+        return {
+          answer: answer.answerContent,
+          percent: percentages[idx],
+          isCorrect: question.correctAnswer.some(ca => ca.answerId === answer.answerId)
+        };
+      });
+      
+      const userAnswerIdx = isCorrect ? 
+        allAnswers.findIndex(a => question.correctAnswer.some(ca => ca.answerId === a.answerId)) : 
+        Math.floor(Math.random() * question.answers.length);
+      
+      const userAnswer = allAnswers[userAnswerIdx]?.answerContent || 
+        (isCorrect ? correctAnswerContent : `Mauvaise réponse pour Q${i + 1}`);
       
       results.push({
-        question: `Question ${i + 1}: Quel est le titre de cette chanson des années 80?`,
-        correctAnswer: `Réponse correcte ${i + 1}`,
-        userAnswer: isCorrect ? `Réponse correcte ${i + 1}` : `Mauvaise réponse A pour Q${i + 1}`,
+        question: question.question,
+        correctAnswer: correctAnswerContent,
+        userAnswer: userAnswer,
         isCorrect: isCorrect,
         timeSpent: Math.floor(Math.random() * 15) + 3, // 3-18 seconds
-        hintsUsed: Math.floor(Math.random() * 3) // 0-2 hints
+        hintsUsed: Math.floor(Math.random() * 3), // 0-2 hints
+        userAnswerPercentage: percentages[userAnswerIdx],
+        allAnswerPercentages: allAnswerPercentages
       });
+    }
+    
+    return results;
+  }
+  
+  generateRandomPercentages(count: number): number[] {
+    // Génère des pourcentages aléatoires qui totalisent 100%
+    const percentages: number[] = [];
+    let remainingPercent = 100;
+    
+    for (let i = 0; i < count - 1; i++) {
+      const max = remainingPercent - (count - i - 1);
+      const percent = Math.floor(Math.random() * max) + 1;
+      percentages.push(percent);
+      remainingPercent -= percent;
+    }
+    
+    percentages.push(remainingPercent); // Le dernier pourcentage prend le reste
+    return percentages;
+  }
+
+  getRandomDate(): string {
+    const now = new Date();
+    const pastDate = new Date();
+    pastDate.setDate(now.getDate() - Math.floor(Math.random() * 60));
+    return pastDate.toLocaleDateString();
+  }
+
+  getScoreClass(isCorrect: boolean): string {
+    return isCorrect ? 'correct' : 'incorrect';
+  }
+
+  navigateBack() {
+    this.router.navigate(['/player-stats', this.profileId]);
+  }
+}

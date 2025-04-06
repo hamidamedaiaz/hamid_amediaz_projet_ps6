@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ProfileService } from 'src/services/profile.service';
 import { QuizService } from 'src/services/quiz-list.service';
 import { Profile } from 'src/models/profile.model';
@@ -26,34 +27,19 @@ interface MonthProgress {
   styleUrl: './stats-accueilli.component.scss'
 })
 export class StatsAccueilliComponent implements OnInit {
-
-
-    profiles: Profile[] = [];
+  profiles: Profile[] = [];
   quizzes: Quiz[] = [];
-
-
-
   selectedProfile: Profile | null = null;
-
-
-
   readonly ITEMS_PER_PAGE = 5;
   currentPage = 1;
-
-
-
-
   searchQuery = '';
   sortBy = 'name';
-
-
-
-
   private readonly months = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sep', 'Oct', 'Nov', 'Déc'];
 
   constructor(
     private profileService: ProfileService,
-    private quizService: QuizService
+    private quizService: QuizService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -62,28 +48,24 @@ export class StatsAccueilliComponent implements OnInit {
       console.log('Profils chargés:', this.profiles.length);
     });
 
-
     this.quizService.quiz$.subscribe(quizzes => {
       this.quizzes = quizzes;
     });
   }
 
+  // Méthode modifiée pour rediriger vers la page détaillée des statistiques
   viewProfileDetails(profile: Profile) {
-    this.selectedProfile = profile;
-    console.log('Détails du profil ouverts pour:', profile.name, profile.lastName);
+    console.log('Navigation vers les statistiques détaillées de l\'accueilli:', profile.name, profile.lastName);
+    this.router.navigate(['/player-stats', profile.id]);
   }
 
   closeProfileDetails() {
     this.selectedProfile = null;
   }
 
-
-
   filteredProfiles() {
     let filtered = [...this.profiles];
     
-
-
     if (this.searchQuery) {
       const query = this.searchQuery.toLowerCase();
       filtered = filtered.filter(profile => 
@@ -92,8 +74,6 @@ export class StatsAccueilliComponent implements OnInit {
       );
     }
     
-
-
     filtered.sort((a, b) => {
       switch (this.sortBy) {
         case 'name':
@@ -146,8 +126,6 @@ export class StatsAccueilliComponent implements OnInit {
   }
 
   getLastPlayedDate(profile: Profile): string {
-
-
     const now = new Date();
     const daysAgo = Math.floor(Math.random() * 30);
     const date = new Date(now.getTime() - daysAgo * 24 * 60 * 60 * 1000);
@@ -174,7 +152,6 @@ export class StatsAccueilliComponent implements OnInit {
       });
     }
     
-
     return history.sort((a, b) => {
       const dateA = new Date(a.date.split('/').reverse().join('-'));
       const dateB = new Date(b.date.split('/').reverse().join('-'));
@@ -183,8 +160,6 @@ export class StatsAccueilliComponent implements OnInit {
   }
 
   getProfileProgress(profile: Profile): MonthProgress[] {
-
-
     const progress: MonthProgress[] = [];
     const now = new Date();
     const currentMonth = now.getMonth();

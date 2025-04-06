@@ -1,11 +1,12 @@
-<div class="player-stats-details-container" *ngIf="profile">
+<div class="player-stats-container" *ngIf="profile">
     <div class="header-section">
-      <button class="back-button" (click)="goBack()">
+      <button class="back-button" (click)="navigateBack()">
         <i class="fa fa-arrow-left"></i> Retour
       </button>
       <h1 class="page-title">Statistiques de l'Accueilli</h1>
     </div>
-  
+    
+    <!-- Section Profil -->
     <div class="profile-section">
       <div class="profile-card">
         <div class="profile-avatar">
@@ -17,10 +18,11 @@
         </div>
       </div>
     </div>
-  
-    <div class="stats-metrics-section">
-      <h2 class="section-title">Métriques Thérapeutiques</h2>
-      <div class="metrics-grid">
+    
+    <!-- Section Statistiques Globales -->
+    <div class="stats-overview-section">
+      <h2 class="section-title">Vue d'ensemble</h2>
+      <div class="stats-metrics-grid">
         <div class="metric-card">
           <div class="metric-icon games-icon">
             <i class="fa fa-gamepad"></i>
@@ -37,7 +39,7 @@
           </div>
           <div class="metric-content">
             <span class="metric-value">{{ successRate }}%</span>
-            <span class="metric-label">Taux de réussite</span>
+            <span class="metric-label">Score moyen</span>
           </div>
         </div>
         
@@ -46,8 +48,8 @@
             <i class="fa fa-clock-o"></i>
           </div>
           <div class="metric-content">
-            <span class="metric-value">{{ avgResponseTime }}s</span>
-            <span class="metric-label">Temps de réponse moyen</span>
+            <span class="metric-value">{{ averageTimePerQuestion }}s</span>
+            <span class="metric-label">Temps moyen par question</span>
           </div>
         </div>
         
@@ -56,16 +58,58 @@
             <i class="fa fa-lightbulb-o"></i>
           </div>
           <div class="metric-content">
-            <span class="metric-value">{{ avgHintsUsed }}</span>
+            <span class="metric-value">{{ averageHintsUsed }}</span>
             <span class="metric-label">Indices utilisés en moyenne</span>
           </div>
         </div>
       </div>
     </div>
-  
-    <!-- Section spécifique pour les métriques thérapeutiques demandées -->
+    
+    <!-- Répartition par Catégories -->
+    <div class="quiz-categories-section">
+      <h2 class="section-title">Quiz par Catégories</h2>
+      <div class="categories-chart">
+        <div class="category-bar" *ngFor="let category of quizCategoryData" 
+            [style.width.%]="category.percentage" 
+            [style.background-color]="'#' + (Math.floor(Math.random()*16777215).toString(16))">
+          <span class="category-label">{{ category.category }}</span>
+          <span class="category-value">{{ category.count }}</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Tendance des Performances -->
+    <div class="performance-trend-section">
+      <h2 class="section-title">Évolution des Performances</h2>
+      
+      <div class="tabs-container">
+        <button class="tab-btn" [class.active]="activeTab === 'score'" (click)="setActiveTab('score')">
+          Score global
+        </button>
+        <button class="tab-btn" [class.active]="activeTab === 'hints'" (click)="setActiveTab('hints')">
+          Utilisation des indices
+        </button>
+        <button class="tab-btn" [class.active]="activeTab === 'time'" (click)="setActiveTab('time')">
+          Temps de réponse
+        </button>
+        <button class="tab-btn" [class.active]="activeTab === 'accuracy'" (click)="setActiveTab('accuracy')">
+          Précision
+        </button>
+      </div>
+      
+      <div class="performance-chart">
+        <div class="chart-bar" *ngFor="let performance of monthlyPerformance">
+          <div class="bar-column" [style.height.%]="performance.score">
+            <span class="bar-value">{{ performance.score }}%</span>
+          </div>
+          <span class="bar-label">{{ performance.month }}</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Métriques thérapeutiques spécifiques -->
     <div class="therapy-metrics-section">
-      <h2 class="section-title">Détails Thérapeutiques</h2>
+      <h2 class="section-title">Métriques Thérapeutiques</h2>
       <div class="therapy-metrics-grid">
         <!-- Nombre d'indices utilisés -->
         <div class="therapy-metric-card">
@@ -77,7 +121,7 @@
         <!-- Temps moyen entre les réponses -->
         <div class="therapy-metric-card">
           <h3 class="therapy-metric-title">Temps Entre Réponses</h3>
-          <div class="therapy-metric-value">{{ avgTimeBetweenAnswers }}s</div>
+          <div class="therapy-metric-value">{{ avgTimeBetweenAnswers.toFixed(1) }}s</div>
           <div class="therapy-metric-description">Temps moyen entre chaque réponse donnée</div>
         </div>
         
@@ -96,7 +140,7 @@
         </div>
       </div>
       
-      <!-- Graphique en secteurs pour les réponses correctes/incorrectes -->
+      <!-- Graphique en barres pour les réponses correctes/incorrectes -->
       <div class="answers-distribution">
         <h3 class="answers-distribution-title">Distribution des Réponses</h3>
         <div class="answers-chart">
@@ -109,37 +153,47 @@
         </div>
       </div>
     </div>
-  
-    <div class="progress-section">
-      <h2 class="section-title">Progression</h2>
-      
-      <div class="tabs-container">
-        <button class="tab-btn" [class.active]="activeTab === 'score'" (click)="setActiveTab('score')">
-          Score global
-        </button>
-        <button class="tab-btn" [class.active]="activeTab === 'hints'" (click)="setActiveTab('hints')">
-          Utilisation des indices
-        </button>
-        <button class="tab-btn" [class.active]="activeTab === 'time'" (click)="setActiveTab('time')">
-          Temps de réponse
-        </button>
-        <button class="tab-btn" [class.active]="activeTab === 'accuracy'" (click)="setActiveTab('accuracy')">
-          Précision
-        </button>
-      </div>
-      
-      <div class="chart-container">
-        <div class="progress-chart">
-          <div *ngFor="let item of getCurrentData()" class="progress-bar" 
-              [style.height.%]="getHeightPercentage(item.value)">
-            <span class="progress-value">{{ getValueDisplay(item.value) }}</span>
-            <span class="progress-label">{{ item.month }}</span>
-          </div>
-        </div>
+    
+    <!-- Liste des Quiz Joués -->
+    <div class="quiz-history-section">
+      <h2 class="section-title">Historique des Quiz</h2>
+      <div class="quiz-history-table-container">
+        <table class="quiz-history-table">
+          <thead>
+            <tr>
+              <th>Quiz</th>
+              <th>Date</th>
+              <th>Score</th>
+              <th>Temps Moyen</th>
+              <th>Indices Utilisés</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let result of quizResults">
+              <td class="quiz-title">{{ result.quizTitle }}</td>
+              <td>{{ result.date }}</td>
+              <td>
+                <div class="score-display" [ngClass]="getScoreColor(result.percentageCorrect)">
+                  {{ result.score }}/{{ result.totalQuestions }}
+                  <span class="score-percentage">({{ result.percentageCorrect }}%)</span>
+                </div>
+              </td>
+              <td>{{ result.timeSpent }}s</td>
+              <td>{{ result.hintsUsed }}</td>
+              <td>
+                <button class="view-details-btn" (click)="viewQuizDetails(result.quizId)">
+                  Détails
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
   
-  <div class="loading-message" *ngIf="!profile">
-    Chargement des données du joueur...
+  <div class="loading-container" *ngIf="!profile">
+    <div class="spinner"></div>
+    <p class="loading-text">Chargement des données...</p>
   </div>

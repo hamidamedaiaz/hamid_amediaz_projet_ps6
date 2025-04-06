@@ -1,4 +1,4 @@
-import { Component, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { QuizCreationComponent } from "./pages/quiz-creation/quiz-creation.component";
 import { MultiplayerGameSetupComponent } from "./pages/multiplayer-game-setup/multiplayer-game-setup.component";
@@ -11,7 +11,8 @@ import { MultiplayerGameLoginPageComponent } from './pages/multiplayer-game-logi
 import { MultiplayerGameAdminViewComponent } from './pages/multiplayer-game-admin-view/multiplayer-game-admin-view.component';
 import { WaitingStartPageComponent } from './pages/waiting-start-page/waiting-start-page.component';
 import { SelectQuizPageComponent } from './pages/select-quiz-page/select-quiz-page.component';
-
+import { PlayerStatsDetailsComponent } from './pages/player-stats-details/player-stats-details.component';
+import { QuizResultDetailsComponent } from './pages/quiz-result-details/quiz-result-details.component';
 
 const routes: Routes = [
   {path:'', component:HomeComponent},
@@ -25,7 +26,8 @@ const routes: Routes = [
   {path:'multiplayer-game-admin-view',component: MultiplayerGameAdminViewComponent},
   {path:'waiting-start', component:WaitingStartPageComponent},
   {path:'select-quiz', component:SelectQuizPageComponent},
-  
+  {path:'player-stats/:id', component: PlayerStatsDetailsComponent},
+  {path:'quiz-result/:profileId/:quizId', component: QuizResultDetailsComponent},
 ];
 
 @NgModule({
