@@ -28,8 +28,13 @@ export class HomeComponent {
 
   selectGamemode(){
     console.log("gamemode");
+    this.currentPageService.setCurrentPage("gamemode-selection")
     this.router.navigate(['/gamemode-selection'])
   }
-  
+
+  goToAdminPage(){
+    this.currentPageService.setCurrentPage("admin")
+    this.router.navigate(['/admin']);
+  }
 
 }

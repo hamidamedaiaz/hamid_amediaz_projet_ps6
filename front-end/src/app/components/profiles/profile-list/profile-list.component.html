@@ -1,9 +1,9 @@
-<section *ngIf="currentPage!=='home'">
+<section *ngIf="currentPage==='admin'">
     <input type="text" id="search-bar" class="search-input" [(ngModel)]="searchQuery"
         placeholder="Rechercher un joueur...">
     <section class="profile-list-section">
         <div class="profile-list-container" *ngFor="let profile of filteredProfiles()">
-            <app-profile-item [profile]="profile" [context]="context"
+            <app-profile-item [profile]="profile" [context]="'admin'"
                 (profileSelected)="profileSelectedHandler(profile)">
             </app-profile-item>
         </div>
@@ -16,6 +16,17 @@
         <div class="profile-list-container" *ngFor="let profile of filteredProfiles()">
             <app-profile-item [profile]="profile" [context]="context"
                 (profileSelected)="profileSelectedHandler(profile)">
+            </app-profile-item>
+        </div>
+    </section>
+</section>
+<section *ngIf="currentPage==='multiplayer-setup'">
+    <input type="text" id="search-bar" class="search-input" [(ngModel)]="searchQuery"
+        placeholder="Rechercher un joueur...">
+    <section class="profile-list-section">
+        <div class="profile-list-container" *ngFor="let profile of filteredProfiles()">
+            <app-profile-item [profile]="profile" [context]="context"
+                (profileSelected)="removeProfile(profile)">
             </app-profile-item>
         </div>
     </section>

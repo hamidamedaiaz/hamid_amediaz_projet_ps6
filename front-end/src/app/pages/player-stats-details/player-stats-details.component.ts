@@ -39,14 +39,12 @@ export class PlayerStatsDetailsComponent implements OnInit {
   profile: Profile | null = null;
   profileId: number = 0;
   
-  // Métriques générales
   totalGames: number = 0;
   successRate: number = 0;
   averageResponseTime: number = 0;
   averageTimePerQuestion: number = 0;
   averageHintsUsed: number = 0;
   
-  // Métriques spécifiques
   totalHintsUsed: number = 0;        
   avgTimeBetweenAnswers: number = 0; 
   totalCorrectAnswers: number = 0;    
@@ -54,15 +52,12 @@ export class PlayerStatsDetailsComponent implements OnInit {
   correctAnswersPercent: number = 0;  
   incorrectAnswersPercent: number = 0; 
   
-  // Visualisations
   monthlyPerformance: MonthProgress[] = [];
   quizCategoryData: QuizCategoryData[] = [];
   quizResults: GameHistory[] = [];
   
-  // Onglet actif
   activeTab: 'score' | 'hints' | 'time' | 'accuracy' = 'score';
   
-  // Math pour les templates
   Math = Math;
 
   constructor(
@@ -93,17 +88,13 @@ export class PlayerStatsDetailsComponent implements OnInit {
     });
   }
 
-  // Méthode pour générer des données de statistiques simulées
-  // Dans un environnement de production, ces données viendraient d'une API
   generateStatsData() {
-    // Génération des statistiques globales
     this.totalGames = Math.floor(Math.random() * 20) + 5;
     this.successRate = Math.floor(Math.random() * 40) + 40;
     this.averageResponseTime = Math.floor(Math.random() * 100) / 10 + 3;
     this.averageTimePerQuestion = Math.floor(Math.random() * 100) / 10 + 5;
     this.averageHintsUsed = Math.floor(Math.random() * 10) / 10 + 1;
     
-    // Métriques spécifiques
     this.totalHintsUsed = Math.floor(this.averageHintsUsed * this.totalGames);
     this.avgTimeBetweenAnswers = this.averageTimePerQuestion + Math.random() * 2;
     this.totalCorrectAnswers = Math.floor(this.totalGames * 15 * this.successRate / 100);
@@ -111,14 +102,12 @@ export class PlayerStatsDetailsComponent implements OnInit {
     this.correctAnswersPercent = this.successRate;
     this.incorrectAnswersPercent = 100 - this.successRate;
 
-    // Progression mensuelle
     const months = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin'];
     this.monthlyPerformance = months.map(month => ({
       month,
       score: Math.floor(Math.random() * 30) + 50
     }));
 
-    // Catégories de quiz
     const categories = ['Années 80', 'Années 90', 'Rock', 'Pop', 'Jazz'];
     let totalCount = 0;
     
@@ -128,14 +117,11 @@ export class PlayerStatsDetailsComponent implements OnInit {
       return { category, count, percentage: 0 };
     });
     
-    // Calculer les pourcentages
     this.quizCategoryData.forEach(category => {
       category.percentage = Math.round((category.count / totalCount) * 100);
     });
 
-    // Historique des quiz
-    this.quizService.quiz$.subscribe(quizzes => {
-      // Créer un historique simulé des quiz joués par ce joueur
+    this.quizService.quizzes$.subscribe(quizzes => {
       const sampleQuizzes = quizzes.slice(0, Math.min(5, quizzes.length));
       
       this.quizResults = Array.from({length: Math.min(8, this.totalGames)}, (_, i) => {
@@ -162,7 +148,6 @@ export class PlayerStatsDetailsComponent implements OnInit {
         };
       });
       
-      // Trier par date
       this.quizResults.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
     });
   }
@@ -189,27 +174,24 @@ export class PlayerStatsDetailsComponent implements OnInit {
     this.activeTab = tab;
   }
 
-  // Méthode pour convertir en pourcentage de hauteur pour le graphique
   getHeightPercentage(value: number): number {
     switch (this.activeTab) {
       case 'score': 
       case 'accuracy': 
-        return value; // Déjà en pourcentage
+        return value; 
       case 'hints':
-        return (value / 5) * 100; // Supposant un maximum de 5 indices
+        return (value / 5) * 100; 
       case 'time':
-        return (value / 15) * 100; // Supposant un maximum de 15 secondes
+        return (value / 15) * 100; 
       default:
         return value;
     }
   }
 
-  // Naviguer vers les détails du quiz
   viewQuizDetails(quizId: number) {
     this.router.navigate(['/quiz-result', this.profileId, quizId]);
   }
 
-  // Retourner à la page d'administration
   navigateBack() {
     this.router.navigate(['/admin'], { 
       queryParams: { section: 'stats-accueilli' } 

@@ -1,4 +1,10 @@
-<div class="result-item" (click)="selectProfile()">
-    {{
-       profile?.name }} {{ profile?.lastName }}
+<div *ngIf="currentPage==='home' || currentPage==='admin'" class="result-item" (click)="selectProfile()">
+    {{profile?.name }} {{ profile?.lastName }}
 </div>
+
+<section class="profile-item-section"  *ngIf="currentPage==='multiplayer-setup'">
+    <div class="result-item multi">
+        {{profile?.name }} {{ profile?.lastName }}
+    </div>
+    <img src="../../../../assets/icons/xmark.svg" alt="xmark" (click)="selectProfile()" class="remove-profile-icon">
+</section>

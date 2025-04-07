@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { QuizAppComponent } from 'src/app/components/admin/quiz-app/quiz-app.component';
 import { Router } from '@angular/router';
+import { CurrentPageService } from 'src/services/currentPage.service';
 
 
 @Component({
@@ -12,7 +13,9 @@ import { Router } from '@angular/router';
 })
 export class SelectQuizPageComponent {
 
-  constructor(private router:Router){}
+  constructor(private router:Router, private currentPageService:CurrentPageService){
+    this.currentPageService.setCurrentPage("select-quiz-page");
+  }
 
   public leavePage(){
     this.router.navigate(["/gamemode-selection"])

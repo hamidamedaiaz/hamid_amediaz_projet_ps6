@@ -1,7 +1,8 @@
 <div class="question-container">
-    
+
     <div class="question-left-side">
-        <audio id="audio" preload controls *ngIf="context === 'solo' || context === 'admin'" src="{{getAudioPath()}}"></audio>
+        <audio id="audio" preload controls *ngIf="context === 'solo' || context === 'admin'"
+            src="{{getAudioPath()}}"></audio>
         <section class="question-header-section">
             <div class="question-title">{{getTitle()}}</div>
             <div class="button-section" *ngIf="context === 'solo' || context === 'admin'">
@@ -9,8 +10,8 @@
                 <p id="volume">Volume</p>
                 <section class="volume-section">
                     <button id="decreaseVolumeBtn" (click)="decreaseVolume()">-</button>
-                    <input value="{{getVolume()}}" id="volume-input"  readonly>
-                    <button id="increaseVolumeBtn"  (click)="increaseVolume()">+</button>
+                    <input value="{{getVolume()}}" id="volume-input" readonly>
+                    <button id="increaseVolumeBtn" (click)="increaseVolume()">+</button>
                 </section>
             </div>
         </section>
@@ -38,6 +39,11 @@
             </div>
             <p class="next-hint-in">Prochain indice dans ...</p>
         </section>
-        <button *ngIf="context==='solo' || context ==='admin'" class="next-question-btn button">Question suivante</button>
+        <section class="button-right-side-section">
+            <button *ngIf="context==='solo' || context ==='admin'" (click)="nextQuestion()"
+                class="next-question-btn button">Question suivante</button>
+            <button *ngIf="context==='solo' || context ==='admin'" (click)="previousQuestion()"
+                class="next-question-btn button">Question précédente</button>
+        </section>
     </div>
 </div>

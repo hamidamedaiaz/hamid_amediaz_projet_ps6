@@ -1,9 +1,9 @@
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { QuizAnswerComponent } from '../quiz-answer/quiz-answer.component';
 import { QuizHintComponent } from '../quiz-hint/quiz-hint.component';
 import { CommonModule } from '@angular/common';
 import { Question } from 'src/models/question.model';
-import { QUESTION } from 'src/mocks/question.mock';
+import { QUESTIONS } from 'src/mocks/question.mock';
 import { Answer } from 'src/models/answer.model';
 import { CurrentProfileService } from 'src/services/currentProfile.service';
 import { Router } from '@angular/router';
@@ -23,9 +23,19 @@ export class QuizQuestionComponent {
   @Input()
   context: String | null = null;
 
-  private volume: number = 50;
+  @Input()
+  question: Question | null = null;
 
-  private question: Question = QUESTION;
+  @Output()
+  nextQuestionEmitter: EventEmitter<Boolean> = new EventEmitter<Boolean>();
+
+  @Output()
+  previousQuestionEmitter: EventEmitter<Boolean> = new EventEmitter<Boolean>();
+
+  @Output()
+  correctAnswerEmitter: EventEmitter<Boolean> = new EventEmitter<Boolean>(); 
+
+  private volume: number = 50;
 
   private currentProfile: Profile | undefined;
 
@@ -44,19 +54,23 @@ export class QuizQuestionComponent {
   }
 
   public getHints() {
-    return this.question.hints;
+    if (this.question) return this.question.hints;
+    return null;
   }
 
   public getAnswers() {
-    return this.question.answers.concat(this.question.correctAnswer);
+    if (this.question) return this.question.answers.concat(this.question.correctAnswer);
+    return null;
   }
 
   public getTitle() {
-    return this.question.question;
+    if (this.question) return this.question.question;
+    return null;
   }
 
   public getAudioPath() {
-    return this.question.audioPath;
+    if (this.question) return this.question.audioPath;
+    return null;
   }
 
   public increaseVolume() {
@@ -74,17 +88,17 @@ export class QuizQuestionComponent {
   }
 
   public answerSelected(answer: Answer) {
-    if (this.question.correctAnswer.includes(answer)) {
-      console.log("Bonne Réponse");
-    } else {
-      const index = this.question.answers.indexOf(answer);
-      if (index !== -1) {
-        this.question.answers.splice(index, 1);
+    if (this.question) {
+      if (this.question.correctAnswer.includes(answer)) {
+        this.correctAnswerEmitter.emit(true);
+      } else {
+        const index = this.question.answers.indexOf(answer);
+        if (index !== -1) {
+          this.question.answers.splice(index, 1);
+        }
       }
     }
   }
-
-
 
   public accessToSettings() {
     if (this.currentProfile) {
@@ -97,8 +111,16 @@ export class QuizQuestionComponent {
     console.log("restarting the music...");
   }
 
-  public getAnswersPercents(){
-    return [15,50,25,10];
+  public getAnswersPercents() {
+    return [15, 50, 25, 10];
+  }
+
+  public nextQuestion(){
+    this.nextQuestionEmitter.emit(true);
+  }
+
+  public previousQuestion(){
+    this.previousQuestionEmitter.emit(true);
   }
 
 }

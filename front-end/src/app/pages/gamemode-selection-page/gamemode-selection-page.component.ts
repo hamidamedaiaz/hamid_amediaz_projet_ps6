@@ -10,7 +10,7 @@ import { CurrentPageService } from 'src/services/currentPage.service';
 export class GamemodeSelectionComponent {
 
   constructor(private currentPageService:CurrentPageService){
-    this.currentPageService.setCurrentPage("select-quiz");
+    this.currentPageService.setCurrentPage("gamemode-selection");
   }
 
 }

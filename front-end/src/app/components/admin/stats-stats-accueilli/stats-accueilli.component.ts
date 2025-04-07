@@ -17,6 +17,7 @@ interface GameHistory {
 interface MonthProgress {
   month: string;
   score: number;
+  responseTime: number;
 }
 
 @Component({
@@ -48,7 +49,8 @@ export class StatsAccueilliComponent implements OnInit {
       console.log('Profils chargés:', this.profiles.length);
     });
 
-    this.quizService.quiz$.subscribe(quizzes => {
+
+    this.quizService.quizzes$.subscribe(quizzes => {
       this.quizzes = quizzes;
     });
   }
@@ -168,10 +170,20 @@ export class StatsAccueilliComponent implements OnInit {
       const monthIndex = (currentMonth - i + 12) % 12;
       progress.push({
         month: this.months[monthIndex],
-        score: Math.floor(Math.random() * 30) + 60
+        score: Math.floor(Math.random() * 30) + 60,
+        responseTime: Math.floor(Math.random() * 12) + 3 
       });
     }
     
     return progress;
+  }
+
+  getTimeHeight(responseTime: number): number {
+   
+    const minTime = 3;  
+    const maxTime = 15; 
+    
+    
+    return Math.max(0, Math.min(100, (1 - (responseTime - minTime) / (maxTime - minTime)) * 100));
   }
 }

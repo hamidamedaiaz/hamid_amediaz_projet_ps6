@@ -79,4 +79,8 @@ export class ProfileListComponent {
   public showProfileList() {
     this.isProfileListActivated = !this.isProfileListActivated;
   }
+
+  public removeProfile(profileToRemove:Profile){
+    this.profileList =  this.profileList.filter(profile => profile != profileToRemove);
+  }
 }

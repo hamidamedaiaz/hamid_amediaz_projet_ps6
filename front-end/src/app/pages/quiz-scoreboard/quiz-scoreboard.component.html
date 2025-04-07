@@ -1,0 +1,10 @@
+<section class="scoreboard-container">
+    <span class="scoreboard-title">Félicitation, vous avez terminé le quiz !</span>
+    <section class="scoreboard-section">
+        <span class="congrats-message">Bravo, vous avez obtenu un score de : {{score}}/{{maxPoint}} !</span>
+        <section class="button-section">
+            <button class="button" id="replay-btn" (click)="replay()">Rejouer</button>
+            <button class="button" id="leave-btn" (click)="exit()">Quitter</button>
+        </section>
+    </section>
+</section>

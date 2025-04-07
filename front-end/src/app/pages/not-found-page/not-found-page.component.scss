@@ -1,0 +1,46 @@
+.not-found-section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 60%;    
+}
+
+.home-btn{
+    padding: 10px 20px;
+    width: 8rem;
+    height: 3rem;
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.home-btn:hover{
+    cursor: pointer;
+    transform: scale(1.03);
+    background-color:#5f88af;
+}
+
+.error-title{
+    font-size: 5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #006A71;
+    font-family: "Unbounded", sans-serif;
+    user-select: none;
+}
+
+.message-content{
+    font-size: 2rem;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #48a5a757;
+    border-radius: 10px;
+    padding: 1rem 2rem;
+    color: #ecf0f1;
+    font-weight: bold;
+}

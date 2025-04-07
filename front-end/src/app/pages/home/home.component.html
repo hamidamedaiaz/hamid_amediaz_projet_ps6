@@ -8,7 +8,7 @@
 </head>
 
 <body>
-  <button class="admin-button" routerLink="admin">Page Admin</button>
+  <button class="admin-button" (click)="goToAdminPage()">Page Admin</button>
 
   <span class="home-page-title">Octave</span>
   <app-profile-list class="profile-list-container" [context]="context"></app-profile-list>

@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter, ChangeDetectorRef } from '@angu
 import { Profile } from 'src/models/profile.model';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { CurrentPageService } from 'src/services/currentPage.service';
 
 @Component({
   selector: 'app-profile-item',
@@ -11,6 +12,8 @@ import { Router } from '@angular/router';
   imports: [CommonModule]
 })
 export class ProfileItemComponent {
+
+  currentPage: String = this.currentPageService.getCurrentPage();
 
   @Input()
   profile: Profile | undefined;
@@ -23,26 +26,32 @@ export class ProfileItemComponent {
 
   constructor(
     private router: Router,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private currentPageService: CurrentPageService
   ) { }
 
   ngOnInit() {
     console.log('ProfileItemComponent initialisé avec contexte:', this.context);
+    console.log(this.currentPage)
   }
 
   selectProfile() {
     if (this.profile) {
-      console.log('Sélection du profil:', this.profile.name, 'dans contexte:', this.context);
-      
-      this.profileSelected.emit(this.profile);
-      console.log('Événement émis pour:', this.profile.name);
-      
-      this.cdr.detectChanges();
-      
-      if (this.context === 'home') {
+      if (this.currentPage === 'home') {
+       
+        this.profileSelected.emit(this.profile);
+        this.cdr.detectChanges();
         setTimeout(() => {
           this.router.navigate(['/gamemode-selection']);
         }, 100);
+      }
+      else if(this.currentPage==='admin'){
+        this.profileSelected.emit(this.profile);
+        this.cdr.detectChanges();
+      }
+      else if(this.currentPage === 'multiplayer-setup'){
+        console.log("remove ", this.profile)
+        this.profileSelected.emit(this.profile);
       }
     }
   }

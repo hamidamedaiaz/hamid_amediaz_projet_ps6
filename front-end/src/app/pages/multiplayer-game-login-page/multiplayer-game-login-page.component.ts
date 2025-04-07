@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { CurrentPageService } from 'src/services/currentPage.service';
 
 @Component({
   selector: 'app-multiplayer-game-login-page',
@@ -12,7 +13,8 @@ export class MultiplayerGameLoginPageComponent {
 
   public code:string = "";
 
-  constructor(private router:Router){  
+  constructor(private router:Router, private currentPageService:CurrentPageService){  
+    this.currentPageService.setCurrentPage("multiplayer-game-login-page")
   }
 
   public joinGame(code:String){

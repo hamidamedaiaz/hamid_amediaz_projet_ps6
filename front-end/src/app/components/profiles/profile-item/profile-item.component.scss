@@ -8,9 +8,29 @@
     margin-bottom: 10px;
     transition: background-color 0.3s, transform 0.3s;
   }
+
+  .multi{
+    width: 100%;
+  }
+
   
   .result-item:hover {
     background-color: #f0f0f0;
     transform: scale(1.02);
     cursor: pointer;
+  }
+
+  .remove-profile-icon{
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .remove-profile-icon:hover{
+    cursor: pointer;
+  }
+  .profile-item-section{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
   }

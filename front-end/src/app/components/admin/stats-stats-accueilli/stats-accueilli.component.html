@@ -46,7 +46,6 @@
       </tbody>
     </table>
     
-    <!-- Pagination -->
     <div class="pagination">
       <button 
         [disabled]="currentPage === 1" 
@@ -119,13 +118,31 @@
           </tbody>
         </table>
         
-        <h3>Progression</h3>
-        <div class="progress-chart">
-          <div *ngFor="let month of getProfileProgress(selectedProfile); let i = index" 
-               class="progress-bar" 
-               [style.height.%]="month.score">
-            <span class="progress-label">{{ month.score }}%</span>
-            <span class="month-label">{{ month.month }}</span>
+        <h3>Évolution des Performances</h3>
+        <div class="performance-chart-container">
+          <div class="chart-legend">
+            <div class="legend-item">
+              <span class="legend-color" style="background-color: #3498db;"></span>
+              <span class="legend-text">Score</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-color" style="background-color: #e74c3c;"></span>
+              <span class="legend-text">Temps de réponse</span>
+            </div>
+          </div>
+          <div class="performance-chart">
+            <div *ngFor="let month of getProfileProgress(selectedProfile); let i = index" 
+                 class="progress-bar-container">
+              <div class="bar-labels">
+                <span class="score-label">{{ month.score }}%</span>
+                <span class="time-label">{{ month.responseTime }}s</span>
+              </div>
+              <div class="bar-columns">
+                <div class="score-bar" [style.height.%]="month.score"></div>
+                <div class="time-bar" [style.height.%]="getTimeHeight(month.responseTime)"></div>
+              </div>
+              <span class="month-label">{{ month.month }}</span>
+            </div>
           </div>
         </div>
       </div>

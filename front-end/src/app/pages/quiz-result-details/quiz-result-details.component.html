@@ -6,7 +6,6 @@
       <h1 class="page-title">Résultat du Quiz</h1>
     </div>
     
-    <!-- Section d'information générale -->
     <div class="info-section">
       <div class="quiz-profile-info">
         <h2 class="quiz-title">{{ quiz.title }}</h2>
@@ -36,27 +35,6 @@
       </div>
     </div>
     
-    <!-- Graphique de performance -->
-    <div class="performance-section">
-      <h2 class="section-title">Performance par Question</h2>
-      
-      <div class="performance-graph">
-        <div class="question-performance-item" *ngFor="let result of questionResults; let i = index">
-          <div class="question-number">Q{{ i + 1 }}</div>
-          <div class="question-result-bar">
-            <div class="result-track">
-              <div class="result-progress" [ngClass]="getScoreClass(result.isCorrect)" [style.width]="result.isCorrect ? '100%' : '0%'"></div>
-            </div>
-          </div>
-          <div class="question-stats">
-            <span class="time-stat">{{ result.timeSpent }}s</span>
-            <span class="hints-stat" *ngIf="result.hintsUsed > 0">{{ result.hintsUsed }} indice<span *ngIf="result.hintsUsed > 1">s</span></span>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Liste détaillée des questions -->
     <div class="questions-section">
       <h2 class="section-title">Détail des Réponses</h2>
       

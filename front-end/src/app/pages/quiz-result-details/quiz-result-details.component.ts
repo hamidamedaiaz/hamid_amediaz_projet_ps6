@@ -15,7 +15,7 @@ interface QuestionResult {
   isCorrect: boolean;
   timeSpent: number;
   hintsUsed: number;
-  userAnswerPercentage: number; // % des joueurs qui ont choisi cette réponse
+  userAnswerPercentage: number; 
   allAnswerPercentages: { answer: string, percent: number, isCorrect: boolean }[];
 }
 
@@ -32,7 +32,6 @@ export class QuizResultDetailsComponent implements OnInit {
   quiz: Quiz | null = null;
   profile: Profile | null = null;
   
-  // Données du résultat
   quizDate: string = '';
   score: number = 0;
   totalQuestions: number = 0;
@@ -40,7 +39,6 @@ export class QuizResultDetailsComponent implements OnInit {
   averageTimePerQuestion: number = 0;
   totalHintsUsed: number = 0;
   
-  // Résultats des questions individuelles
   questionResults: QuestionResult[] = [];
   
   constructor(
@@ -75,10 +73,9 @@ export class QuizResultDetailsComponent implements OnInit {
   }
   
   loadQuizData() {
-    this.quizService.quiz$.subscribe(quizzes => {
+    this.quizService.quizzes$.subscribe(quizzes => {
       this.quiz = quizzes.find(q => q.id === this.quizId) || null;
       if (!this.quiz) {
-        // Si on ne trouve pas le quiz, on génère des données fictives pour démonstration
         this.quiz = {
           id: this.quizId,
           title: "Quiz Exemple",
@@ -91,7 +88,6 @@ export class QuizResultDetailsComponent implements OnInit {
   }
   
   generateQuizResultsData() {
-    // Génération de données simulées pour la démonstration
     this.quizDate = this.getRandomDate();
     this.totalQuestions = Math.floor(Math.random() * 5) + 10; // 10-15 questions
     this.score = Math.floor(Math.random() * (this.totalQuestions - 5)) + 5; // Score entre 5 et totalQuestions
@@ -140,7 +136,6 @@ export class QuizResultDetailsComponent implements OnInit {
       const question = questions[i];
       const correctAnswerContent = question.correctAnswer[0]?.answerContent || "Réponse correcte";
       
-      // Générer des pourcentages de réponses aléatoires (total 100%)
       const percentages = this.generateRandomPercentages(4);
       const allAnswers = [...question.answers, ...question.correctAnswer];
       
@@ -175,7 +170,6 @@ export class QuizResultDetailsComponent implements OnInit {
   }
   
   generateRandomPercentages(count: number): number[] {
-    // Génère des pourcentages aléatoires qui totalisent 100%
     const percentages: number[] = [];
     let remainingPercent = 100;
     
@@ -186,7 +180,7 @@ export class QuizResultDetailsComponent implements OnInit {
       remainingPercent -= percent;
     }
     
-    percentages.push(remainingPercent); // Le dernier pourcentage prend le reste
+    percentages.push(remainingPercent); 
     return percentages;
   }
 
