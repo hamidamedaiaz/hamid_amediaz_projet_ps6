@@ -18,29 +18,50 @@ export class QuizDetailsComponent implements OnChanges {
   @Input() quiz!: Quiz;
   @Output() quizSaved = new EventEmitter<void>(); // Événement pour informer que le quiz est enregistré
 
-  title: string = "";
+  questions: Question[] = [];
 
   selectedQuestion: Question | null = null;
   selectedQuestionTitle: string = "";
-  selectedQuestionAnswers: Answer[] = [];
-  questions: Question[] = [];
+
+
+  private selectedQuestionAnswers: Answer[] = [];
+  private selectedQuestionCorrectAnswers: Answer[] = [];
+
+  selectedQuestionHints: String[] = [];
+
 
   constructor(private router: Router) {
   }
 
+  addHint() {
+  }
+  deleteHint(index: number) {
+  }
+
+
   ngOnChanges(changes: SimpleChanges) {
     if (changes['quiz'] && changes['quiz'].currentValue) {
-      this.title = this.quiz.title;
       this.questions = this.quiz.questions;
     }
   }
+
+  selectQuestion(index: number) {
+    this.selectedQuestion = this.questions[index];
+    this.selectedQuestionTitle = this.selectedQuestion.question;
+    this.selectedQuestionAnswers = this.selectedQuestion.answers;
+    this.selectedQuestionCorrectAnswers = this.selectedQuestion.correctAnswer;
+  }
+
+  getAnswers(){
+    return [...this.selectedQuestionCorrectAnswers, ...this.selectedQuestionAnswers];
+  }
+
 
   updateQuestionTitle() {
     if (this.selectedQuestion) {
       this.selectedQuestion.question = this.selectedQuestionTitle;
     }
   }
-
 
   addQuestion() {
     const newQuestion = {
@@ -52,7 +73,6 @@ export class QuizDetailsComponent implements OnChanges {
     };
 
     this.questions.push(newQuestion); // Ajout à la liste des questions
-    this.questions = [...this.questions]; // Mise à jour pour forcer le rendu
   }
 
 
@@ -68,16 +88,10 @@ export class QuizDetailsComponent implements OnChanges {
   deleteAnswer(index: number){
     if(this.selectedQuestion){
       this.selectedQuestion.answers.splice(index, 1); // Supprime dans l'objet original
-      this.selectedQuestionAnswers = [...this.selectedQuestion.answers]; // Mise à jour pour Angular
     }
   }
 
 
-  selectQuestion(index: number) {
-    this.selectedQuestion = this.questions[index];
-    this.selectedQuestionTitle = this.selectedQuestion.question;
-    this.selectedQuestionAnswers = this.selectedQuestion.answers;
-  }
 
   addAnswer() {
     if (this.selectedQuestion) {

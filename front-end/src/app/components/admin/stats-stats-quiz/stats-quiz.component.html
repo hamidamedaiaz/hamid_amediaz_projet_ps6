@@ -1,0 +1,65 @@
+<div class="stats-container">
+    <div class="stats-content">
+      <h2>Statistiques des Quiz</h2>
+
+      <div class="stats-header">
+        <div class="stats-search">
+          <input
+            type="text"
+            placeholder="Rechercher un quiz..."
+            [(ngModel)]="searchQuery"
+            class="search-input"
+          />
+        </div>
+        <div class="stats-filters">
+          <select [(ngModel)]="sortBy" class="filter-select">
+            <option value="title">Trier par titre</option>
+            <option value="count">Trier par nombre de fois jouées</option>
+            <option value="score">Trier par score moyen</option>
+          </select>
+        </div>
+      </div>
+
+      <table class="stats-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Titre</th>
+            <th>Nombre de questions</th>
+            <th>Nombre de fois jouées</th>
+            <th>Score moyen des joueurs</th>
+            <th>Dernier lancement</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let quiz of filteredQuizzes()" [class.highlighted]="selectedQuiz?.id === quiz.id" class="table-item" (click)="viewQuizDetails(quiz)">
+            <td>{{ quiz.id }}</td>
+            <td>{{ quiz.title }}</td>
+            <td>{{ getQuestionCount(quiz) }}</td>
+            <td>{{ getQuizCount(quiz) }}</td>
+            <td>{{ getAverageScore(quiz) }}%</td>
+            <td>{{ getLastPlayedDate(quiz) }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Pagination -->
+      <div class="pagination">
+        <button
+          [disabled]="currentPage === 1"
+          (click)="changePage(currentPage - 1)"
+          class="page-btn"
+        >
+          &laquo;
+        </button>
+        <span class="page-info">{{ currentPage }} / {{ getTotalPages() }}</span>
+        <button
+          [disabled]="currentPage === getTotalPages()"
+          (click)="changePage(currentPage + 1)"
+          class="page-btn"
+        >
+          &raquo;
+        </button>
+      </div>
+    </div>
+  </div>

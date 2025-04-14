@@ -3,11 +3,11 @@ import { QuizAnswerComponent } from '../quiz-answer/quiz-answer.component';
 import { QuizHintComponent } from '../quiz-hint/quiz-hint.component';
 import { CommonModule } from '@angular/common';
 import { Question } from 'src/models/question.model';
-import { QUESTIONS } from 'src/mocks/question.mock';
 import { Answer } from 'src/models/answer.model';
 import { CurrentProfileService } from 'src/services/currentProfile.service';
 import { Router } from '@angular/router';
 import { Profile } from 'src/models/profile.model';
+import { filter } from 'rxjs';
 @Component({
   selector: 'app-quiz-question',
   standalone: true,
@@ -39,10 +39,15 @@ export class QuizQuestionComponent {
 
   private currentProfile: Profile | undefined;
 
+  private selectedAnswer:Answer[]=[];
+
+  public showCorrectEffect:Boolean=false;
+
   constructor(private router: Router, private currentProfileService: CurrentProfileService) {
     this.currentProfileService.current_profile$.subscribe((currentProfile) => {
       this.currentProfile = currentProfile;
     })
+    this.selectedAnswer=[];
   }
 
   public setVolume(newVolume: number) {
@@ -59,7 +64,20 @@ export class QuizQuestionComponent {
   }
 
   public getAnswers() {
-    if (this.question) return this.question.answers.concat(this.question.correctAnswer);
+    if (!this.question) return null;
+  
+    const allAnswers = (this.question.answers.concat(this.question.correctAnswer));
+  
+    //const shuffledAnswers = allAnswers.filter(ans => !this.selectedAnswer.some(sel => sel.answerId === ans.answerId));
+
+    return allAnswers.filter(ans => !this.selectedAnswer.some(sel => sel.answerId === ans.answerId));;
+      
+  }
+
+  public getAllAnswers(){
+    if(this.question){
+      return (this.question.answers.concat(this.question.correctAnswer));
+    }
     return null;
   }
 
@@ -89,12 +107,25 @@ export class QuizQuestionComponent {
 
   public answerSelected(answer: Answer) {
     if (this.question) {
-      if (this.question.correctAnswer.includes(answer)) {
-        this.correctAnswerEmitter.emit(true);
+      const isCorrect = this.question.correctAnswer.some(
+        (correct) => correct.answerId === answer.answerId
+      );
+  
+      if (isCorrect) {
+        
+        this.showCorrectEffect = true;
+  
+        setTimeout(() => {
+          this.showCorrectEffect = false;
+          this.correctAnswerEmitter.emit(true);
+        }, 1000);
+
+        
+
       } else {
         const index = this.question.answers.indexOf(answer);
         if (index !== -1) {
-          this.question.answers.splice(index, 1);
+          this.selectedAnswer.push(answer);
         }
       }
     }
@@ -112,15 +143,36 @@ export class QuizQuestionComponent {
   }
 
   public getAnswersPercents() {
-    return [15, 50, 25, 10];
+    const percent:number[] = [15, 50, 25, 10]
+    const answerWithPercents:Object[]=[];
+    const allAnswers = this.getAllAnswers()
+    //console.log("allanswers: ",allAnswers)
+    if(this.question && allAnswers){
+      for(let i = 0; i < allAnswers.length; i++){
+        answerWithPercents.push({answer: allAnswers[i], percent: percent[i]})
+      }
+    }
+    console.log("answerwithpercent",answerWithPercents)
+    return answerWithPercents;
   }
 
   public nextQuestion(){
+    this.selectedAnswer=[];
     this.nextQuestionEmitter.emit(true);
   }
 
   public previousQuestion(){
+    this.selectedAnswer=[];
     this.previousQuestionEmitter.emit(true);
+  }
+
+  private shuffle(answers:Answer[]) :Answer[]{
+    const shuffled = answers.slice(); // make a copy
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
   }
 
 }

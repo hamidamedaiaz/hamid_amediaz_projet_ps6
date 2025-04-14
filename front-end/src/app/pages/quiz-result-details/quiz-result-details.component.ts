@@ -8,6 +8,8 @@ import { Profile } from 'src/models/profile.model';
 import { Question } from 'src/models/question.model';
 import { Answer } from 'src/models/answer.model';
 
+
+
 interface QuestionResult {
   question: string;
   correctAnswer: string;
@@ -18,6 +20,8 @@ interface QuestionResult {
   userAnswerPercentage: number; 
   allAnswerPercentages: { answer: string, percent: number, isCorrect: boolean }[];
 }
+
+
 
 @Component({
   selector: 'app-quiz-result-details',
@@ -89,11 +93,15 @@ export class QuizResultDetailsComponent implements OnInit {
   
   generateQuizResultsData() {
     this.quizDate = this.getRandomDate();
-    this.totalQuestions = Math.floor(Math.random() * 5) + 10; // 10-15 questions
-    this.score = Math.floor(Math.random() * (this.totalQuestions - 5)) + 5; // Score entre 5 et totalQuestions
+    this.totalQuestions = Math.floor(Math.random() * 5) + 10;
+
+
+    this.score = Math.floor(Math.random() * (this.totalQuestions - 5)) + 5; 
+
+
     this.percentageCorrect = Math.round((this.score / this.totalQuestions) * 100);
-    this.averageTimePerQuestion = Math.floor(Math.random() * 10) + 5; // 5-15 seconds
-    this.totalHintsUsed = Math.floor(Math.random() * 10); // 0-10 hints
+    this.averageTimePerQuestion = Math.floor(Math.random() * 10) + 5; 
+    this.totalHintsUsed = Math.floor(Math.random() * 10);
     
     this.questionResults = this.generateMockQuestionResults();
   }
@@ -159,8 +167,10 @@ export class QuizResultDetailsComponent implements OnInit {
         correctAnswer: correctAnswerContent,
         userAnswer: userAnswer,
         isCorrect: isCorrect,
-        timeSpent: Math.floor(Math.random() * 15) + 3, // 3-18 seconds
-        hintsUsed: Math.floor(Math.random() * 3), // 0-2 hints
+        timeSpent: Math.floor(Math.random() * 15) + 3, 
+
+
+        hintsUsed: Math.floor(Math.random() * 3),
         userAnswerPercentage: percentages[userAnswerIdx],
         allAnswerPercentages: allAnswerPercentages
       });

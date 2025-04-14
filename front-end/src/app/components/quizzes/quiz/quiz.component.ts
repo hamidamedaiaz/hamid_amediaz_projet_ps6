@@ -31,7 +31,7 @@ export class QuizComponent {
   constructor(private currentQuizService:CurrentQuizService, private router:Router, private currentPageService:CurrentPageService) { }
 
   public nextQuestion() {
-    console.log(this.currentQuestionId, this.questions.length)
+    //console.log(this.currentQuestionId, this.questions.length)
     if(this.currentQuestionId === this.questions.length - 1){
       this.router.navigate(["/quiz-scoreboard"]);
     }

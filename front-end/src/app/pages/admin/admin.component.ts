@@ -10,6 +10,7 @@ import { Quiz } from "../../../models/quiz.model";
 import { QuizDetailsComponent } from "../../components/admin/quiz-details/quiz-details.component";
 import { Profile } from 'src/models/profile.model';
 import { StatsAccueilliComponent } from "../../components/admin/stats-stats-accueilli/stats-accueilli.component";
+import { StatsQuizComponent } from "../../components/admin/stats-stats-quiz/stats-quiz.component";
 import { CurrentPageService } from 'src/services/currentPage.service';
 
 
@@ -26,7 +27,8 @@ import { CurrentPageService } from 'src/services/currentPage.service';
     QuizAppComponent,
     ProfileConfigurationComponent,
     QuizDetailsComponent,
-    StatsAccueilliComponent
+    StatsAccueilliComponent,
+    StatsQuizComponent
   ],
 
   templateUrl: './admin.component.html',

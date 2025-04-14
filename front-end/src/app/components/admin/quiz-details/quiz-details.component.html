@@ -25,7 +25,7 @@
       <!-- Section de création de réponses -->
       <div id="answer-section">
         <h2 class="title-quiz-template">Réponses :</h2>
-        <div *ngFor="let answer of selectedQuestionAnswers; let j = index">
+        <div *ngFor="let answer of getAnswers(); let j = index">
           <app-answer [answer]="answer.answerContent"
                       [isCorrect]="isCorrect(answer)"
                       (answerChange)="updateAnswerText(j, $event)"
@@ -33,9 +33,23 @@
 
           </app-answer>
         </div>
+
         <p id="button-info">Cochez la case à côté de la réponse pour indiquer qu'elle est juste</p>
         <button id="add-answer" class="simple-btn" (click)="addAnswer()">+ Ajouter réponse</button>
       </div>
+
+      <!-- Section de création d'indices -->
+      <div id="hint-section">
+        <h2 class="title-quiz-template">Indices :</h2>
+        <div *ngFor="let hint of selectedQuestionHints; let k = index">
+          <div class="hint-item">
+            <input type="text" class="hint-input" placeholder="Entrez un indice...">
+            <button class="delete-btn" (click)="deleteHint(k)">Supprimer</button>
+          </div>
+        </div>
+        <button id="add-hint" class="simple-btn" (click)="addHint()">+ Ajouter indice</button>
+      </div>
+
     </div>
   </div>
 </div>

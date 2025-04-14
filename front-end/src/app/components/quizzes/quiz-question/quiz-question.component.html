@@ -1,6 +1,5 @@
 <div class="question-container">
-
-    <div class="question-left-side">
+    <div class="question-left-side" [ngClass]="{'correct-flash': showCorrectEffect}">
         <audio id="audio" preload controls *ngIf="context === 'solo' || context === 'admin'"
             src="{{getAudioPath()}}"></audio>
         <section class="question-header-section">

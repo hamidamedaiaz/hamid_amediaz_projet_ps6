@@ -225,3 +225,28 @@ html {
     margin-top: 20px;
   }
 }
+
+.home-page-title {
+  font-size: 5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center; /* centre horizontalement */
+  align-items: center;     /* centre verticalement */
+  height: 80%;
+  width: 100%;
+  color: #006A71;
+  font-family: "Unbounded", sans-serif;
+
+}
+
+
+#subText{
+  position: absolute;
+  top: 45%;
+  left:38%;
+  font-size: 20px;
+  color:dimgrey;
+}
+
+

@@ -7,7 +7,7 @@
             </svg>
         </button>
     </div>
-    
+
     <div class="profile-card">
         <div class="profile-avatar">
             {{ getInitials() }}
@@ -17,10 +17,10 @@
             <p class="profile-id">ID: {{profile?.id}}</p>
         </div>
     </div>
-    
+
     <div class="configuration-section">
         <h3 class="section-title">Paramètres de jeu</h3>
-        
+
         <div class="settings-group">
             <div class="setting-item">
                 <label for="hint-timer-selector">Temps avant d'afficher les indices</label>
@@ -31,7 +31,7 @@
                     <option value="0">Afficher directement</option>
                 </select>
             </div>
-            
+
             <div class="setting-item">
                 <label for="relaunch-timer-selector">Temps avant de relancer le joueur</label>
                 <select id="relaunch-timer-selector" class="configuration-select">
@@ -41,7 +41,7 @@
                     <option value="0">Jamais</option>
                 </select>
             </div>
-            
+
             <div class="setting-item">
                 <label for="remove-answer-timer-selector">Temps avant d'enlever une réponse</label>
                 <select id="remove-answer-timer-selector" class="configuration-select">
@@ -60,7 +60,7 @@
                     <option value="0">Aucun</option>
                 </select>
             </div>
-            
+
             <div class="setting-item">
                 <label for="answer-count-selector">Nombre de réponses affichées</label>
                 <select id="answer-count-selector" class="configuration-select">
@@ -70,13 +70,20 @@
                 </select>
             </div>
         </div>
-        
+
         <h3 class="section-title">Options d'affichage</h3>
-        
         <div class="settings-group">
+          <div class="setting-item">
+            <label>Taille de police</label>
+            <select class="configuration-select">
+              <option value="Petit">Petit</option>
+              <option value="Moyen" selected>Moyen</option>
+              <option value="Grand">Grand</option>
+            </select>
+          </div>
         </div>
     </div>
-    
+
     <div class="action-buttons">
         <button class="save-button" (click)="saveConfiguration()">Enregistrer</button>
         <button class="cancel-button" (click)="closeConfiguration()">Annuler</button>

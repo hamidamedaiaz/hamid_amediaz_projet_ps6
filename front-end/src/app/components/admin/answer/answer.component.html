@@ -1,9 +1,8 @@
-<div class="reponses">
-  <input id="quiz-answer" type="text" placeholder="Saisisez une réponse"
+<div class="answer-item">
+  <input type="text" class="answer-input" placeholder="Saisissez une réponse"
          [ngModel]="answer"
          (ngModelChange)="answerChange.emit($event)">
-  <input type="checkbox" class="toggle"
+  <input type="checkbox" class="answer-checkbox"
          [checked]="isCorrect">
-  <img id="delete-answer" src="/assets/icons/delete.png" alt="Supprimer" (click)="deleteAnswer()">
-
+  <button class="delete-btn" (click)="deleteAnswer()">Supprimer</button>
 </div>

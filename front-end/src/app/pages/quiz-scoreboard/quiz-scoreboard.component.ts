@@ -29,6 +29,7 @@ export class QuizScoreboardComponent {
 
   public replay(){
     console.log("replay")
+    this.router.navigate(["/select-quiz"])
   }
 
   public exit(){

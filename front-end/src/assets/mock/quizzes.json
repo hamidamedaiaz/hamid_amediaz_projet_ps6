@@ -8,9 +8,9 @@
         "questionId": 101,
         "question": "Quel groupe a sorti 'Bohemian Rhapsody' en 1975 ?",
         "answers": [
-          { "questionId": 101, "answerId": 1, "answerContent": "Queen" },
           { "questionId": 101, "answerId": 2, "answerContent": "The Beatles" },
-          { "questionId": 101, "answerId": 3, "answerContent": "The Rolling Stones" }
+          { "questionId": 101, "answerId": 3, "answerContent": "The Rolling Stones" },
+          { "questionId": 101, "answerId": 4, "answerContent": "Genesis" }
         ],
         "correctAnswer": [
           { "questionId": 101, "answerId": 1, "answerContent": "Queen" }
@@ -22,9 +22,9 @@
         "questionId": 102,
         "question": "Quel album des Pink Floyd est sorti en 1973 ?",
         "answers": [
-          { "questionId": 102, "answerId": 4, "answerContent": "Dark Side of the Moon" },
           { "questionId": 102, "answerId": 5, "answerContent": "The Wall" },
-          { "questionId": 102, "answerId": 6, "answerContent": "Wish You Were Here" }
+          { "questionId": 102, "answerId": 6, "answerContent": "Wish You Were Here" },
+          { "questionId": 102, "answerId": 7, "answerContent": "Animals" }
         ],
         "correctAnswer": [
           { "questionId": 102, "answerId": 4, "answerContent": "Dark Side of the Moon" }
@@ -36,9 +36,9 @@
         "questionId": 103,
         "question": "Qui a chanté 'Hotel California' en 1976 ?",
         "answers": [
-          { "questionId": 103, "answerId": 7, "answerContent": "The Eagles" },
           { "questionId": 103, "answerId": 8, "answerContent": "Fleetwood Mac" },
-          { "questionId": 103, "answerId": 9, "answerContent": "Led Zeppelin" }
+          { "questionId": 103, "answerId": 9, "answerContent": "Led Zeppelin" },
+          { "questionId": 103, "answerId": 10, "answerContent": "Creedence Clearwater Revival" }
         ],
         "correctAnswer": [
           { "questionId": 103, "answerId": 7, "answerContent": "The Eagles" }
@@ -57,9 +57,9 @@
         "questionId": 201,
         "question": "Qui a chanté 'Stayin' Alive' en 1977 ?",
         "answers": [
-          { "questionId": 201, "answerId": 10, "answerContent": "Bee Gees" },
           { "questionId": 201, "answerId": 11, "answerContent": "Earth, Wind & Fire" },
-          { "questionId": 201, "answerId": 12, "answerContent": "Kool & The Gang" }
+          { "questionId": 201, "answerId": 12, "answerContent": "Kool & The Gang" },
+          { "questionId": 201, "answerId": 13, "answerContent": "Village People" }
         ],
         "correctAnswer": [
           { "questionId": 201, "answerId": 10, "answerContent": "Bee Gees" }
@@ -72,8 +72,8 @@
         "question": "Quel est le tube le plus célèbre de Michael Jackson en 1983 ?",
         "answers": [
           { "questionId": 202, "answerId": 13, "answerContent": "Beat It" },
-          { "questionId": 202, "answerId": 14, "answerContent": "Billie Jean" },
-          { "questionId": 202, "answerId": 15, "answerContent": "Thriller" }
+          { "questionId": 202, "answerId": 15, "answerContent": "Thriller" },
+          { "questionId": 202, "answerId": 16, "answerContent": "Wanna Be Startin' Somethin'" }
         ],
         "correctAnswer": [
           { "questionId": 202, "answerId": 14, "answerContent": "Billie Jean" }
@@ -85,9 +85,9 @@
         "questionId": 203,
         "question": "Quel groupe a chanté 'Le Freak' en 1978 ?",
         "answers": [
-          { "questionId": 203, "answerId": 16, "answerContent": "Chic" },
           { "questionId": 203, "answerId": 17, "answerContent": "Village People" },
-          { "questionId": 203, "answerId": 18, "answerContent": "Boney M." }
+          { "questionId": 203, "answerId": 18, "answerContent": "Boney M." },
+          { "questionId": 203, "answerId": 19, "answerContent": "KC and the Sunshine Band" }
         ],
         "correctAnswer": [
           { "questionId": 203, "answerId": 16, "answerContent": "Chic" }

@@ -12,7 +12,7 @@
         <img class="logo" ngSrc="assets/icons/stats.png" height="512" width="512">
         <span>Statistiques</span>
       </button>
-      
+
       <!-- Sous-menu des statistiques -->
       <div class="submenu" [class.open]="showStatsSubmenu">
         <button class="sidebar-btn submenu-btn" (click)="setSection('stats-accueilli')">
@@ -22,7 +22,7 @@
           <span>Statistiques Quiz</span>
         </button>
       </div>
-      
+
       <button class="sidebar-btn" (click)="setSection('quiz')">
         <img class="logo" ngSrc="assets/icons/quiz-logo.png" height="512" width="512">
         <span>Quiz</span>
@@ -35,20 +35,26 @@
         <span>Retour</span>
       </button>
     </nav>
-    
+
     <main class="content">
       <div *ngIf="activeSection === 'home'">
-        <p>c'est le home</p>
+        <span class="home-page-title">Octave- Admin</span>
+
+        <p id="subText">Utilisez la barre latérale pour naviguer</p>
       </div>
-      
+
       <div *ngIf="activeSection === 'stats-accueilli'">
         <app-stats-accueilli></app-stats-accueilli>
       </div>
-      
+
+      <div *ngIf="activeSection === 'stats-quiz'">
+        <app-stats-quiz></app-stats-quiz>
+      </div>
+
       <div *ngIf="activeSection === 'quiz'">
         <app-quiz-app [context]="'admin'"></app-quiz-app>
       </div>
-      
+
       <div *ngIf="activeSection === 'acceuilli'" class="acceuilli-section">
         <div class="profiles-panel" [ngClass]="{'collapsed': selectedProfile}">
           <h2 class="section-title">Liste des Joueurs</h2>
@@ -58,7 +64,7 @@
             [context]="'admin'">
           </app-profile-list>
         </div>
-        
+
         <div *ngIf="selectedProfile" class="config-panel">
           <app-profile-configuration
             [profile]="selectedProfile"
@@ -66,7 +72,7 @@
           </app-profile-configuration>
         </div>
       </div>
-      
+
       <div *ngIf="activeSection === 'quiz-details'">
         <app-quiz-details *ngIf="activeQuiz" [quiz]="activeQuiz"></app-quiz-details>
       </div>

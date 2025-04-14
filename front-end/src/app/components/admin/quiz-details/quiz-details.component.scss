@@ -188,3 +188,48 @@
 #add-question:hover {
   background-color: #16a085;
 }
+
+
+#hint-section {
+  margin-top: 40px;
+}
+
+.hint-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.hint-input {
+  flex-grow: 1;
+  height: 40px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 10px;
+  outline: none;
+  font-size: 14px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  margin-right: 10px;
+  background-color: #f9f9f9;
+}
+
+.hint-input:focus {
+  border-color: #1abc9c;
+  box-shadow: 0 0 5px rgba(26, 188, 156, 0.5);
+}
+
+.delete-btn {
+  background: #e74c3c;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.delete-btn:hover {
+  background-color: #c0392b;
+}

@@ -12,6 +12,7 @@ import { MultiplayerGameAdminViewComponent } from './pages/multiplayer-game-admi
 import { WaitingStartPageComponent } from './pages/waiting-start-page/waiting-start-page.component';
 import { SelectQuizPageComponent } from './pages/select-quiz-page/select-quiz-page.component';
 import { PlayerStatsDetailsComponent } from './pages/player-stats-details/player-stats-details.component';
+import { QuizStatsDetailsComponent } from './pages/quiz-stats-details/quiz-stats-details.component';
 import { QuizResultDetailsComponent } from './pages/quiz-result-details/quiz-result-details.component';
 import { QuizScoreboardComponent } from './pages/quiz-scoreboard/quiz-scoreboard.component';
 import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.component';
@@ -29,8 +30,9 @@ const routes: Routes = [
   {path:'multiplayer-game-admin-view',component: MultiplayerGameAdminViewComponent},
   {path:'waiting-start', component:WaitingStartPageComponent},
   {path:'select-quiz', component:SelectQuizPageComponent},
-  {path:'quiz-scoreboard', component:QuizScoreboardComponent},  
+  {path:'quiz-scoreboard', component:QuizScoreboardComponent},
   {path:'player-stats/:id', component: PlayerStatsDetailsComponent},
+  {path:'quiz-stats/:id', component: QuizStatsDetailsComponent},
   {path:'quiz-result/:profileId/:quizId', component: QuizResultDetailsComponent},
   {path:'quiz-scoreboard',component:QuizScoreboardComponent},
 
