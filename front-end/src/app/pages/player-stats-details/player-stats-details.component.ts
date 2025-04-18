@@ -3,30 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ProfileService } from 'src/services/profile.service';
 import { QuizService } from 'src/services/quiz-list.service';
+import { QuizResultService } from 'src/services/quiz-result.service';
 import { Profile } from 'src/models/profile.model';
-import { Quiz } from 'src/models/quiz.model';
-
-interface GameHistory {
-  quizId: number;
-  quizTitle: string;
-  date: string;
-  score: number;
-  totalQuestions: number;
-  percentageCorrect: number;
-  timeSpent: number;
-  hintsUsed: number;
-}
-
-interface MonthProgress {
-  month: string;
-  score: number;
-}
-
-interface QuizCategoryData {
-  category: string;
-  count: number;
-  percentage: number;
-}
 
 @Component({
   selector: 'app-player-stats-details',
@@ -39,12 +17,10 @@ export class PlayerStatsDetailsComponent implements OnInit {
   profile: Profile | null = null;
   profileId: number = 0;
   
-
+  // Données statistiques
   totalGames: number = 0;
   bestScore: number = 0;
   averageScore: number = 0;
-  
-
   averageTimePerQuestion: number = 0;
   totalHintsUsed: number = 0;
   avgTimeBetweenAnswers: number = 0;
@@ -53,26 +29,20 @@ export class PlayerStatsDetailsComponent implements OnInit {
   correctAnswersPercent: number = 0;
   incorrectAnswersPercent: number = 0;
   
-
-  monthlyPerformance: MonthProgress[] = [];
-  quizCategoryData: QuizCategoryData[] = [];
-  quizResults: GameHistory[] = [];
+  // Données de progression
+  monthlyPerformance: any[] = [];
+  quizResults: any[] = [];
   
-
-
   activeTab: 'score' | 'hints' | 'time' | 'accuracy' = 'score';
   
-
-
   Math = Math;
-  
-  private readonly months = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin'];
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private profileService: ProfileService,
-    private quizService: QuizService
+   
+    private quizResultService: QuizResultService
   ) {}
 
   ngOnInit() {
@@ -80,7 +50,7 @@ export class PlayerStatsDetailsComponent implements OnInit {
       this.profileId = Number(params['id']);
       if (this.profileId) {
         this.loadProfileData();
-        this.generateStatsData();
+        this.statistics();
       } else {
         this.router.navigate(['/admin']);
       }
@@ -96,98 +66,34 @@ export class PlayerStatsDetailsComponent implements OnInit {
     });
   }
 
-
-
-  generateStatsData() {
-
-
-    this.totalGames = Math.floor(Math.random() * 20) + 5;
-    this.bestScore = Math.floor(Math.random() * 20) + 75;
-    this.averageScore = Math.floor(Math.random() * 30) + 60;
+  statistics() {
+    const playerStats = this.quizResultService.getPlayerTotalStats(this.profileId);
     
-
-
-    this.averageTimePerQuestion = Math.floor(Math.random() * 100) / 10 + 5;
-    this.avgTimeBetweenAnswers = this.averageTimePerQuestion + Math.random() * 2;
-    this.totalHintsUsed = Math.floor(Math.random() * this.totalGames * 3);
+    this.totalGames = playerStats.totalGames;
+    this.bestScore = playerStats.bestScore;
+    this.averageScore = playerStats.averageScore;
+    this.averageTimePerQuestion = playerStats.averageTimePerQuestion;
+    this.totalHintsUsed = playerStats.totalHintsUsed;
+    this.avgTimeBetweenAnswers = playerStats.averageTimePerQuestion;
+    this.correctAnswersPercent = playerStats.correctAnswersPercent;
+    this.incorrectAnswersPercent = playerStats.incorrectAnswersPercent;
     
-
-
-    const totalQuestions = this.totalGames * 10; // Hypothèse: 10 questions par quiz
-    this.totalCorrectAnswers = Math.floor(totalQuestions * this.averageScore / 100);
-    this.totalIncorrectAnswers = totalQuestions - this.totalCorrectAnswers;
-    this.correctAnswersPercent = Math.round((this.totalCorrectAnswers / totalQuestions) * 100);
-    this.incorrectAnswersPercent = 100 - this.correctAnswersPercent;
-
-
-
-
-    this.monthlyPerformance = this.months.map(month => ({
-      month,
-      score: Math.floor(Math.random() * 30) + 50
-    }));
-
-
-
-
-    const categories = ['Années 80', 'Années 90', 'Rock', 'Pop', 'Jazz'];
-    let totalCount = 0;
+    this.chargementDesdoneeMonsuelle();
     
-    this.quizCategoryData = categories.map(category => {
-      const count = Math.floor(Math.random() * 5) + 1;
-      totalCount += count;
-      return { category, count, percentage: 0 };
-    });
-    
-
-
-    this.quizCategoryData.forEach(category => {
-      category.percentage = Math.round((category.count / totalCount) * 100);
-    });
-
-
-
-    this.quizService.quizzes$.subscribe(quizzes => {
-      this.quizResults = Array.from({length: Math.min(8, this.totalGames)}, (_, i) => {
-        const quizIndex = i % Math.max(1, quizzes.length);
-        const quiz = quizzes[quizIndex] || {
-          id: i + 1,
-          title: `Quiz Exemple ${i + 1}`,
-          description: 'Quiz généré',
-          questions: []
-        };
-        
-        const totalQuestions = quiz.questions.length || 10;
-        const correctQuestions = Math.floor(Math.random() * totalQuestions) + Math.floor(totalQuestions / 3);
-        
-        return {
-          quizId: quiz.id,
-          quizTitle: quiz.title,
-          date: this.getRandomDate(),
-          score: correctQuestions,
-          totalQuestions: totalQuestions,
-          percentageCorrect: Math.round((correctQuestions / totalQuestions) * 100),
-          timeSpent: Math.floor(Math.random() * 20) + 5,
-          hintsUsed: Math.floor(Math.random() * 3)
-        };
-      });
-      
-
-
-      this.quizResults.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-    });
+    this.quizResults = this.quizResultService.getQuizHistoryForPlayer(this.profileId);
   }
-
-  getRandomDate(): string {
-    const now = new Date();
-    const pastDate = new Date();
-    pastDate.setDate(now.getDate() - Math.floor(Math.random() * 60));
-    return pastDate.toLocaleDateString();
-  }
-
-  getInitials(profile: Profile): string {
-    if (!profile) return '';
-    return (profile.name.charAt(0) + profile.lastName.charAt(0)).toUpperCase();
+getInitials(profile: Profile): string {
+  if (!profile) return '';
+  
+  const firstName = profile.name.charAt(0).toUpperCase();
+  const lastName = profile.lastName.charAt(0).toUpperCase();
+  
+  return firstName + lastName;
+}
+  
+  chargementDesdoneeMonsuelle() {
+    // Chargement des données mensuelles selon l'onglet actif
+    this.setActiveTab(this.activeTab);
   }
 
   getScoreColor(score: number): string {
@@ -199,35 +105,31 @@ export class PlayerStatsDetailsComponent implements OnInit {
   setActiveTab(tab: 'score' | 'hints' | 'time' | 'accuracy') {
     this.activeTab = tab;
     
+    const monthlyData = this.quizResultService.getPlayerMonthlyStats(this.profileId);
     
-
-
     switch(tab) {
       case 'score':
-        this.monthlyPerformance = this.months.map(month => ({
-          month,
-          score: Math.floor(Math.random() * 30) + 50
+        this.monthlyPerformance = monthlyData.map((data :any) => ({
+          month: data.month,
+          score: data.score
         }));
         break;
       case 'hints':
-        this.monthlyPerformance = this.months.map(month => ({
-          month,
-
-          score: Math.floor(Math.random() * 60) + 20
+        this.monthlyPerformance = monthlyData.map((data :any) => ({
+          month: data.month,
+          score: data.hintUsage
         }));
         break;
       case 'time':
-        this.monthlyPerformance = this.months.map(month => ({
-          month,
-
-
-          score: Math.floor(Math.random() * 40) + 40
+        this.monthlyPerformance = monthlyData.map((data :any) => ({
+          month: data.month,
+          score: data.responseTime
         }));
         break;
       case 'accuracy':
-        this.monthlyPerformance = this.months.map(month => ({
-          month,
-          score: Math.floor(Math.random() * 25) + 65
+        this.monthlyPerformance = monthlyData.map((data :any) => ({
+          month: data.month,
+          score: data.accuracy
         }));
         break;
     }
@@ -241,5 +143,4 @@ export class PlayerStatsDetailsComponent implements OnInit {
     this.router.navigate(['/admin'], { 
       queryParams: { section: 'stats-accueilli' } 
     });
-  }
-}
+  }}

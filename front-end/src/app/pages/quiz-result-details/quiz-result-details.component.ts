@@ -79,7 +79,6 @@ export class QuizResultDetailsComponent implements OnInit {
         this.quizResult = this.quizResultService.getResultByProfileAndQuiz(this.profileId, this.quizId);
         
         if (this.quizResult) {
-
           this.quizDate = this.formatDate(this.quizResult.date);
           this.score = this.quizResult.score;
           this.totalQuestions = this.quizResult.totalQuestions;
@@ -91,32 +90,30 @@ export class QuizResultDetailsComponent implements OnInit {
           this.totalIndiceUsed = this.quizResult.hintsUsed;
           this.questionResults = this.quizResult.questionResults;
         } else {
-
-          this.generateDemoData();
+          this.createDemoResult();
         }
       });
     });
   }
   
-  generateDemoData() {
-
-    this.quizDate = this.formatDate(new Date());
-    this.score = 8;
-    this.totalQuestions = 10;
-    this.percentage = 80;
-    this.averageTimePerQuestion = 12.5;
-    this.totalIndiceUsed = 3;
-    
+  createDemoResult() {
     if (this.quiz) {
+      this.quizDate = this.formatDate(new Date());
+      this.score = Math.round(this.quiz.questions.length * 0.8); 
+      this.totalQuestions = this.quiz.questions.length;
+      this.percentage = 80;
+      this.averageTimePerQuestion = 12.5;
+      this.totalIndiceUsed = 3;
+      
       this.questionResults = this.quiz.questions.map((question, index) => {
-        const isCorrect = index < 8; 
+        const isCorrect = index < this.score; 
         return {
           questionId: question.questionId,
           question: question.question,
           correctAnswer: question.correctAnswer[0],
           userAnswer: isCorrect ? question.correctAnswer[0] : question.answers[0],
           isCorrect: isCorrect,
-          timeSpent: 2,
+          timeSpent: Math.floor(Math.random() * 15) + 10, 
           hintsUsed: isCorrect ? 0 : 1 
         };
       });
