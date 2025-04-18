@@ -1,68 +1,20 @@
 <div class="quiz-result-container" *ngIf="quiz && profile">
   <app-quiz-result-header (goBack)="navigateBack()"></app-quiz-result-header>
-    <app-quiz-result-info
-    [averageTimePerQuestion]="averageTimePerQuestion"
-    [quizDate]="quizDate"
-    [profile]="profile"
-    [percentage]="percentage"
-    [quiz]="quiz"
-    [totalindIceUsed]="totalIndicetsUsed"
-    [score]="score"
-    ></app-quiz-result-info>
-    
-    <div class="questions-section">
-      <h2 class="section-title">Détail des Réponses</h2>
-      
-      <div class="questions-list">
-        <div class="question-item" *ngFor="let result of questionResults; let i = index" [ngClass]="getScoreClass(result.isCorrect)">
-          <div class="question-header">
-            <span class="question-number">Question {{ i + 1 }}</span>
-            <span class="question-result-badge" [ngClass]="getScoreClass(result.isCorrect)">
-              {{ result.isCorrect ? 'Correct' : 'Incorrect' }}
-            </span>
-          </div>
-          
-          <div class="question-content">
-            <p class="question-text">{{ result.question }}</p>
-            
-            <div class="answers-container">
-              <!-- Toutes les réponses possibles avec pourcentages -->
-              <div *ngFor="let answerOption of result.allAnswerPercentages" class="answer-item" 
-                   [ngClass]="{'selected-answer': answerOption.answer === result.userAnswer, 
-                               'correct-answer': answerOption.isCorrect}">
-                <div class="answer-content">
-                  <span class="answer-text">{{ answerOption.answer }}</span>
-                  <!--<div class="answer-percentage-bar" [style.width.%]="answerOption.percent"></div>-->
-                  <!--<span class="answer-percentage">{{ answerOption.percent }}%</span>-->
-                </div>
-                <div class="answer-indicator">
-                  <i *ngIf="answerOption.answer === result.userAnswer && result.isCorrect" class="fa fa-check correct-icon"></i>
-                  <i *ngIf="answerOption.answer === result.userAnswer && !result.isCorrect" class="fa fa-times incorrect-icon"></i>
-                  <i *ngIf="answerOption.isCorrect && answerOption.answer !== result.userAnswer" class="fa fa-check-circle correct-answer-icon"></i>
-                </div>
-              </div>
-            </div>
-            
-            <div class="question-metrics">
-              <div class="metric-item">
-                <span class="metric-icon time-small"></span>
-                <span class="metric-label">Temps:</span>
-                <span class="metric-value">{{ result.timeSpent }}s</span>
-              </div>
-              
-              <div class="metric-item">
-                <span class="metric-icon hint-small"></span>
-                <span class="metric-label">Indices:</span>
-                <span class="metric-value">{{ result.hintsUsed }}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
   
-  <div class="loading-container" *ngIf="!quiz || !profile">
-    <div class="spinner"></div>
-    <p class="loading-text">Chargement des résultats...</p>
-  </div>
+  <app-quiz-result-info
+    [quiz]="quiz"
+    [profile]="profile"
+    [quizDate]="quizDate"
+    [score]="score"
+    [totalQuestions]="totalQuestions"
+    [percentage]="percentage"
+    [averageTimePerQuestion]="averageTimePerQuestion"
+    [totalindIceUsed]="totalIndiceUsed">
+  </app-quiz-result-info>
+  
+  <app-quiz-result-questions [questionResults]="questionResults"></app-quiz-result-questions>
+</div>
+
+<div class="loading-container" *ngIf="!quiz || !profile">
+  <div class="spinner"></div>
+</div>
