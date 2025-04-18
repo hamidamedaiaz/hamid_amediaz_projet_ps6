@@ -13,13 +13,32 @@
     </div>
   </div>
 
+
+  <div class="quiz-creation-left-container" *ngIf="selectedQuestion == undefined">
+    <div id="quiz-empty-message">
+      <h2>Aucune question sélectionnée</h2>
+      <p>Sélectionnez une question dans la liste ou cliquez sur "+ Ajouter question".</p>
+    </div>
+  </div>
+
+
+
   <!-- Section de création de question et de réponses -->
-  <div id="quiz-creation-left-container">
+  <div class="quiz-creation-left-container" *ngIf="selectedQuestion != undefined">
     <div id="quiz-creation-section">
       <!-- Section de création de question -->
       <div id="question-section">
         <h2 class="title-quiz-template">Question :</h2>
-        <input type="text" class="question-input" placeholder="Entrez la question..." [(ngModel)]="selectedQuestionTitle"  (ngModelChange)="updateQuestionTitle()">
+        <div class="question-with-audio">
+          <input type="text" class="question-input" placeholder="Entrez la question..."
+                 [(ngModel)]="selectedQuestionTitle"
+                 (ngModelChange)="updateQuestionTitle()">
+
+          <label class="audio-upload-label">
+            + Ajouter une musique
+            <input type="file" id="audio-upload">
+          </label>
+        </div>
       </div>
 
       <!-- Section de création de réponses -->
@@ -41,14 +60,19 @@
       <!-- Section de création d'indices -->
       <div id="hint-section">
         <h2 class="title-quiz-template">Indices :</h2>
-        <div *ngFor="let hint of selectedQuestionHints; let k = index">
-          <div class="hint-item">
-            <input type="text" class="hint-input" placeholder="Entrez un indice...">
-            <button class="delete-btn" (click)="deleteHint(k)">Supprimer</button>
-          </div>
+
+        <div *ngFor="let hint of selectedQuestionHints; let k = index" class="hint-item">
+          <input type="text" class="hint-input" placeholder="Entrez un indice..."
+                 [ngModel]="selectedQuestionHints[k]"
+                 (ngModelChange)="updateHintText(k, $event)">
+          <button class="delete-btn" (click)="deleteHint(k)">Supprimer</button>
         </div>
+
+
+        <!-- On place le bouton ici, en bas -->
         <button id="add-hint" class="simple-btn" (click)="addHint()">+ Ajouter indice</button>
       </div>
+
 
     </div>
   </div>

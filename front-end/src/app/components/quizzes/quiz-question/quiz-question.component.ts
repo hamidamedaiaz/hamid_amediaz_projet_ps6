@@ -70,7 +70,7 @@ export class QuizQuestionComponent {
   
     //const shuffledAnswers = allAnswers.filter(ans => !this.selectedAnswer.some(sel => sel.answerId === ans.answerId));
 
-    return allAnswers.filter(ans => !this.selectedAnswer.some(sel => sel.answerId === ans.answerId));;
+    return allAnswers.filter(ans => !this.selectedAnswer.some(sel => sel.answerId === ans.answerId && sel.questionId === ans.questionId));;
       
   }
 

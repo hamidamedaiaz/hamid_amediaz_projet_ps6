@@ -1,39 +1,14 @@
 <div class="quiz-result-container" *ngIf="quiz && profile">
-    <div class="header-section">
-      <button class="back-button" (click)="navigateBack()">
-        <i class="fa fa-arrow-left"></i> Retour
-      </button>
-      <h1 class="page-title">Résultat du Quiz</h1>
-    </div>
-    
-    <div class="info-section">
-      <div class="quiz-profile-info">
-        <h2 class="quiz-title">{{ quiz.title }}</h2>
-        <p class="quiz-date">{{ quizDate }}</p>
-        <p class="profile-name">Joueur: {{ profile.name }} {{ profile.lastName }}</p>
-      </div>
-      
-      <div class="score-summary">
-        <div class="score-badge" [ngClass]="percentageCorrect >= 70 ? 'high-score' : (percentageCorrect >= 50 ? 'medium-score' : 'low-score')">
-          <span class="score-value">{{ score }}/{{ totalQuestions }}</span>
-          <span class="score-percentage">{{ percentageCorrect }}%</span>
-        </div>
-        
-        <div class="stats-details">
-          <div class="stat-item">
-            <span class="stat-icon time-icon"></span>
-            <span class="stat-label">Temps moyen:</span>
-            <span class="stat-value">{{ averageTimePerQuestion }}s par question</span>
-          </div>
-          
-          <div class="stat-item">
-            <span class="stat-icon hint-icon"></span>
-            <span class="stat-label">Indices utilisés:</span>
-            <span class="stat-value">{{ totalHintsUsed }} au total</span>
-          </div>
-        </div>
-      </div>
-    </div>
+  <app-quiz-result-header (goBack)="navigateBack()"></app-quiz-result-header>
+    <app-quiz-result-info
+    [averageTimePerQuestion]="averageTimePerQuestion"
+    [quizDate]="quizDate"
+    [profile]="profile"
+    [percentage]="percentage"
+    [quiz]="quiz"
+    [totalindIceUsed]="totalIndicetsUsed"
+    [score]="score"
+    ></app-quiz-result-info>
     
     <div class="questions-section">
       <h2 class="section-title">Détail des Réponses</h2>
@@ -57,8 +32,8 @@
                                'correct-answer': answerOption.isCorrect}">
                 <div class="answer-content">
                   <span class="answer-text">{{ answerOption.answer }}</span>
-                  <div class="answer-percentage-bar" [style.width.%]="answerOption.percent"></div>
-                  <span class="answer-percentage">{{ answerOption.percent }}%</span>
+                  <!--<div class="answer-percentage-bar" [style.width.%]="answerOption.percent"></div>-->
+                  <!--<span class="answer-percentage">{{ answerOption.percent }}%</span>-->
                 </div>
                 <div class="answer-indicator">
                   <i *ngIf="answerOption.answer === result.userAnswer && result.isCorrect" class="fa fa-check correct-icon"></i>

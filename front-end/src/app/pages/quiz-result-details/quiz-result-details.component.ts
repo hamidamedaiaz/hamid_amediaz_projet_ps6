@@ -7,6 +7,9 @@ import { Quiz } from 'src/models/quiz.model';
 import { Profile } from 'src/models/profile.model';
 import { Question } from 'src/models/question.model';
 import { Answer } from 'src/models/answer.model';
+import { QuizResultHeaderComponent } from 'src/app/components/admin/quiz-results/quiz-result-header/quiz-result-header.component';
+import { QuizResultInfoComponent } from "../../components/admin/quiz-results/quiz-result-info/quiz-result-info.component";
+import { Input } from '@angular/core';
 
 
 
@@ -26,7 +29,7 @@ interface QuestionResult {
 @Component({
   selector: 'app-quiz-result-details',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, QuizResultHeaderComponent, QuizResultInfoComponent],
   templateUrl: './quiz-result-details.component.html',
   styleUrl: './quiz-result-details.component.scss'
 })
@@ -36,12 +39,12 @@ export class QuizResultDetailsComponent implements OnInit {
   quiz: Quiz | null = null;
   profile: Profile | null = null;
   
-  quizDate: string = '';
+  @Input()quizDate: string = '';
   score: number = 0;
   totalQuestions: number = 0;
-  percentageCorrect: number = 0;
+  percentage: number = 0;
   averageTimePerQuestion: number = 0;
-  totalHintsUsed: number = 0;
+  @Input()totalIndicetsUsed: number = 0;
   
   questionResults: QuestionResult[] = [];
   
@@ -92,16 +95,14 @@ export class QuizResultDetailsComponent implements OnInit {
   }
   
   generateQuizResultsData() {
-    this.quizDate = this.getRandomDate();
-    this.totalQuestions = Math.floor(Math.random() * 5) + 10;
+    this.totalQuestions = 10;
 
 
-    this.score = Math.floor(Math.random() * (this.totalQuestions - 5)) + 5; 
+    this.score = 8; 
 
 
-    this.percentageCorrect = Math.round((this.score / this.totalQuestions) * 100);
-    this.averageTimePerQuestion = Math.floor(Math.random() * 10) + 5; 
-    this.totalHintsUsed = Math.floor(Math.random() * 10);
+    this.percentage = Math.round((this.score / this.totalQuestions) * 100);
+    this.averageTimePerQuestion = 5; 
     
     this.questionResults = this.generateMockQuestionResults();
   }

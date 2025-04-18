@@ -10,7 +10,7 @@ import {Router, RouterLink} from "@angular/router";
 @Component({
   selector: 'app-quiz-details',
   standalone: true,
-  imports: [FormsModule, CommonModule, AnswerComponent, RouterLink],
+  imports: [FormsModule, CommonModule, AnswerComponent],
   templateUrl: './quiz-details.component.html',
   styleUrls: ['./quiz-details.component.scss']
 })
@@ -27,15 +27,38 @@ export class QuizDetailsComponent implements OnChanges {
   private selectedQuestionAnswers: Answer[] = [];
   private selectedQuestionCorrectAnswers: Answer[] = [];
 
-  selectedQuestionHints: String[] = [];
+  selectedQuestionHints: string[] = [];
 
 
-  constructor(private router: Router) {
-  }
+  constructor(private router: Router) {}
 
   addHint() {
+    if (this.selectedQuestionHints) {
+      this.selectedQuestionHints.push("");
+    }
+    this.updateQuizHints();
   }
+
+  updateHintText(index: number, newText: string) {
+    if (this.selectedQuestion) {
+      this.selectedQuestion.hints[index] = newText;
+      this.updateQuizHints();
+    }
+  }
+
   deleteHint(index: number) {
+    if (this.selectedQuestionHints) {
+      this.selectedQuestionHints.splice(index, 1);
+      this.updateQuizHints();
+    }
+  }
+
+
+  updateQuizHints() {
+    // cette methode permet de mettre à jour le mock
+    if (this.selectedQuestion) {
+      this.selectedQuestion.hints = [...this.selectedQuestionHints];
+    }
   }
 
 
@@ -50,6 +73,7 @@ export class QuizDetailsComponent implements OnChanges {
     this.selectedQuestionTitle = this.selectedQuestion.question;
     this.selectedQuestionAnswers = this.selectedQuestion.answers;
     this.selectedQuestionCorrectAnswers = this.selectedQuestion.correctAnswer;
+    this.selectedQuestionHints = this.selectedQuestion.hints;
   }
 
   getAnswers(){
@@ -69,6 +93,7 @@ export class QuizDetailsComponent implements OnChanges {
       question: "",
       answers: [],
       correctAnswer: [],
+      hints: [],
       audioPath:"/assets/musics/Michael Jackson - Billie Jean.mp3"
     };
 

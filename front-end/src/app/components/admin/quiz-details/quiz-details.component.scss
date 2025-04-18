@@ -16,7 +16,7 @@
   position: relative;
 }
 
-#quiz-creation-left-container {
+.quiz-creation-left-container {
   width: 66%;
   height: 100%;
   padding: 2%;
@@ -53,9 +53,11 @@
   color: #444;
   border-bottom: 2px solid #1abc9c;
   display: inline-block;
+  width: fit-content;
   padding-bottom: 5px;
   margin-bottom: 20px;
 }
+
 
 .question-input, .answer-input {
   width: calc(100% - 30px);
@@ -192,7 +194,10 @@
 
 #hint-section {
   margin-top: 40px;
+  display: flex;
+  flex-direction: column; /* empile proprement */
 }
+
 
 .hint-item {
   display: flex;
@@ -232,4 +237,60 @@
 
 .delete-btn:hover {
   background-color: #c0392b;
+}
+
+
+#add-hint {
+  align-self: flex-start;
+  margin-top: 20px;
+}
+
+
+#quiz-empty-message {
+  margin-top: 30%;
+  text-align: center;
+  color: #333;
+}
+
+#quiz-empty-message h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: #444;
+}
+
+#quiz-empty-message p {
+  font-size: 1rem;
+  color: #666;
+}
+
+
+.question-with-audio {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.question-with-audio .question-input {
+  width: 70%;
+}
+
+.audio-upload-label {
+  background-color: #1abc9c;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background-color 0.3s;
+  white-space: nowrap;
+  margin-bottom: 10px;
+}
+
+.audio-upload-label:hover {
+  background-color: #16a085;
+}
+
+.audio-upload-label input[type="file"] {
+  // on enleve le parcourir les fichier qui est moche
+  display: none;
 }

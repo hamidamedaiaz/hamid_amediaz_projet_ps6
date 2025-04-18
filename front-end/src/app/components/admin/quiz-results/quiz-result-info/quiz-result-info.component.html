@@ -1,0 +1,28 @@
+<div class="info-section">
+    <div class="quiz-profile-info">
+      <h2 class="quiz-title">{{ quiz?.title }}</h2>
+      <p class="quiz-date">{{ quizDate }}</p>
+      <p class="profile-name">Joueur: {{ profile?.name }} {{ profile?.lastName }}</p>
+    </div>
+    
+    <div class="score-summary">
+      <div class="score-badge" [ngClass]="getScoreClass()">
+        <span class="score-value">{{ score }}/{{ totalQuestions }}</span>
+        <span class="score-percentage">{{ percentage }}%</span>
+      </div>
+      
+      <div class="stats-details">
+        <div class="stat-item">
+          <span class="stat-icon time-icon"></span>
+          <span class="stat-label">Temps moyen:</span>
+          <span class="stat-value">{{ averageTimePerQuestion }}s par question</span>
+        </div>
+        
+        <div class="stat-item">
+          <span class="stat-icon hint-icon"></span>
+          <span class="stat-label">Indices utilisés:</span>
+          <span class="stat-value">{{ totalindIceUsed }} au total</span>
+        </div>
+      </div>
+    </div>
+  </div>
