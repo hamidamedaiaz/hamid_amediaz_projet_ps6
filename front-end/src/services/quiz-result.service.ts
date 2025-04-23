@@ -171,8 +171,7 @@ export class QuizResultService {
       score: result.score,
       totalQuestions: result.totalQuestions,
       percentageCorrect: this.calculatePercentage(result.score, result.totalQuestions),
-      timeSpent: Math.round(result.timeSpent / result.totalQuestions), // Temps moyen par question
-      hintsUsed: result.hintsUsed
+      timeSpent: Math.round(result.timeSpent / result.totalQuestions),       hintsUsed: result.hintsUsed
     })).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
   }
 }

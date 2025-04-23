@@ -54,4 +54,8 @@ export class QuizAppComponent implements OnInit {
     this.router.navigate(["/singleplayer-game"])
   }
 
+  createQuiz(){
+      this.quizService.createQuiz();
+  }
+
 }

@@ -1,6 +1,13 @@
 <div id="container">
   <!-- Section de la liste des questions -->
   <div id="quiz-creation-right-container">
+
+    <div id="quiz-title">
+      <h2 class="title-quiz-template">Nom :</h2>
+      <input type="text" class="question-input" placeholder="Entrez la question..."
+             [(ngModel)]="this.quiz.title">
+    </div>
+
     <div id="question-list">
       <h2 class="title-quiz-template">Liste des questions :</h2>
       <div *ngFor="let question of quiz.questions; let i = index">

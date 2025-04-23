@@ -18,6 +18,8 @@ export class QuizDetailsComponent implements OnChanges {
   @Input() quiz!: Quiz;
   @Output() quizSaved = new EventEmitter<void>(); // Événement pour informer que le quiz est enregistré
 
+  quizTitle: String = "";
+
   questions: Question[] = [];
 
   selectedQuestion: Question | null = null;

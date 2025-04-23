@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ProfileService } from 'src/services/profile.service';
-import { QuizService } from 'src/services/quiz-list.service';
 import { QuizResultService } from 'src/services/quiz-result.service';
 import { Profile } from 'src/models/profile.model';
 
@@ -17,7 +16,6 @@ export class PlayerStatsDetailsComponent implements OnInit {
   profile: Profile | null = null;
   profileId: number = 0;
   
-  // Données statistiques
   totalGames: number = 0;
   bestScore: number = 0;
   averageScore: number = 0;
@@ -29,7 +27,6 @@ export class PlayerStatsDetailsComponent implements OnInit {
   correctAnswersPercent: number = 0;
   incorrectAnswersPercent: number = 0;
   
-  // Données de progression
   monthlyPerformance: any[] = [];
   quizResults: any[] = [];
   
@@ -92,7 +89,6 @@ getInitials(profile: Profile): string {
 }
   
   chargementDesdoneeMonsuelle() {
-    // Chargement des données mensuelles selon l'onglet actif
     this.setActiveTab(this.activeTab);
   }
 

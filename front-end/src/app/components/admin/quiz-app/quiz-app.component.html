@@ -6,6 +6,11 @@
   <div class="quiz-list" *ngIf="context==='admin'">
     <!-- Le ngFor permet de boucler dans chaque quizz en fonction de la barre de search-->
     <!-- le [quiz]= ... permet de rentrer l'input que le quizz-item demande-->
+
+    <div class="quiz-item create-quiz-item" (click)="createQuiz()">
+      <h3>+ Créer un quiz</h3>
+    </div>
+
     <app-quiz-item
       *ngFor="let quiz of filteredQuizzes()"
       [quiz]="quiz" (launchMultiGameEmitter)="launchMultiGame(quiz)">

@@ -1,0 +1,23 @@
+<div class="quiz-stats-container">
+  <h2>Statistiques du Quiz: {{ quiz.title }}</h2>
+
+  <div class="statistic">
+    <strong>Nombre de Questions: </strong>
+    <span>{{ getQuestionCount() }}</span>
+  </div>
+
+  <div class="statistic">
+    <strong>Nombre de fois joué: </strong>
+    <span>{{ getTimesPlayed() }}</span>
+  </div>
+
+  <div class="statistic">
+    <strong>Score moyen des joueurs: </strong>
+    <span>{{ getAverageScore() }}%</span>
+  </div>
+
+  <div class="statistic">
+    <strong>Dernier lancement: </strong>
+    <span>{{ getLastPlayedDate() }}</span>
+  </div>
+</div>

@@ -14,7 +14,6 @@
           <p class="question-text">{{ result.question }}</p>
           
           <div class="answers-container">
-            <!-- Toutes les réponses possibles (format original) -->
             <div *ngFor="let answer of getAllPossibleAnswers(result)" class="answer-item" 
                  [ngClass]="{
                    'selected-answer': isUserAnswer(answer, result.userAnswer), 

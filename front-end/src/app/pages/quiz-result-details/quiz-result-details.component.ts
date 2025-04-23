@@ -54,14 +54,14 @@ export class QuizResultDetailsComponent implements OnInit {
       this.quizId = Number(params['quizId']);
       
       if (this.profileId && this.quizId) {
-        this.loadData();
+        this.chargementDesDonne();
       } else {
         this.router.navigate(['/admin']);
       }
     });
   }
   
-  loadData() {
+  chargementDesDonne() {
     this.profileService.profiles$.subscribe(profiles => {
       this.profile = profiles.find(p => p.id === this.profileId) || null;
       if (!this.profile) {
@@ -90,13 +90,13 @@ export class QuizResultDetailsComponent implements OnInit {
           this.totalIndiceUsed = this.quizResult.hintsUsed;
           this.questionResults = this.quizResult.questionResults;
         } else {
-          this.createDemoResult();
+          this.creatNewResult();
         }
       });
     });
   }
   
-  createDemoResult() {
+  creatNewResult() {
     if (this.quiz) {
       this.quizDate = this.formatDate(new Date());
       this.score = Math.round(this.quiz.questions.length * 0.8); 
