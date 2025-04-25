@@ -46,6 +46,9 @@
             <input type="file" id="audio-upload">
           </label>
         </div>
+        <span class="button-info" *ngIf="selectedQuestion.audioPath">
+          Fichier musique sélectionné : {{ selectedQuestion.audioPath }}
+        </span>
       </div>
 
       <!-- Section de création de réponses -->
@@ -60,7 +63,7 @@
           </app-answer>
         </div>
 
-        <p id="button-info">Cochez la case à côté de la réponse pour indiquer qu'elle est juste</p>
+        <p class="button-info">Cochez la case à côté de la réponse pour indiquer qu'elle est juste</p>
         <button id="add-answer" class="simple-btn" (click)="addAnswer()">+ Ajouter réponse</button>
       </div>
 

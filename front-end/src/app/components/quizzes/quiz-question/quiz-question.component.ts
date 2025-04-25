@@ -8,6 +8,7 @@ import { CurrentProfileService } from 'src/services/currentProfile.service';
 import { Router } from '@angular/router';
 import { Profile } from 'src/models/profile.model';
 import { filter } from 'rxjs';
+
 @Component({
   selector: 'app-quiz-question',
   standalone: true,
@@ -39,15 +40,18 @@ export class QuizQuestionComponent {
 
   private currentProfile: Profile | undefined;
 
-  private selectedAnswer:Answer[]=[];
+  // Changed from selectedAnswer to wrongAnswers for better semantics
+  private wrongAnswers: Answer[] = [];
 
-  public showCorrectEffect:Boolean=false;
+  public showCorrectEffect: Boolean = false;
+
+  public hintsActive: Boolean = false;
 
   constructor(private router: Router, private currentProfileService: CurrentProfileService) {
     this.currentProfileService.current_profile$.subscribe((currentProfile) => {
       this.currentProfile = currentProfile;
     })
-    this.selectedAnswer=[];
+    this.wrongAnswers = [];
   }
 
   public setVolume(newVolume: number) {
@@ -66,12 +70,18 @@ export class QuizQuestionComponent {
   public getAnswers() {
     if (!this.question) return null;
   
+    // Get all answers including correct ones
     const allAnswers = (this.question.answers.concat(this.question.correctAnswer));
-  
-    //const shuffledAnswers = allAnswers.filter(ans => !this.selectedAnswer.some(sel => sel.answerId === ans.answerId));
+    
+    // Instead of filtering, we'll return all answers and handle visibility in the template
+    return allAnswers;
+  }
 
-    return allAnswers.filter(ans => !this.selectedAnswer.some(sel => sel.answerId === ans.answerId && sel.questionId === ans.questionId));;
-      
+  // Check if an answer is wrong (used for display logic)
+  public isWrongAnswer(answer: Answer): boolean {
+    return this.wrongAnswers.some(
+      wrong => wrong.answerId === answer.answerId && wrong.questionId === answer.questionId
+    );
   }
 
   public getAllAnswers(){
@@ -112,21 +122,15 @@ export class QuizQuestionComponent {
       );
   
       if (isCorrect) {
-        
         this.showCorrectEffect = true;
   
         setTimeout(() => {
           this.showCorrectEffect = false;
           this.correctAnswerEmitter.emit(true);
         }, 1000);
-
-        
-
       } else {
-        const index = this.question.answers.indexOf(answer);
-        if (index !== -1) {
-          this.selectedAnswer.push(answer);
-        }
+        // Add to wrong answers list instead of selected answers
+        this.wrongAnswers.push(answer);
       }
     }
   }
@@ -146,23 +150,21 @@ export class QuizQuestionComponent {
     const percent:number[] = [15, 50, 25, 10]
     const answerWithPercents:Object[]=[];
     const allAnswers = this.getAllAnswers()
-    //console.log("allanswers: ",allAnswers)
     if(this.question && allAnswers){
       for(let i = 0; i < allAnswers.length; i++){
         answerWithPercents.push({answer: allAnswers[i], percent: percent[i]})
       }
     }
-    console.log("answerwithpercent",answerWithPercents)
     return answerWithPercents;
   }
 
   public nextQuestion(){
-    this.selectedAnswer=[];
+    this.wrongAnswers = [];
     this.nextQuestionEmitter.emit(true);
   }
 
   public previousQuestion(){
-    this.selectedAnswer=[];
+    this.wrongAnswers = [];
     this.previousQuestionEmitter.emit(true);
   }
 
@@ -175,4 +177,7 @@ export class QuizQuestionComponent {
     return shuffled;
   }
 
+  public areHintsActive() : Boolean{
+    return this.hintsActive;
+  }
 }

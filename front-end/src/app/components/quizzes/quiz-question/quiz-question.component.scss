@@ -1,9 +1,9 @@
 .question-container {
-    display: grid;
-    grid-template-columns: 4fr 1fr;
-    grid-template-rows: 1fr;
-    height: 100vh;
-    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    overflow: hidden
 }
 
 .button {
@@ -18,22 +18,34 @@
     font-size: 20px;
 }
 
-.button:hover{
+.button:hover {
     background-color: #5f88af;
 }
 
+.previous-question-btn {
+    position: absolute;
+    left: 5%;
+    bottom: 5%;
+}
+
+.next-question-btn {
+    position: absolute;
+    right: 5%;
+    bottom: 5%;
+}
 
 .question-right-side {
-    grid-area: 1 / 2 / 2 / 3;
-    background-color:#9ACBD0;
+    background-color: #9ACBD0;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
     padding: 5vh 0px;
+    height: 100%;
+    width: 20%;
 }
 
-.hint-section{
+.hint-section {
     height: 90%;
     width: 80%;
     display: flex;
@@ -41,7 +53,7 @@
     align-items: flex-start;
 }
 
-.hint-title{
+.hint-title {
     color: #fff;
     font-family: Arial, sans-serif;
     font-size: 20px;
@@ -49,7 +61,7 @@
     margin-top: 20px;
 }
 
-.right-side-separator{
+.right-side-separator {
     width: 100%;
     height: 2px;
     border: none;
@@ -57,34 +69,36 @@
 }
 
 .question-left-side {
-    grid-area: 1 / 1 / 2 / 2;
+    
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 80%;
+    height: 100%;
 }
 
 .correct-flash {
     background-color: rgba(0, 255, 0, 0.4);
     transition: background-color 0.5s ease-in-out;
-  }
-  
+}
 
 
-.question-header-section{
+
+.question-header-section {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 80%;
 }
 
-.button-section{
+.button-section {
     display: flex;
     align-items: center;
     gap: 20px;
 }
 
-.answers-section{
+.answers-section {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(2, 1fr);
@@ -94,22 +108,23 @@
 }
 
 
-.volume-section{
+.volume-section {
     display: flex;
     align-items: center;
 }
 
-#decreaseVolumeBtn{
+#decreaseVolumeBtn {
     border-radius: 3px 0px 0px 3px;
-    border: 1px solid ;
+    border: 1px solid;
 }
 
-#increaseVolumeBtn{
+#increaseVolumeBtn {
     border-radius: 0px 3px 3px 0px;
-    border: 1px solid ;
+    border: 1px solid;
 }
 
-#decreaseVolumeBtn, #increaseVolumeBtn{
+#decreaseVolumeBtn,
+#increaseVolumeBtn {
     font-size: 20px;
     width: 35px;
     height: 35px;
@@ -119,59 +134,61 @@
     transition: background-color 0.3s;
 }
 
-#decreaseVolumeBtn:hover, #increaseVolumeBtn:hover{
+#decreaseVolumeBtn:hover,
+#increaseVolumeBtn:hover {
     background-color: #5f88af;
 }
 
-#decreaseVolumeBtn, #increaseVolumeBtn:hover{
+#decreaseVolumeBtn,
+#increaseVolumeBtn:hover {
     cursor: pointer;
 }
 
-.button:hover{
+.button:hover {
     cursor: pointer;
 }
 
-#volume-input{
+#volume-input {
     width: 40px;
     height: 35px;
     font-size: 20px;
     border: 1px solid;
     border-radius: 0px;
-    border: 1px solid #2c3e50; 
+    border: 1px solid #2c3e50;
     text-align: center;
 }
 
-.left-side-separator{
+.left-side-separator {
     background-color: #1abc9c;
     color: #1abc9c;
     width: 80%;
 }
 
-.question-title{
+.question-title {
     font-size: 30px;
     font-family: monospace;
     width: 80%;
-    
+
 }
 
-#volume{
+#volume {
     font-family: monospace;
     font-size: 20px;
 }
 
-#audio{
+#audio {
     width: 80%;
     margin-bottom: 5vh;
     border-radius: 10px;
 }
 
-.next-hint-in{
+.next-hint-in {
     color: white;
     font-size: 15px;
     font-family: monospace;
 }
 
-.answers-section-admin-view{
+.answers-section-admin-view {
     display: flex;
     flex-direction: column;
     width: 80%;
@@ -179,8 +196,75 @@
     margin-top: 20px;
 }
 
-.button-right-side-section{
+.button-right-side-section {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    transition: transform 0.5s ease-in-out ;
 }
+
+
+.hidden {
+    position: relative;
+    transform: translateX(100%); // Start position off-screen to the right
+    opacity: 0;
+}
+
+.active {
+    transform: translateX(0); // End position, fully visible
+    opacity: 1;
+}
+
+
+
+
+// Add these styles to your component's SCSS file
+
+.answers-container {
+    position: relative;
+    transition: opacity 0.3s ease-out;
+    
+    &.wrong-answer {
+      // Keep the container visible but fade out its content
+      pointer-events: none; // Prevent further clicks
+    }
+  }
+  
+  .hidden-answer {
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
+  }
+  
+  // Your existing styles for right side container
+  .question-right-side {
+    position: relative;
+    transform: translateX(100%); // Start position off-screen to the right
+    opacity: 0;
+    transition: transform 0.7s ease-in-out, opacity 0.5s ease-in-out;
+  }
+
+  
+  .active {
+    transform: translateX(0); // End position, fully visible
+    opacity: 1;
+  }
+  
+  // Ensure container prevents horizontal overflow
+  .question-container {
+    overflow-x: hidden;
+    display: flex;
+    position: relative;
+    width: 100%;
+  }
+  
+  // Add animation for correct answer flash
+  .correct-flash {
+    animation: flashGreen 1s;
+  }
+  
+  @keyframes flashGreen {
+    0% { background-color: transparent; }
+    50% { background-color: rgba(0, 255, 0, 0.3); }
+    100% { background-color: transparent; }
+  }
+  

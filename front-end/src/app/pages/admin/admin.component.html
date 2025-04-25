@@ -38,7 +38,7 @@
 
     <main class="content">
       <div *ngIf="activeSection === 'home'">
-        <span class="home-page-title">Octave- Admin</span>
+        <span class="home-page-title">Octave - Admin</span>
 
         <p id="subText">Utilisez la barre latérale pour naviguer</p>
       </div>
@@ -48,7 +48,7 @@
       </div>
 
       <div *ngIf="activeSection === 'stats-quiz'">
-        <app-stats-quiz></app-stats-quiz>
+        <app-selection-list context="quiz"></app-selection-list>
       </div>
 
       <div *ngIf="activeSection === 'quiz'">

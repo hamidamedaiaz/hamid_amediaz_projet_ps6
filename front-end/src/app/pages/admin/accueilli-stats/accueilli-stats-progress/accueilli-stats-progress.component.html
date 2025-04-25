@@ -1,0 +1,41 @@
+<div class="section-progression">
+    <h3>Progression</h3>
+    
+    <button 
+  *ngFor="let onglet of ['score', 'indices', 'temps', 'precision']"
+  class="bouton-onglet" 
+  [class.actif]="ongletActif === onglet" 
+  (click)="changerOnglet(onglet)">
+  {{ obtenirTitreOnglet(onglet) }}
+</button>
+  
+    <div class="graphique-progression">
+      <ng-container *ngIf="donneesAdaptees && donneesAdaptees.length > 0; else pasDeData">
+        <div *ngFor="let item of donneesAdaptees; let i = index" 
+             class="conteneur-barre">
+          <div class="barre" 
+               [ngClass]="obtenirClasseCouleur(ongletActif)"
+               [style.height.%]="item.valeur"
+               [title]="creerTexteAide(item)">
+            <span class="etiquette-valeur">
+              {{ formaterValeurAffichee(donneesParMois[i].valeur) }}
+            </span>
+          </div>
+          <span class="etiquette-mois">{{ item.mois }}</span>
+        </div>
+      </ng-container>
+      
+      <ng-template #pasDeData>
+        <div class="pas-de-donnees">
+          <p>Aucune donnée disponible pour cette période</p>
+        </div>
+      </ng-template>
+    </div>
+    
+    <div class="legende" *ngIf="donneesAdaptees && donneesAdaptees.length > 0">
+      <div class="element-legende">
+        <span class="couleur-legende" [ngClass]="obtenirClasseCouleur(ongletActif)"></span>
+        <span class="texte-legende">{{ obtenirTitreOnglet(ongletActif) }}</span>
+      </div>
+    </div>
+  </div>

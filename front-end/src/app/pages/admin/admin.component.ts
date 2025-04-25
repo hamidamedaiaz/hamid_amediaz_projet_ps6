@@ -1,7 +1,6 @@
 import { Component, Input, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router, RouterLink, RouterOutlet } from "@angular/router";
 import { CommonModule, NgOptimizedImage } from '@angular/common';
-import { StatsComponent } from "../../components/admin/stats/stats.component";
 import { ProfileListComponent } from 'src/app/components/profiles/profile-list/profile-list.component';
 import { QuizAppComponent } from "../../components/admin/quiz-app/quiz-app.component";
 import { ProfileConfigurationComponent } from 'src/app/components/profiles/profile-configuration/profile-configuration.component';
@@ -12,6 +11,8 @@ import { Profile } from 'src/models/profile.model';
 import { StatsAccueilliComponent } from "../../components/admin/stats-stats-accueilli/stats-accueilli.component";
 import { StatsQuizComponent } from "../../components/admin/stats-stats-quiz/stats-quiz.component";
 import { CurrentPageService } from 'src/services/currentPage.service';
+import {SelectionListComponent} from "../../components/admin/selection-list/selection-list.component";
+import {StatsService} from "../../../services/stats.service";
 
 
 @Component({
@@ -21,14 +22,14 @@ import { CurrentPageService } from 'src/services/currentPage.service';
     RouterLink,
     RouterOutlet,
     CommonModule,
-    StatsComponent,
     NgOptimizedImage,
     ProfileListComponent,
     QuizAppComponent,
     ProfileConfigurationComponent,
     QuizDetailsComponent,
     StatsAccueilliComponent,
-    StatsQuizComponent
+    StatsQuizComponent,
+    SelectionListComponent
   ],
 
   templateUrl: './admin.component.html',
@@ -44,18 +45,36 @@ export class AdminComponent implements OnInit {
 
   constructor(
     private quizService: QuizService,
+    private statsService: StatsService,
     private cdr: ChangeDetectorRef,private currentPageService: CurrentPageService
   ) {
     this.currentPageService.setCurrentPage("admin");
    }
 
   ngOnInit() {
+
+    // Permet de quand on clique sur un quiz dans quizDetail ça change de page
     this.quizService.selectedEditQuiz$.subscribe((quiz) => {
       if (quiz !== null) {
         this.setSection('quiz-details');
         this.activeQuiz = quiz;
       }
     });
+
+    this.statsService.idAcceuilli$.subscribe((id) =>{
+      if(id !== null){
+        console.log("Demande stat sur acceuilli id = " + id);
+        this.setSection('home');
+      }
+    })
+
+    this.statsService.idQuiz$.subscribe((id) =>{
+      if(id !== null){
+        console.log("Demande stat sur quiz id = " + id);
+        this.setSection('home');
+      }
+    })
+
   }
   toggleStatsMenu() {
     this.showStatsSubmenu = !this.showStatsSubmenu;

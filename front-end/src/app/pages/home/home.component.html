@@ -8,6 +8,21 @@
 </head>
 
 <body>
+<div *ngIf="!hide_admin_log" class="admin-log-container">
+  <div class="frallo" (click)="hideAdminLog()">
+    <div class="code-page-container" (click)="$event.stopPropagation()">
+      <h2>Entrez votre code</h2>
+      <div class="code-inputs">
+        <input type="text" maxlength="1" [(ngModel)]="code[0]" (input)="onInput(0, $event)" autofocus>
+        <input type="text" maxlength="1" [(ngModel)]="code[1]" (input)="onInput(1, $event)">
+        <input type="text" maxlength="1" [(ngModel)]="code[2]" (input)="onInput(2, $event)">
+        <input type="text" maxlength="1" [(ngModel)]="code[3]" (input)="onInput(3, $event)">
+      </div>
+    </div>
+  </div>
+</div>
+
+
   <button class="admin-button" (click)="goToAdminPage()">Page Admin</button>
 
   <span class="home-page-title">Octave</span>

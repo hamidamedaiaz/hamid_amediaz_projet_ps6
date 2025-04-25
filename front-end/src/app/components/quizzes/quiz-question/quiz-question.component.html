@@ -1,24 +1,27 @@
 <div class="question-container">
+    
     <div class="question-left-side" [ngClass]="{'correct-flash': showCorrectEffect}">
+        <div class="button-section" *ngIf="context === 'solo' || context === 'admin'">
+            <button id="replay-btn" class="button music-button" (click)="restartMusic()">Rejouer la musique</button>
+            <p id="volume">Volume</p>
+            <section class="volume-section">
+                <button id="decreaseVolumeBtn" (click)="decreaseVolume()">-</button>
+                <input value="{{getVolume()}}" id="volume-input" readonly>
+                <button id="increaseVolumeBtn" (click)="increaseVolume()">+</button>
+            </section>
+        </div>
         <audio id="audio" preload controls *ngIf="context === 'solo' || context === 'admin'"
             src="{{getAudioPath()}}"></audio>
         <section class="question-header-section">
+            
             <div class="question-title">{{getTitle()}}</div>
-            <div class="button-section" *ngIf="context === 'solo' || context === 'admin'">
-                <button id="replay-btn" class="button music-button" (click)="restartMusic()">Rejouer la musique</button>
-                <p id="volume">Volume</p>
-                <section class="volume-section">
-                    <button id="decreaseVolumeBtn" (click)="decreaseVolume()">-</button>
-                    <input value="{{getVolume()}}" id="volume-input" readonly>
-                    <button id="increaseVolumeBtn" (click)="increaseVolume()">+</button>
-                </section>
-            </div>
         </section>
         <hr class="left-side-separator">
         <section *ngIf="getAnswers() && context !== 'admin'" class="answers-section">
-            <div class="answers-container" *ngFor="let answer of getAnswers()">
+            <div class="answers-container" *ngFor="let answer of getAnswers()" [ngClass]="{'wrong-answer': isWrongAnswer(answer)}">
                 <app-quiz-answer [answer]="answer" [context]="'user'"
-                    (answerSelected)=answerSelected(answer)></app-quiz-answer>
+                    (answerSelected)="answerSelected(answer)"
+                    [ngClass]="{'hidden-answer': isWrongAnswer(answer)}"></app-quiz-answer>
             </div>
         </section>
         <section *ngIf="getAnswers() && context === 'admin'" class="answers-section-admin-view">
@@ -27,9 +30,7 @@
             </div>
         </section>
     </div>
-
-    <div class="question-right-side">
-        <!-- <button class="setting-btn button" (click)="accessToSettings()">Paramètres</button> -->
+    <div [ngClass]="areHintsActive() ? 'active' : 'hidden'" class="question-right-side">
         <section class="hint-section">
             <span class="hint-title">Indices: </span>
             <hr class="right-side-separator">
@@ -38,11 +39,9 @@
             </div>
             <p class="next-hint-in">Prochain indice dans ...</p>
         </section>
-        <section class="button-right-side-section">
-            <button *ngIf="context==='solo' || context ==='admin'" (click)="nextQuestion()"
-                class="next-question-btn button">Question suivante</button>
-            <button *ngIf="context==='solo' || context ==='admin'" (click)="previousQuestion()"
-                class="next-question-btn button">Question précédente</button>
-        </section>
     </div>
+    <button *ngIf="context==='solo' || context ==='admin'" (click)="nextQuestion()"
+        class="next-question-btn button">Question suivante</button>
+    <button *ngIf="context==='solo' || context ==='admin'" (click)="previousQuestion()"
+        class="previous-question-btn button">Question précédente</button>
 </div>

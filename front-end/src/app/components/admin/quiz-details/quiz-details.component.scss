@@ -24,6 +24,7 @@
   background-color: #ffffff;
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
 }
 
 #quiz-creation-section {
@@ -169,7 +170,7 @@
   background-color: #e0e0e0;
 }
 
-#button-info {
+.button-info {
   color: #777;
   font-style: italic;
   margin-top: 10px;

@@ -1,0 +1,18 @@
+<div class="header-section">
+    <button class="back-button" (click)="navigateBack()">
+      <i class="fa fa-arrow-left"></i> Retour
+    </button>
+    <h1 class="page-title">Statistiques de l'Accueilli</h1>
+  </div>
+  
+  <div class="profile-section">
+    <div class="profile-card">
+      <div class="profile-avatar">
+        {{ getInitials() }}
+      </div>
+      <div class="profile-info">
+        <h2 class="profile-name">{{ profileName }}</h2>
+        <p class="profile-id">ID: {{ profileId }}</p>
+      </div>
+    </div>
+  </div>

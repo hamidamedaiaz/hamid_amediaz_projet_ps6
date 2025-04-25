@@ -1,0 +1,80 @@
+<div class="stats-container">
+  <div class="stats-content">
+    <h2 *ngIf="context === 'acceuilli'">Statistiques des Accueillis</h2>
+    <h2 *ngIf="context === 'quiz'">Statistiques des Quiz</h2>
+
+
+    <div class="stats-header">
+      <div class="stats-search">
+        <input
+          type="text"
+          placeholder="Rechercher ..."
+          [(ngModel)]="searchQuery"
+          class="search-input"
+        />
+      </div>
+    </div>
+
+    <div *ngIf="context === 'acceuilli'">
+      <table class="stats-table">
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nom</th>
+          <th>Prénom</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let profile of filteredProfiles()"
+            [class.highlighted]="selectedProfile?.id === profile.id"
+            (click)="getAcceuilliStat(profile.id)"
+            class="clickable-row">
+          <td>{{ profile.id }}</td>
+          <td>{{ profile.lastName }}</td>
+          <td>{{ profile.name}}</td>
+        </tr>
+        </tbody>
+      </table >
+    </div>
+
+    <div *ngIf="context === 'quiz'">
+      <table class="stats-table">
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>Titre</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let quiz of filteredQuizzes()"
+            [class.highlighted]="selectedProfile?.id === quiz.id"
+            (click)="getQuizStat(quiz.id)"
+            class="clickable-row">
+          <td>{{ quiz.id }}</td>
+          <td>{{ quiz.title }}</td>
+        </tr>
+        </tbody>
+      </table >
+    </div>
+
+    <div class="pagination">
+      <button
+        [disabled]="currentPage === 1"
+        (click)="changePage(currentPage - 1)"
+        class="page-btn"
+      >
+        &laquo;
+      </button>
+      <span class="page-info">{{ currentPage }} / {{ getTotalPages() }}</span>
+      <button
+        [disabled]="currentPage === getTotalPages()"
+        (click)="changePage(currentPage + 1)"
+        class="page-btn"
+      >
+        &raquo;
+      </button>
+    </div>
+
+  </div>
+</div>
