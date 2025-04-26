@@ -1,9 +1,9 @@
-
+@import '/src/app/color-palette.scss';
   
   .result-item {
     padding: 15px;
-    border-bottom: 1px solid #e0e0e0;
-    background-color: #ececec;
+    border-bottom: 1px solid $primary-border-white;
+    background-color: $primary-white-bg;
     border-radius: 8px;
     margin-bottom: 10px;
     transition: background-color 0.3s, transform 0.3s;
@@ -15,7 +15,7 @@
 
   
   .result-item:hover {
-    background-color: #f0f0f0;
+    background-color: $primary-btn-white-hover;
     transform: scale(1.02);
     cursor: pointer;
   }

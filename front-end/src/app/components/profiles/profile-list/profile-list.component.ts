@@ -5,7 +5,6 @@ import { ProfileItemComponent } from '../profile-item/profile-item.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ProfileSearchbarComponent } from 'src/app/components/profiles/profile-searchbar/profile-searchbar.component';
 import { CurrentProfileService } from 'src/services/currentProfile.service';
 import { CurrentPageService } from 'src/services/currentPage.service';
 
@@ -17,7 +16,6 @@ import { CurrentPageService } from 'src/services/currentPage.service';
   imports: [
     ProfileItemComponent,
     CommonModule,
-    ProfileSearchbarComponent,
     FormsModule
   ],
 })
@@ -53,9 +51,7 @@ export class ProfileListComponent {
   }
 
   filteredProfiles() {
-    return this.profileList.filter(profile =>
-      profile.name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-      profile.lastName.toLowerCase().includes(this.searchQuery.toLowerCase()));
+    return this.profileList.filter(profile => profile.name.toLowerCase().concat(' ').concat(profile.lastName.toLowerCase()).includes(this.searchQuery.toLowerCase()));
   }
 
   ngOnInit() {

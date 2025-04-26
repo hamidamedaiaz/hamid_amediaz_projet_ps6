@@ -1,6 +1,5 @@
 import { Component,Input } from '@angular/core';
 import { Router, RouterLink} from "@angular/router";
-import { ProfileSearchbarComponent } from 'src/app/components/profiles/profile-searchbar/profile-searchbar.component';
 import { ProfileListComponent } from 'src/app/components/profiles/profile-list/profile-list.component';
 import { CurrentPageService } from 'src/services/currentPage.service';
 import { NgIf, NgClass } from '@angular/common';import {FormsModule} from "@angular/forms";
@@ -10,7 +9,6 @@ import { NgIf, NgClass } from '@angular/common';import {FormsModule} from "@angu
   standalone: true,
     imports: [
         RouterLink,
-        ProfileSearchbarComponent,
         FormsModule,
         ProfileListComponent,
         NgClass,

@@ -14,12 +14,12 @@
     align-items: center;
     margin-bottom: 24px;
     padding-bottom: 16px;
-    border-bottom: 1px solid #eaeaea;
+    border-bottom: $primary-border-white;
   }
   
   .title {
     margin: 0;
-    color: $primary-text;
+    color: $primary-black-text;
     font-size: 1.5rem;
     font-weight: 600;
   }
@@ -27,7 +27,7 @@
   .close-button {
     background: none;
     border: none;
-    color: #95a5a6;
+    color: $primary-black-text;
     padding: 6px;
     cursor: pointer;
     border-radius: 50%;
@@ -37,8 +37,8 @@
     transition: all 0.2s ease;
     
     &:hover {
-      background-color: #f5f5f5;
-      color: #e74c3c;
+      background-color: $primary-btn-white-hover;
+      color: $primary-delete-btn;
       transform: rotate(90deg);
     }
     
@@ -50,19 +50,20 @@
   .profile-card {
     display: flex;
     align-items: center;
-    background-color: #f8f9fa;
+    background-color: $primary-white-bg;
     border-radius: 12px;
     padding: 20px;
     margin-bottom: 24px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    box-shadow: $primary-box-shadow;
+
   }
   
   .profile-avatar {
     width: 64px;
     height: 64px;
     border-radius: 50%;
-    background-color: $primary-text;
-    color: white;
+    background-color: $primary-blue-bg;
+    color: $primary-white-text;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -78,13 +79,13 @@
   
   .profile-name {
     margin: 0 0 4px 0;
-    color: $primary-text;
+    color: $primary-black-text;
     font-size: 1.2rem;
   }
   
   .profile-id {
     margin: 0;
-    color: #7f8c8d;
+    color: $secondary-white-text;
     font-size: 0.9rem;
   }
   
@@ -95,7 +96,7 @@
   
   .section-title {
     margin: 28px 0 16px;
-    color: $secondary-bg;
+    color: $primary-black-text;
     font-size: 1.1rem;
     font-weight: 600;
     position: relative;
@@ -105,15 +106,15 @@
       position: absolute;
       left: 0;
       bottom: -8px;
-      width: 40px;
+      width: 100%;
       height: 3px;
-      background-color: $primary-text;
+      background-color: $primary-blue-bg;
       border-radius: 3px;
     }
   }
   
   .settings-group {
-    background-color: #f8f9fa;
+    background-color: $secondary-white-bg;
     border-radius: 8px;
     padding: 16px;
     margin-bottom: 20px;
@@ -130,7 +131,7 @@
       display: block;
       margin-bottom: 8px;
       font-weight: 500;
-      color: #34495e;
+      color: $secondary-black-text;
       font-size: 0.9rem;
     }
   }
@@ -139,10 +140,10 @@
     width: 100%;
     padding: 10px 12px;
     border-radius: 6px;
-    border: 1px solid #ddd;
-    background-color: white;
+    border: $primary-border-white;
+    background-color: $primary-white-bg;
     font-size: 0.95rem;
-    color: $secondary-bg&;
+    color: $primary-black-text;
     appearance: none;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23a88800' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
     background-repeat: no-repeat;
@@ -150,9 +151,9 @@
     background-size: 16px;
     
     &:focus {
-      border-color:$primary-text;
+      border-color:$primary-black-text;
       outline: none;
-      box-shadow: 0 0 0 2px rgba(168, 136, 0, 0.1);
+      box-shadow: $primary-box-shadow
     }
   }
   
@@ -161,7 +162,7 @@
     gap: 12px;
     margin-top: 32px;
     padding-top: 16px;
-    border-top: 1px solid #eaeaea;
+    border-top: $primary-border-white;
   }
   
   .save-button, .cancel-button {
@@ -174,15 +175,15 @@
   }
   
   .save-button {
-    background-color: $secondary-bg;
-    color: white;
+    background-color: $primary-blue-btn;
+    color: $primary-btn-white-text;
     border: none;
     flex-grow: 1;
     
     &:hover {
-      background-color: darken($primary-text, 8%);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      background-color: $primary-btn-blue-hover;
+      transform: scaleS(1.03);
+      box-shadow: $primary-box-shadow
     }
     
     &:active {
@@ -191,13 +192,13 @@
   }
   
   .cancel-button {
-    background-color: transparent;
-    color: #7f8c8d;
-    border: 1px solid #ddd;
+    background-color: $primary-white-btn;
+    color: $secondary-black-text;
+    border: $primary-border-white;
     
     &:hover {
-      background-color: #f5f5f5;
-      color: $secondary-bg;
+      background-color: $primary-btn-white-hover;
+      transform: scale(1.03);
     }
   }
   
@@ -215,5 +216,5 @@
   }
   
   ::-webkit-scrollbar-thumb:hover {
-    background: $secondary-bg;
+    background: $primary-blue-bg;
   }

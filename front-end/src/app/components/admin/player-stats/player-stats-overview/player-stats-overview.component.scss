@@ -1,3 +1,5 @@
+@import '/src/app/color-palette.scss';
+
 .stats-overview {
     display: flex;
     justify-content: space-between;
@@ -6,11 +8,11 @@
     
     .stat-item {
       flex: 1;
-      background-color: #f8f9fa;
+      background-color: $secondary-white-bg;
       border-radius: 10px;
       padding: 15px;
       text-align: center;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      box-shadow: $primary-box-shadow;
       margin: 0 5px;
 
       
@@ -18,7 +20,7 @@
         display: block;
         font-size: 2rem;
         font-weight: 700;
-        color: #2c3e50;
+        color: $primary-black-text;
         margin-bottom: 5px;
       }
 
@@ -26,7 +28,7 @@
       .stat-label {
         display: block;
         font-size: 0.9rem;
-        color: #777;
+        color: $secondary-white-text;
       }
 
     }

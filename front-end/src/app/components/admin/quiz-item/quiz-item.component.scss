@@ -1,42 +1,63 @@
-.quiz-item {
-  width: 350px;
-  min-height: 150px;
-  padding: 20px;
-  border-radius: 5px;
-  text-align: center;
-  border: 1px solid #ddd;
-  background-color: #f8f9fa;
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+@import '/src/app/color-palette.scss';
+
+.header-card-section{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  height: 30%;
 }
 
-.quiz-item:hover {
-  background-color: #f2f2f2;
-  border: 1px solid #f2f2f2;
+.quiz-item {
+  width: 350px;
+  height: 200px;
+  padding: 20px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+  border: $primary-border-white;
+  background-color: $secondary-white-bg;
+  transition: all 0.2s ease-in-out;
+}
+
+.quiz-item-title{
+  margin: 0px;
+  width: 70%;
+}
+
+.button-section{
+  width: 30%;
 }
 
 .button{
-  margin-top: 10px;
   border: none;
   background: none;
   padding: 5px;
   border-radius: 5px;
 }
 
+.quiz-item-description{
+  height: 50%;
+}
+
 .button:hover{
-  background: #d7d7d7;
+  background: $primary-btn-white-hover;
   cursor: pointer;
 }
 
 .launch-multi-game-btn{
-  background-color: #2c3e50;
+  background-color: $secondary-blue-bg;
   border: none;
-  color: #f2f2f2;
+  color: $primary-white-text;
   padding: 10px;
   transition: background-color 0.2s ease-in-out;
   border-radius: 10px;
+  font-size: 17px;
+  height: 20%;
 }
 
 .launch-multi-game-btn:hover{
-  background-color: #243241;
+  background-color: $secondary-btn-blue-hover;
   cursor: pointer;
 }

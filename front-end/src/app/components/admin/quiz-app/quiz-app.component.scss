@@ -1,3 +1,5 @@
+@import '/src/app/color-palette.scss';
+
 .quiz-container {
   display: flex;
   flex-direction: column;
@@ -17,9 +19,8 @@
   width: 100%;
   max-width: 600px;
   padding: 10px;
-  margin-top:5vh;
-  margin-bottom: 10vh;
-  border: 1px solid #ddd;
+  margin:5vh;
+  border: $primary-border-black;
   border-radius: 8px;
   font-size: 16px;
 }
@@ -33,13 +34,12 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: #2c3e50;
+  color: $primary-black-text;
   font-weight: 500;
-  cursor: pointer;
-  background-color: #f1f5f9;
-  border: 1px solid #d1d5db;
+  background-color: $secondary-white-bg;
+  border: $primary-border-white;
   border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  box-shadow: $primary-box-shadow;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   padding: 20px;
   min-height: 150px;
@@ -49,8 +49,9 @@
 
 
 .create-quiz-item:hover{
-    background-color: #e2e8f0;
+    background-color: $primary-btn-white-hover;
     transform: scale(1.02);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: $primary-box-shadow;
+    cursor: pointer;
 }
 
