@@ -17,7 +17,9 @@ export class WaitingStartPageComponent {
 
   constructor(private router:Router, private currentQuizService:CurrentQuizService, private quizService:QuizService, private currentPageService:CurrentPageService){
     this.currentPageService.setCurrentPage("waiting-start-page")
-
+    setTimeout(() => {
+      this.redirectToOnlineGame();
+    }, 3000);
   }
 
 

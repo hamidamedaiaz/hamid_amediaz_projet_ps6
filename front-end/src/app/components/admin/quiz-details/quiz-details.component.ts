@@ -137,4 +137,12 @@ export class QuizDetailsComponent implements OnChanges {
     return this.selectedQuestion?.correctAnswer.some(correctAnswer => correctAnswer.answerId === answer.answerId) ?? false;
   }
 
+
+  // permet de ne pas afficher le chemin complet jusqu'à la musique
+  public getSelectedQuestionName(question: Question){
+      let name = question.audioPath.split('/');
+      const size = name.length
+      return name[size-1]
+  }
+
 }

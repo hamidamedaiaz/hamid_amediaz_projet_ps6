@@ -5,13 +5,36 @@ import { ProfileService } from 'src/services/profile.service';
 import { QuizResultService } from 'src/services/quiz-result.service';
 import { Profile } from 'src/models/profile.model';
 
+
+import {PlayerStatsHeaderComponent} from 'src/app/components/admin/player-stats/player-stats-header/player-stats-header.component';
+import { PlayerStatsOverviewComponent } from '../../components/admin/player-stats/player-stats-overview/player-stats-overview.component';
+
+import { PlayerStatsTherapyMetricsComponent} from '../../components/admin/player-stats/player-stats-therapy-metrics/player-stats-therapy-metrics.component';
+
+import { PlayerStatsProgressionComponent } from '../../components/admin/player-stats/player-stats-progression/player-stats-progression.component';
+import { PlayerStatsQuizHistoryComponent } from '../../components/admin/player-stats/player-stats-quiz-history/player-stats-quiz-history.component';
+
+
 @Component({
   selector: 'app-player-stats-details',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [
+    CommonModule, 
+    RouterLink,
+
+    PlayerStatsHeaderComponent,
+    PlayerStatsOverviewComponent ,
+    PlayerStatsTherapyMetricsComponent,
+
+    PlayerStatsProgressionComponent,
+  
+    PlayerStatsQuizHistoryComponent
+  ],
+
   templateUrl: './player-stats-details.component.html',
   styleUrl: './player-stats-details.component.scss'
 })
+
 export class PlayerStatsDetailsComponent implements OnInit {
   profile: Profile | null = null;
   profileId: number = 0;
@@ -38,7 +61,6 @@ export class PlayerStatsDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private profileService: ProfileService,
-   
     private quizResultService: QuizResultService
   ) {}
 
@@ -79,14 +101,7 @@ export class PlayerStatsDetailsComponent implements OnInit {
     
     this.quizResults = this.quizResultService.getQuizHistoryForPlayer(this.profileId);
   }
-getInitials(profile: Profile): string {
-  if (!profile) return '';
-  
-  const firstName = profile.name.charAt(0).toUpperCase();
-  const lastName = profile.lastName.charAt(0).toUpperCase();
-  
-  return firstName + lastName;
-}
+
   
   chargementDesdoneeMonsuelle() {
     this.setActiveTab(this.activeTab);
@@ -105,25 +120,25 @@ getInitials(profile: Profile): string {
     
     switch(tab) {
       case 'score':
-        this.monthlyPerformance = monthlyData.map((data :any) => ({
+        this.monthlyPerformance = monthlyData.map((data: any) => ({
           month: data.month,
           score: data.score
         }));
         break;
       case 'hints':
-        this.monthlyPerformance = monthlyData.map((data :any) => ({
+        this.monthlyPerformance = monthlyData.map((data: any) => ({
           month: data.month,
           score: data.hintUsage
         }));
         break;
       case 'time':
-        this.monthlyPerformance = monthlyData.map((data :any) => ({
+        this.monthlyPerformance = monthlyData.map((data: any) => ({
           month: data.month,
           score: data.responseTime
         }));
         break;
       case 'accuracy':
-        this.monthlyPerformance = monthlyData.map((data :any) => ({
+        this.monthlyPerformance = monthlyData.map((data: any) => ({
           month: data.month,
           score: data.accuracy
         }));
@@ -131,12 +146,15 @@ getInitials(profile: Profile): string {
     }
   }
 
+
   viewQuizDetails(quizId: number) {
     this.router.navigate(['/quiz-result', this.profileId, quizId]);
   }
+  
 
   navigateBack() {
     this.router.navigate(['/admin'], { 
       queryParams: { section: 'stats-accueilli' } 
     });
-  }}
+  }
+}

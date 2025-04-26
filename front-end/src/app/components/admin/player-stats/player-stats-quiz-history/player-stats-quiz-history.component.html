@@ -1,0 +1,33 @@
+<div class="quiz-history-section">
+    <h3 class="section-title">Historique des Quiz</h3>
+    <div class="quiz-history-table-container">
+      <table class="quiz-history-table">
+
+        <thead>
+          <tr>
+            <th>Quiz</th>
+            <th>Date</th>
+            <th>Score</th>
+            <th>Temps Moyen</th>
+            <th>Indices Utilisés</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr class="quiz-table-row" *ngFor="let game of quizResults" (click)="viewQuizDetails(game.quizId)">
+            <td class="quiz-title">{{ game.quizTitle }}</td>
+            <td>{{ game.date }}</td>
+            <td>
+              <div class="score-display" [ngClass]="getScoreColor(game.percentageCorrect)">
+                {{ game.score }}/{{ game.totalQuestions }}
+                <span class="score-percentage">({{ game.percentageCorrect }}%)</span>
+              </div>
+            </td>
+            <td>{{ game.timeSpent }}s</td>
+            <td>{{ game.hintsUsed }}</td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </div>

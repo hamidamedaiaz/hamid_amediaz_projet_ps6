@@ -7,7 +7,7 @@ import { Answer } from 'src/models/answer.model';
 import { CurrentProfileService } from 'src/services/currentProfile.service';
 import { Router } from '@angular/router';
 import { Profile } from 'src/models/profile.model';
-import { filter } from 'rxjs';
+import { CurrentQuizService } from 'src/services/current-quiz.service';
 
 @Component({
   selector: 'app-quiz-question',
@@ -34,24 +34,67 @@ export class QuizQuestionComponent {
   previousQuestionEmitter: EventEmitter<Boolean> = new EventEmitter<Boolean>();
 
   @Output()
-  correctAnswerEmitter: EventEmitter<Boolean> = new EventEmitter<Boolean>(); 
+  correctAnswerEmitter: EventEmitter<Boolean> = new EventEmitter<Boolean>();
 
   private volume: number = 50;
 
   private currentProfile: Profile | undefined;
 
-  // Changed from selectedAnswer to wrongAnswers for better semantics
   private wrongAnswers: Answer[] = [];
 
   public showCorrectEffect: Boolean = false;
 
   public hintsActive: Boolean = false;
 
-  constructor(private router: Router, private currentProfileService: CurrentProfileService) {
+  public shuffledAnswers: Answer[] = [];
+
+  private HINT_TIME_OUT_DURATION = 2000;
+
+  private hintTimer: any = null;
+
+  private NUMBER_OF_PLAYER: number = 8;
+
+  private GIVEN_ANSWERS_COUNTER: number = 5;
+
+  constructor(private router: Router, private currentProfileService: CurrentProfileService, private currentQuizService: CurrentQuizService) {
     this.currentProfileService.current_profile$.subscribe((currentProfile) => {
       this.currentProfile = currentProfile;
     })
     this.wrongAnswers = [];
+  }
+
+
+  ngOnChanges() {
+    if (this.question) {
+      this.shuffledAnswers = this.shuffle(this.question.answers.concat(this.question.correctAnswer));
+      this.resetQuestion();
+    }
+    
+
+    if(this.context !== 'admin'){
+
+      this.clearHintTimeOut();
+
+      this.hintTimer = setTimeout(() => {
+        this.hintsActive = true;
+      }, this.HINT_TIME_OUT_DURATION);
+    }
+  }
+
+  private clearHintTimeOut(){
+    if(this.hintTimer) {
+      clearTimeout(this.hintTimer)
+    }
+  }
+
+  public showHints(){
+    this.hintsActive = !this.hintsActive
+  }
+
+  public resetQuestion(){
+    this.hintsActive = false;
+    this.wrongAnswers = [];
+    this.GIVEN_ANSWERS_COUNTER = 0;
   }
 
   public setVolume(newVolume: number) {
@@ -68,24 +111,18 @@ export class QuizQuestionComponent {
   }
 
   public getAnswers() {
-    if (!this.question) return null;
-  
-    // Get all answers including correct ones
-    const allAnswers = (this.question.answers.concat(this.question.correctAnswer));
-    
-    // Instead of filtering, we'll return all answers and handle visibility in the template
-    return allAnswers;
+    return this.shuffledAnswers;
   }
 
-  // Check if an answer is wrong (used for display logic)
+
   public isWrongAnswer(answer: Answer): boolean {
     return this.wrongAnswers.some(
       wrong => wrong.answerId === answer.answerId && wrong.questionId === answer.questionId
     );
   }
 
-  public getAllAnswers(){
-    if(this.question){
+  public getAllAnswers() {
+    if (this.question) {
       return (this.question.answers.concat(this.question.correctAnswer));
     }
     return null;
@@ -94,6 +131,14 @@ export class QuizQuestionComponent {
   public getTitle() {
     if (this.question) return this.question.question;
     return null;
+  }
+
+  public getNbOfGivenAnswers(): number{
+    return this.GIVEN_ANSWERS_COUNTER;
+  }
+
+  public getNbOfPlayers(){
+    return this.NUMBER_OF_PLAYER;
   }
 
   public getAudioPath() {
@@ -120,16 +165,16 @@ export class QuizQuestionComponent {
       const isCorrect = this.question.correctAnswer.some(
         (correct) => correct.answerId === answer.answerId
       );
-  
+
       if (isCorrect) {
+        this.currentQuizService.increaseScore(answer);
         this.showCorrectEffect = true;
-  
+        this.clearHintTimeOut();
         setTimeout(() => {
           this.showCorrectEffect = false;
           this.correctAnswerEmitter.emit(true);
         }, 1000);
       } else {
-        // Add to wrong answers list instead of selected answers
         this.wrongAnswers.push(answer);
       }
     }
@@ -147,28 +192,28 @@ export class QuizQuestionComponent {
   }
 
   public getAnswersPercents() {
-    const percent:number[] = [15, 50, 25, 10]
-    const answerWithPercents:Object[]=[];
+    const percent: number[] = [15, 50, 25, 10]
+    const answerWithPercents: Object[] = [];
     const allAnswers = this.getAllAnswers()
-    if(this.question && allAnswers){
-      for(let i = 0; i < allAnswers.length; i++){
-        answerWithPercents.push({answer: allAnswers[i], percent: percent[i]})
+    if (this.question && allAnswers) {
+      for (let i = 0; i < allAnswers.length; i++) {
+        answerWithPercents.push({ answer: allAnswers[i], percent: percent[i] })
       }
     }
     return answerWithPercents;
   }
 
-  public nextQuestion(){
+  public nextQuestion() {
     this.wrongAnswers = [];
     this.nextQuestionEmitter.emit(true);
   }
 
-  public previousQuestion(){
+  public previousQuestion() {
     this.wrongAnswers = [];
     this.previousQuestionEmitter.emit(true);
   }
 
-  private shuffle(answers:Answer[]) :Answer[]{
+  private shuffle(answers: Answer[]): Answer[] {
     const shuffled = answers.slice(); // make a copy
     for (let i = shuffled.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -177,7 +222,7 @@ export class QuizQuestionComponent {
     return shuffled;
   }
 
-  public areHintsActive() : Boolean{
+  public areHintsActive(): Boolean {
     return this.hintsActive;
   }
 }

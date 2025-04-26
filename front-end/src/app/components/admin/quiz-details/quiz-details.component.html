@@ -47,7 +47,7 @@
           </label>
         </div>
         <span class="button-info" *ngIf="selectedQuestion.audioPath">
-          Fichier musique sélectionné : {{ selectedQuestion.audioPath }}
+          Fichier musique sélectionné : {{ getSelectedQuestionName(selectedQuestion) }}
         </span>
       </div>
 
