@@ -2,7 +2,7 @@
 
 .gamemodeList {
     display: flex;
-    height: 100vh;
+    height: 100%;
     position: relative;
 }
 
@@ -15,22 +15,3 @@
     flex:1.7;
 }
 
-#cancelBtn {
-    position: absolute; 
-    bottom: 5vh; 
-    left: 95%; 
-    transform: translateX(-95%);
-    background-color: #f0f0f0; 
-    color: #333;
-    border: none;
-    padding: 15px 30px;
-    font-size: 16px;
-    border-radius: 8px;
-    transition: transform 0.3s;
-    border-bottom: 1px solid #e0e0e0;
-}
-
-#cancelBtn:hover{
-    cursor: pointer;
-    transform: translateX(-95%) translateY(-5px);
-}

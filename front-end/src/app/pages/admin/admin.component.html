@@ -51,7 +51,8 @@
         <app-selection-list context="quiz"></app-selection-list>
       </div>
 
-      <div *ngIf="activeSection === 'quiz'">
+      <div *ngIf="activeSection === 'quiz'" class="select-quiz-container">
+        <span class="select-quiz-title">Selectionner un quiz</span>
         <app-quiz-app [context]="'admin'"></app-quiz-app>
       </div>
 

@@ -15,11 +15,14 @@ import { QuizService } from 'src/services/quiz-list.service';
 
 export class WaitingStartPageComponent {
 
+  private redirectionTimer:any = null;
+
   constructor(private router:Router, private currentQuizService:CurrentQuizService, private quizService:QuizService, private currentPageService:CurrentPageService){
     this.currentPageService.setCurrentPage("waiting-start-page")
-    setTimeout(() => {
+    this.redirectionTimer = setTimeout(() => {
       this.redirectToOnlineGame();
-    }, 3000);
+    }, 100000);
+
   }
 
 
@@ -30,6 +33,7 @@ export class WaitingStartPageComponent {
   }
 
   public leaveQueue(){
+    if(this.redirectionTimer) clearTimeout(this.redirectionTimer)
     this.router.navigate(['/multiplayer-game-login'])
   }
 }

@@ -13,38 +13,43 @@
 .button {
     padding: 10px 20px;
     width: 8vw;
-    background-color: #2c3e50;
-    color: #ecf0f1;
+    background-color: $third-blue-bg;
+    color: $primary-white-btn;
     border: none;
     border-radius: 10px;
-    cursor: pointer;
     transition: background-color 0.3s ease-in-out;
     font-size: 20px;
+    box-shadow: $primary-box-shadow;
+    
 }
 
 .button:hover {
-    background-color: #5f88af;
+    cursor: pointer;
+    background-color: $third-btn-blue-hover;
 }
 
 .previous-question-btn {
     position: absolute;
+    background-color: $fourth-blue-bg;
     left: 5%;
     bottom: 5%;
 }
 
 .next-question-btn {
     position: absolute;
+    background-color: $fourth-blue-bg;
     right: 5%;
     bottom: 5%;
 }
 
 
-.question-admin-container{
+.question-admin-container {
     width: 80%;
 }
-/* --- Right Side (hints) --- */
+
+
 .question-right-side {
-    background-color: #9ACBD0;
+    background-color: $third-blue-bg;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -57,7 +62,6 @@
     transform: translateX(100%);
     opacity: 0;
     transition: transform 0.7s ease-out, opacity 0.3s ease-out;
-    //z-index: 10;
 }
 
 .question-right-side.active {
@@ -74,7 +78,7 @@
 }
 
 .hint-title {
-    color: #fff;
+    color: $primary-white-text;
     font-family: Arial, sans-serif;
     font-size: 20px;
     font-weight: 400;
@@ -84,7 +88,7 @@
 .right-side-separator {
     width: 100%;
     height: 2px;
-    background-color: #fff;
+    background-color: $primary-white-text;
     border: none;
 }
 
@@ -105,7 +109,7 @@
 
 /* Fallback pour les navigateurs qui ne supportent pas :has */
 @supports not (selector(:has(*))) {
-    .question-right-side.active ~ .question-left-side {
+    .question-right-side.active~.question-left-side {
         width: 80%;
     }
 }
@@ -116,9 +120,17 @@
 }
 
 @keyframes flashGreen {
-    0% { background-color: transparent; }
-    50% { background-color: rgba(0, 255, 0, 0.3); }
-    100% { background-color: transparent; }
+    0% {
+        background-color: transparent;
+    }
+
+    50% {
+        background-color: rgba(0, 255, 0, 0.3);
+    }
+
+    100% {
+        background-color: transparent;
+    }
 }
 
 /* --- Header and buttons --- */
@@ -129,7 +141,7 @@
     justify-content: space-between;
 }
 
-.answer-counter{
+.answer-counter {
     font-size: 30px;
     font-family: monospace;
 }
@@ -147,7 +159,7 @@
     grid-template-rows: repeat(2, 1fr);
     gap: 50px;
     margin-top: 50px;
-    
+
 }
 
 .answers-section-admin-view {
@@ -179,11 +191,11 @@
 
 #decreaseVolumeBtn,
 #increaseVolumeBtn {
-    font-size: 20px;
-    width: 35px;
-    height: 35px;
-    background-color: #2c3e50;
-    color: #ecf0f1;
+    font-size: 2em;
+    width: 50px;
+    height: 50px;
+    background-color: $fourth-blue-btn;
+    color: $primary-btn-white-text;
     border: none;
     transition: background-color 0.3s;
     cursor: pointer;
@@ -199,14 +211,14 @@
 
 #decreaseVolumeBtn:hover,
 #increaseVolumeBtn:hover {
-    background-color: #5f88af;
+    background-color: $secondary-btn-blue-hover;
 }
 
 #volume-input {
-    width: 40px;
-    height: 35px;
-    font-size: 20px;
-    border: 1px solid #2c3e50;
+    width: 70px;
+    height: 50px;
+    font-size: 1.5em;
+    border: $primary-border-blue;
     border-radius: 0;
     text-align: center;
 }
@@ -215,18 +227,19 @@
     display: flex;
     gap: 2vw;
     align-items: center;
+    height: 95px;
 }
 
 #volume {
     font-family: monospace;
-    font-size: 20px;
+    font-size: 2em;
     margin: 0;
 }
 
 /* --- Others --- */
 .left-side-separator {
-    background-color: #1abc9c;
-    color: #1abc9c;
+    background-color: $primary-black-bg;
+    color: $primary-blue-btn;
     width: 100%;
 }
 
@@ -243,7 +256,7 @@
 }
 
 .next-hint-in {
-    color: white;
+    color: $primary-white-text;
     font-size: 15px;
     font-family: monospace;
 }
@@ -261,14 +274,20 @@
     transition: transform 0.5s ease-in-out;
 }
 
+.hints-container{
+    overflow-y: auto;
+}
+
 .hidden {
     opacity: 0;
 }
 
+
 /* --- Responsive --- */
 @media (max-width: 992px) {
+
     .global-question-container:has(.question-right-side.active) .question-left-side,
-    .question-right-side.active ~ .question-left-side {
+    .question-right-side.active~.question-left-side {
         width: 75%;
     }
 
@@ -291,8 +310,9 @@
 }
 
 @media (max-width: 768px) {
+
     .global-question-container:has(.question-right-side.active) .question-left-side,
-    .question-right-side.active ~ .question-left-side {
+    .question-right-side.active~.question-left-side {
         width: 70%;
     }
 

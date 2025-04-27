@@ -10,22 +10,29 @@
     font-family: monospace;
     font-weight: bold;
     transition: all 0.3s ease-in-out;
-    color: white;
+    color: $primary-white-text;
 }
 
+
 .multiplayer{
-    background-color: #48A6A7;
+    background-color: $primary-blue-bg;
 }
+
+
 .solo{
-    background-color:#006A71;
+    background-color: $secondary-blue-bg;
 }
+
+
 .multiplayer:hover{
     cursor: pointer;
-    background-color: white;
-    color: #48A6A7;
+    background-color: $primary-white-bg;
+    color: $primary-blue-bg;
 }
+
+
 .solo:hover{
     cursor: pointer;
-    background-color: white;
-    color: #006A71;
+    background-color: $primary-white-bg;
+    color: $secondary-blue-bg;
 }

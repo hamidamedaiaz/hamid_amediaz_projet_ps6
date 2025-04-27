@@ -20,13 +20,18 @@
   max-width: 600px;
   padding: 10px;
   margin:5vh;
-  border: $primary-border-black;
+  border: $primary-border-white;
   border-radius: 8px;
   font-size: 16px;
 }
 
 .solo-selection-quiz-item:hover{
   cursor: pointer;
+  transform: scale(1.03);
+}
+
+.solo-selection-quiz-item{
+  transition: all 0.2s ease-in-out;
 }
 
 .create-quiz-item {
@@ -42,8 +47,8 @@
   box-shadow: $primary-box-shadow;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   padding: 20px;
-  min-height: 150px;
-  width: 350px;
+  width: 15vw;
+  height: 15vh;
   text-align: center;
 }
 

@@ -6,7 +6,8 @@
                 <section class="play-control-btn-section">
                     <button id="play-btn" class="button">Jouer la musique</button>
                     <button id="pause-btn" class="button">Arrêter la musique</button>
-                    <button id="replay-btn" class="button music-button" (click)="restartMusic()">Rejouer la musique</button>
+                    <button id="replay-btn" class="button music-button" (click)="restartMusic()">Rejouer la
+                        musique</button>
                 </section>
                 <section class="volume-section">
                     <p id="volume">Volume</p>
@@ -21,7 +22,8 @@
                 src="{{getAudioPath()}}"></audio>
             <section class="question-header-section">
                 <div class="question-title">{{getTitle()}}</div>
-                <div *ngIf="context === 'admin'" class="answer-counter">Réponses : {{getNbOfGivenAnswers()}}/{{getNbOfPlayers()}}</div>
+                <div *ngIf="context === 'admin'" class="answer-counter">Réponses :
+                    {{getNbOfGivenAnswers()}}/{{getNbOfPlayers()}}</div>
                 <button *ngIf="context==='admin'" (click)="showHints()" class="button">
                     Afficher les Indices
                 </button>
@@ -47,8 +49,8 @@
             <hr class="right-side-separator">
             <div class="hints-container" *ngFor="let hint of getHints()">
                 <app-quiz-hint [hint]="hint" class="hint-item"></app-quiz-hint>
+                <p class="next-hint-in">Prochain indice dans ...</p>
             </div>
-            <p class="next-hint-in">Prochain indice dans ...</p>
         </section>
     </div>
     <button *ngIf="context==='solo' || context ==='admin'" (click)="nextQuestion()"
@@ -56,4 +58,3 @@
     <button *ngIf="context==='solo' || context ==='admin'" (click)="previousQuestion()"
         class="previous-question-btn button">Question précédente</button>
 </div>
-

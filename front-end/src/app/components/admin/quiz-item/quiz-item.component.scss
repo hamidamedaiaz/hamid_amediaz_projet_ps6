@@ -4,12 +4,12 @@
   display: flex;
   gap: 10px;
   align-items: center;
-  height: 30%;
+  height: 50%;
 }
 
 .quiz-item {
-  width: 350px;
-  height: 200px;
+  width: 20vw;
+  height: 15vh;
   padding: 20px;
   border-radius: 5px;
   display: flex;
@@ -37,16 +37,13 @@
   border-radius: 5px;
 }
 
-.quiz-item-description{
-  height: 50%;
-}
 
 .button:hover{
   background: $primary-btn-white-hover;
   cursor: pointer;
 }
 
-.launch-multi-game-btn{
+.launch-game-btn{
   background-color: $secondary-blue-bg;
   border: none;
   color: $primary-white-text;
@@ -54,10 +51,10 @@
   transition: background-color 0.2s ease-in-out;
   border-radius: 10px;
   font-size: 17px;
-  height: 20%;
+  height: 40%;
 }
 
-.launch-multi-game-btn:hover{
+.launch-game-btn:hover{
   background-color: $secondary-btn-blue-hover;
   cursor: pointer;
 }

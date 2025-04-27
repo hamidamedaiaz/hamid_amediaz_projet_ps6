@@ -7,9 +7,8 @@
           (click)="onDeleteClick()"></button>
     </section>
   </section>
-
-  <p class="quiz-item-description">{{ quiz.description }}</p>
   
-  <button *ngIf="currentPage==='admin'" class="launch-multi-game-btn" (click)="launchMultiGame()">Lancer en
+  <button *ngIf="currentPage==='admin'" class="launch-game-btn" (click)="launchMultiGame()">Lancer en
     multijoueur</button>
+  <button *ngIf="context==='solo'" class="launch-game-btn" (click)="launchSoloGame()">Démarrer</button>
 </div>

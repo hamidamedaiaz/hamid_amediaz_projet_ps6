@@ -3,7 +3,10 @@ $secondary-white-bg:#f8f9fa;
 $primary-blue-bg: #0099ff;
 $secondary-blue-bg: #0086e0;
 $third-blue-bg:#004D80;
+$fourth-blue-bg: #0073c0;
 $primary-black-bg:#1D1D1D;
+
+$primary-blue-bg-faded: rgb(0,153,255,0.35);
 
 $primary-blue-btn: #0099ff;
 $secondary-blue-btn:#0086e0;
@@ -18,6 +21,7 @@ $primary-btn-black-text:#1D1D1D;
 
 $primary-btn-blue-hover: #0073C0;
 $secondary-btn-blue-hover:#004D80;
+$third-btn-blue-hover:#002740;
 $primary-btn-white-hover: #efefef;
 $primary-btn-delete-hover:#c0392b;
 
@@ -31,6 +35,7 @@ $primary-blue-text: #0099ff;
 
 $primary-border-white: 1px #ccc solid;
 $primary-border-black:1px  #1c1c1c solid; 
+$primary-border-blue:1px $third-blue-bg solid;
 
 $primary-success:green;
 

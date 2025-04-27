@@ -1,1 +1,27 @@
 @import '/src/app/color-palette.scss';
+
+.button{
+    padding: 10px 20px;
+    width: 8rem;
+    height: 3rem;
+    background-color: $third-blue-btn;
+    color: $primary-btn-white-text;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.button:hover{
+    background: $secondary-btn-blue-hover;
+}
+
+
+#leave-btn{
+    position: absolute;
+    left: 5%;
+    bottom: 5%;
+    z-index: 20;
+}

@@ -1,8 +1,8 @@
 @import '/src/app/color-palette.scss';
 
 .answer-item {
-    background-color: #006A71;
-    color: white;
+    background-color: $primary-blue-btn;
+    color: $primary-btn-white-text;
     border-radius: 10px;
     height: 15vh;
     transition: all 0.2s ease-in-out;
@@ -16,14 +16,14 @@
 
 .answer-item:hover {
     cursor: pointer;
-    background-color: #9ACBD0;
+    background-color: $primary-btn-blue-hover;
     transform: scale(1.06);
 }
 
 .percent-item {
     position: relative;
-    background-color: rgba(72, 165, 167, 0.3411764706);
-    color: white;
+    background-color: $primary-blue-bg-faded;
+    color: $primary-white-text;
     border-radius: 10px;
     padding: 10px 12.5px 10px 20px;
     font-family: monospace;

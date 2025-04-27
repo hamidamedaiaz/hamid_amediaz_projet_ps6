@@ -200,6 +200,8 @@ body {
   animation: slideInUp 0.5s ease-in-out forwards;
   opacity: 0;
   transform: translateY(-30px);
+  
+  box-shadow: $primary-box-shadow;
 }
 
 
@@ -221,6 +223,7 @@ body {
   user-select: none;
   animation: slideOutDown 0.4s ease-in-out forwards;
   transform: translateY(70px);
+  user-select: none;
 }
 
 

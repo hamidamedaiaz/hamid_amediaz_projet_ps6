@@ -3,6 +3,7 @@ import {QuizService} from "../../../../services/quiz-list.service";
 import {NgOptimizedImage, CommonModule} from "@angular/common";
 import {Quiz} from "../../../../models/quiz.model";
 import {CurrentPageService } from 'src/services/currentPage.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -26,6 +27,9 @@ export class QuizItemComponent {
   @Output()
   launchMultiGameEmitter: EventEmitter<Quiz> = new EventEmitter<Quiz>();
 
+  @Output()
+  launchSoloGameEmitter: EventEmitter<Quiz> = new EventEmitter<Quiz>();
+
   currentPage:String=this.currentPageService.getCurrentPage();
 
   constructor(private quizService: QuizService, private currentPageService: CurrentPageService) {
@@ -42,5 +46,9 @@ export class QuizItemComponent {
 
   launchMultiGame(){
     return this.launchMultiGameEmitter.emit(this.quiz);
+  }
+
+  launchSoloGame(){
+    return this.launchSoloGameEmitter.emit(this.quiz);
   }
 }
