@@ -30,12 +30,6 @@
             </section>
             <hr class="left-side-separator">
             
-            <!-- Message de succès - plus visible pour les personnes âgées -->
-            <div *ngIf="showSuccessMessage" class="success-message">
-                <span>{{ successMessage }}</span>
-                <div class="success-icon">✓</div>
-            </div>
-            
             <section *ngIf="getAnswers() && context !== 'admin'" class="answers-section">
                 <div class="answers-container" *ngFor="let answer of getAnswers()"
                     [ngClass]="{'wrong-answer': isWrongAnswer(answer)}">

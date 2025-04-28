@@ -6,6 +6,10 @@ export const GAMEMODE_LIST: Gamemode[] = [
     },
     {
         name: "Multi"
-    }
+    },
 ]
+
+export const GAMEMODE_UNDEFINED: Gamemode = {
+        name:"Undefined"
+}
 

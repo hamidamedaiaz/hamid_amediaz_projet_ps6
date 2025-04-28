@@ -33,13 +33,11 @@ export class CurrentQuizService {
     }
   }
 
-  public increaseScore(answer: Answer): Boolean{
+  public increaseScore(answer: Answer){
     if(!this.givenCorrectAnswers.includes(answer)){
         this.score += 1;
-        this.givenCorrectAnswers.push(answer);
-        return true;
+        this.givenCorrectAnswers.push(answer);   
     }
-    return false;
   }
 
   public setCurrentQuiz(quiz: Quiz) {

@@ -29,9 +29,7 @@ export class QuizComponent {
   @Input()
   context: String | any;
 
-  constructor(private currentQuizService: CurrentQuizService, private router: Router, private currentPageService: CurrentPageService) {
-
-  }
+  constructor(private currentQuizService: CurrentQuizService, private router: Router) {}
 
   public nextQuestion() {
     if (this.currentQuestionId >= this.questions.length - 1) {

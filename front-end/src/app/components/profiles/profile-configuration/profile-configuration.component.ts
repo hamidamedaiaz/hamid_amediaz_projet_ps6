@@ -1,10 +1,13 @@
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, ChangeDetectorRef } from '@angular/core';
 import { Profile } from 'src/models/profile.model';
+import {FormsModule} from "@angular/forms";
 
 @Component({
   selector: 'app-profile-configuration',
   standalone: true,
-  imports: [],
+  imports: [
+    FormsModule
+  ],
   templateUrl: './profile-configuration.component.html',
   styleUrl: './profile-configuration.component.scss'
 })
@@ -28,10 +31,10 @@ export class ProfileConfigurationComponent implements OnChanges {
 
   getInitials(): string {
     if (!this.profile) return '';
-    
+
     const firstName = this.profile.name.charAt(0).toUpperCase();
     const lastName = this.profile.lastName.charAt(0).toUpperCase();
-    
+
     return firstName + lastName;
   }
 
@@ -39,7 +42,7 @@ export class ProfileConfigurationComponent implements OnChanges {
     console.log('Fermeture du panneau de configuration');
     this.closeConfigPanel.emit();
   }
-  
+
   saveConfiguration() {
     console.log('Configuration sauvegardée pour:', this.profile?.name);
     this.closeConfiguration();

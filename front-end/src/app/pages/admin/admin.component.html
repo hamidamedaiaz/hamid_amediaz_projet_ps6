@@ -63,7 +63,7 @@
 
       <div *ngIf="activeSection === 'acceuilli'" class="acceuilli-section">
         <div class="profiles-panel" [ngClass]="{'collapsed': selectedProfile}">
-          <h2 class="section-title">Liste des Joueurs</h2>
+          <h2 class="section-title">Liste des acceuillis</h2>
           <app-profile-list
             class="profile-list-container"
             (profileSelected)="onProfileSelect($event)"

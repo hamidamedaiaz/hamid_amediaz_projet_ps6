@@ -111,4 +111,12 @@ export class AdminComponent implements OnInit {
     this.selectedProfile = null;
     this.cdr.detectChanges();
   }
+
+  createProfile(){
+    this.selectedProfile = {
+      id : Date.now(),
+      name : '',
+      lastName : ''
+    }
+  }
 }

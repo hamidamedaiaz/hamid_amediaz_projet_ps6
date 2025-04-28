@@ -1,11 +1,11 @@
-import { Component, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ProfileService } from 'src/services/profile.service';
-import { QuizService } from 'src/services/quiz-list.service';
+import { ProfileStatsService } from 'src/services/profile-stats.service';
 import { Profile } from 'src/models/profile.model';
-import { Quiz } from 'src/models/quiz.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-stats-accueilli',
@@ -14,49 +14,32 @@ import { Quiz } from 'src/models/quiz.model';
   templateUrl: './stats-accueilli.component.html',
   styleUrl: './stats-accueilli.component.scss'
 })
-export class StatsAccueilliComponent implements OnInit, AfterViewInit {
+export class StatsAccueilliComponent implements OnInit, OnDestroy {
   profiles: Profile[] = [];
-  quizzes: Quiz[] = [];
   selectedProfile: Profile | null = null;
   readonly ITEMS_PER_PAGE = 5;
   currentPage = 1;
   searchQuery = '';
   sortBy = 'name';
-
  
-  private calculatedStats: {[key: number]: any} = {};
+  private subscriptions: Subscription[] = [];
 
   constructor(
     private profileService: ProfileService,
-    private quizService: QuizService,
-    private router: Router,
-    private cdr: ChangeDetectorRef 
+    private profileStatsService: ProfileStatsService,
+    private router: Router
   ) {}
 
   ngOnInit() {
-    this.profileService.profiles$.subscribe(profiles => {
+    const profileSub = this.profileService.profiles$.subscribe(profiles => {
       this.profiles = profiles;
       console.log('Profils chargés:', this.profiles.length);
     });
-
-    this.quizService.quizzes$.subscribe(quizzes => {
-      this.quizzes = quizzes;
-    });
+    this.subscriptions.push(profileSub);
   }
 
-  ngAfterViewInit() {
-    setTimeout(() => {
-      this.profiles.forEach(profile => {
-        this.calculatedStats[profile.id] = {
-          quizCount: this.getQuizCountForProfile(profile),
-          bestScore: this.getBestScore(profile),
-          averageScore: this.getAverageScore(profile),
-          lastPlayedDate: this.getLastPlayedDate(profile)
-        };
-      });
-
-      this.cdr.detectChanges();
-    }, 0);
+  ngOnDestroy() {
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
   viewProfileDetails(profile: Profile) {
@@ -80,20 +63,27 @@ export class StatsAccueilliComponent implements OnInit, AfterViewInit {
     
     filtered.sort((a, b) => {
       switch (this.sortBy) {
+
         case 'name':
+
           return a.name.localeCompare(b.name);
         case 'count':
-          const countA = this.calculatedStats[a.id]?.quizCount || this.getQuizCountForProfile(a);
-          const countB = this.calculatedStats[b.id]?.quizCount || this.getQuizCountForProfile(b);
+
+          const countA = this.profileStatsService.getProfileStats(a.id).quizCount;
+          const countB = this.profileStatsService.getProfileStats(b.id).quizCount;
           return countB - countA;
+
         case 'score':
-          const scoreA = this.calculatedStats[a.id]?.averageScore || this.getAverageScore(a);
-          const scoreB = this.calculatedStats[b.id]?.averageScore || this.getAverageScore(b);
+          const scoreA = this.profileStatsService.getProfileStats(a.id).averageScore;
+          const scoreB = this.profileStatsService.getProfileStats(b.id).averageScore;
           return scoreB - scoreA;
+
         default:
           return 0;
       }
     });
+
+    
     
     const startIndex = (this.currentPage - 1) * this.ITEMS_PER_PAGE;
     return filtered.slice(startIndex, startIndex + this.ITEMS_PER_PAGE);
@@ -121,35 +111,20 @@ export class StatsAccueilliComponent implements OnInit, AfterViewInit {
     return (profile.name.charAt(0) + profile.lastName.charAt(0)).toUpperCase();
   }
 
+
   getQuizCountForProfile(profile: Profile): number {
-    if (this.calculatedStats[profile.id]?.quizCount !== undefined) {
-      return this.calculatedStats[profile.id].quizCount;
-    }
-    return Math.floor(Math.random() * 20) + 1;
+    return this.profileStatsService.getProfileStats(profile.id).quizCount;
   }
 
   getBestScore(profile: Profile): number {
-    if (this.calculatedStats[profile.id]?.bestScore !== undefined) {
-      return this.calculatedStats[profile.id].bestScore;
-    }
-    return Math.floor(Math.random() * 30) + 70;
+    return this.profileStatsService.getProfileStats(profile.id).bestScore;
   }
 
   getAverageScore(profile: Profile): number {
-    if (this.calculatedStats[profile.id]?.averageScore !== undefined) {
-      return this.calculatedStats[profile.id].averageScore;
-    }
-    return Math.floor(Math.random() * 20) + 60;
+    return this.profileStatsService.getProfileStats(profile.id).averageScore;
   }
 
   getLastPlayedDate(profile: Profile): string {
-    if (this.calculatedStats[profile.id]?.lastPlayedDate !== undefined) {
-      return this.calculatedStats[profile.id].lastPlayedDate;
-    }
-    const now = new Date();
-    const daysAgo = Math.floor(Math.random() * 30);
-    const date = new Date(now.getTime() - daysAgo * 24 * 60 * 60 * 1000);
-    return date.toLocaleDateString();
+    return this.profileStatsService.getProfileStats(profile.id).lastPlayedDate;
   }
-
 }

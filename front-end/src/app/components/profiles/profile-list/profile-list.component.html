@@ -1,6 +1,7 @@
 <section *ngIf="currentPage==='admin'">
     <input type="text" id="search-bar" class="search-input" [(ngModel)]="searchQuery"
-        placeholder="Rechercher un joueur...">
+        placeholder="Rechercher un acceuilli...">
+    <button id="add-profile" (click)="createProfile()">+ Ajouter un profil</button>
     <section class="profile-list-section">
         <div class="profile-list-container" *ngFor="let profile of filteredProfiles()">
             <app-profile-item [profile]="profile" [context]="'admin'"

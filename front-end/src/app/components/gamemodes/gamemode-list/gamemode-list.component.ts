@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Gamemode } from 'src/models/gamemode.model';
 import { GamemodeService } from 'src/services/gamemode.service';
+import { LocalStorageService } from 'src/services/localstorage.service';
 
 
 @Component({

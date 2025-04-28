@@ -15,6 +15,7 @@ import { PlayerStatsDetailsComponent } from './pages/player-stats-details/player
 import { QuizResultDetailsComponent } from './pages/quiz-result-details/quiz-result-details.component';
 import { QuizScoreboardComponent } from './pages/quiz-scoreboard/quiz-scoreboard.component';
 import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.component';
+import { AnswerSubmittedPageComponent } from './pages/answer-submitted-page/answer-submitted-page.component';
 
 
 const routes: Routes = [
@@ -33,6 +34,7 @@ const routes: Routes = [
   {path:'player-stats/:id', component: PlayerStatsDetailsComponent},
   {path:'quiz-result/:profileId/:quizId', component: QuizResultDetailsComponent},
   {path:'quiz-scoreboard',component:QuizScoreboardComponent},
+  {path: 'answer-submitted', component:AnswerSubmittedPageComponent},
 
 
   {path:'**',component: NotFoundPageComponent},

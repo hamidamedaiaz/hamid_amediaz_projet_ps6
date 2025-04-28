@@ -79,4 +79,12 @@ export class ProfileListComponent {
   public removeProfile(profileToRemove:Profile){
     this.profileList =  this.profileList.filter(profile => profile != profileToRemove);
   }
+
+  public createProfile(){
+    this.profileSelected.next({
+      id:999,
+      name:'',
+      lastName:''
+    })
+  }
 }

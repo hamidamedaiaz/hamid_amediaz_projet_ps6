@@ -8,6 +8,7 @@ import { CurrentProfileService } from 'src/services/currentProfile.service';
 import { Router } from '@angular/router';
 import { Profile } from 'src/models/profile.model';
 import { CurrentQuizService } from 'src/services/current-quiz.service';
+import { GamemodeService } from 'src/services/gamemode.service';
 
 @Component({
   selector: 'app-quiz-question',
@@ -52,7 +53,7 @@ export class QuizQuestionComponent {
   public shuffledAnswers: Answer[] = [];
 
   private HINT_TIME_OUT_DURATION = 2000;
-  private CORRECT_ANSWER_DELAY = 4000; 
+  private CORRECT_ANSWER_DELAY = 1500;
 
   private hintTimer: any = null;
 
@@ -60,22 +61,15 @@ export class QuizQuestionComponent {
 
   private GIVEN_ANSWERS_COUNTER: number = 5;
 
-  constructor(private router: Router, private currentProfileService: CurrentProfileService, private currentQuizService: CurrentQuizService) {
+  constructor(private router: Router, 
+              private currentProfileService: CurrentProfileService, 
+              private currentQuizService: CurrentQuizService,
+              private gamemodeService : GamemodeService) {
     this.currentProfileService.current_profile$.subscribe((currentProfile) => {
       this.currentProfile = currentProfile;
     })
-    this.wrongAnswers = [];
-  }
 
-
-  ngOnChanges() {
-    if (this.question) {
-      this.shuffledAnswers = this.shuffle(this.question.answers.concat(this.question.correctAnswer));
-      this.resetQuestion();
-    }
-    
-
-    if(this.context !== 'admin'){
+    if (this.context !== 'admin') {
 
       this.clearHintTimeOut();
 
@@ -85,30 +79,32 @@ export class QuizQuestionComponent {
     }
   }
 
-  private clearHintTimeOut(){
-    if(this.hintTimer) {
+
+  ngOnChanges() {
+    if (this.question) {
+      this.shuffledAnswers = this.shuffle(this.question.answers.concat(this.question.correctAnswer));
+      this.resetQuestion();
+    }
+  }
+
+  private clearHintTimeOut() {
+    if (this.hintTimer) {
       clearTimeout(this.hintTimer)
     }
   }
 
-  public showHints(){
+  public showHints() {
     this.hintsActive = !this.hintsActive
   }
 
-  public resetQuestion(){
+  public resetQuestion() {
     this.hintsActive = false;
     this.wrongAnswers = [];
     this.showSuccessMessage = false;
     this.GIVEN_ANSWERS_COUNTER = 0;
   }
 
-  public setVolume(newVolume: number) {
-    this.volume = newVolume;
-  }
 
-  public getVolume() {
-    return this.volume;
-  }
 
   public getHints() {
     if (this.question) return this.question.hints;
@@ -138,32 +134,15 @@ export class QuizQuestionComponent {
     return null;
   }
 
-  public getNbOfGivenAnswers(): number{
+  public getNbOfGivenAnswers(): number {
     return this.GIVEN_ANSWERS_COUNTER;
   }
 
-  public getNbOfPlayers(){
+  public getNbOfPlayers() {
     return this.NUMBER_OF_PLAYER;
   }
 
-  public getAudioPath() {
-    if (this.question) return this.question.audioPath;
-    return null;
-  }
 
-  public increaseVolume() {
-    if (this.volume < 100) {
-      this.volume += 10;
-      console.log("increasing the volume");
-    }
-  }
-
-  public decreaseVolume() {
-    if (this.volume > 0) {
-      this.volume -= 10;
-      console.log("decreasing the volume");
-    }
-  }
 
   public answerSelected(answer: Answer) {
     if (this.question) {
@@ -172,34 +151,25 @@ export class QuizQuestionComponent {
       );
 
       if (isCorrect) {
-        this.currentQuizService.increaseScore(answer);
-        this.showCorrectEffect = true;
-
-        this.showSuccessMessage = true;
-
-        this.clearHintTimeOut();
-        
-        setTimeout(() => {
-          this.showCorrectEffect = false;
-          this.showSuccessMessage = false;
-          this.correctAnswerEmitter.emit(true);
-        }, this.CORRECT_ANSWER_DELAY);
+        if (this.gamemodeService.getCurrentGamemode().name === 'Solo') {
+          this.showCorrectEffect = true;
+          this.clearHintTimeOut();
+          setTimeout(() => {
+            this.showCorrectEffect = false;
+            this.currentQuizService.increaseScore(answer);
+            this.nextQuestionEmitter.emit(true);
+          }, this.CORRECT_ANSWER_DELAY);
+        }
+        else if(this.gamemodeService.getCurrentGamemode().name === 'Multi'){
+          console.log("ooo")
+          this.router.navigate(["/answer-submitted"]);
+        }
       } else {
         this.wrongAnswers.push(answer);
       }
     }
   }
 
-  public accessToSettings() {
-    if (this.currentProfile) {
-      console.log(this.currentProfile);
-      this.router.navigate(["/settings"])
-    }
-  }
-
-  public restartMusic() {
-    console.log("restarting the music...");
-  }
 
   public getAnswersPercents() {
     const percent: number[] = [15, 50, 25, 10]
@@ -234,5 +204,40 @@ export class QuizQuestionComponent {
 
   public areHintsActive(): Boolean {
     return this.hintsActive;
+  }
+
+  // MULTIPLAYER GAME CONTROL
+
+  // MUSIC CONTROL 
+
+  public restartMusic() {
+    console.log("restarting the music...");
+  }
+
+  public getAudioPath() {
+    if (this.question) return this.question.audioPath;
+    return null;
+  }
+
+  public setVolume(newVolume: number) {
+    this.volume = newVolume;
+  }
+
+  public getVolume() {
+    return this.volume;
+  }
+
+  public increaseVolume() {
+    if (this.volume < 100) {
+      this.volume += 10;
+      console.log("increasing the volume");
+    }
+  }
+
+  public decreaseVolume() {
+    if (this.volume > 0) {
+      this.volume -= 10;
+      console.log("decreasing the volume");
+    }
   }
 }

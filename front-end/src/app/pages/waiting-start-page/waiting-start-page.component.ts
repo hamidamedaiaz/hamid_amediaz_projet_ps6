@@ -21,7 +21,7 @@ export class WaitingStartPageComponent {
     this.currentPageService.setCurrentPage("waiting-start-page")
     this.redirectionTimer = setTimeout(() => {
       this.redirectToOnlineGame();
-    }, 100000);
+    }, 3000);
 
   }
 

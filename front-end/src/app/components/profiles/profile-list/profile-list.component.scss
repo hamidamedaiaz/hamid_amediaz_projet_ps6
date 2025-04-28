@@ -1,5 +1,28 @@
 @import '/src/app/color-palette.scss';
 
+#add-profile {
+  background-color: #4CAF50; /* Vert doux */
+  color: white;
+  padding: 10px 20px;
+  margin-left: 15px;
+  margin-top: 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+#add-profile:hover {
+  background-color: #45a049; /* Vert un peu plus foncé au survol */
+  transform: scale(1.05);
+}
+
+#add-profile:active {
+  background-color: #3e8e41;
+  transform: scale(1);
+}
+
   app-profile-list {
     list-style-type: none;
     padding: 0;
