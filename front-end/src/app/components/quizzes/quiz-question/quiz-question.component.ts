@@ -43,12 +43,16 @@ export class QuizQuestionComponent {
   private wrongAnswers: Answer[] = [];
 
   public showCorrectEffect: Boolean = false;
+  public showSuccessMessage: Boolean = false;
+  public successMessage: string = "BONNE RÉPONSE !";
+
 
   public hintsActive: Boolean = false;
 
   public shuffledAnswers: Answer[] = [];
 
   private HINT_TIME_OUT_DURATION = 2000;
+  private CORRECT_ANSWER_DELAY = 4000; 
 
   private hintTimer: any = null;
 
@@ -94,6 +98,7 @@ export class QuizQuestionComponent {
   public resetQuestion(){
     this.hintsActive = false;
     this.wrongAnswers = [];
+    this.showSuccessMessage = false;
     this.GIVEN_ANSWERS_COUNTER = 0;
   }
 
@@ -169,11 +174,16 @@ export class QuizQuestionComponent {
       if (isCorrect) {
         this.currentQuizService.increaseScore(answer);
         this.showCorrectEffect = true;
+
+        this.showSuccessMessage = true;
+
         this.clearHintTimeOut();
+        
         setTimeout(() => {
           this.showCorrectEffect = false;
+          this.showSuccessMessage = false;
           this.correctAnswerEmitter.emit(true);
-        }, 1000);
+        }, this.CORRECT_ANSWER_DELAY);
       } else {
         this.wrongAnswers.push(answer);
       }
@@ -214,7 +224,7 @@ export class QuizQuestionComponent {
   }
 
   private shuffle(answers: Answer[]): Answer[] {
-    const shuffled = answers.slice(); // make a copy
+    const shuffled = answers.slice();
     for (let i = shuffled.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];

@@ -13,6 +13,7 @@ import { StatsQuizComponent } from "../../components/admin/stats-stats-quiz/stat
 import { CurrentPageService } from 'src/services/currentPage.service';
 import {SelectionListComponent} from "../../components/admin/selection-list/selection-list.component";
 import {StatsService} from "../../../services/stats.service";
+import {QuizStatsComponent} from "../../components/admin/quiz-stats/quiz-stats.component";
 
 
 @Component({
@@ -29,7 +30,8 @@ import {StatsService} from "../../../services/stats.service";
     QuizDetailsComponent,
     StatsAccueilliComponent,
     StatsQuizComponent,
-    SelectionListComponent
+    SelectionListComponent,
+    QuizStatsComponent
   ],
 
   templateUrl: './admin.component.html',
@@ -39,6 +41,7 @@ export class AdminComponent implements OnInit {
   activeSection: string = 'home';
   activeQuiz: Quiz | null = null;
   selectedProfile: Profile | null = null;
+  selectedQuizStat: Quiz | null = null;
   showStatsSubmenu: boolean = false;
   @Input()
   public context: string = "admin";
@@ -71,7 +74,13 @@ export class AdminComponent implements OnInit {
     this.statsService.idQuiz$.subscribe((id) =>{
       if(id !== null){
         console.log("Demande stat sur quiz id = " + id);
-        this.setSection('home');
+        // Pour l'instant on fait comme ça en attendant le SQL
+        for(const q of this.quizService.quizzes$.getValue()){
+          if(q.id == id){
+            this.selectedQuizStat = q;
+          }
+        }
+        this.setSection('quiz-stats');
       }
     })
 

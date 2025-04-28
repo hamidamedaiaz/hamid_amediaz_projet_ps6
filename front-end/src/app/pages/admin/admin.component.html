@@ -18,7 +18,7 @@
         <button class="sidebar-btn submenu-btn" (click)="setSection('stats-accueilli')">
           <span>Statistiques Accueillis</span>
         </button>
-        <button class="sidebar-btn submenu-btn" (click)="setSection('stats-quiz')">
+        <button class="sidebar-btn submenu-btn" (click)="setSection('selection-stat-quiz')">
           <span>Statistiques Quiz</span>
         </button>
       </div>
@@ -47,13 +47,18 @@
         <app-stats-accueilli></app-stats-accueilli>
       </div>
 
-      <div *ngIf="activeSection === 'stats-quiz'">
+      <div *ngIf="activeSection === 'selection-stat-quiz'">
         <app-selection-list context="quiz"></app-selection-list>
+      </div>
+
+      <div *ngIf="activeSection === 'quiz-stats'">
+        <app-quiz-stats *ngIf="selectedQuizStat" [quiz]="selectedQuizStat"></app-quiz-stats>
       </div>
 
       <div *ngIf="activeSection === 'quiz'" class="select-quiz-container">
         <span class="select-quiz-title">Selectionner un quiz</span>
         <app-quiz-app [context]="'admin'"></app-quiz-app>
+
       </div>
 
       <div *ngIf="activeSection === 'acceuilli'" class="acceuilli-section">
