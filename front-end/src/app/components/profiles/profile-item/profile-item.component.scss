@@ -1,36 +1,55 @@
 @import '/src/app/color-palette.scss';
-  
-  .result-item {
-    padding: 15px;
-    border-bottom: $primary-border-white;
-    background-color: $primary-white-bg;
-    border-radius: 8px;
-    margin-bottom: 10px;
-    transition: background-color 0.3s, transform 0.3s;
-  }
 
-  .multi{
-    width: 100%;
-  }
+.result-item {
+  padding: 15px;
+  border-bottom: $primary-border-white;
+  background-color: $primary-white-bg;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  transition: background-color 0.3s, transform 0.3s;
+}
 
-  
-  .result-item:hover {
-    background-color: $primary-btn-white-hover;
-    transform: scale(1.02);
-    cursor: pointer;
-  }
+.multi {
+  width: 85%;
+}
 
-  .remove-profile-icon{
-    width: 2rem;
-    height: 2rem;
-  }
 
-  .remove-profile-icon:hover{
-    cursor: pointer;
-  }
-  .profile-item-section{
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-    align-items: center;
-  }
+.result-item:hover {
+  background-color: $primary-btn-white-hover;
+  transform: scale(1.02);
+  cursor: pointer;
+}
+
+.remove-profile-icon {
+  width: 2rem;
+  height: 2rem;
+}
+
+.remove-profile-icon:hover {
+  cursor: pointer;
+}
+
+.profile-item-section {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  height: fit-content;
+}
+
+.delete-user-btn {
+  background: $primary-delete-btn;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.delete-user-btn:hover {
+  background-color: $primary-btn-delete-hover;
+}

@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { CurrentQuizService } from 'src/services/current-quiz.service';
+import { QuizService } from 'src/services/quiz.service';
 
 @Component({
   selector: 'app-quiz-scoreboard',
@@ -16,11 +16,9 @@ export class QuizScoreboardComponent implements OnInit {
 
   constructor(
     private router: Router, 
-    private currentQuizService: CurrentQuizService,
-    private elementRef: ElementRef
-  ) {
-    this.score = this.currentQuizService.getScore();
-    this.maxPoint = this.currentQuizService.getNumberOfQuestions();
+    private QuizService: QuizService) {
+    this.score = this.QuizService.getScore();
+    this.maxPoint = this.QuizService.getNumberOfQuestions();
   }
 
   ngOnInit(): void {
@@ -61,11 +59,13 @@ export class QuizScoreboardComponent implements OnInit {
 
   public replay() {
     console.log("replay");
+    this.QuizService.resetCurrentQuiz();
     this.router.navigate(["/select-quiz"]);
   }
 
   public exit() {
     console.log("exiting the quiz...");
+    this.QuizService.resetCurrentQuiz();
     this.router.navigate(["/"]);
   }
 }

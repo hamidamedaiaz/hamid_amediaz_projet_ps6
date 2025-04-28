@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ProfileService } from 'src/services/profile.service';
-import { QuizService } from 'src/services/quiz-list.service';
+import { QuizListService } from 'src/services/quiz-list.service';
 import { Profile } from 'src/models/profile.model';
 import { Quiz } from 'src/models/quiz.model';
 
@@ -42,7 +42,7 @@ export class StatsQuizComponent implements OnInit {
 
   constructor(
     private profileService: ProfileService,
-    private quizService: QuizService,
+    private quizService: QuizListService,
     private router: Router
   ) {}
 

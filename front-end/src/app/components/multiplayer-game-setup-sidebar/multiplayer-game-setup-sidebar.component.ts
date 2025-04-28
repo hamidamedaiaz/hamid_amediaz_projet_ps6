@@ -30,7 +30,7 @@ export class MultiplayerGameSetupSidebarComponent {
 
   public launchGame(){
     console.log("Game Launched");
-    this.router.navigate(["/multiplayer-game-admin-view"])
+    this.router.navigate(["/multiplayer-game"])
   }
 
   public leaveSetup(){

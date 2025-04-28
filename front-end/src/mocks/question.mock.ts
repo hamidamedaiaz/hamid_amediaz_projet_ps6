@@ -54,3 +54,13 @@ export const QUESTIONS: Question[] = [{
     hints: ["Le groupe est connu pour son style country rock"],
     audioPath: "assets/musics/Michael Jackson - Billie Jean.mp3"
   }]
+
+  export const EMPTY_QUESTION: Question = {
+    questionId: 0,
+    question: '',
+    correctAnswer: [],
+    answers: [],
+    hints: [],
+    audioPath: '',
+  };
+  

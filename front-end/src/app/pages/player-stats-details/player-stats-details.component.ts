@@ -154,6 +154,7 @@ export class PlayerStatsDetailsComponent implements OnInit {
 
   navigateBack() {
     this.router.navigate(['/admin'], { 
+      
       queryParams: { section: 'stats-accueilli' } 
     });
   }

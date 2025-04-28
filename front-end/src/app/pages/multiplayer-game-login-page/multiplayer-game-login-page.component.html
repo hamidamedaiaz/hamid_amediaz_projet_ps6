@@ -5,12 +5,12 @@
 
 <section class="join-game-section">
     <div class="join-game-container">
-        <p class="join-game-title">Rejoindre une partie</p>
+        <p class="join-game-title">{{message}}</p>
         <hr class="separator">
-        <div class="input-section">
-            <input class="join-game-code-input" type="text" placeholder="Entrez le code de la partie" value="{{code}}">
-            <input class="join-game-submit button" type="submit" value="Rejoindre la partie" (click)="joinGame('code')">
-        </div>
+        <form action="" method="post" class="input-section">
+            <input class="join-game-code-input" type="text" placeholder="Entrez le code de la partie" [(ngModel)]="code" required name="code">
+            <input class="join-game-submit button" type="submit" value="Rejoindre la partie" (click)="joinGame()">
+        </form>
         <button (click)="leave()" class="button" id="leave-btn">Quitter</button>
     </div>
 </section>

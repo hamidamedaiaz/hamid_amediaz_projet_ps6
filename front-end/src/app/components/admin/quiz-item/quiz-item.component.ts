@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {QuizService} from "../../../../services/quiz-list.service";
+import {QuizListService} from "../../../../services/quiz-list.service";
 import {NgOptimizedImage, CommonModule} from "@angular/common";
 import {Quiz} from "../../../../models/quiz.model";
 import {CurrentPageService } from 'src/services/currentPage.service';
@@ -32,7 +32,7 @@ export class QuizItemComponent {
 
   currentPage:String=this.currentPageService.getCurrentPage();
 
-  constructor(private quizService: QuizService, private currentPageService: CurrentPageService) {
+  constructor(private quizService: QuizListService, private currentPageService: CurrentPageService) {
     console.log("current page: ",this.currentPage);
   }
 

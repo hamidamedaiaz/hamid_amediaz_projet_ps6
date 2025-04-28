@@ -3,6 +3,7 @@ import { Router, RouterLink} from "@angular/router";
 import { ProfileListComponent } from 'src/app/components/profiles/profile-list/profile-list.component';
 import { CurrentPageService } from 'src/services/currentPage.service';
 import { NgIf, NgClass } from '@angular/common';import {FormsModule} from "@angular/forms";
+import { CurrentProfileService } from 'src/services/currentProfile.service';
 
 @Component({
   selector: 'app-home',
@@ -20,7 +21,7 @@ import { NgIf, NgClass } from '@angular/common';import {FormsModule} from "@angu
 
 export class HomeComponent {
 
-  constructor(private router: Router, private currentPageService:CurrentPageService){
+  constructor(private router: Router, private currentPageService:CurrentPageService, private currentProfileService: CurrentProfileService){
     this.currentPageService.setCurrentPage("home");
   }
 
@@ -39,7 +40,6 @@ export class HomeComponent {
 
   goToAdminPage(){
     this.hide_admin_log = false;
-    console.log("zizi");
     //this.currentPageService.setCurrentPage("admin")
     //this.router.navigate(['/admin']);
   }
@@ -74,6 +74,7 @@ export class HomeComponent {
       console.log("Code saisi :", finalCode);
       if(finalCode === this.CORRECT_CODE){
         this.currentPageService.setCurrentPage("admin")
+        this.currentProfileService.setAdmin();
         this.router.navigate(['/admin']);
       }
     }

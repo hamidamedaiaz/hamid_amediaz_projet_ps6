@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { QuizResult, QuestionResult } from '../models/quiz-result.model';
 import { CurrentProfileService } from './currentProfile.service';
-import { CurrentQuizService } from './current-quiz.service';
+import { QuizService } from './quiz.service';
 import { QUIZ_RESULTS} from '../mocks/quiz-results.mock';
 import { MONTHLY_STATS } from '../mocks/quiz-results.mock';
 
@@ -27,7 +27,7 @@ export class QuizResultService {
 
   constructor(
     private currentProfileService: CurrentProfileService,
-    private currentQuizService: CurrentQuizService
+    private currentQuizService: QuizService
   ) {}
 
   saveQuizResult(result: QuizResult): void {
@@ -45,7 +45,7 @@ export class QuizResultService {
   ): QuizResult {
     const newResult: QuizResult = {
       id: this.generateNewId(),
-      quiz: this.currentQuizService.currentQuiz!,
+      quiz: this.currentQuizService.quiz!,
       profile: this.currentProfileService.getCurrentProfile(),
       date: new Date(),
       score,

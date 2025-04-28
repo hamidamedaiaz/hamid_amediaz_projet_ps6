@@ -84,7 +84,9 @@ export class ProfileListComponent {
     this.profileSelected.next({
       id:999,
       name:'',
-      lastName:''
+      lastName:'',
+      role:'user',
+      HINT_TIME_OUT_DURATION:5000
     })
   }
 }

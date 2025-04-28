@@ -7,8 +7,11 @@ import { Answer } from 'src/models/answer.model';
 import { CurrentProfileService } from 'src/services/currentProfile.service';
 import { Router } from '@angular/router';
 import { Profile } from 'src/models/profile.model';
-import { CurrentQuizService } from 'src/services/current-quiz.service';
+import { QuizService } from 'src/services/quiz.service';
 import { GamemodeService } from 'src/services/gamemode.service';
+import { Gamemode } from 'src/models/gamemode.model';
+import { GAMEMODE_UNDEFINED } from 'src/mocks/gamemode-list.mock';
+import { GUEST_PROFILE } from 'src/mocks/profile-list.mock';
 
 @Component({
   selector: 'app-quiz-question',
@@ -22,37 +25,21 @@ export class QuizQuestionComponent {
 
   @ViewChild('audio') audio!: ElementRef<HTMLAudioElement>;
 
-  @Input()
-  context: String | null = null;
-
-  @Input()
-  question: Question | null = null;
-
-  @Output()
-  nextQuestionEmitter: EventEmitter<Boolean> = new EventEmitter<Boolean>();
-
-  @Output()
-  previousQuestionEmitter: EventEmitter<Boolean> = new EventEmitter<Boolean>();
-
-  @Output()
-  correctAnswerEmitter: EventEmitter<Boolean> = new EventEmitter<Boolean>();
-
   private volume: number = 50;
 
-  private currentProfile: Profile | undefined;
+  private question: Question | undefined;
+
+  private gamemode: Gamemode = GAMEMODE_UNDEFINED
 
   private wrongAnswers: Answer[] = [];
 
   public showCorrectEffect: Boolean = false;
-  public showSuccessMessage: Boolean = false;
-  public successMessage: string = "BONNE RÉPONSE !";
-
 
   public hintsActive: Boolean = false;
 
   public shuffledAnswers: Answer[] = [];
 
-  private HINT_TIME_OUT_DURATION = 2000;
+  
   private CORRECT_ANSWER_DELAY = 1500;
 
   private hintTimer: any = null;
@@ -63,22 +50,34 @@ export class QuizQuestionComponent {
 
   constructor(private router: Router, 
               private currentProfileService: CurrentProfileService, 
-              private currentQuizService: CurrentQuizService,
+              private quizService: QuizService,
               private gamemodeService : GamemodeService) {
-    this.currentProfileService.current_profile$.subscribe((currentProfile) => {
-      this.currentProfile = currentProfile;
+
+    this.quizService.question$.subscribe((question) => {
+      this.question = question;
+      this.shuffledAnswers = this.shuffle(this.question.answers.concat(this.question.correctAnswer));
+
+      if (this.getRole() === 'user') {
+        this.clearHintTimeOut();
+        this.hintTimer = setTimeout(() => {
+          this.hintsActive = true;
+        }, this.currentProfileService.getHint_Time_Duration());
+      }
+      
     })
 
-    if (this.context !== 'admin') {
+    
 
-      this.clearHintTimeOut();
-
-      this.hintTimer = setTimeout(() => {
-        this.hintsActive = true;
-      }, this.HINT_TIME_OUT_DURATION);
-    }
   }
 
+  public getGamemode(){
+    this.gamemode = this.gamemodeService.getCurrentGamemode();
+    return this.gamemode.name;
+  }
+
+  public getRole(){
+    return this.currentProfileService.getCurrentProfile().role;
+  }
 
   ngOnChanges() {
     if (this.question) {
@@ -90,6 +89,7 @@ export class QuizQuestionComponent {
   private clearHintTimeOut() {
     if (this.hintTimer) {
       clearTimeout(this.hintTimer)
+      this.hintsActive = false;
     }
   }
 
@@ -100,7 +100,6 @@ export class QuizQuestionComponent {
   public resetQuestion() {
     this.hintsActive = false;
     this.wrongAnswers = [];
-    this.showSuccessMessage = false;
     this.GIVEN_ANSWERS_COUNTER = 0;
   }
 
@@ -156,12 +155,11 @@ export class QuizQuestionComponent {
           this.clearHintTimeOut();
           setTimeout(() => {
             this.showCorrectEffect = false;
-            this.currentQuizService.increaseScore(answer);
-            this.nextQuestionEmitter.emit(true);
+            this.quizService.increaseScore(answer);
+            this.quizService.nextQuestion();
           }, this.CORRECT_ANSWER_DELAY);
         }
         else if(this.gamemodeService.getCurrentGamemode().name === 'Multi'){
-          console.log("ooo")
           this.router.navigate(["/answer-submitted"]);
         }
       } else {
@@ -185,12 +183,12 @@ export class QuizQuestionComponent {
 
   public nextQuestion() {
     this.wrongAnswers = [];
-    this.nextQuestionEmitter.emit(true);
+    this.quizService.nextQuestion();
   }
 
   public previousQuestion() {
     this.wrongAnswers = [];
-    this.previousQuestionEmitter.emit(true);
+    this.quizService.previousQuestion();
   }
 
   private shuffle(answers: Answer[]): Answer[] {

@@ -6,7 +6,7 @@ import { Quiz } from "../models/quiz.model";
 @Injectable({
   providedIn: 'root'
 })
-export class QuizService {
+export class QuizListService {
   private apiUrl = '/assets/mock/quizzes.json';
   public quizzes$: BehaviorSubject<Quiz[]> = new BehaviorSubject<Quiz[]>([]);
   public selectedEditQuiz$ = new BehaviorSubject<Quiz | null>(null);

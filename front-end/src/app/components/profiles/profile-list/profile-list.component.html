@@ -24,7 +24,7 @@
 <section *ngIf="currentPage==='multiplayer-setup'">
     <input type="text" id="search-bar" class="search-input" [(ngModel)]="searchQuery"
         placeholder="Rechercher un joueur...">
-    <section class="profile-list-section">
+    <section class="profile-list-section setup">
         <div class="profile-list-container" *ngFor="let profile of filteredProfiles()">
             <app-profile-item [profile]="profile" [context]="context"
                 (profileSelected)="removeProfile(profile)">

@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { QuestionResult } from 'src/models/quiz-result.model';
 import { Answer } from 'src/models/answer.model';
-import { QuizService } from 'src/services/quiz-list.service';
+import { QuizListService } from 'src/services/quiz-list.service';
 
 @Component({
   selector: 'app-quiz-result-questions',
@@ -14,7 +14,7 @@ import { QuizService } from 'src/services/quiz-list.service';
 export class QuizResultQuestionsComponent {
   @Input() questionResults: QuestionResult[] = [];
   
-  constructor(private quizService: QuizService) {}
+  constructor(private quizService: QuizListService) {}
   
   getScoreClass(isCorrect: boolean): string {
     return isCorrect ? 'correct' : 'incorrect';

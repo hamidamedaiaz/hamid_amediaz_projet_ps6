@@ -4,7 +4,7 @@ import {NgForOf, NgIf} from "@angular/common";
 import {Profile} from "../../../../models/profile.model";
 import {Quiz} from "../../../../models/quiz.model";
 import {ProfileService} from "../../../../services/profile.service";
-import {QuizService} from "../../../../services/quiz-list.service";
+import {QuizListService} from "../../../../services/quiz-list.service";
 import {Router} from "@angular/router";
 import {CurrentPageService} from "../../../../services/currentPage.service";
 import {StatsService} from "../../../../services/stats.service";
@@ -36,7 +36,7 @@ export class SelectionListComponent implements OnInit{
 
   constructor(
     private profileService: ProfileService,
-    private quizService: QuizService,
+    private quizService: QuizListService,
     private statService: StatsService,
     private router: Router,
     private currentPageService: CurrentPageService,

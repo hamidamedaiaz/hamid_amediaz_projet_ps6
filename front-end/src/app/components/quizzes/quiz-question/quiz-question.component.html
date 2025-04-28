@@ -1,8 +1,8 @@
 <div class="global-question-container">
 
     <div class="question-left-side" [ngClass]="{'correct-flash': showCorrectEffect}">
-        <div [ngClass]="context === 'admin' ? 'question-admin-container': ''">
-            <div class="button-section" *ngIf="context === 'solo' || context === 'admin'">
+        <div [ngClass]="getRole() === 'admin' ? 'question-admin-container': ''">
+            <div class="button-section" *ngIf="getGamemode() === 'Solo' || getRole() === 'admin'">
                 <section class="play-control-btn-section">
                     <button id="play-btn" class="button">Jouer la musique</button>
                     <button id="pause-btn" class="button">Arrêter la musique</button>
@@ -18,28 +18,28 @@
                     </section>
                 </section>
             </div>
-            <audio id="audio" preload controls *ngIf="context === 'solo' || context === 'admin'"
+            <audio id="audio" preload controls *ngIf="getGamemode() === 'Solo' || getRole() === 'admin'"
                 src="{{getAudioPath()}}"></audio>
             <section class="question-header-section">
                 <div class="question-title">{{getTitle()}}</div>
-                <div *ngIf="context === 'admin'" class="answer-counter">Réponses :
+                <div *ngIf="getRole() === 'admin'" class="answer-counter">Réponses :
                     {{getNbOfGivenAnswers()}}/{{getNbOfPlayers()}}</div>
-                <button *ngIf="context==='admin'" (click)="showHints()" class="button">
+                <button *ngIf="getRole()==='admin'" (click)="showHints()" class="button">
                     Afficher les Indices
                 </button>
             </section>
             <hr class="left-side-separator">
             
-            <section *ngIf="getAnswers() && context !== 'admin'" class="answers-section">
+            <section *ngIf="getAnswers() && getRole() === 'user'" class="answers-section">
                 <div class="answers-container" *ngFor="let answer of getAnswers()"
                     [ngClass]="{'wrong-answer': isWrongAnswer(answer)}">
-                    <app-quiz-answer [answer]="answer" [context]="'user'" (answerSelected)="answerSelected(answer)"
+                    <app-quiz-answer [answer]="answer" (answerSelected)="answerSelected(answer)"
                         [ngClass]="{'hidden-answer': isWrongAnswer(answer)}"></app-quiz-answer>
                 </div>
             </section>
-            <section *ngIf="getAnswers() && context === 'admin'" class="answers-section-admin-view">
+            <section *ngIf="getAnswers() && getRole() === 'admin'" class="answers-section-admin-view">
                 <div class="answers-container" *ngFor="let percent of getAnswersPercents()">
-                    <app-quiz-answer [percent]="percent" [context]="'admin'"></app-quiz-answer>
+                    <app-quiz-answer [percent]="percent"></app-quiz-answer>
                 </div>
             </section>
         </div>
@@ -54,8 +54,8 @@
             </div>
         </section>
     </div>
-    <button *ngIf="context==='solo' || context ==='admin'" (click)="nextQuestion()"
+    <button *ngIf="getGamemode()==='Solo' || getRole() ==='admin'" (click)="nextQuestion()"
         class="next-question-btn button">Question suivante</button>
-    <button *ngIf="context==='solo' || context ==='admin'" (click)="previousQuestion()"
+    <button *ngIf="getGamemode()==='Solo' || getRole() ==='admin'" (click)="previousQuestion()"
         class="previous-question-btn button">Question précédente</button>
 </div>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { QuizService } from 'src/services/quiz-list.service';
+import { QuizListService } from 'src/services/quiz-list.service';
 import { ProfileService } from 'src/services/profile.service';
 import { QuizResultService } from 'src/services/quiz-result.service';
 import { Quiz } from 'src/models/quiz.model';
@@ -43,7 +43,7 @@ export class QuizResultDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private quizService: QuizService,
+    private quizService: QuizListService,
     private profileService: ProfileService,
     private quizResultService: QuizResultService
   ) {}

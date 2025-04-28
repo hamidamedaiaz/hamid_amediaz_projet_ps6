@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { Profile } from "src/models/profile.model";
-import { GUEST_PROFILE } from "../mocks/profile-list.mock";
+import { ADMIN_PROFILE, GUEST_PROFILE } from "../mocks/profile-list.mock";
 
 @Injectable({
   providedIn: 'root'
@@ -28,5 +28,14 @@ export class CurrentProfileService {
     resetCurrentProfile(){
         console.log("Current Profile has been reset successfully")
         this.current_profile=GUEST_PROFILE;
+    }
+
+    public getHint_Time_Duration(){
+        return this.current_profile.HINT_TIME_OUT_DURATION;
+    }
+
+    public setAdmin(){
+        this.current_profile = ADMIN_PROFILE;
+        this.current_profile$.next(this.current_profile);
     }
 }
