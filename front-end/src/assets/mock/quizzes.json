@@ -12,7 +12,7 @@
           { "questionId": 101, "answerId": 3, "answerContent": "The Rolling Stones" },
           { "questionId": 101, "answerId": 4, "answerContent": "Genesis" }
         ],
-        "correctAnswer": [
+        "correctAnswers": [
           { "questionId": 101, "answerId": 1, "answerContent": "Queen" }
         ],
         "hints": ["Le leader du groupe était Freddie Mercury"],
@@ -26,7 +26,7 @@
           { "questionId": 102, "answerId": 6, "answerContent": "Wish You Were Here" },
           { "questionId": 102, "answerId": 7, "answerContent": "Animals" }
         ],
-        "correctAnswer": [
+        "correctAnswers": [
           { "questionId": 102, "answerId": 4, "answerContent": "Dark Side of the Moon" }
         ],
         "hints": ["La pochette de l'album représente un prisme"],
@@ -40,7 +40,7 @@
           { "questionId": 103, "answerId": 9, "answerContent": "Led Zeppelin" },
           { "questionId": 103, "answerId": 10, "answerContent": "Creedence Clearwater Revival" }
         ],
-        "correctAnswer": [
+        "correctAnswers": [
           { "questionId": 103, "answerId": 7, "answerContent": "The Eagles" }
         ],
         "hints": ["Le groupe est connu pour son style country rock"],
@@ -61,7 +61,7 @@
           { "questionId": 201, "answerId": 12, "answerContent": "Kool & The Gang" },
           { "questionId": 201, "answerId": 13, "answerContent": "Village People" }
         ],
-        "correctAnswer": [
+        "correctAnswers": [
           { "questionId": 201, "answerId": 10, "answerContent": "Bee Gees" }
         ],
         "hints": ["Chanson emblématique du film 'Saturday Night Fever'"],
@@ -75,7 +75,7 @@
           { "questionId": 202, "answerId": 15, "answerContent": "Thriller" },
           { "questionId": 202, "answerId": 16, "answerContent": "Wanna Be Startin' Somethin'" }
         ],
-        "correctAnswer": [
+        "correctAnswers": [
           { "questionId": 202, "answerId": 14, "answerContent": "Billie Jean" }
         ],
         "hints": ["Le clip montre le chanteur marcher sur des dalles lumineuses"],
@@ -89,7 +89,7 @@
           { "questionId": 203, "answerId": 18, "answerContent": "Boney M." },
           { "questionId": 203, "answerId": 19, "answerContent": "KC and the Sunshine Band" }
         ],
-        "correctAnswer": [
+        "correctAnswers": [
           { "questionId": 203, "answerId": 16, "answerContent": "Chic" }
         ],
         "hints": ["Le refrain contient 'Freak out!'"],

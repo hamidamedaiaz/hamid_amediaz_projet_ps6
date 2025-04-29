@@ -200,7 +200,7 @@ body {
   animation: slideInUp 0.5s ease-in-out forwards;
   opacity: 0;
   transform: translateY(-30px);
-  
+  z-index: 3;
   box-shadow: $primary-box-shadow;
 }
 

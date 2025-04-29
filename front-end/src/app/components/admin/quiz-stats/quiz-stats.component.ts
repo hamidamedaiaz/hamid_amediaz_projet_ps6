@@ -1,14 +1,8 @@
-import {
-  Component,
-  Input,
-  OnInit,
-  AfterViewInit,
-  ViewChild,
-  ElementRef
-} from '@angular/core';
+import { Component, Input, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule, NgForOf } from '@angular/common';
 import { Chart, registerables } from 'chart.js';
 import { Quiz } from '../../../../models/quiz.model';
+import {CurrentPageService} from "../../../../services/currentPage.service";
 
 Chart.register(...registerables);
 
@@ -32,7 +26,6 @@ interface QuestionStat {
 export class QuizStatsComponent implements OnInit, AfterViewInit {
   @Input() quiz!: Quiz;
 
-  // Métriques globales (inchangées)
   totalPlays      = Math.floor(Math.random() * 1000);
   averageTime     = Math.floor(Math.random() * 60) + 20;
   averageHints    = Math.floor(Math.random() * 4);
@@ -44,27 +37,33 @@ export class QuizStatsComponent implements OnInit, AfterViewInit {
   @ViewChild('groupChart') groupChartRef!: ElementRef<HTMLCanvasElement>;
   private chart!: Chart;
 
+  constructor(private pageService : CurrentPageService) {
+
+  }
+
+  goBack(){
+    console.log("Test");
+    this.pageService.adminNav("home")
+  }
+
   ngOnInit(): void {
     this.questionsStats = this.quiz.questions.map(q => {
       // Construis la liste complète des réponses
       const opts = [
         ...q.answers.map(a => a.answerContent),
-        q.correctAnswer[0].answerContent
+        q.correctAnswers[0].answerContent
       ];
 
-      // Fonction utilitaire : génère n nombres aléatoires et normalise pour total=100
       const randDist = (n: number) => {
         const arr = Array.from({ length: n }, () => Math.random());
         const sum = arr.reduce((s, v) => s + v, 0);
         return arr.map(v => Math.round((v / sum) * 100));
       };
 
-      // Génère trois distributions
       let first = randDist(opts.length);
       let second = randDist(opts.length);
       let third = randDist(opts.length);
 
-      // Ajuste pour corriger la somme à 100 (possible léger écart)
       const fix = (arr: number[]) => {
         const diff = 100 - arr.reduce((s, v) => s + v, 0);
         arr[0] += diff;

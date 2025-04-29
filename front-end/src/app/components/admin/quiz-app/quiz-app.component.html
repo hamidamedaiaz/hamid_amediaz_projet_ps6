@@ -11,15 +11,23 @@
       <h3>+ Créer un quiz</h3>
     </div>
 
-    <app-quiz-item
-      *ngFor="let quiz of filteredQuizzes()"
-      [quiz]="quiz" (launchMultiGameEmitter)="launchMultiGame(quiz)">
+    <app-quiz-item *ngFor="let quiz of filteredQuizzes()" [quiz]="quiz"
+      (launchMultiGameEmitter)="launchMultiGame(quiz)" (deleteQuiz)="deleteQuiz(quiz)">
     </app-quiz-item>
   </div>
   <div class="quiz-list" *ngIf="context==='solo'">
-    <app-quiz-item  [context]="'solo'"
-      *ngFor="let quiz of filteredQuizzes()"
-      [quiz]="quiz" (click)="launchSoloGame(quiz)" class="solo-selection-quiz-item">
+    <app-quiz-item [context]="'solo'" *ngFor="let quiz of filteredQuizzes()" [quiz]="quiz"
+      (click)="launchSoloGame(quiz)" class="solo-selection-quiz-item">
     </app-quiz-item>
   </div>
+
+  <div *ngIf="showDeleteConfirm" class="delete-confirm">
+    <div class="delete-confirm-content">
+        <p>Êtes-vous sûr de vouloir supprimer {{quizToDelete?.title}} ?</p>
+        <div class="delete-buttons">
+            <button class="confirm-delete-btn" (click)="confirmDelete()">Confirmer</button>
+            <button class="cancel-delete-btn" (click)="cancelDelete()">Annuler</button>
+        </div>
+    </div>
+</div>
 </div>

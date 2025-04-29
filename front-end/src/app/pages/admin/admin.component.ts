@@ -64,7 +64,7 @@ export class AdminComponent implements OnInit {
       }
     });
 
-    
+
     // Permet de quand on clique sur un quiz dans quizDetail ça change de page
     this.quizService.selectedEditQuiz$.subscribe((quiz) => {
       if (quiz !== null) {
@@ -73,7 +73,9 @@ export class AdminComponent implements OnInit {
       }
     });
 
-
+    this.currentPageService.admin_navigation$.subscribe((val) =>{
+      this.setSection(val);
+    })
 
     this.statsService.idAcceuilli$.subscribe((id) =>{
       if(id !== null){
@@ -123,13 +125,5 @@ export class AdminComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
-  createProfile(){
-    this.selectedProfile = {
-      id : Date.now(),
-      name : '',
-      lastName : '',
-      role:'',
-      HINT_TIME_OUT_DURATION:5000
-    }
-  }
+
 }

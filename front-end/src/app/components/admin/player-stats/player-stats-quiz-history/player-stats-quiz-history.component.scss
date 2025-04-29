@@ -13,12 +13,13 @@
     
     .quiz-history-table-container {
       overflow-x: auto;
+      box-shadow: $primary-box-shadow;
   
       .quiz-history-table {
         width: 100%;
         border-collapse: collapse;
         background-color: $secondary-white-bg;
-        box-shadow: $primary-box-shadow;
+        
         border-radius: 10px;
         overflow: hidden;
   

@@ -1,15 +1,54 @@
+
 <section *ngIf="currentPage==='admin'">
-    <input type="text" id="search-bar" class="search-input" [(ngModel)]="searchQuery"
-        placeholder="Rechercher un acceuilli...">
-    <button id="add-profile" (click)="createProfile()">+ Ajouter un profil</button>
+    <div class="admin-profile-header">
+        <input type="text" id="search-bar" class="search-input" [(ngModel)]="searchQuery"
+            placeholder="Rechercher un acceuilli...">
+        <button id="add-profile" (click)="createProfile()">+ Ajouter un accueilli</button>
+    </div>
+
+
+    <div *ngIf="showProfileForm" class="profile-form">
+        <h3>Ajouter un accueilli</h3>
+        <div class="form-group">
+            <label for="firstName">Prénom:</label>
+            <input type="text" id="firstName" class="form-input" [(ngModel)]="currentProfile.name" placeholder="Prénom">
+        </div>
+        <div class="form-group">
+            <label for="lastName">Nom:</label>
+            <input type="text" id="lastName" class="form-input" [(ngModel)]="currentProfile.lastName" placeholder="Nom">
+        </div>
+        <div class="form-buttons">
+            <button class="save-btn" (click)="saveProfile()">Enregistrer</button>
+            <button class="cancel-btn" (click)="cancelProfileForm()">Annuler</button>
+        </div>
+    </div>
+
+
+    <div *ngIf="showDeleteConfirm" class="delete-confirm">
+        <div class="delete-confirm-content">
+            <p>Êtes-vous sûr de vouloir supprimer {{profileToDelete?.name}} {{profileToDelete?.lastName}} ?</p>
+            <div class="delete-buttons">
+                <button class="confirm-delete-btn" (click)="confirmDelete()">Confirmer</button>
+                <button class="cancel-delete-btn" (click)="cancelDelete()">Annuler</button>
+            </div>
+        </div>
+    </div>
+
+
     <section class="profile-list-section">
-        <div class="profile-list-container" *ngFor="let profile of filteredProfiles()">
-            <app-profile-item [profile]="profile" [context]="'admin'"
-                (profileSelected)="profileSelectedHandler(profile)">
-            </app-profile-item>
+        <div *ngFor="let profile of filteredProfiles()" class="enhanced-profile-item" (click)="profileSelectedHandler(profile)">
+            <div class="profile-details">
+                <p class="profile-name">{{profile.name}} {{profile.lastName}}</p>
+                <p class="profile-id">ID: {{profile.id}}</p>
+            </div>
+            <div class="profile-actions" (click)="$event.stopPropagation()">
+                <button class="delete-btn" (click)="deleteProfile(profile)">Supprimer</button>
+            </div>
         </div>
     </section>
 </section>
+
+
 <section *ngIf="currentPage==='home'">
     <input type="text" id="search-bar" class="search-input" [(ngModel)]="searchQuery"
         placeholder="Rechercher un joueur..." (click)="showProfileList()">
@@ -21,6 +60,8 @@
         </div>
     </section>
 </section>
+
+
 <section *ngIf="currentPage==='multiplayer-setup'">
     <input type="text" id="search-bar" class="search-input" [(ngModel)]="searchQuery"
         placeholder="Rechercher un joueur...">

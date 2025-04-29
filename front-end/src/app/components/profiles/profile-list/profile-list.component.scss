@@ -1,55 +1,265 @@
 @import '/src/app/color-palette.scss';
 
 #add-profile {
-  background-color: #4CAF50; /* Vert doux */
-  color: white;
+  background-color: $primary-blue-btn; /* Vert doux */
+  color: $primary-btn-white-text;
   padding: 10px 20px;
-  margin-left: 15px;
-  margin-top: 15px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 14px;
   transition: background-color 0.3s, transform 0.2s;
 }
 
 #add-profile:hover {
-  background-color: #45a049; /* Vert un peu plus foncé au survol */
+  background-color: $primary-btn-blue-hover; /* Vert un peu plus foncé au survol */
   transform: scale(1.05);
 }
 
-#add-profile:active {
-  background-color: #3e8e41;
-  transform: scale(1);
+app-profile-list {
+  list-style-type: none;
+  padding: 0;
+  a {
+    text-decoration: none;
+    color: $primary-black-text;
+  }
 }
 
-  app-profile-list {
-    list-style-type: none;
-    padding: 0;
-    a {
-      text-decoration: none;
-      color: $primary-black-text;
-    }
-  }
+.search-input {
+  width: 100%;
+  border: $primary-border-white;
+  outline: none;
+  padding: 15px;
+  font-size: 16px;
+  border-radius: 10px;
+  background-color: $primary-white-bg;
+  color: $primary-black-text;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+}
 
-  .search-input {
+.profile-list-section {
+  margin-top: 20px;
+}
+
+.setup {
+  padding: 2em;
+  border-radius: 10px;
+  box-shadow: $primary-box-shadow;
+}
+
+
+.admin-profile-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 10px;
+}
+
+.profile-form {
+  background-color: $primary-white-bg;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 20px 0;
+  box-shadow: $primary-box-shadow;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: $primary-black-text;
+}
+
+.form-input {
+  width: 100%;
+  padding: 10px;
+  border: $primary-border-white;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+.form-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.save-btn, .cancel-btn {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.save-btn {
+  background-color: $primary-blue-btn;
+  color: $primary-white-text;
+}
+
+.save-btn:hover {
+  background-color: $primary-btn-blue-hover;
+}
+
+.cancel-btn {
+  background-color: $primary-white-btn;
+  color: $primary-black-text;
+}
+
+.cancel-btn:hover {
+  background-color: $primary-btn-white-hover;
+}
+
+.enhanced-profile-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: $primary-white-bg;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  box-shadow: $primary-box-shadow;
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+
+.enhanced-profile-item:hover {
+  transform: translateY(-2px);
+  background-color: $primary-btn-white-hover;
+}
+
+.profile-details {
+  flex: 1;
+}
+
+.profile-name {
+  margin: 0 0 5px 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: $primary-black-text;
+}
+
+.profile-id {
+  margin: 0;
+  font-size: 14px;
+  color: $secondary-black-text;
+}
+
+.profile-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.edit-btn, .delete-btn {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.edit-btn {
+  background-color: $primary-blue-btn;
+  color: $primary-white-text;
+}
+
+.edit-btn:hover {
+  background-color: $primary-btn-blue-hover;
+}
+
+.delete-btn {
+  background-color: $primary-delete-btn;
+  color: $primary-white-text;
+}
+
+.delete-btn:hover {
+  background-color: $primary-btn-delete-hover;
+}
+
+
+.delete-confirm {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.delete-confirm-content {
+  background-color: $primary-white-bg;
+  border-radius: 10px;
+  padding: 20px;
+  width: 400px;
+  max-width: 90%;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+
+
+.confirm-delete-btn {
+  background-color: $primary-delete-btn;
+  color: $primary-white-text;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+.confirm-delete-btn:hover {
+  background-color: $primary-btn-delete-hover;
+}
+
+.cancel-delete-btn {
+  background-color: $primary-white-btn;
+  color: $primary-black-text;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+.cancel-delete-btn:hover {
+  background-color: $primary-btn-white-hover;
+}
+.delete-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  .admin-profile-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  #add-profile {
+    margin-left: 0;
+    margin-top: 10px;
     width: 100%;
-    border: $primary-border-white;
-    outline: none;
-    padding: 15px;
-    font-size: 16px;
-    border-radius: 10px;
-    background-color: $primary-white-bg;
-    color: $primary-black-text;
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
   }
-
-  .profile-list-section{
-    margin-top: 20px;
+  
+  .enhanced-profile-item {
+    flex-direction: column;
+    align-items: flex-start;
   }
-
-  .setup{
-    padding: 2em;
-    border-radius: 10px;
-    box-shadow: $primary-box-shadow;
+  
+  .profile-actions {
+    margin-top: 10px;
+    width: 100%;
+    justify-content: flex-end;
   }
+}

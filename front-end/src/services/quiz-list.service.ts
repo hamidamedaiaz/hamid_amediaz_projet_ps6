@@ -11,7 +11,6 @@ export class QuizListService {
   public quizzes$: BehaviorSubject<Quiz[]> = new BehaviorSubject<Quiz[]>([]);
   public selectedEditQuiz$ = new BehaviorSubject<Quiz | null>(null);
 
-
   constructor(private http: HttpClient) {
     this.getQuizzes();
   }

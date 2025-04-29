@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { PROFILE_STATS_MOCK, ProfileStatsBasic } from 'src/mocks/profile-stats.mock';
+import { LocalStorageService } from './localstorage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +8,7 @@ import { PROFILE_STATS_MOCK, ProfileStatsBasic } from 'src/mocks/profile-stats.m
 export class ProfileStatsService {
   private profileStatsCache = new Map<number, ProfileStatsBasic>();
 
-  constructor() {
+  constructor(private localStorageService: LocalStorageService) {
     this.initializeCache();
   }
 

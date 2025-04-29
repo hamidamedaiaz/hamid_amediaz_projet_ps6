@@ -1,39 +1,18 @@
 <div class="global-question-container">
-
     <div class="question-left-side" [ngClass]="{'correct-flash': showCorrectEffect}">
         <div [ngClass]="getRole() === 'admin' ? 'question-admin-container': ''">
             <div class="button-section" *ngIf="getGamemode() === 'Solo' || getRole() === 'admin'">
-                <section class="play-control-btn-section">
-                    <button id="play-btn" class="button">Jouer la musique</button>
-                    <button id="pause-btn" class="button">Arrêter la musique</button>
-                    <button id="replay-btn" class="button music-button" (click)="restartMusic()">Rejouer la
-                        musique</button>
-                </section>
-                <section class="volume-section">
-                    <p id="volume">Volume</p>
-                    <section class="volume-control-btn-section">
-                        <button id="decreaseVolumeBtn" (click)="decreaseVolume()">-</button>
-                        <input value="{{getVolume()}}" id="volume-input" readonly>
-                        <button id="increaseVolumeBtn" (click)="increaseVolume()">+</button>
-                    </section>
-                </section>
+                <app-music-control [volume]="getVolume()" [audio_path]="getAudioPath()"></app-music-control>
             </div>
-            <audio id="audio" preload controls *ngIf="getGamemode() === 'Solo' || getRole() === 'admin'"
-                src="{{getAudioPath()}}"></audio>
-            <section class="question-header-section">
-                <div class="question-title">{{getTitle()}}</div>
-                <div *ngIf="getRole() === 'admin'" class="answer-counter">Réponses :
-                    {{getNbOfGivenAnswers()}}/{{getNbOfPlayers()}}</div>
-                <button *ngIf="getRole()==='admin'" (click)="showHints()" class="button">
-                    Afficher les Indices
-                </button>
-            </section>
+
+            <app-quiz-question-header [title]="getTitle()" (show_hints)="showHints()"></app-quiz-question-header>
+
             <hr class="left-side-separator">
-            
-            <section *ngIf="getAnswers() && getRole() === 'user'" class="answers-section">
+
+            <!-- <section *ngIf="getAnswers() && getRole() === 'user'" class="answers-section">
                 <div class="answers-container" *ngFor="let answer of getAnswers()"
                     [ngClass]="{'wrong-answer': isWrongAnswer(answer)}">
-                    <app-quiz-answer [answer]="answer" (answerSelected)="answerSelected(answer)"
+                    <app-quiz-answer [answer]="answer" (answer_selected)="answerSelected(answer)"
                         [ngClass]="{'hidden-answer': isWrongAnswer(answer)}"></app-quiz-answer>
                 </div>
             </section>
@@ -41,21 +20,17 @@
                 <div class="answers-container" *ngFor="let percent of getAnswersPercents()">
                     <app-quiz-answer [percent]="percent"></app-quiz-answer>
                 </div>
-            </section>
+            </section> -->
+            <app-quiz-answers (correct_answer)="submitCorrectAnswer()"></app-quiz-answers>
         </div>
     </div>
-    <div [ngClass]="areHintsActive() ? 'active' : 'hidden'" class="question-right-side">
-        <section class="hint-section">
-            <span class="hint-title">Indices: </span>
-            <hr class="right-side-separator">
-            <div class="hints-container" *ngFor="let hint of getHints()">
-                <app-quiz-hint [hint]="hint" class="hint-item"></app-quiz-hint>
-                <p class="next-hint-in">Prochain indice dans ...</p>
-            </div>
-        </section>
-    </div>
+
+    <app-quiz-hints [ngClass]="areHintsActive() ? 'active' : 'hidden'" class="question-right-side"></app-quiz-hints>
+
     <button *ngIf="getGamemode()==='Solo' || getRole() ==='admin'" (click)="nextQuestion()"
         class="next-question-btn button">Question suivante</button>
     <button *ngIf="getGamemode()==='Solo' || getRole() ==='admin'" (click)="previousQuestion()"
         class="previous-question-btn button">Question précédente</button>
+        
+    <app-quiz-question-pop-up *ngIf="showQuestionPopUp" (cancel_pop_pup)="CancelPopPup()" (continue_pop_pup)="nextQuestion()"></app-quiz-question-pop-up>
 </div>

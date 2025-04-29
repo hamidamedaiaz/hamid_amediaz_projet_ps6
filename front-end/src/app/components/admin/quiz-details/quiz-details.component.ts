@@ -74,7 +74,7 @@ export class QuizDetailsComponent implements OnChanges {
     this.selectedQuestion = this.questions[index];
     this.selectedQuestionTitle = this.selectedQuestion.question;
     this.selectedQuestionAnswers = this.selectedQuestion.answers;
-    this.selectedQuestionCorrectAnswers = this.selectedQuestion.correctAnswer;
+    this.selectedQuestionCorrectAnswers = this.selectedQuestion.correctAnswers;
     this.selectedQuestionHints = this.selectedQuestion.hints;
   }
 
@@ -94,7 +94,7 @@ export class QuizDetailsComponent implements OnChanges {
       questionId: this.questions.length + 1,
       question: "",
       answers: [],
-      correctAnswer: [],
+      correctAnswers: [],
       hints: [],
       audioPath:"/assets/musics/Michael Jackson - Billie Jean.mp3"
     };
@@ -134,7 +134,7 @@ export class QuizDetailsComponent implements OnChanges {
   }
 
   isCorrect(answer: Answer): boolean {
-    return this.selectedQuestion?.correctAnswer.some(correctAnswer => correctAnswer.answerId === answer.answerId) ?? false;
+    return this.selectedQuestion?.correctAnswers.some(correctAnswer => correctAnswer.answerId === answer.answerId) ?? false;
   }
 
 

@@ -110,8 +110,8 @@ export class QuizResultDetailsComponent implements OnInit {
         return {
           questionId: question.questionId,
           question: question.question,
-          correctAnswer: question.correctAnswer[0],
-          userAnswer: isCorrect ? question.correctAnswer[0] : question.answers[0],
+          correctAnswer: question.correctAnswers[0],
+          userAnswer: isCorrect ? question.correctAnswers[0] : question.answers[0],
           isCorrect: isCorrect,
           timeSpent: Math.floor(Math.random() * 15) + 10, 
           hintsUsed: isCorrect ? 0 : 1 

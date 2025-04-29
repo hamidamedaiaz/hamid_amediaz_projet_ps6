@@ -30,7 +30,12 @@ export class QuizItemComponent {
   @Output()
   launchSoloGameEmitter: EventEmitter<Quiz> = new EventEmitter<Quiz>();
 
+  @Output()
+  deleteQuiz: EventEmitter<Boolean> = new EventEmitter<Boolean>();
+
   currentPage:String=this.currentPageService.getCurrentPage();
+
+  public showDeleteConfirm: Boolean = false;
 
   constructor(private quizService: QuizListService, private currentPageService: CurrentPageService) {
     console.log("current page: ",this.currentPage);
@@ -41,8 +46,10 @@ export class QuizItemComponent {
   }
 
   onDeleteClick(){
-    console.log("Delete Quiz")
+    this.deleteQuiz.emit(true)
   }
+
+  
 
   launchMultiGame(){
     return this.launchMultiGameEmitter.emit(this.quiz);

@@ -4,7 +4,7 @@ export interface Question{
     questionId: number;
     question: string;
     answers: Answer[];
-    correctAnswer: Answer[];
+    correctAnswers: Answer[];
     hints: string[];
     audioPath: string;
 }

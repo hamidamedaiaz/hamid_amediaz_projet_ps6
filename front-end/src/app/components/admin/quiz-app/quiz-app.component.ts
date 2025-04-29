@@ -1,9 +1,9 @@
-import { Component, OnInit,Input } from '@angular/core';
-import {CommonModule}  from "@angular/common";
-import {QuizItemComponent} from "../quiz-item/quiz-item.component";
+import { Component, OnInit, Input } from '@angular/core';
+import { CommonModule } from "@angular/common";
+import { QuizItemComponent } from "../quiz-item/quiz-item.component";
 import { FormsModule } from '@angular/forms';
-import {Quiz} from "../../../../models/quiz.model";
-import {QuizListService} from "src/services/quiz-list.service";
+import { Quiz } from "../../../../models/quiz.model";
+import { QuizListService } from "src/services/quiz-list.service";
 import { Router } from '@angular/router';
 import { CurrentPageService } from 'src/services/currentPage.service';
 import { QuizService } from 'src/services/quiz.service';
@@ -21,18 +21,22 @@ import { QuizService } from 'src/services/quiz.service';
 })
 export class QuizAppComponent implements OnInit {
   searchQuery: string = '';
-  quizzes:Quiz[] = [];
-  currentPage=this.currentPageService.getCurrentPage();
+  quizzes: Quiz[] = [];
+  currentPage = this.currentPageService.getCurrentPage();
 
   @Input()
-  context:String|undefined;
+  context: String | undefined;
 
-  constructor(private quizListService: QuizListService, private currentQuizService:QuizService, private router:Router, private currentPageService:CurrentPageService) {
+  public showDeleteConfirm: Boolean = false;
+
+  public quizToDelete: Quiz | undefined;
+
+  constructor(private quizListService: QuizListService, private currentQuizService: QuizService, private router: Router, private currentPageService: CurrentPageService) {
     console.log("Quizzes chargés :", this.quizzes);
   }
 
   ngOnInit(): void {
-    this.quizListService.quizzes$.subscribe((quizzes:Quiz[]) => this.quizzes = quizzes)
+    this.quizListService.quizzes$.subscribe((quizzes: Quiz[]) => this.quizzes = quizzes)
   }
 
 
@@ -42,20 +46,40 @@ export class QuizAppComponent implements OnInit {
     );
   }
 
-  launchMultiGame(quiz:Quiz){
+  launchMultiGame(quiz: Quiz) {
     console.log("Launching this quiz in singleplayer mode ", quiz);
     this.currentQuizService.setQuiz(quiz);
     this.router.navigate(['/multiplayer-game-setup'])
   }
 
-  launchSoloGame(quiz:Quiz){
+  launchSoloGame(quiz: Quiz) {
     console.log("Launching this quiz in singleplayer mode ", quiz);
     this.currentQuizService.setQuiz(quiz);
     this.router.navigate(["/singleplayer-game"])
   }
 
-  createQuiz(){
-      this.quizListService.createQuiz();
+  createQuiz() {
+    this.quizListService.createQuiz();
+  }
+
+  deleteQuiz(quiz: Quiz) {
+    this.showDeleteConfirm = true;
+    this.quizToDelete = quiz;
+    console.log("detected")
+  }
+
+  confirmDelete() {
+    if (this.quizToDelete) {
+      const index = this.quizzes.indexOf(this.quizToDelete);
+      if (index > -1) this.quizzes.splice(index, 1);
+      this.showDeleteConfirm = false;
+      console.log("Suppression Confirmed");
+    } else this.cancelDelete();
+  }
+
+  cancelDelete() {
+    this.showDeleteConfirm = false;
+    console.log("Suppresson canceled");
   }
 
 }

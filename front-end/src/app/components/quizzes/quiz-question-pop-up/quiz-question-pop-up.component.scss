@@ -1,0 +1,88 @@
+@import '/src/app/color-palette.scss';
+
+.global-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+}
+
+.pop-up-container {
+    background-color: $primary-white-bg;
+    padding: 60px 40px;
+    border-radius: 16px;
+    box-shadow: 0 12px 30px rgba(0, 106, 113, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5vh;
+    animation: fadeInScale 0.4s ease-out;
+    z-index: 20;
+    max-width: 600px;
+    width: 90%;
+}
+
+.btn-section {
+    display: flex;
+    gap: 20px;
+}
+
+.button {
+    padding: 10px 20px;
+    width: 8vw;
+    border: none;
+    border-radius: 10px;
+    transition: background-color 0.3s ease-in-out;
+    font-size: 20px;
+    box-shadow: $primary-box-shadow;
+}
+
+.button:hover {
+    cursor: pointer;
+}
+
+.cancel-btn{
+    background-color: $primary-white-bg;
+    color: $primary-black-text;
+}
+
+.cancel-btn:hover{
+    background-color: $primary-btn-white-hover;
+}
+
+.continue-btn{
+    background-color: $primary-blue-bg;
+    color: $primary-btn-white-text;
+}
+
+.continue-btn:hover{
+    background-color: $primary-btn-blue-hover;
+}
+
+
+.message {
+    color: $primary-blue-bg;
+    font-family: "Unbounded", sans-serif;
+    font-size: 3rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+
+@keyframes fadeInScale {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }

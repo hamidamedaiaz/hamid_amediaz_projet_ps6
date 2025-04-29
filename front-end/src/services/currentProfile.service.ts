@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { Profile } from "src/models/profile.model";
 import { ADMIN_PROFILE, GUEST_PROFILE } from "../mocks/profile-list.mock";
+import { LocalStorageService } from "./localstorage.service";
 
 @Injectable({
   providedIn: 'root'
@@ -13,12 +14,22 @@ export class CurrentProfileService {
     private current_profile: Profile = GUEST_PROFILE
 
     public current_profile$: BehaviorSubject<Profile> = new BehaviorSubject<Profile>(this.current_profile);
+
+    private CURRENT_PROFILE_KEY:string= "CURRENT_PROFILE";
     
-    constructor() {}
+    constructor(private localStorageService: LocalStorageService) {
+        this.loadFromStorage();
+    }
+
+    private loadFromStorage():void{
+        this.current_profile = this.localStorageService.getItem(this.CURRENT_PROFILE_KEY);
+        this.current_profile$.next(this.current_profile);
+    }
 
     setCurrentProfile(profile: Profile) {
         this.current_profile = profile;
         this.current_profile$.next(this.current_profile);
+        this.localStorageService.storeItem(this.CURRENT_PROFILE_KEY, JSON.stringify(this.current_profile));
     }
 
     getCurrentProfile(){
@@ -27,6 +38,7 @@ export class CurrentProfileService {
 
     resetCurrentProfile(){
         console.log("Current Profile has been reset successfully")
+        this.localStorageService.removeItem(this.CURRENT_PROFILE_KEY);
         this.current_profile=GUEST_PROFILE;
     }
 
@@ -37,5 +49,6 @@ export class CurrentProfileService {
     public setAdmin(){
         this.current_profile = ADMIN_PROFILE;
         this.current_profile$.next(this.current_profile);
+        this.localStorageService.storeItem(this.CURRENT_PROFILE_KEY, JSON.stringify(this.current_profile));
     }
 }

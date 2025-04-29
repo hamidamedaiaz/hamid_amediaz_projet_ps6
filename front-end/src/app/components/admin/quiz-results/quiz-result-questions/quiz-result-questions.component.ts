@@ -34,7 +34,7 @@ export class QuizResultQuestionsComponent {
     for (const quiz of quizzes) {
       const question = quiz.questions.find(q => q.questionId === result.questionId);
       if (question) {
-        return [...question.answers, ...question.correctAnswer];
+        return [...question.answers, ...question.correctAnswers];
       }
     }
     

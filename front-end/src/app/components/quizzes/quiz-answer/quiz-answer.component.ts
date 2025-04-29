@@ -19,13 +19,13 @@ import { QuizService } from 'src/services/quiz.service';
 export class QuizAnswerComponent {
   
   @Input()
-  answer:any;
+  answer!:Answer;
   
   @Input()
-  percent:any;
+  percent?:any;
 
   @Output()
-  answerSelected: EventEmitter<Answer> = new EventEmitter<Answer>();
+  @Output() answerSelected: EventEmitter<Answer> = new EventEmitter<Answer>();
 
   private profile:Profile | undefined;
 
@@ -34,9 +34,7 @@ export class QuizAnswerComponent {
   constructor(private gamemodeService:GamemodeService, private currentProfileService: CurrentProfileService){
     this.currentProfileService.current_profile$.subscribe((profile)=>{
       this.profile = profile;
-    })
-
-    
+    })    
   }
 
   public getGamemode(){
@@ -48,7 +46,7 @@ export class QuizAnswerComponent {
     return this.profile?.role;
   }
 
-  selectedAnswer(){
+  selectedAnswer() {
     this.answerSelected.emit(this.answer);
   }
 

@@ -1,9 +1,3 @@
-<div (click)="selectedAnswer()" class="answer-item" *ngIf="answer">
+<div (click)="selectedAnswer()" class="answer-item">
     {{answer.answerContent}}
-</div>
-<div 
-    (click)="selectedAnswer()" 
-    class="percent-item" 
-    *ngIf="percent">
-    {{ percent.answer.answerContent }} - {{ percent.percent }}%
 </div>

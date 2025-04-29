@@ -45,11 +45,11 @@
   border: none;
   border-radius: 6px;
   padding: 10px 20px;
-  color: white;
+  color: $primary-btn-white-text;
   cursor: pointer;
   font-size: 14px;
   transition: background-color 0.3s;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: $primary-box-shadow
 }
 
 .delete-btn:hover {

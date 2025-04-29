@@ -10,7 +10,6 @@
 #quiz-answer {
   width: 50%;
   border: none;
-  border-bottom: 2px solid lightgray;
   padding: 10px;
   font-size: 14px;
   outline: none;
@@ -18,28 +17,28 @@
 }
 
 #quiz-answer:focus {
-  border-bottom: 3px solid #888;
+  border-bottom: $primary-border-white;
 }
 
 .toggle {
   appearance: none;
   width: 20px;
   height: 20px;
-  border: 1px solid #ccc;
+  border: $primary-border-white;
   border-radius: 4px;
-  background-color: white;
+  background-color: $primary-white-bg;
   cursor: pointer;
 
 }
 
 .toggle:checked {
-  background-color: green;
+  background-color: $primary-blue-bg;
 }
 
 #delete-answer{
   width: 24px;
   height: 24px;
   cursor: pointer;
-  margin-left: 5px; /* Petit espace entre les boutons */
+  margin-left: 5px;
   transition: transform 0.2s ease-in-out;
 }

@@ -5,7 +5,7 @@ export const QUESTION: Question = {
     questionId: 0,
     question: "Quel est l'auteur de la chanson Billie Jean ?",
     answers: [ANSWERS.ANSWER1, ANSWERS.ANSWER4, ANSWERS.ANSWER3],
-    correctAnswer: [ANSWERS.ANSWER2],
+    correctAnswers: [ANSWERS.ANSWER2],
     hints:[
         "Son surnom est 'The King of Pop'",
         "Il a popularisé le moonwalk",
@@ -22,7 +22,7 @@ export const QUESTIONS: Question[] = [{
       { questionId: 101, "answerId": 2, "answerContent": "The Beatles" },
       { questionId: 101, "answerId": 3, "answerContent": "The Rolling Stones" }
     ],
-    correctAnswer: [
+    correctAnswers: [
       { questionId: 101, "answerId": 1, "answerContent": "Queen" }
     ],
     hints: ["Le leader du groupe était Freddie Mercury"],
@@ -35,7 +35,7 @@ export const QUESTIONS: Question[] = [{
       { questionId: 102, "answerId": 5, "answerContent": "The Wall" },
       { questionId: 102, "answerId": 6, "answerContent": "Wish You Were Here" }
     ],
-    correctAnswer: [
+    correctAnswers: [
       { questionId: 102, "answerId": 4, "answerContent": "Dark Side of the Moon" }
     ],
     hints: ["La pochette de l'album représente un prisme"],
@@ -48,7 +48,7 @@ export const QUESTIONS: Question[] = [{
       { questionId: 103, "answerId": 8, "answerContent": "Fleetwood Mac" },
       { questionId: 103, "answerId": 9, "answerContent": "Led Zeppelin" }
     ],
-    correctAnswer: [
+    correctAnswers: [
       { questionId: 103, "answerId": 7, "answerContent": "The Eagles" }
     ],
     hints: ["Le groupe est connu pour son style country rock"],
@@ -58,7 +58,7 @@ export const QUESTIONS: Question[] = [{
   export const EMPTY_QUESTION: Question = {
     questionId: 0,
     question: '',
-    correctAnswer: [],
+    correctAnswers: [],
     answers: [],
     hints: [],
     audioPath: '',

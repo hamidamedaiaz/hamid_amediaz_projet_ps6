@@ -60,3 +60,60 @@
     cursor: pointer;
 }
 
+
+.delete-confirm {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  z-index: 10;
+}
+
+.delete-confirm-content {
+  background-color: $primary-white-bg;
+  border-radius: 10px;
+  padding: 20px;
+  width: 400px;
+  max-width: 90%;
+  text-align: center;
+  box-shadow: $primary-box-shadow;
+}
+
+.delete-buttons{
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+
+.confirm-delete-btn {
+  background-color: $primary-delete-btn;
+  color: $primary-white-text;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+.confirm-delete-btn:hover {
+  background-color: $primary-btn-delete-hover;
+}
+
+.cancel-delete-btn {
+  background-color: $primary-white-btn;
+  color: $primary-black-text;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+.cancel-delete-btn:hover {
+  background-color: $primary-btn-white-hover;
+}
