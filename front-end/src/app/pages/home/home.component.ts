@@ -1,9 +1,10 @@
 import { Component,Input } from '@angular/core';
 import { Router, RouterLink} from "@angular/router";
-import { ProfileListComponent } from 'src/app/components/profiles/profile-list/profile-list.component';
+import { ProfileListComponent } from 'src/app/components/admin/profiles/profile-list/profile-list.component';
 import { CurrentPageService } from 'src/services/currentPage.service';
 import { NgIf, NgClass } from '@angular/common';import {FormsModule} from "@angular/forms";
 import { CurrentProfileService } from 'src/services/currentProfile.service';
+import {last} from "rxjs";
 
 @Component({
   selector: 'app-home',
@@ -30,7 +31,11 @@ export class HomeComponent {
   public context: string = "home";
 
   public hide_admin_log : boolean = true;
+  public codeError: boolean = false;
   public CORRECT_CODE : string = "1234";
+  code: string[] = ['', '', '', ''];
+  private autoCloseTimeoutId: any = null;
+
 
   selectGamemode(){
     console.log("gamemode");
@@ -40,44 +45,85 @@ export class HomeComponent {
 
   goToAdminPage(){
     this.hide_admin_log = false;
+
+    // Si un timer précédent existe, on l’annule
+    if (this.autoCloseTimeoutId) {
+      clearTimeout(this.autoCloseTimeoutId);
+    }
+
+    this.autoCloseTimeoutId = setTimeout(() => {
+      this.hide_admin_log = true;
+      this.code = ['', '', '', ''];
+      this.codeError = false;
+      this.autoCloseTimeoutId = null; // Réinitialise l’ID
+    }, 10000);
     //this.currentPageService.setCurrentPage("admin")
     //this.router.navigate(['/admin']);
   }
 
   hideAdminLog(){
     this.hide_admin_log = true; // Cache la modale si on clique en dehors
+    if (this.autoCloseTimeoutId) {
+      clearTimeout(this.autoCloseTimeoutId);
+      this.autoCloseTimeoutId = null;
+    }
   }
 
-  code: string[] = ['', '', '', ''];
+
 
   onInput(index: number, event: any) {
-    const input = event.target;
+    const input = event.target as HTMLInputElement;
     const value = input.value;
 
-    // Autoriser que les chiffres
+    // Autoriser uniquement les chiffres
     if (!/^\d$/.test(value)) {
+      input.value = '';
       this.code[index] = '';
       return;
     }
 
-    // Passer au champ suivant si un chiffre est saisi
-    if (value && index < 3) {
-      const nextInput = input.nextElementSibling;
+    this.code[index] = value;
+
+    // Aller au champ suivant si un chiffre est saisi
+    if (index < 3) {
+      const nextInput = input.nextElementSibling as HTMLInputElement;
       if (nextInput) {
         nextInput.focus();
       }
     }
 
-    // Si tous les chiffres sont remplis
+    // Vérification si tous les chiffres sont remplis
     if (this.code.every(digit => digit !== '')) {
       const finalCode = this.code.join('');
       console.log("Code saisi :", finalCode);
-      if(finalCode === this.CORRECT_CODE){
-        this.currentPageService.setCurrentPage("admin")
+      if (finalCode === this.CORRECT_CODE) {
+        this.currentPageService.setCurrentPage("admin");
         this.currentProfileService.setAdmin();
         this.router.navigate(['/admin']);
+      }
+      else{
+        this.codeError = true;
+        this.code = ['', '', '', ''];
+        // Vider les champs visibles normalement le this.Code = ... marche mais l'affichage bug ça va trop vite
+        const inputs = document.querySelectorAll('.code-inputs input') as NodeListOf<HTMLInputElement>;
+        inputs.forEach(input => input.value = '');
+        inputs[0].focus();
       }
     }
   }
 
+
+
+  keyPressed(i : number, event: KeyboardEvent) {
+    console.log("keyPressed"  + event.key);
+    const inputs = document.querySelectorAll('.code-inputs input') as NodeListOf<HTMLInputElement>;
+
+    if (event.key === 'Backspace') {
+      this.code[i] = '';
+      if(i > 0){
+        inputs[i-1].focus();
+      }
+      event.preventDefault();
+    }
+  }
 }

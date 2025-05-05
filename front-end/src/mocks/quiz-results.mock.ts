@@ -34,20 +34,11 @@ export const QUIZ_RESULTS: QuizResult[] = [
     },
     profile: PROFILE_LIST[0], 
     date: new Date('2023-04-10'),
-    score: 8,
-    totalQuestions: 10,
+    score: 2,
+    totalQuestions: 3,
     timeSpent: 300, 
     hintsUsed: 3,
     questionResults: [
-      {
-        questionId: 0,
-        question: 'Quel est l\'auteur de la chanson Billie Jean ?',
-        correctAnswer: ANSWERS.ANSWER2,
-        userAnswer: ANSWERS.ANSWER2,
-        isCorrect: true,
-        timeSpent: 15,
-        hintsUsed: 0
-      },
       {
         questionId: 101,
         question: "Quel groupe a sorti 'Bohemian Rhapsody' en 1975 ?",
@@ -87,20 +78,11 @@ export const QUIZ_RESULTS: QuizResult[] = [
     },
     profile: PROFILE_LIST[1], 
     date: new Date('2023-04-15'),
-    score: 6,
-    totalQuestions: 10,
+    score: 2,
+    totalQuestions: 3,
     timeSpent: 350,
     hintsUsed: 5,
     questionResults: [
-      {
-        questionId: 0,
-        question: 'Quel est l\'auteur de la chanson Billie Jean ?',
-        correctAnswer: ANSWERS.ANSWER2,
-        userAnswer: ANSWERS.ANSWER1,
-        isCorrect: false,
-        timeSpent: 20,
-        hintsUsed: 1
-      },
       {
         questionId: 101,
         question: "Quel groupe a sorti 'Bohemian Rhapsody' en 1975 ?",
@@ -140,20 +122,11 @@ export const QUIZ_RESULTS: QuizResult[] = [
     },
     profile: PROFILE_LIST[0], 
     date: new Date('2023-04-20'),
-    score: 9,
-    totalQuestions: 10,
+    score: 2,
+    totalQuestions: 3,
     timeSpent: 280,
     hintsUsed: 2,
     questionResults: [
-      {
-        questionId: 0,
-        question: 'Quel est l\'auteur de la chanson Billie Jean ?',
-        correctAnswer: ANSWERS.ANSWER2,
-        userAnswer: ANSWERS.ANSWER2,
-        isCorrect: true,
-        timeSpent: 12,
-        hintsUsed: 0
-      },
       {
         questionId: 101,
         question: "Quel groupe a sorti 'Bohemian Rhapsody' en 1975 ?",
@@ -184,59 +157,6 @@ export const QUIZ_RESULTS: QuizResult[] = [
     ]
   },
   {
-    id: 4,
-    quiz: {
-      id: 3,
-      title: 'Quiz Pop',
-      description: 'Test vos connaissances sur la musique pop',
-      questions: [QUESTION, ...QUESTIONS]
-    },
-    profile: PROFILE_LIST[2],
-    date: new Date('2023-04-18'),
-    score: 7,
-    totalQuestions: 10,
-    timeSpent: 320,
-    hintsUsed: 4,
-    questionResults: [
-      {
-        questionId: 0,
-        question: 'Quel est l\'auteur de la chanson Billie Jean ?',
-        correctAnswer: ANSWERS.ANSWER2,
-        userAnswer: ANSWERS.ANSWER2,
-        isCorrect: true,
-        timeSpent: 14,
-        hintsUsed: 1
-      },
-      {
-        questionId: 101,
-        question: "Quel groupe a sorti 'Bohemian Rhapsody' en 1975 ?",
-        correctAnswer: { questionId: 101, answerId: 1, answerContent: "Queen" },
-        userAnswer: { questionId: 101, answerId: 1, answerContent: "Queen" },
-        isCorrect: true,
-        timeSpent: 19,
-        hintsUsed: 0
-      },
-      {
-        questionId: 102,
-        question: "Quel album des Pink Floyd est sorti en 1973 ?",
-        correctAnswer: { questionId: 102, answerId: 4, answerContent: "Dark Side of the Moon" },
-        userAnswer: { questionId: 102, answerId: 5, answerContent: "The Wall" },
-        isCorrect: false,
-        timeSpent: 22,
-        hintsUsed: 1
-      },
-      {
-        questionId: 103,
-        question: "Qui a chanté 'Hotel California' en 1976 ?",
-        correctAnswer: { questionId: 103, answerId: 7, answerContent: "The Eagles" },
-        userAnswer: { questionId: 103, answerId: 8, answerContent: "Fleetwood Mac" },
-        isCorrect: false,
-        timeSpent: 26,
-        hintsUsed: 2
-      }
-    ]
-  },
-  {
     id: 5,
     quiz: {
       id: 1,
@@ -246,20 +166,11 @@ export const QUIZ_RESULTS: QuizResult[] = [
     },
     profile: PROFILE_LIST[3], 
     date: new Date('2023-04-12'),
-    score: 5,
-    totalQuestions: 10,
+    score: 3,
+    totalQuestions: 3,
     timeSpent: 380,
     hintsUsed: 6,
     questionResults: [
-      {
-        questionId: 0,
-        question: 'Quel est l\'auteur de la chanson Billie Jean ?',
-        correctAnswer: ANSWERS.ANSWER2,
-        userAnswer: ANSWERS.ANSWER2,
-        isCorrect: true,
-        timeSpent: 17,
-        hintsUsed: 1
-      },
       {
         questionId: 101,
         question: "Quel groupe a sorti 'Bohemian Rhapsody' en 1975 ?",
@@ -289,62 +200,6 @@ export const QUIZ_RESULTS: QuizResult[] = [
       }
     ]
   },
-  
- 
-  {
-    id: 6,
-    quiz: {
-      id: 3,
-      title: 'Quiz Pop',
-      description: 'Test vos connaissances sur la musique pop',
-      questions: [QUESTION, ...QUESTIONS]
-    },
-    profile: PROFILE_LIST[0], 
-    date: new Date('2023-05-05'),
-    score: 7,
-    totalQuestions: 10,
-    timeSpent: 290,
-    hintsUsed: 3,
-    questionResults: [
-      {
-        questionId: 0,
-        question: 'Quel est l\'auteur de la chanson Billie Jean ?',
-        correctAnswer: ANSWERS.ANSWER2,
-        userAnswer: ANSWERS.ANSWER2,
-        isCorrect: true,
-        timeSpent: 14,
-        hintsUsed: 0
-      },
-      {
-        questionId: 101,
-        question: "Quel groupe a sorti 'Bohemian Rhapsody' en 1975 ?",
-        correctAnswer: { questionId: 101, answerId: 1, answerContent: "Queen" },
-        userAnswer: { questionId: 101, answerId: 1, answerContent: "Queen" },
-        isCorrect: true,
-        timeSpent: 20,
-        hintsUsed: 1
-      },
-      {
-        questionId: 102,
-        question: "Quel album des Pink Floyd est sorti en 1973 ?",
-        correctAnswer: { questionId: 102, answerId: 4, answerContent: "Dark Side of the Moon" },
-        userAnswer: { questionId: 102, answerId: 5, answerContent: "The Wall" },
-        isCorrect: false,
-        timeSpent: 25,
-        hintsUsed: 1
-      },
-      {
-        questionId: 103,
-        question: "Qui a chanté 'Hotel California' en 1976 ?",
-        correctAnswer: { questionId: 103, answerId: 7, answerContent: "The Eagles" },
-        userAnswer: { questionId: 103, answerId: 7, answerContent: "The Eagles" },
-        isCorrect: true,
-        timeSpent: 20,
-        hintsUsed: 1
-      }
-    ]
-  },
-  
  
   {
     id: 7,
@@ -356,20 +211,11 @@ export const QUIZ_RESULTS: QuizResult[] = [
     },
     profile: PROFILE_LIST[1], 
     date: new Date('2023-05-02'),
-    score: 8,
-    totalQuestions: 10,
+    score: 2,
+    totalQuestions: 3,
     timeSpent: 310,
     hintsUsed: 2,
     questionResults: [
-      {
-        questionId: 0,
-        question: 'Quel est l\'auteur de la chanson Billie Jean ?',
-        correctAnswer: ANSWERS.ANSWER2,
-        userAnswer: ANSWERS.ANSWER2,
-        isCorrect: true,
-        timeSpent: 16,
-        hintsUsed: 0
-      },
       {
         questionId: 101,
         question: "Quel groupe a sorti 'Bohemian Rhapsody' en 1975 ?",
@@ -410,20 +256,11 @@ export const QUIZ_RESULTS: QuizResult[] = [
     },
     profile: PROFILE_LIST[4], 
     date: new Date('2023-04-25'),
-    score: 9,
-    totalQuestions: 10,
+    score: 2,
+    totalQuestions: 3,
     timeSpent: 250,
     hintsUsed: 1,
     questionResults: [
-      {
-        questionId: 0,
-        question: 'Quel est l\'auteur de la chanson Billie Jean ?',
-        correctAnswer: ANSWERS.ANSWER2,
-        userAnswer: ANSWERS.ANSWER2,
-        isCorrect: true,
-        timeSpent: 12,
-        hintsUsed: 0
-      },
       {
         questionId: 101,
         question: "Quel groupe a sorti 'Bohemian Rhapsody' en 1975 ?",
@@ -465,20 +302,11 @@ export const QUIZ_RESULTS: QuizResult[] = [
     },
     profile: PROFILE_LIST[4], 
     date: new Date('2023-05-03'),
-    score: 8,
-    totalQuestions: 10,
+    score: 2,
+    totalQuestions: 3,
     timeSpent: 270,
     hintsUsed: 2,
     questionResults: [
-      {
-        questionId: 0,
-        question: 'Quel est l\'auteur de la chanson Billie Jean ?',
-        correctAnswer: ANSWERS.ANSWER2,
-        userAnswer: ANSWERS.ANSWER2,
-        isCorrect: true,
-        timeSpent: 13,
-        hintsUsed: 0
-      },
       {
         questionId: 101,
         question: "Quel groupe a sorti 'Bohemian Rhapsody' en 1975 ?",
@@ -520,20 +348,11 @@ export const QUIZ_RESULTS: QuizResult[] = [
     },
     profile: PROFILE_LIST[2], 
     date: new Date('2023-05-10'),
-    score: 6,
-    totalQuestions: 10,
+    score: 2,
+    totalQuestions: 3,
     timeSpent: 340,
     hintsUsed: 4,
     questionResults: [
-      {
-        questionId: 0,
-        question: 'Quel est l\'auteur de la chanson Billie Jean ?',
-        correctAnswer: ANSWERS.ANSWER2,
-        userAnswer: ANSWERS.ANSWER2,
-        isCorrect: true,
-        timeSpent: 15,
-        hintsUsed: 1
-      },
       {
         questionId: 101,
         question: "Quel groupe a sorti 'Bohemian Rhapsody' en 1975 ?",
@@ -574,20 +393,11 @@ export const QUIZ_RESULTS: QuizResult[] = [
     },
     profile: PROFILE_LIST[3], 
     date: new Date('2023-05-08'),
-    score: 7,
-    totalQuestions: 10,
+    score: 3,
+    totalQuestions: 3,
     timeSpent: 320,
     hintsUsed: 3,
     questionResults: [
-      {
-        questionId: 0,
-        question: 'Quel est l\'auteur de la chanson Billie Jean ?',
-        correctAnswer: ANSWERS.ANSWER2,
-        userAnswer: ANSWERS.ANSWER2,
-        isCorrect: true,
-        timeSpent: 16,
-        hintsUsed: 0
-      },
       {
         questionId: 101,
         question: "Quel groupe a sorti 'Bohemian Rhapsody' en 1975 ?",
@@ -618,113 +428,6 @@ export const QUIZ_RESULTS: QuizResult[] = [
     ]
   },
   
-  {
-    id: 12,
-    quiz: {
-      id: 3,
-      title: 'Quiz Pop',
-      description: 'Test vos connaissances sur la musique pop',
-      questions: [QUESTION, ...QUESTIONS]
-    },
-    profile: PROFILE_LIST[4], 
-    date: new Date('2023-05-15'),
-    score: 7,
-    totalQuestions: 10,
-    timeSpent: 300,
-    hintsUsed: 3,
-    questionResults: [
-      {
-        questionId: 0,
-        question: 'Quel est l\'auteur de la chanson Billie Jean ?',
-        correctAnswer: ANSWERS.ANSWER2,
-        userAnswer: ANSWERS.ANSWER2,
-        isCorrect: true,
-        timeSpent: 15,
-        hintsUsed: 0
-      },
-      {
-        questionId: 101,
-        question: "Quel groupe a sorti 'Bohemian Rhapsody' en 1975 ?",
-        correctAnswer: { questionId: 101, answerId: 1, answerContent: "Queen" },
-        userAnswer: { questionId: 101, answerId: 1, answerContent: "Queen" },
-        isCorrect: true,
-        timeSpent: 17,
-        hintsUsed: 1
-      },
-      {
-        questionId: 102,
-        question: "Quel album des Pink Floyd est sorti en 1973 ?",
-        correctAnswer: { questionId: 102, answerId: 4, answerContent: "Dark Side of the Moon" },
-        userAnswer: { questionId: 102, answerId: 4, answerContent: "Dark Side of the Moon" },
-        isCorrect: true,
-        timeSpent: 20,
-        hintsUsed: 1
-      },
-      {
-        questionId: 103,
-        question: "Qui a chanté 'Hotel California' en 1976 ?",
-        correctAnswer: { questionId: 103, answerId: 7, answerContent: "The Eagles" },
-        userAnswer: { questionId: 103, answerId: 9, answerContent: "Led Zeppelin" },
-        isCorrect: false,
-        timeSpent: 22,
-        hintsUsed: 1
-      }
-    ]
-  },
-  
-  {
-    id: 13,
-    quiz: {
-      id: 3,
-      title: 'Quiz Pop',
-      description: 'Test vos connaissances sur la musique pop',
-      questions: [QUESTION, ...QUESTIONS]
-    },
-    profile: PROFILE_LIST[3], 
-    date: new Date('2023-05-12'),
-    score: 6,
-    totalQuestions: 10,
-    timeSpent: 350,
-    hintsUsed: 5,
-    questionResults: [
-      {
-        questionId: 0,
-        question: 'Quel est l\'auteur de la chanson Billie Jean ?',
-        correctAnswer: ANSWERS.ANSWER2,
-        userAnswer: ANSWERS.ANSWER1,
-        isCorrect: false,
-        timeSpent: 18,
-        hintsUsed: 1
-      },
-      {
-        questionId: 101,
-        question: "Quel groupe a sorti 'Bohemian Rhapsody' en 1975 ?",
-        correctAnswer: { questionId: 101, answerId: 1, answerContent: "Queen" },
-        userAnswer: { questionId: 101, answerId: 1, answerContent: "Queen" },
-        isCorrect: true,
-        timeSpent: 22,
-        hintsUsed: 1
-      },
-      {
-        questionId: 102,
-        question: "Quel album des Pink Floyd est sorti en 1973 ?",
-        correctAnswer: { questionId: 102, answerId: 4, answerContent: "Dark Side of the Moon" },
-        userAnswer: { questionId: 102, answerId: 4, answerContent: "Dark Side of the Moon" },
-        isCorrect: true,
-        timeSpent: 25,
-        hintsUsed: 2
-      },
-      {
-        questionId: 103,
-        question: "Qui a chanté 'Hotel California' en 1976 ?",
-        correctAnswer: { questionId: 103, answerId: 7, answerContent: "The Eagles" },
-        userAnswer: { questionId: 103, answerId: 8, answerContent: "Fleetwood Mac" },
-        isCorrect: false,
-        timeSpent: 26,
-        hintsUsed: 1
-      }
-    ]
-  }
 ];
 
 export const MONTHLY_STATS: MonthlyStatsCollection = {

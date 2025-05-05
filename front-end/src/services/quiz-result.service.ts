@@ -18,6 +18,7 @@ export interface MonthlyStatsData {
 @Injectable({
   providedIn: 'root'
 })
+
 export class QuizResultService {
   private currentResult: QuizResult | null = null;
   private results: QuizResult[] = QUIZ_RESULTS;

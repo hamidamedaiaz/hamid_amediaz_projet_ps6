@@ -1,0 +1,88 @@
+<div id="container">
+  <!-- Section de la liste des questions -->
+  <div id="quiz-creation-right-container">
+
+    <div id="quiz-title">
+      <h2 class="title-quiz-template">Nom :</h2>
+      <input type="text" class="question-input" placeholder="Entrez la question..."
+             [(ngModel)]="this.quiz.title">
+    </div>
+
+    <div id="question-list">
+      <h2 class="title-quiz-template">Liste des questions :</h2>
+      <div *ngFor="let question of quiz.questions; let i = index">
+        <button class="sidebar-btn" (click)="selectQuestion(i)">
+          {{ question.question }}
+        </button>
+      </div>
+      <button id="add-listQ" class="simple-btn" (click)="addQuestion()" >+ Ajouter question</button>
+      <button id="end-quiz" class="simple-btn" (click)="saveQuiz()">Enregistrer ce quiz</button>
+    </div>
+  </div>
+
+
+  <div class="quiz-creation-left-container" *ngIf="selectedQuestion == undefined">
+    <div id="quiz-empty-message">
+      <h2>Aucune question sélectionnée</h2>
+      <p>Sélectionnez une question dans la liste ou cliquez sur "+ Ajouter question".</p>
+    </div>
+  </div>
+
+
+
+  <!-- Section de création de question et de réponses -->
+  <div class="quiz-creation-left-container" *ngIf="selectedQuestion != undefined">
+    <div id="quiz-creation-section">
+      <!-- Section de création de question -->
+      <div id="question-section">
+        <h2 class="title-quiz-template">Question :</h2>
+        <div class="question-with-audio">
+          <input type="text" class="question-input" placeholder="Entrez la question..."
+                 [(ngModel)]="selectedQuestionTitle"
+                 (ngModelChange)="updateQuestionTitle()">
+
+          <label class="audio-upload-label">
+            + Ajouter une musique
+            <input type="file" id="audio-upload">
+          </label>
+        </div>
+        <span class="button-info" *ngIf="selectedQuestion.audioPath">
+          Fichier musique sélectionné : {{ getSelectedQuestionName(selectedQuestion) }}
+        </span>
+      </div>
+
+      <!-- Section de création de réponses -->
+      <div id="answer-section">
+        <h2 class="title-quiz-template">Réponses :</h2>
+        <div *ngFor="let answer of getAnswers(); let j = index">
+          <app-answer [answer]="answer.answerContent"
+                      [isCorrect]="isCorrect(answer)"
+                      (answerChange)="updateAnswerText(j, $event)"
+                      (deleteEvent)="deleteAnswer(j)">
+          </app-answer>
+        </div>
+
+        <p class="button-info">Cochez la case à côté de la réponse pour indiquer qu'elle est juste</p>
+        <button id="add-answer" class="simple-btn" (click)="addAnswer()">+ Ajouter réponse</button>
+      </div>
+
+      <!-- Section de création d'indices -->
+      <div id="hint-section">
+        <h2 class="title-quiz-template">Indices :</h2>
+
+        <div *ngFor="let hint of selectedQuestionHints; let k = index" class="hint-item">
+          <input type="text" class="hint-input" placeholder="Entrez un indice..."
+                 [ngModel]="selectedQuestionHints[k]"
+                 (ngModelChange)="updateHintText(k, $event)">
+          <button class="delete-btn" (click)="deleteHint(k)">Supprimer</button>
+        </div>
+
+
+        <!-- On place le bouton ici, en bas -->
+        <button id="add-hint" class="simple-btn" (click)="addHint()">+ Ajouter indice</button>
+      </div>
+
+
+    </div>
+  </div>
+</div>

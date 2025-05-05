@@ -42,9 +42,15 @@ export class CurrentProfileService {
         this.current_profile=GUEST_PROFILE;
     }
 
-    public getHint_Time_Duration(){
-        return this.current_profile.HINT_TIME_OUT_DURATION;
+    public get_hint_display_time_out_duration(){
+        return this.current_profile.HINT_DISPLAY_TIME_OUT_DURATION;
     }
+
+    public get_show_hint_timer(){
+        return this.current_profile.SHOW_HINT_TIMER;
+    }
+
+
 
     public setAdmin(){
         this.current_profile = ADMIN_PROFILE;

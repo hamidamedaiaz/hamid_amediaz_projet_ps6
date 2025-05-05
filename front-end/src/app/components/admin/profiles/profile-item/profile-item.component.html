@@ -1,0 +1,10 @@
+<div *ngIf="currentPage==='home' || currentPage==='admin'" class="result-item" (click)="selectProfile()">
+    {{profile?.name }} {{ profile?.lastName }}
+</div>
+
+<section class="profile-item-section"  *ngIf="context==='multi'">
+    <div class="result-item multi">
+        {{profile?.name }} {{ profile?.lastName }}
+    </div>
+    <button *ngIf="getRole() === 'Admin'" class="delete-user-btn" (click)="deletePlayer()">Supprimer</button>
+</section>

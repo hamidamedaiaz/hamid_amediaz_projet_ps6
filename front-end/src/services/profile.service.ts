@@ -5,6 +5,7 @@ import { Profile } from "src/models/profile.model";
 import { Router } from "@angular/router";
 import { Quiz } from "../models/quiz.model";
 import { LocalStorageService } from "./localstorage.service";
+import { SMALL,MEDIUM,LARGE } from "src/mocks/font-size.mocks";
 //import { HttpClient } from "@angular/common/http"
 
 @Injectable({
@@ -22,12 +23,12 @@ export class ProfileService {
 
   public profiles$: BehaviorSubject<Profile[]> = new BehaviorSubject<Profile[]>(this.profiles);
 
-  constructor(private localStorageService:LocalStorageService) {
+  constructor(private localStorageService: LocalStorageService) {
     //getProfileList();
     //TO DO À Décommenter quand la requête HTTP fonctionnera
   }
 
-  
+
 
   public createProfile(name: string, lastName: string): Profile {
     const newProfile: Profile = {
@@ -35,7 +36,13 @@ export class ProfileService {
       name: name,
       lastName: lastName,
       role: 'user',
-      HINT_TIME_OUT_DURATION: 5000
+      SHOW_POP_UP_TIMER: 15000,
+      HINT_DISPLAY_TIME_OUT_DURATION: 5000,
+      REMOVE_WRONG_ANSWER_INTERVAL: 10000,
+      NUMBER_OF_ANSWERS_DISPLAYED:4,
+      SHOW_HINT_TIMER:5,
+      NUMBER_OF_HINTS_DISPLAYED:5,
+      FONT_SIZE: MEDIUM
     };
 
     this.profiles.push(newProfile);

@@ -41,3 +41,27 @@ $primary-success:green;
 
 
 $primary-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.135);
+
+$font-size-small: clamp(12px, 0.9vw, 18px);
+$font-size-medium: clamp(14px, 1.1vw, 22px); // équivalent à mid
+$font-size-large: clamp(16px, 1.3vw, 26px);  // équivalent à high
+$font-size-xlarge: clamp(20px, 1.5vw, 32px);
+
+// Classes pour les différentes tailles de police
+.font-size {
+  &-small {
+    font-size: $font-size-small;
+  }
+  
+  &-medium {
+    font-size: $font-size-medium; // équivalent à mid
+  }
+  
+  &-large {
+    font-size: $font-size-large;  // équivalent à high
+  }
+  
+  &-xlarge {
+    font-size: $font-size-xlarge;
+  }
+}

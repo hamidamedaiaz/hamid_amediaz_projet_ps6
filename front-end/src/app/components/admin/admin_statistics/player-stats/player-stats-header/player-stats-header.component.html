@@ -1,0 +1,18 @@
+<div class="header-section">
+  <button class="back-button" (click)="navigateBack()">
+    <span class="fa fa-arrow-left">Retour</span>
+  </button>
+  <h1 class="page-title">Statistiques de l'Accueilli</h1>
+</div>
+
+
+
+<div class="profile-section" *ngIf="profile">
+  <div class="profile-card">
+    <div class="profile-avatar">{{ getInitials(profile) }}</div>
+    <div class="profile-info">
+      <h2 class="profile-name">{{ profile.name }} {{ profile.lastName }}</h2>
+      <p class="profile-id">ID: {{ profile.id }}</p>
+    </div>
+  </div>
+</div>
