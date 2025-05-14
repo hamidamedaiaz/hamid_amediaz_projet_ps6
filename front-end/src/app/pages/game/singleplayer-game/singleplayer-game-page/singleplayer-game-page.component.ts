@@ -27,7 +27,6 @@ export class SingleplayerGamePageComponent {
               private quizService: QuizService){
     this.currentProfileService.current_profile$.subscribe((currentProfile) => {
       this.currentProfile = currentProfile;
-      this.fontSize = this.currentProfile.FONT_SIZE.value
     })
     this.currentPageService.setCurrentPage("singleplayer-game")
   }

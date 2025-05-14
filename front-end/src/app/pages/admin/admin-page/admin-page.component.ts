@@ -14,6 +14,8 @@ import {StatsService} from "../../../../services/stats.service";
 import {QuizStatsComponent} from "../../../components/admin/admin_statistics/quiz-stats/quiz-stats.component";
 import {ActivatedRoute } from "@angular/router";
 import {PlayerStatsDetailsComponent} from "../player-stats-details/player-stats-details.component";
+//import {QuizSectionComponent} from "src/app/components/admin/admin_quizzes/q"
+//
 
 
 @Component({
@@ -30,7 +32,7 @@ import {PlayerStatsDetailsComponent} from "../player-stats-details/player-stats-
     QuizDetailsComponent,
     SelectionListComponent,
     QuizStatsComponent,
-    PlayerStatsDetailsComponent
+    PlayerStatsDetailsComponent,
   ],
 
   templateUrl: './admin-page.component.html',

@@ -7,7 +7,7 @@ import { Quiz } from "../models/quiz.model";
   providedIn: 'root'
 })
 export class QuizListService {
-  private apiUrl = '/assets/mock/quizzes.json';
+  private apiUrl = 'http://localhost:9428/api/quizzes';
   public quizzes$: BehaviorSubject<Quiz[]> = new BehaviorSubject<Quiz[]>([]);
   public selectedEditQuiz$ = new BehaviorSubject<Quiz | null>(null);
 
@@ -22,7 +22,6 @@ export class QuizListService {
   }
 
   public createQuiz(): void {
-    // Pour l'instant on met ça osef mais quand on met le back faudra le faire propre surtout l'id
     const newQuiz: Quiz = {
       id: Date.now(),
       title: '',

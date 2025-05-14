@@ -282,6 +282,11 @@
     opacity: 0;
 }
 
+.music-volume-control-section{
+    display: flex;
+    gap: 2vw;
+}
+
 
 /* --- Responsive --- */
 @media (max-width: 992px) {

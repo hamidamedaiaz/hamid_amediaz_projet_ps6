@@ -3,8 +3,8 @@
   <div id="quiz-creation-right-container">
 
     <div id="quiz-title">
-      <h2 class="title-quiz-template">Nom :</h2>
-      <input type="text" class="question-input" placeholder="Entrez la question..."
+      <h2 class="title-quiz-template">Titre :</h2>
+      <input type="text" class="question-input" placeholder="Entrez le titre du quiz..."
              [(ngModel)]="this.quiz.title">
     </div>
 
@@ -58,7 +58,7 @@
           <app-answer [answer]="answer.answerContent"
                       [isCorrect]="isCorrect(answer)"
                       (answerChange)="updateAnswerText(j, $event)"
-                      (deleteEvent)="deleteAnswer(j)">
+                      (deleteEvent)="deleteAnswer(answer)">
           </app-answer>
         </div>
 

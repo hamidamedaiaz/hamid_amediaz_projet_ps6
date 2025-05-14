@@ -1,5 +1,3 @@
-import { FontSize } from "./font-size.model";
-
 export interface Profile {
     id: number;
     name: string;
@@ -11,5 +9,5 @@ export interface Profile {
     REMOVE_WRONG_ANSWER_INTERVAL: number,
     NUMBER_OF_ANSWERS_DISPLAYED:number,
     NUMBER_OF_HINTS_DISPLAYED:number,
-    FONT_SIZE:FontSize;
+    profilePicture:string
 }

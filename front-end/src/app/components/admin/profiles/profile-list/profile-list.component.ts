@@ -4,10 +4,9 @@ import { ProfileService } from 'src/services/profile.service';
 import { ProfileItemComponent } from '../profile-item/profile-item.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
 import { CurrentProfileService } from 'src/services/currentProfile.service';
 import { CurrentPageService } from 'src/services/currentPage.service';
-import { MEDIUM } from 'src/mocks/font-size.mocks';
+import { GUEST_PROFILE } from 'src/mocks/profile-list.mock';
 
 @Component({
   selector: 'app-profile-list',
@@ -37,19 +36,7 @@ export class ProfileListComponent {
 
   public showProfileForm: boolean = false;
   public isEditing: boolean = false;
-  public currentProfile: Profile = {
-    id: 0,
-    name: '',
-    lastName: '',
-    role: 'user',
-    SHOW_POP_UP_TIMER: 15000,
-    HINT_DISPLAY_TIME_OUT_DURATION: 5000,
-    REMOVE_WRONG_ANSWER_INTERVAL: 10000,
-    NUMBER_OF_ANSWERS_DISPLAYED:4,
-    SHOW_HINT_TIMER:5,
-    NUMBER_OF_HINTS_DISPLAYED:4,
-    FONT_SIZE: MEDIUM
-  };
+  public currentProfile: Profile = GUEST_PROFILE;
   public showDeleteConfirm: boolean = false;
   public profileToDelete: Profile | null = null;
 
@@ -113,10 +100,10 @@ export class ProfileListComponent {
       SHOW_POP_UP_TIMER: 15000,
       HINT_DISPLAY_TIME_OUT_DURATION: 5000,
       REMOVE_WRONG_ANSWER_INTERVAL: 10000,
-      NUMBER_OF_ANSWERS_DISPLAYED:4,
-      SHOW_HINT_TIMER:5,
-      NUMBER_OF_HINTS_DISPLAYED:4,
-      FONT_SIZE: MEDIUM
+      NUMBER_OF_ANSWERS_DISPLAYED: 4,
+      SHOW_HINT_TIMER: 5,
+      NUMBER_OF_HINTS_DISPLAYED: 4,
+      profilePicture: "empty_path"
     };
     this.showProfileForm = true;
   }
@@ -164,10 +151,10 @@ export class ProfileListComponent {
       SHOW_POP_UP_TIMER: 15000,
       HINT_DISPLAY_TIME_OUT_DURATION: 5000,
       REMOVE_WRONG_ANSWER_INTERVAL: 10000,
-      SHOW_HINT_TIMER:5,
-      NUMBER_OF_ANSWERS_DISPLAYED:4,
-      NUMBER_OF_HINTS_DISPLAYED:4,
-      FONT_SIZE: MEDIUM
+      SHOW_HINT_TIMER: 5,
+      NUMBER_OF_ANSWERS_DISPLAYED: 4,
+      NUMBER_OF_HINTS_DISPLAYED: 4,
+      profilePicture: "empty_path"
     };
   }
 }

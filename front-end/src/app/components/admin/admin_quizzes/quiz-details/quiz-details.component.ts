@@ -5,7 +5,6 @@ import { Question } from "src/models/question.model";
 import { CommonModule } from '@angular/common';
 import {Answer} from "src/models/answer.model";
 import {AnswerComponent} from "../answer/answer.component";
-import {Router, RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-quiz-details',
@@ -18,8 +17,6 @@ export class QuizDetailsComponent implements OnChanges {
   @Input() quiz!: Quiz;
   @Output() quizSaved = new EventEmitter<void>(); // Événement pour informer que le quiz est enregistré
 
-  quizTitle: String = "";
-
   questions: Question[] = [];
 
   selectedQuestion: Question | null = null;
@@ -27,12 +24,11 @@ export class QuizDetailsComponent implements OnChanges {
 
 
   private selectedQuestionAnswers: Answer[] = [];
-  private selectedQuestionCorrectAnswers: Answer[] = [];
 
   selectedQuestionHints: string[] = [];
 
 
-  constructor(private router: Router) {}
+  constructor() {}
 
   addHint() {
     if (this.selectedQuestionHints) {
@@ -55,11 +51,21 @@ export class QuizDetailsComponent implements OnChanges {
     }
   }
 
-  deleteAnswer(index: number){
-    if(this.selectedQuestion){
-      this.selectedQuestion.answers.splice(index, 1); // Supprime dans l'objet original
+  deleteAnswer(answer: Answer) {
+    if (!this.selectedQuestion) return;
+
+    const indexInAnswers = this.selectedQuestion.answers.findIndex(a => a.answerId === answer.answerId);
+    if (indexInAnswers !== -1) {
+      this.selectedQuestion.answers.splice(indexInAnswers, 1);
+      return;
+    }
+
+    const indexInCorrect = this.selectedQuestion.correctAnswers.findIndex(a => a.answerId === answer.answerId);
+    if (indexInCorrect !== -1) {
+      this.selectedQuestion.correctAnswers.splice(indexInCorrect, 1);
     }
   }
+
 
 
   updateQuizHints() {
@@ -82,12 +88,12 @@ export class QuizDetailsComponent implements OnChanges {
     this.selectedQuestion = this.questions[index];
     this.selectedQuestionTitle = this.selectedQuestion.question;
     this.selectedQuestionAnswers = this.selectedQuestion.answers;
-    this.selectedQuestionCorrectAnswers = this.selectedQuestion.correctAnswers;
     this.selectedQuestionHints = this.selectedQuestion.hints;
   }
 
-  getAnswers(){
-    return [...this.selectedQuestionCorrectAnswers, ...this.selectedQuestionAnswers];
+  getAnswers(): Answer[] {
+    if (!this.selectedQuestion) return [];
+    return [...this.selectedQuestion.answers, ...this.selectedQuestion.correctAnswers];
   }
 
 
@@ -113,15 +119,12 @@ export class QuizDetailsComponent implements OnChanges {
 
   saveQuiz() {
     console.log("Quiz enregistré !"); // Juste pour tester dans la console
-    this.quizSaved.emit(); // Émettre un événement pour signaler que le quiz est enregistré
+    console.log(this.quiz)
   }
 
   updateAnswerText(index: number, newText: string) {
     this.selectedQuestionAnswers[index].answerContent = newText;
   }
-
- 
-
 
 
   addAnswer() {
@@ -133,7 +136,6 @@ export class QuizDetailsComponent implements OnChanges {
       };
 
       this.selectedQuestion.answers.push(newAnswer);
-      this.selectedQuestionAnswers = [...this.selectedQuestion.answers]; // LAISSER LE ... pour eviter de pointer sur la mm adresse mem
     }
   }
 

@@ -23,9 +23,6 @@ export class QuizScoreboardComponent implements OnInit {
     private QuizService: QuizService, private currentProfileService:CurrentProfileService) {
     this.score = this.QuizService.getScore();
     this.maxPoint = this.QuizService.getNumberOfQuestions();
-    this.currentProfileService.current_profile$.subscribe((currentProfile) => {
-      this.fontSize = currentProfile.FONT_SIZE.value
-    })
   }
 
   ngOnInit(): void {

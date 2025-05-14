@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8">
   <title>Octave - Admin</title>
@@ -61,23 +62,18 @@
       <div *ngIf="activeSection === 'quiz'" class="select-quiz-container">
         <span class="select-quiz-title">Selectionner un quiz</span>
         <app-quiz-app [context]="'admin'"></app-quiz-app>
-
       </div>
 
       <div *ngIf="activeSection === 'acceuilli'" class="acceuilli-section">
         <div class="profiles-panel" [ngClass]="{'collapsed': selectedProfile}">
           <h2 class="section-title">Liste des acceuillis</h2>
-          <app-profile-list
-            class="profile-list-container"
-            (profileSelected)="onProfileSelect($event)"
+          <app-profile-list class="profile-list-container" (profileSelected)="onProfileSelect($event)"
             [context]="'admin'">
           </app-profile-list>
         </div>
 
         <div *ngIf="selectedProfile" class="config-panel">
-          <app-profile-configuration
-            [profile]="selectedProfile"
-            (closeConfigPanel)="closeConfigPanel()">
+          <app-profile-configuration [profile]="selectedProfile" (closeConfigPanel)="closeConfigPanel()">
           </app-profile-configuration>
         </div>
       </div>
@@ -88,4 +84,5 @@
     </main>
   </div>
 </body>
+
 </html>

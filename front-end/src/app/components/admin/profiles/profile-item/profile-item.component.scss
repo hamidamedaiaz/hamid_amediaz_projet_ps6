@@ -1,11 +1,12 @@
 @import '/src/app/color-palette.scss';
 
 .result-item {
-  padding: 15px;
+  font-size: 2vh;
+  padding: 1.5vh;
   border-bottom: $primary-border-white;
   background-color: $primary-white-bg;
-  border-radius: 8px;
-  margin-bottom: 10px;
+  border-radius: 1vh;
+  margin-top: 1vh;
   transition: background-color 0.3s, transform 0.3s;
 }
 

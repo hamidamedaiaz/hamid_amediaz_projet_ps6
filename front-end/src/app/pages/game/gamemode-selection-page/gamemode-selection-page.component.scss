@@ -1,27 +1,31 @@
 @import '/src/app/color-palette.scss';
 
 .button{
-    padding: 10px 20px;
-    width: 8rem;
-    height: 3rem;
-    background-color: $third-blue-btn;
-    color: $primary-btn-white-text;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    font-size: 20px;
-    font-weight: bold;
+  width: 16vh;
+  height: 6vh;
+  padding: 1.2vh 2.4vh;
+  background-color: $third-blue-btn;
+  color: $primary-btn-white-text;
+  border: none;
+  border-radius: 1vh;
+  font-size: 1.8vh;
+  font-weight: 600;
+  font-family: 'Arial', sans-serif;
+  cursor: pointer;
+  letter-spacing: 0.05vh;
+  transition: all 0.3s ease-in-out;
+  box-shadow: $primary-box-shadow;
 }
 
 .button:hover{
-    background: $secondary-btn-blue-hover;
+  background: $secondary-btn-blue-hover;
+  transform: translateY(-0.3vh);
+  box-shadow: $primary-box-shadow;
 }
 
-
 #leave-btn{
-    position: absolute;
-    left: 5%;
-    bottom: 5%;
-    z-index: 20;
+  position: absolute;
+  left: 5%;
+  bottom: 5%;
+  z-index: 20;
 }

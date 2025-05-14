@@ -6,7 +6,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 100px;
+    font-size: min(12vh,10vw);
     font-family: monospace;
     font-weight: bold;
     transition: all 0.3s ease-in-out;
@@ -24,15 +24,9 @@
 }
 
 
-.multiplayer:hover{
+.gamemode-name:hover{
     cursor: pointer;
     background-color: $primary-white-bg;
     color: $primary-blue-bg;
-}
-
-
-.solo:hover{
-    cursor: pointer;
-    background-color: $primary-white-bg;
-    color: $secondary-blue-bg;
+    font-size: min(13vh,11vw);
 }

@@ -1,18 +1,14 @@
 <div class="music-control-container">
     <section class="music-control-section">
         <section class="play-control-btn-section">
-            <button id="play-btn" class="button">Jouer la musique</button>
-            <button id="pause-btn" class="button">Arrêter la musique</button>
+            <button id="play-btn" class="button" (click)="playMusic()">Jouer la musique</button>
+            <button id="pause-btn" class="button" (click)="pauseMusic()">Arrêter la musique</button>
             <button id="replay-btn" class="button music-button" (click)="restartMusic()">Rejouer la
                 musique</button>
         </section>
-        <section class="volume-section">
-            <p id="volume">Volume</p>
-            <section class="volume-control-btn-section">
-                <button id="decreaseVolumeBtn" (click)="decreaseVolume()">-</button>
-                <input value="{{volume}}" id="volume-input" readonly>
-                <button id="increaseVolumeBtn" (click)="increaseVolume()">+</button>
-            </section>
+        <section class="music-volume-control-section">
+            <button class="button" (click)="decreaseVolume()">Diminuer le volume</button>
+            <button class="button" (click)="increaseVolume()">Augmenter le volume</button>
         </section>
     </section>
     <audio id="audio" preload controls *ngIf="getGamemode() === 'Solo' || getRole() === 'admin'"
