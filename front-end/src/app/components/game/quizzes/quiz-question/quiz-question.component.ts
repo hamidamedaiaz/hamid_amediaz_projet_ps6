@@ -146,12 +146,12 @@ export class QuizQuestionComponent {
 
   public isWrongAnswer(answer: Answer): boolean {
     return this.wrongAnswers.some(
-      wrong => wrong.answerId === answer.answerId && wrong.questionId === answer.questionId
+      wrong => wrong.id === answer.id && wrong.questionId === answer.questionId
     );
   }
 
   public getAllAnswers() {
-    return (this.question.answers.concat(this.question.correctAnswers));
+    return this.question.answers;
 
   }
 

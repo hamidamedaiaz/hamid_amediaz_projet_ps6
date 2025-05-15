@@ -96,7 +96,7 @@ export class QuizService {
   public setQuestion(questionId: number): void {
     // Vérifier que this.quiz existe et a des questions
     if (this.quiz && this.quiz.questions && this.quiz.questions.length > 0) {
-      const matchingQuestion = this.quiz.questions.find(q => q.questionId === questionId);
+      const matchingQuestion = this.quiz.questions.find(q => q.id === questionId);
       if (matchingQuestion) {
         this.question = matchingQuestion;
         this.question$.next(this.question);
@@ -104,13 +104,13 @@ export class QuizService {
     }
   }
 
-  public getScore(): number { 
-    return this.givenCorrectAnswers.length; 
+  public getScore(): number {
+    return this.givenCorrectAnswers.length;
   }
 
   public getQuestions(): Question[] | null {
-    if (this.quiz && this.quiz.questions) { 
-      return this.quiz.questions; 
+    if (this.quiz && this.quiz.questions) {
+      return this.quiz.questions;
     }
     return null;
   }
@@ -169,16 +169,16 @@ export class QuizService {
 
     this.resetCurrentQuiz();
     this.quiz = this.quizConfigurationService.applyProfileConfiguration(this.quiz);
-    
-    
+
+
     if (!this.quiz.questions || this.quiz.questions.length === 0) {
       console.error('Le quiz ne contient pas de questions après configuration');
       this.router.navigate(['/']);
       return;
     }
-    
+
     this.isQuizRunning = true;
-    
+
     this.question = this.quiz.questions[this.questionId];
     this.question$.next(this.question);
 
@@ -191,7 +191,7 @@ export class QuizService {
       console.error('Quiz ou questions non définis');
       return;
     }
-    
+
     if (this.questionId > 0) {
       this.questionId--;
       this.question = this.quiz.questions[this.questionId];

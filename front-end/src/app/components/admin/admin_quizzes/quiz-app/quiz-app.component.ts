@@ -83,4 +83,9 @@ export class QuizAppComponent implements OnInit {
     console.log("Suppresson canceled");
   }
 
+
+  requestEditQuiz(){
+
+  }
+
 }

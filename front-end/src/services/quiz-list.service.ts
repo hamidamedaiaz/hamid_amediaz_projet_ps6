@@ -21,11 +21,17 @@ export class QuizListService {
     });
   }
 
+  public RequestEditQuizzes(q : Quiz): void{
+    console.log("[SERVER REQUEST] - Request edition : ", q)
+    this.http.post<Quiz>(this.apiUrl, q).subscribe({
+      next: (res) => console.log("[SERVER RESPONSE] - ", res),
+      error: (err) => console.error("[SERVER ERROR] - ", err)
+    });  }
+
   public createQuiz(): void {
     const newQuiz: Quiz = {
       id: Date.now(),
       title: '',
-      description: '',
       questions: []
     };
     this.selectedEditQuiz$.next(newQuiz);

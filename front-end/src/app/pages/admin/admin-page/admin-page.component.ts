@@ -136,5 +136,4 @@ export class AdminPageComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
-
 }

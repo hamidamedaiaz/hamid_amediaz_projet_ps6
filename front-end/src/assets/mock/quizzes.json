@@ -11,24 +11,26 @@
           {
             "questionId": 101,
             "answerId": 2,
-            "answerContent": "The Beatles"
+            "answerContent": "The Beatles",
+            "isCorrect": false
           },
           {
             "questionId": 101,
             "answerId": 3,
-            "answerContent": "The Rolling Stones"
+            "answerContent": "The Rolling Stones",
+            "isCorrect": false
           },
           {
             "questionId": 101,
             "answerId": 4,
-            "answerContent": "Genesis"
-          }
-        ],
-        "correctAnswers": [
+            "answerContent": "Genesis",
+            "isCorrect": false
+          },
           {
             "questionId": 101,
             "answerId": 1,
-            "answerContent": "Queen"
+            "answerContent": "Queen",
+            "isCorrect": true
           }
         ],
         "hints": [
@@ -43,24 +45,26 @@
           {
             "questionId": 102,
             "answerId": 5,
-            "answerContent": "The Wall"
+            "answerContent": "The Wall",
+            "isCorrect": false
           },
           {
             "questionId": 102,
             "answerId": 6,
-            "answerContent": "Wish You Were Here"
+            "answerContent": "Wish You Were Here",
+            "isCorrect": false
           },
           {
             "questionId": 102,
             "answerId": 7,
-            "answerContent": "Animals"
-          }
-        ],
-        "correctAnswers": [
+            "answerContent": "Animals",
+            "isCorrect": false
+          },
           {
             "questionId": 102,
             "answerId": 4,
-            "answerContent": "Dark Side of the Moon"
+            "answerContent": "Dark Side of the Moon",
+            "isCorrect": true
           }
         ],
         "hints": [
@@ -75,24 +79,26 @@
           {
             "questionId": 103,
             "answerId": 8,
-            "answerContent": "Fleetwood Mac"
+            "answerContent": "Fleetwood Mac",
+            "isCorrect": false
           },
           {
             "questionId": 103,
             "answerId": 9,
-            "answerContent": "Led Zeppelin"
+            "answerContent": "Led Zeppelin",
+            "isCorrect": false
           },
           {
             "questionId": 103,
             "answerId": 10,
-            "answerContent": "Creedence Clearwater Revival"
-          }
-        ],
-        "correctAnswers": [
+            "answerContent": "Creedence Clearwater Revival",
+            "isCorrect": false
+          },
           {
             "questionId": 103,
             "answerId": 7,
-            "answerContent": "The Eagles"
+            "answerContent": "The Eagles",
+            "isCorrect": true
           }
         ],
         "hints": [
@@ -114,24 +120,26 @@
           {
             "questionId": 201,
             "answerId": 11,
-            "answerContent": "Earth, Wind & Fire"
+            "answerContent": "Earth, Wind & Fire",
+            "isCorrect": false
           },
           {
             "questionId": 201,
             "answerId": 12,
-            "answerContent": "Kool & The Gang"
+            "answerContent": "Kool & The Gang",
+            "isCorrect": false
           },
           {
             "questionId": 201,
             "answerId": 13,
-            "answerContent": "Village People"
-          }
-        ],
-        "correctAnswers": [
+            "answerContent": "Village People",
+            "isCorrect": false
+          },
           {
             "questionId": 201,
             "answerId": 10,
-            "answerContent": "Bee Gees"
+            "answerContent": "Bee Gees",
+            "isCorrect": true
           }
         ],
         "hints": [
@@ -146,24 +154,26 @@
           {
             "questionId": 202,
             "answerId": 13,
-            "answerContent": "Beat It"
+            "answerContent": "Beat It",
+            "isCorrect": false
           },
           {
             "questionId": 202,
             "answerId": 15,
-            "answerContent": "Thriller"
+            "answerContent": "Thriller",
+            "isCorrect": false
           },
           {
             "questionId": 202,
             "answerId": 16,
-            "answerContent": "Wanna Be Startin' Somethin'"
-          }
-        ],
-        "correctAnswers": [
+            "answerContent": "Wanna Be Startin' Somethin'",
+            "isCorrect": false
+          },
           {
             "questionId": 202,
             "answerId": 14,
-            "answerContent": "Billie Jean"
+            "answerContent": "Billie Jean",
+            "isCorrect": true
           }
         ],
         "hints": [
@@ -178,24 +188,26 @@
           {
             "questionId": 203,
             "answerId": 17,
-            "answerContent": "Village People"
+            "answerContent": "Village People",
+            "isCorrect": false
           },
           {
             "questionId": 203,
             "answerId": 18,
-            "answerContent": "Boney M."
+            "answerContent": "Boney M.",
+            "isCorrect": false
           },
           {
             "questionId": 203,
             "answerId": 19,
-            "answerContent": "KC and the Sunshine Band"
-          }
-        ],
-        "correctAnswers": [
+            "answerContent": "KC and the Sunshine Band",
+            "isCorrect": false
+          },
           {
             "questionId": 203,
             "answerId": 16,
-            "answerContent": "Chic"
+            "answerContent": "Chic",
+            "isCorrect": true
           }
         ],
         "hints": [
@@ -217,24 +229,26 @@
           {
             "questionId": 301,
             "answerId": 21,
-            "answerContent": "Dalida"
+            "answerContent": "Dalida",
+            "isCorrect": false
           },
           {
             "questionId": 301,
             "answerId": 22,
-            "answerContent": "Juliette Gréco"
+            "answerContent": "Juliette Gréco",
+            "isCorrect": false
           },
           {
             "questionId": 301,
             "answerId": 23,
-            "answerContent": "Yves Montand"
-          }
-        ],
-        "correctAnswers": [
+            "answerContent": "Yves Montand",
+            "isCorrect": false
+          },
           {
             "questionId": 301,
             "answerId": 20,
-            "answerContent": "Édith Piaf"
+            "answerContent": "Édith Piaf",
+            "isCorrect": true
           }
         ],
         "hints": [
@@ -251,24 +265,20 @@
           {
             "questionId": 302,
             "answerId": 24,
-            "answerContent": "Francis Cabrel"
+            "answerContent": "Francis Cabrel",
+            "isCorrect": true
           },
           {
             "questionId": 302,
             "answerId": 25,
-            "answerContent": "Michel Sardou"
+            "answerContent": "Michel Sardou",
+            "isCorrect": false
           },
           {
             "questionId": 302,
             "answerId": 26,
-            "answerContent": "Claude François"
-          }
-        ],
-        "correctAnswers": [
-          {
-            "questionId": 302,
-            "answerId": 24,
-            "answerContent": "Francis Cabrel"
+            "answerContent": "Claude François",
+            "isCorrect": false
           }
         ],
         "hints": [
@@ -292,24 +302,26 @@
           {
             "questionId": 401,
             "answerId": 31,
-            "answerContent": "Elvis Presley"
+            "answerContent": "Elvis Presley",
+            "isCorrect": false
           },
           {
             "questionId": 401,
             "answerId": 32,
-            "answerContent": "Tony Bennett"
+            "answerContent": "Tony Bennett",
+            "isCorrect": false
           },
           {
             "questionId": 401,
             "answerId": 33,
-            "answerContent": "Dean Martin"
-          }
-        ],
-        "correctAnswers": [
+            "answerContent": "Dean Martin",
+            "isCorrect": false
+          },
           {
             "questionId": 401,
             "answerId": 30,
-            "answerContent": "Frank Sinatra"
+            "answerContent": "Frank Sinatra",
+            "isCorrect": true
           }
         ],
         "hints": [
@@ -326,24 +338,26 @@
           {
             "questionId": 402,
             "answerId": 34,
-            "answerContent": "Sam Cooke"
+            "answerContent": "Sam Cooke",
+            "isCorrect": false
           },
           {
             "questionId": 402,
             "answerId": 35,
-            "answerContent": "Ray Charles"
+            "answerContent": "Ray Charles",
+            "isCorrect": false
           },
           {
             "questionId": 402,
             "answerId": 36,
-            "answerContent": "Otis Redding"
-          }
-        ],
-        "correctAnswers": [
+            "answerContent": "Otis Redding",
+            "isCorrect": false
+          },
           {
             "questionId": 402,
             "answerId": 33,
-            "answerContent": "The Platters"
+            "answerContent": "The Platters",
+            "isCorrect": true
           }
         ],
         "hints": [
@@ -367,24 +381,26 @@
           {
             "questionId": 501,
             "answerId": 41,
-            "answerContent": "Je t’aime comme ça"
+            "answerContent": "Je t’aime comme ça",
+            "isCorrect": false
           },
           {
             "questionId": 501,
             "answerId": 42,
-            "answerContent": "Mon cœur danse avec toi"
+            "answerContent": "Mon cœur danse avec toi",
+            "isCorrect": false
           },
           {
             "questionId": 501,
             "answerId": 43,
-            "answerContent": "Je te veux près de moi"
-          }
-        ],
-        "correctAnswers": [
+            "answerContent": "Je te veux près de moi",
+            "isCorrect": false
+          },
           {
             "questionId": 501,
             "answerId": 40,
-            "answerContent": "Mon cœur te dit bonjour"
+            "answerContent": "Mon cœur te dit bonjour",
+            "isCorrect": true
           }
         ],
         "hints": [
@@ -401,24 +417,20 @@
           {
             "questionId": 502,
             "answerId": 44,
-            "answerContent": "Serge Gainsbourg"
+            "answerContent": "Serge Gainsbourg",
+            "isCorrect": false
           },
           {
             "questionId": 502,
             "answerId": 45,
-            "answerContent": "Jacques Brel"
+            "answerContent": "Jacques Brel",
+            "isCorrect": false
           },
           {
             "questionId": 502,
             "answerId": 46,
-            "answerContent": "Gilbert Bécaud"
-          }
-        ],
-        "correctAnswers": [
-          {
-            "questionId": 502,
-            "answerId": 46,
-            "answerContent": "Gilbert Bécaud"
+            "answerContent": "Gilbert Bécaud",
+            "isCorrect": true
           }
         ],
         "hints": [
@@ -442,24 +454,26 @@
           {
             "questionId": 601,
             "answerId": 51,
-            "answerContent": "Joe Cocker"
+            "answerContent": "Joe Cocker",
+            "isCorrect": false
           },
           {
             "questionId": 601,
             "answerId": 52,
-            "answerContent": "Claude François"
+            "answerContent": "Claude François",
+            "isCorrect": false
           },
           {
             "questionId": 601,
             "answerId": 53,
-            "answerContent": "Gilbert Bécaud"
-          }
-        ],
-        "correctAnswers": [
+            "answerContent": "Gilbert Bécaud",
+            "isCorrect": false
+          },
           {
             "questionId": 601,
             "answerId": 50,
-            "answerContent": "Joe Dassin"
+            "answerContent": "Joe Dassin",
+            "isCorrect": true
           }
         ],
         "hints": [
@@ -476,24 +490,20 @@
           {
             "questionId": 602,
             "answerId": 54,
-            "answerContent": "Les Musclés"
+            "answerContent": "Les Musclés",
+            "isCorrect": true
           },
           {
             "questionId": 602,
             "answerId": 55,
-            "answerContent": "Carlos"
+            "answerContent": "Carlos",
+            "isCorrect": false
           },
           {
             "questionId": 602,
             "answerId": 56,
-            "answerContent": "Patrick Sébastien"
-          }
-        ],
-        "correctAnswers": [
-          {
-            "questionId": 602,
-            "answerId": 54,
-            "answerContent": "Les Musclés"
+            "answerContent": "Patrick Sébastien",
+            "isCorrect": false
           }
         ],
         "hints": [
@@ -517,24 +527,26 @@
           {
             "questionId": 701,
             "answerId": 61,
-            "answerContent": "Fanta"
+            "answerContent": "Fanta",
+            "isCorrect": false
           },
           {
             "questionId": 701,
             "answerId": 62,
-            "answerContent": "Orangina"
+            "answerContent": "Orangina",
+            "isCorrect": false
           },
           {
             "questionId": 701,
             "answerId": 63,
-            "answerContent": "Oasis"
-          }
-        ],
-        "correctAnswers": [
+            "answerContent": "Oasis",
+            "isCorrect": false
+          },
           {
             "questionId": 701,
             "answerId": 60,
-            "answerContent": "Tropico"
+            "answerContent": "Tropico",
+            "isCorrect": true
           }
         ],
         "hints": [
@@ -551,24 +563,20 @@
           {
             "questionId": 702,
             "answerId": 64,
-            "answerContent": "Findus"
+            "answerContent": "Findus",
+            "isCorrect": true
           },
           {
             "questionId": 702,
             "answerId": 65,
-            "answerContent": "Petit Navire"
+            "answerContent": "Petit Navire",
+            "isCorrect": false
           },
           {
             "questionId": 702,
             "answerId": 66,
-            "answerContent": "Capitaine Iglo"
-          }
-        ],
-        "correctAnswers": [
-          {
-            "questionId": 702,
-            "answerId": 64,
-            "answerContent": "Findus"
+            "answerContent": "Capitaine Iglo",
+            "isCorrect": false
           }
         ],
         "hints": [
@@ -592,24 +600,26 @@
           {
             "questionId": 801,
             "answerId": 71,
-            "answerContent": "West Side Story"
+            "answerContent": "West Side Story",
+            "isCorrect": false
           },
           {
             "questionId": 801,
             "answerId": 72,
-            "answerContent": "Un Américain à Paris"
+            "answerContent": "Un Américain à Paris",
+            "isCorrect": false
           },
           {
             "questionId": 801,
             "answerId": 73,
-            "answerContent": "My Fair Lady"
-          }
-        ],
-        "correctAnswers": [
+            "answerContent": "My Fair Lady",
+            "isCorrect": false
+          },
           {
             "questionId": 801,
             "answerId": 70,
-            "answerContent": "Singin' in the Rain"
+            "answerContent": "Singin' in the Rain",
+            "isCorrect": true
           }
         ],
         "hints": [
@@ -626,24 +636,20 @@
           {
             "questionId": 802,
             "answerId": 74,
-            "answerContent": "Chanson des jumelles"
+            "answerContent": "Chanson des jumelles",
+            "isCorrect": true
           },
           {
             "questionId": 802,
             "answerId": 75,
-            "answerContent": "Douliou douliou Saint-Tropez"
+            "answerContent": "Douliou douliou Saint-Tropez",
+            "isCorrect": false
           },
           {
             "questionId": 802,
             "answerId": 76,
-            "answerContent": "Les moulins de mon cœur"
-          }
-        ],
-        "correctAnswers": [
-          {
-            "questionId": 802,
-            "answerId": 74,
-            "answerContent": "Chanson des jumelles"
+            "answerContent": "Les moulins de mon cœur",
+            "isCorrect": false
           }
         ],
         "hints": [

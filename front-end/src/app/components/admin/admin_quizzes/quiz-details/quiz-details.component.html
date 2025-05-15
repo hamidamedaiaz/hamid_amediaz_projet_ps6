@@ -31,15 +31,14 @@
 
 
   <!-- Section de création de question et de réponses -->
-  <div class="quiz-creation-left-container" *ngIf="selectedQuestion != undefined">
+  <div class="quiz-creation-left-container" *ngIf="selectedQuestion">
     <div id="quiz-creation-section">
       <!-- Section de création de question -->
       <div id="question-section">
         <h2 class="title-quiz-template">Question :</h2>
-        <div class="question-with-audio">
+        <div class="question-with-audio"  *ngIf="this.selectedQuestion.question != null">
           <input type="text" class="question-input" placeholder="Entrez la question..."
-                 [(ngModel)]="selectedQuestionTitle"
-                 (ngModelChange)="updateQuestionTitle()">
+                 [(ngModel)]="this.selectedQuestion.question">
 
           <label class="audio-upload-label">
             + Ajouter une musique
@@ -54,11 +53,12 @@
       <!-- Section de création de réponses -->
       <div id="answer-section">
         <h2 class="title-quiz-template">Réponses :</h2>
-        <div *ngFor="let answer of getAnswers(); let j = index">
+        <div *ngFor="let answer of selectedQuestion.answers; let j = index">
           <app-answer [answer]="answer.answerContent"
-                      [isCorrect]="isCorrect(answer)"
+                      [isCorrect]="answer.isCorrect"
                       (answerChange)="updateAnswerText(j, $event)"
-                      (deleteEvent)="deleteAnswer(answer)">
+                      (deleteEvent)="deleteAnswer(answer)"
+                      (correctChange)="answerCorrectChange($event, j)">
           </app-answer>
         </div>
 
@@ -70,10 +70,8 @@
       <div id="hint-section">
         <h2 class="title-quiz-template">Indices :</h2>
 
-        <div *ngFor="let hint of selectedQuestionHints; let k = index" class="hint-item">
-          <input type="text" class="hint-input" placeholder="Entrez un indice..."
-                 [ngModel]="selectedQuestionHints[k]"
-                 (ngModelChange)="updateHintText(k, $event)">
+        <div *ngFor="let hint of selectedQuestion.hints; let k = index">
+          <input type="text" [(ngModel)]="selectedQuestion.hints[k]" placeholder="Entrez un indice..." class="hint-input">
           <button class="delete-btn" (click)="deleteHint(k)">Supprimer</button>
         </div>
 

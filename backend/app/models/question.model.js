@@ -6,8 +6,7 @@ module.exports = new BaseModel('Question', {
   id: Joi.number().required(),
   question: Joi.string().required(),
   answers:Joi.array().items(Answer.schema).required(),
-  correctAnswers: Joi.array().items(Answer.schema).required(),
   hints: Joi.array().items(Joi.string()).required(),
-  audioPath: Joi.string().required(),
+  audioPath: Joi.string().allow('').required(),
 })
 

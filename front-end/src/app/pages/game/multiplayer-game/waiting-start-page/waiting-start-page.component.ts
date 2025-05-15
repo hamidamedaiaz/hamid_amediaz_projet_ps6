@@ -28,7 +28,6 @@ export class WaitingStartPageComponent {
     }, 3000);
     this.gamefoundTimer = setTimeout(() => {
       this.waiting_message = "Partie trouvée !"
-      console.log("je suis la")
     }, 2000);
   }
 

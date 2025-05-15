@@ -10,6 +10,8 @@ const questionStatistics = require('./question-statistics.model')
 const question = require('./question.model')
 const quiz = require('./quiz.model')
 const userQuizStatistics = require('./user-quiz-statistics.model')
+const quizHistory = require('./quiz-history.model')
+
 
 module.exports = {
   answerStatisticsModel: answerStatistics,
@@ -24,4 +26,6 @@ module.exports = {
   question,
   quiz,
   userQuizStatistics,
+  quizHistory
+  
 }

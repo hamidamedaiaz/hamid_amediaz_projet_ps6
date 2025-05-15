@@ -15,8 +15,13 @@ export class AnswerComponent {
   @Input() answer : string = "";
   @Input() isCorrect : boolean = false;
   @Output() answerChange = new EventEmitter<string>();
+  @Output() correctChange = new EventEmitter<boolean>();
   @Output() deleteEvent = new EventEmitter<boolean>();
 
+  setCorrect(){
+    this.isCorrect = !this.isCorrect;
+    this.correctChange.emit(this.isCorrect);
+  }
 
   deleteAnswer() {
     console.log("DEBUG - Suppression déclenchée !");

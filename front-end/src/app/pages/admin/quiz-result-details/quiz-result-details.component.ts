@@ -15,9 +15,9 @@ import { QuizResultQuestionsComponent } from 'src/app/components/admin/admin_sta
   selector: 'app-quiz-result-details',
   standalone: true,
   imports: [
-    CommonModule, 
-    RouterLink, 
-    QuizResultHeaderComponent, 
+    CommonModule,
+    RouterLink,
+    QuizResultHeaderComponent,
     QuizResultInfoComponent,
     QuizResultQuestionsComponent
   ],
@@ -30,16 +30,16 @@ export class QuizResultDetailsComponent implements OnInit {
   quiz: Quiz | null = null;
   profile: Profile | null = null;
   quizResult: QuizResult | null = null;
-  
+
   quizDate: string = '';
   score: number = 0;
   totalQuestions: number = 0;
   percentage: number = 0;
   averageTimePerQuestion: number = 0;
   totalIndiceUsed: number = 0;
-  
+
   questionResults: QuestionResult[] = [];
-  
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -52,7 +52,7 @@ export class QuizResultDetailsComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.profileId = Number(params['profileId']);
       this.quizId = Number(params['quizId']);
-      
+
       if (this.profileId && this.quizId) {
         this.chargementDesDonne();
       } else {
@@ -60,7 +60,7 @@ export class QuizResultDetailsComponent implements OnInit {
       }
     });
   }
-  
+
   chargementDesDonne() {
     this.profileService.profiles$.subscribe(profiles => {
       this.profile = profiles.find(p => p.id === this.profileId) || null;
@@ -68,23 +68,23 @@ export class QuizResultDetailsComponent implements OnInit {
         this.router.navigate(['/admin']);
         return;
       }
-      
+
       this.quizService.quizzes$.subscribe(quizzes => {
         this.quiz = quizzes.find(q => q.id === this.quizId) || null;
         if (!this.quiz) {
           this.router.navigate(['/admin']);
           return;
         }
-        
+
         this.quizResult = this.quizResultService.getResultByProfileAndQuiz(this.profileId, this.quizId);
-        
+
         if (this.quizResult) {
           this.quizDate = this.formatDate(this.quizResult.date);
           this.score = this.quizResult.score;
           this.totalQuestions = this.quizResult.totalQuestions;
           this.percentage = this.quizResultService.calculatePercentage(this.score, this.totalQuestions);
           this.averageTimePerQuestion = this.quizResultService.calculateAverageTimePerQuestion(
-            this.quizResult.timeSpent, 
+            this.quizResult.timeSpent,
             this.totalQuestions
           );
           this.totalIndiceUsed = this.quizResult.hintsUsed;
@@ -95,31 +95,31 @@ export class QuizResultDetailsComponent implements OnInit {
       });
     });
   }
-  
+
   creatNewResult() {
     if (this.quiz) {
       this.quizDate = this.formatDate(new Date());
-      this.score = Math.round(this.quiz.questions.length * 0.8); 
+      this.score = Math.round(this.quiz.questions.length * 0.8);
       this.totalQuestions = this.quiz.questions.length;
       this.percentage = 80;
       this.averageTimePerQuestion = 12.5;
       this.totalIndiceUsed = 3;
-      
+
       this.questionResults = this.quiz.questions.map((question, index) => {
-        const isCorrect = index < this.score; 
+        const isCorrect = index < this.score;
         return {
-          questionId: question.questionId,
+          questionId: question.id,
           question: question.question,
-          correctAnswer: question.correctAnswers[0],
-          userAnswer: isCorrect ? question.correctAnswers[0] : question.answers[0],
+          correctAnswer: question.answers[0],
+          userAnswer: isCorrect ? question.answers[0] : question.answers[0],
           isCorrect: isCorrect,
-          timeSpent: Math.floor(Math.random() * 15) + 10, 
-          hintsUsed: isCorrect ? 0 : 1 
+          timeSpent: Math.floor(Math.random() * 15) + 10,
+          hintsUsed: isCorrect ? 0 : 1
         };
       });
     }
   }
-  
+
   formatDate(date: Date): string {
     return date.toLocaleDateString('fr-FR', {
       day: '2-digit',

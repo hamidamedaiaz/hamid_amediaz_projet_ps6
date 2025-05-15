@@ -4,7 +4,7 @@
         <div class="quiz-title">{{getQuizTitle()}}</div>
         <section class="question-section">
             <button *ngFor="let question of getQuizQuestions()" class="question-item"
-                (click)="showQuestion(question.questionId)">{{question.question}}</button>
+                (click)="showQuestion(question.id)">{{question.question}}</button>
         </section>
         <section class="button-section">
             <button class="button" (click)="replay()">Rejouter</button>

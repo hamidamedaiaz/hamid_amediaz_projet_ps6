@@ -3,8 +3,6 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { QuizResult, QuestionResult } from '../models/quiz-result.model';
 import { CurrentProfileService } from './currentProfile.service';
 import { QuizService } from './quiz.service';
-import { QUIZ_RESULTS} from '../mocks/quiz-results.mock';
-import { MONTHLY_STATS } from '../mocks/quiz-results.mock';
 
 
 export interface MonthlyStatsData {
@@ -21,7 +19,7 @@ export interface MonthlyStatsData {
 
 export class QuizResultService {
   private currentResult: QuizResult | null = null;
-  private results: QuizResult[] = QUIZ_RESULTS;
+  private results: QuizResult[] = [];
   
   public results$: BehaviorSubject<QuizResult[]> = new BehaviorSubject<QuizResult[]>(this.results);
   public currentResult$: BehaviorSubject<QuizResult | null> = new BehaviorSubject<QuizResult | null>(this.currentResult);
@@ -104,7 +102,7 @@ export class QuizResultService {
 
   getPlayerMonthlyStats(profileId: number): MonthlyStatsData[] {
 
-    return MONTHLY_STATS.players[profileId] || [];
+    return [];
   }
 
   

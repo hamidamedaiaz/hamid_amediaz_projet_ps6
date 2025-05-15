@@ -43,8 +43,7 @@ export class QuizAnswersComponent {
 
     this.quizService.question$.subscribe((question) => {
       this.wrongAnswers = [...question.answers];
-      this.allAnswers = this.shuffle([...this.wrongAnswers, ...question.correctAnswers]);
-      this.correctAnswers = [...question.correctAnswers];
+      this.allAnswers = this.shuffle([...this.wrongAnswers]);
       this.selectedAnswers = [];
 
       // Nettoyage d'un éventuel intervalle précédent

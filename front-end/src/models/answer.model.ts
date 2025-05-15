@@ -1,6 +1,7 @@
 export interface Answer{
     questionId:number,
-    answerId:number,
+    id:number,
     answerContent:string,
+    isCorrect:boolean,
     stats?:number
 }

@@ -22,8 +22,8 @@ import { QuizService } from 'src/services/quiz.service';
 
 export class MultiplayerGameSetupComponent {
   constructor(private gamemodeService:GamemodeService,
-              private currentPageService:CurrentPageService,
-              private multiPlayerQuizService: MultiPlayerGameService,
+              private currentPageService:CurrentPageService, 
+              private multiPlayerQuizService: MultiPlayerGameService, 
               private quizService:QuizService,
               private router:Router){
     this.currentPageService.setCurrentPage("multiplayer-setup");

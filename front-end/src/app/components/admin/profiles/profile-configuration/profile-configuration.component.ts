@@ -45,6 +45,7 @@ export class ProfileConfigurationComponent implements OnChanges {
 
   saveConfiguration() {
     console.log('Configuration sauvegardée pour:', this.profile?.name);
+    //TO DO UPDATE LE PROFILE
     this.closeConfiguration();
   }
 }

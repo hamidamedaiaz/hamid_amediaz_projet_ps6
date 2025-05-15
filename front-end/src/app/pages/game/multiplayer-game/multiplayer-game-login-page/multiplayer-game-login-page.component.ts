@@ -24,7 +24,7 @@ export class MultiplayerGameLoginPageComponent {
 
   public message:string="";
 
-  constructor(private router:Router, private currentPageService:CurrentPageService){
+  constructor(private router:Router, private currentPageService:CurrentPageService){  
     this.currentPageService.setCurrentPage("multiplayer-game-login-page")
     this.message = this.JOIN_GAME_MESSAGE;
   }
@@ -36,10 +36,10 @@ export class MultiplayerGameLoginPageComponent {
     else if(this.code === "0000"){
       console.log("code")
       this.message = this.NO_GAME_FOUND;
-    }
+    } 
     else if (this.code === "1111"){
       this.message = this.NOT_ABLE_TO_JOIN
-    }
+    } 
     else {
       console.log("Game joined with the code: ", this.code);
       this.router.navigate(["/waiting-start"]);

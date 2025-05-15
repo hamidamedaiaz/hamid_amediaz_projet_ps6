@@ -4,6 +4,5 @@ import { EMPTY_QUESTION } from "src/mocks/question.mock"
 export const EMPTY_QUIZ: Quiz = {
     "id": 9999999,
     "title": "Empty Quiz",
-    "description": "",
     "questions": []
   }

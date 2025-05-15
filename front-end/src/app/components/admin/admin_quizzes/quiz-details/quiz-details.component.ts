@@ -5,6 +5,7 @@ import { Question } from "src/models/question.model";
 import { CommonModule } from '@angular/common';
 import {Answer} from "src/models/answer.model";
 import {AnswerComponent} from "../answer/answer.component";
+import {QuizListService} from "../../../../../services/quiz-list.service";
 
 @Component({
   selector: 'app-quiz-details',
@@ -15,140 +16,78 @@ import {AnswerComponent} from "../answer/answer.component";
 })
 export class QuizDetailsComponent implements OnChanges {
   @Input() quiz!: Quiz;
-  @Output() quizSaved = new EventEmitter<void>(); // Événement pour informer que le quiz est enregistré
-
-  questions: Question[] = [];
+  @Output() quizSaved = new EventEmitter<Quiz>();
 
   selectedQuestion: Question | null = null;
-  selectedQuestionTitle: string = "";
 
-
-  private selectedQuestionAnswers: Answer[] = [];
-
-  selectedQuestionHints: string[] = [];
-
-
-  constructor() {}
-
-  addHint() {
-    if (this.selectedQuestionHints) {
-      this.selectedQuestionHints.push("");
-    }
-    this.updateQuizHints();
-  }
-
-  updateHintText(index: number, newText: string) {
-    if (this.selectedQuestion) {
-      this.selectedQuestion.hints[index] = newText;
-      this.updateQuizHints();
-    }
-  }
-
-  deleteHint(index: number) {
-    if (this.selectedQuestionHints) {
-      this.selectedQuestionHints.splice(index, 1);
-      this.updateQuizHints();
-    }
-  }
-
-  deleteAnswer(answer: Answer) {
-    if (!this.selectedQuestion) return;
-
-    const indexInAnswers = this.selectedQuestion.answers.findIndex(a => a.answerId === answer.answerId);
-    if (indexInAnswers !== -1) {
-      this.selectedQuestion.answers.splice(indexInAnswers, 1);
-      return;
-    }
-
-    const indexInCorrect = this.selectedQuestion.correctAnswers.findIndex(a => a.answerId === answer.answerId);
-    if (indexInCorrect !== -1) {
-      this.selectedQuestion.correctAnswers.splice(indexInCorrect, 1);
-    }
-  }
-
-
-
-  updateQuizHints() {
-    // cette methode permet de mettre à jour le mock
-    if (this.selectedQuestion) {
-      this.selectedQuestion.hints = [...this.selectedQuestionHints];
-    }
-  }
-
-
-
+  constructor(private quizService$ : QuizListService) {}
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['quiz'] && changes['quiz'].currentValue) {
-      this.questions = this.quiz.questions;
+    if (changes['quiz']) {
+      // rien à faire ici si le quiz est bien passé via @Input
     }
   }
 
   selectQuestion(index: number) {
-    this.selectedQuestion = this.questions[index];
-    this.selectedQuestionTitle = this.selectedQuestion.question;
-    this.selectedQuestionAnswers = this.selectedQuestion.answers;
-    this.selectedQuestionHints = this.selectedQuestion.hints;
-  }
-
-  getAnswers(): Answer[] {
-    if (!this.selectedQuestion) return [];
-    return [...this.selectedQuestion.answers, ...this.selectedQuestion.correctAnswers];
-  }
-
-
-  updateQuestionTitle() {
-    if (this.selectedQuestion) {
-      this.selectedQuestion.question = this.selectedQuestionTitle;
-    }
+    this.selectedQuestion = this.quiz.questions[index];
   }
 
   addQuestion() {
-    const newQuestion = {
-      questionId: this.questions.length + 1,
-      question: "",
+    const newQuestion: Question = {
+      id: this.quiz.questions.length + 1,
+      question: '',
       answers: [],
-      correctAnswers: [],
       hints: [],
-      audioPath:"/assets/musics/Michael Jackson - Billie Jean.mp3"
+      audioPath: ''
     };
-
-    this.questions.push(newQuestion); // Ajout à la liste des questions
+    this.quiz.questions.push(newQuestion);
   }
-
-
-  saveQuiz() {
-    console.log("Quiz enregistré !"); // Juste pour tester dans la console
-    console.log(this.quiz)
-  }
-
-  updateAnswerText(index: number, newText: string) {
-    this.selectedQuestionAnswers[index].answerContent = newText;
-  }
-
 
   addAnswer() {
     if (this.selectedQuestion) {
-      const newAnswer = {
-        questionId: this.selectedQuestion.questionId,
-        answerId: this.selectedQuestion.answers.length + 1,
-        answerContent: "",
-      };
-
-      this.selectedQuestion.answers.push(newAnswer);
+      this.selectedQuestion.answers.push({
+        questionId: this.selectedQuestion.id,
+        id: this.selectedQuestion.answers.length + 1,
+        answerContent: '',
+        isCorrect: false
+      });
     }
   }
 
-  isCorrect(answer: Answer): boolean {
-    return this.selectedQuestion?.correctAnswers.some(correctAnswer => correctAnswer.answerId === answer.answerId) ?? false;
+  updateAnswerText(index: number, newText: string) {
+    if (this.selectedQuestion) {
+      this.selectedQuestion.answers[index].answerContent = newText;
+    }
   }
 
-
-  // permet de ne pas afficher le chemin complet jusqu'à la musique
-  public getSelectedQuestionName(question: Question){
-      let name = question.audioPath.split('/');
-      const size = name.length
-      return name[size-1]
+  answerCorrectChange(val: boolean, index: number) {
+    if (this.selectedQuestion) {
+      this.selectedQuestion.answers[index].isCorrect = val;
+    }
   }
 
+  deleteAnswer(answer: Answer) {
+    if (this.selectedQuestion) {
+      this.selectedQuestion.answers = this.selectedQuestion.answers.filter(a => a.id !== answer.id);
+    }
+  }
+
+  addHint() {
+    this.selectedQuestion?.hints.push('');
+  }
+
+  deleteHint(index: number) {
+    this.selectedQuestion?.hints.splice(index, 1);
+  }
+
+  getSelectedQuestionName(question: Question): string {
+    return question.audioPath.split('/').pop() || '';
+  }
+
+  saveQuiz() {
+
+    // Quand on save on va emit le quiz modifie pour que quiz app puisse le post sur le serveur.
+    console.log("Quiz enregistré :", this.quiz);
+    this.quizService$.RequestEditQuizzes(this.quiz);
+  }
 }

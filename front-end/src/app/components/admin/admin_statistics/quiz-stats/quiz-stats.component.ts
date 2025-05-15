@@ -50,8 +50,7 @@ export class QuizStatsComponent implements OnInit, AfterViewInit {
     this.questionsStats = this.quiz.questions.map(q => {
       // Construis la liste complète des réponses
       const opts = [
-        ...q.answers.map(a => a.answerContent),
-        q.correctAnswers[0].answerContent
+        ...q.answers.map(a => a.answerContent)
       ];
 
       const randDist = (n: number) => {
