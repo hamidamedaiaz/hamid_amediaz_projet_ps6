@@ -1,8 +1,8 @@
 <section *ngIf="getRole() === 'user'" class="answers-section">
     <div class="answers-container" *ngFor="let answer of getAnswers()"
-        [ngClass]="{'selected-answer': isWrongAnswerSelected(answer)}">
+        [ngClass]="{'selected-answer': isAnswerHidden(answer)}">
         <app-quiz-answer [answer]="answer" (answerSelected)="answerSelected(answer)"
-            [ngClass]="{'hidden-answer': isWrongAnswerSelected(answer)}"></app-quiz-answer>
+            [ngClass]="{'hidden-answer': isAnswerHidden(answer)}"></app-quiz-answer>
     </div>
 </section>
 <section *ngIf="getRole() === 'admin'" class="answers-section-admin-view">

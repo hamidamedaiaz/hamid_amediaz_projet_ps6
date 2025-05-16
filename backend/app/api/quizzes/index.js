@@ -1,13 +1,12 @@
 const { Router } = require('express')
-const Quiz = require('../../models/quiz.model')
-const NotFoundError = require('../../utils/errors/not-found-error')
+const Quizzes = require('../../models/quiz.model')
 
 
 const router = new Router()
 
 router.get('/', (req, res) => {
   try {
-    res.status(200).json(Quiz.get())
+    res.status(200).json(Quizzes.get())
   } catch (err) {
     res.status(500).json(err)
     console.log(err)
@@ -17,10 +16,10 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
   try {
     try {
-      const quiz = Quiz.update(req.body.id, req.body)
+      const quiz = Quizzes.update(req.body.id, req.body)
       res.status(200).json(quiz)
     } catch (err) {
-      const quiz = Quiz.create(req.body)
+      const quiz = Quizzes.create(req.body)
       res.status(201).json(quiz)
       return
     }
@@ -32,7 +31,7 @@ router.post('/', (req, res) => {
 
 router.put('/', (req, res) => {
   try {
-    const quiz = Quiz.update(req.body.id, req.body)
+    const quiz = Quizzes.update(req.body.id, req.body)
     res.status(200).json(quiz)
   } catch (err) {
     res.status(500).json(err)
@@ -40,5 +39,14 @@ router.put('/', (req, res) => {
   }
 })
 
+router.delete('/:id', (req, res) => {
+  try {
+    const quizzes = Quizzes.delete(req.params.id);
+    res.status(200).json(quizzes);
+  } catch(err) {
+    res.status(500).json(err)
+    console.log(err)
+  }
+})
 
 module.exports = router

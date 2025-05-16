@@ -141,9 +141,10 @@ export class QuizService {
       if (this.questionId >= this.quiz.questions.length - 1) {
         this.isQuizRunning = false;
         this.localStorageService.storeItem(this.IS_QUIZ_RUNNING_KEY, JSON.stringify(this.isQuizRunning));
-        if (this.gamemodeService.getCurrentGamemode().name === 'Solo') {
+        console.log("Next Question - Gamemode: ",this.gamemodeService.getCurrentGamemode().name)
+        if (this.gamemodeService.getCurrentGamemode().id === 0) {
           this.router.navigate(["/quiz-scoreboard"]);
-        } else if (this.gamemodeService.getCurrentGamemode().name === 'Multi') {
+        } else if (this.gamemodeService.getCurrentGamemode().id === 1) {
           this.router.navigate(['/quiz-multiplayer-scoreboard']);
         } else {
           this.router.navigate(['/']);

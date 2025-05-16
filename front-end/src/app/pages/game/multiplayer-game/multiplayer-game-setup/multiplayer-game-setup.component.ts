@@ -34,7 +34,7 @@ export class MultiplayerGameSetupComponent {
   }
 
   public launchGame(){
-    this.gamemodeService.setCurrentGamemode('Multi');
+    this.gamemodeService.setCurrentGamemode(1);
     this.quizService.startQuiz()
     this.router.navigate(["/multiplayer-game"])
   }

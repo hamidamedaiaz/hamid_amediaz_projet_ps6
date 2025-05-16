@@ -105,8 +105,6 @@ export class QuizResultService {
     return [];
   }
 
-  
-
   getPlayerTotalStats(profileId: number) {
     const playerResults = this.getResultsByProfileId(profileId);
     

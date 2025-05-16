@@ -232,6 +232,7 @@
 .delete-btn {
   background: $primary-delete-btn;
   border: none;
+  width: fit-content;
   border-radius: 6px;
   padding: 10px 20px;
   color: $primary-btn-white-text;

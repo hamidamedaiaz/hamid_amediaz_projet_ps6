@@ -19,12 +19,22 @@ export class ProfileService {
 
   public profiles$: BehaviorSubject<Profile[]> = new BehaviorSubject<Profile[]>(this.profiles);
 
+  public profileToEdit$: BehaviorSubject<Profile> = new BehaviorSubject<Profile>(PROFILE_LIST[0]);
+
   constructor(private http: HttpClient) {
     this.getProfileList();
   }
 
 
 
+  public selectProfileForEdition(profileToEdit:Profile){
+      this.profileToEdit$.next(profileToEdit);
+  }
+
+  public getSelectedProfileForEdition(){ 
+    if(this.profileToEdit$) return this.profileToEdit$;
+    return null;
+  }
 
 
   public async createProfile(name: string, lastName: string): Promise<void> {
@@ -45,9 +55,9 @@ export class ProfileService {
 
       this.http.post(this.apiUrl, newProfile).subscribe({
         next: () => {
-          this.profiles.push(newProfile);
-          this.profiles$.next([...this.profiles]);
           console.log(`New profile created: ${name} ${lastName} with ID: ${newProfile.id}`);
+          //Syncroniser la database
+          this.getProfileList();
         },
         error: (err) => {
           console.error('Failed to create profile', err);
@@ -72,9 +82,8 @@ export class ProfileService {
       console.log(url)
       this.http.delete<void>(url).subscribe({
         next: () => {
-          // Filtrer le profil supprimé de la liste des profils
-          this.profiles = this.profiles.filter(profile => profile.id !== profileId);
-          this.profiles$.next(this.profiles);
+          // Syncroniser la database
+          this.getProfileList();
         },
         error: (err) => {
           console.error('Failed to delete profile', err);
@@ -84,16 +93,13 @@ export class ProfileService {
   }
 
 
-
   public updateProfile(updatedProfile: Profile): void {
-    console.log("bonjour")
     try {
       const index = this.profiles.findIndex(p => p.id === updatedProfile.id);
       this.http.put(this.apiUrl + "/" + updatedProfile.id, updatedProfile).subscribe({
         next: () => {
           if (index !== -1) {
-            this.profiles[index] = { ...updatedProfile };
-            this.profiles$.next([...this.profiles]);
+            this.getProfileList();
 
             console.log(`Profile updated: ${updatedProfile.name} ${updatedProfile.lastName} with ID: ${updatedProfile.id}`);
           }

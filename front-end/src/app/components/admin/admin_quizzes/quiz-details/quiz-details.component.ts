@@ -1,11 +1,11 @@
-import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { Quiz } from "src/models/quiz.model";
 import { FormsModule } from '@angular/forms';
 import { Question } from "src/models/question.model";
 import { CommonModule } from '@angular/common';
-import {Answer} from "src/models/answer.model";
-import {AnswerComponent} from "../answer/answer.component";
-import {QuizListService} from "../../../../../services/quiz-list.service";
+import { Answer } from "src/models/answer.model";
+import { AnswerComponent } from "../answer/answer.component";
+import { QuizListService } from "../../../../../services/quiz-list.service";
 
 @Component({
   selector: 'app-quiz-details',
@@ -19,8 +19,9 @@ export class QuizDetailsComponent implements OnChanges {
   @Output() quizSaved = new EventEmitter<Quiz>();
 
   selectedQuestion: Question | null = null;
+  private currentQuestionIndex = 0;
 
-  constructor(private quizService$ : QuizListService) {}
+  constructor(private quizService: QuizListService) { }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['quiz']) {
@@ -30,6 +31,7 @@ export class QuizDetailsComponent implements OnChanges {
 
   selectQuestion(index: number) {
     this.selectedQuestion = this.quiz.questions[index];
+    this.currentQuestionIndex = index;
   }
 
   addQuestion() {
@@ -85,9 +87,19 @@ export class QuizDetailsComponent implements OnChanges {
   }
 
   saveQuiz() {
-
     // Quand on save on va emit le quiz modifie pour que quiz app puisse le post sur le serveur.
     console.log("Quiz enregistré :", this.quiz);
-    this.quizService$.RequestEditQuizzes(this.quiz);
+    this.quizService.RequestEditQuizzes(this.quiz);
+    this.quizSaved.emit(this.quiz);
   }
+  
+  deleteQuestion() {
+    this.quiz.questions.splice(this.currentQuestionIndex, 1);
+    this.selectedQuestion = null;
+  }
+
+  trackByIndex(index: number, item: any): number {
+    return index;
+  }
+
 }

@@ -112,7 +112,7 @@ export class MusicControlComponent implements AfterViewInit {
   }
 
   public getGamemode() {
-    return this.gamemodeService.getCurrentGamemode().name;
+    return this.gamemodeService.getCurrentGamemode();
   }
 
   public getRole() {

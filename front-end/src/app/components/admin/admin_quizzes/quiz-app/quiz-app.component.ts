@@ -19,7 +19,7 @@ import { QuizService } from 'src/services/quiz.service';
   templateUrl: './quiz-app.component.html',
   styleUrl: './quiz-app.component.scss'
 })
-export class QuizAppComponent implements OnInit {
+export class QuizAppComponent {
   searchQuery: string = '';
   quizzes: Quiz[] = [];
   currentPage = this.currentPageService.getCurrentPage();
@@ -32,11 +32,10 @@ export class QuizAppComponent implements OnInit {
   public quizToDelete: Quiz | undefined;
 
   constructor(private quizListService: QuizListService, private quizService: QuizService, private router: Router, private currentPageService: CurrentPageService) {
-    console.log("Quizzes chargés :", this.quizzes);
-  }
-
-  ngOnInit(): void {
-    this.quizListService.quizzes$.subscribe((quizzes: Quiz[]) => this.quizzes = quizzes)
+    this.quizListService.quizzes$.subscribe((quizzes: Quiz[]) => {
+      console.log("Nouveaux quizzes reçus :", quizzes);
+      this.quizzes = quizzes;
+    });
   }
 
 
@@ -71,10 +70,8 @@ export class QuizAppComponent implements OnInit {
 
   confirmDelete() {
     if (this.quizToDelete) {
-      const index = this.quizzes.indexOf(this.quizToDelete);
-      if (index > -1) this.quizzes.splice(index, 1);
+      this.quizListService.deleteQuiz(this.quizToDelete.id);
       this.showDeleteConfirm = false;
-      console.log("Suppression Confirmed");
     } else this.cancelDelete();
   }
 
@@ -84,8 +81,7 @@ export class QuizAppComponent implements OnInit {
   }
 
 
-  requestEditQuiz(){
-
+  requestEditQuiz() {
   }
 
 }

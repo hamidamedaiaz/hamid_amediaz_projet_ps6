@@ -11,6 +11,6 @@
             <button class="button" (click)="increaseVolume()">Augmenter le volume</button>
         </section>
     </section>
-    <audio id="audio" preload controls *ngIf="getGamemode() === 'Solo' || getRole() === 'admin'"
+    <audio id="audio" preload controls *ngIf="getGamemode().id === 0 || getRole() === 'admin'"
         src="{{audio_path}}"></audio>
 </div>

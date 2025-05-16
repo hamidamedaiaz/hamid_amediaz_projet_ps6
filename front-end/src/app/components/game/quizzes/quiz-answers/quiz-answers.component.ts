@@ -6,6 +6,8 @@ import { Answer } from 'src/models/answer.model';
 import { QuizAnswerComponent } from '../quiz-answer/quiz-answer.component';
 import { MultiPlayerGameService } from 'src/services/multiplayer-game.service';
 import { QuizAnswerMultiplayerComponent } from '../quiz-answer-multiplayer/quiz-answer-multiplayer.component';
+import { findIndex, last } from 'rxjs';
+import { each } from 'chart.js/dist/helpers/helpers.core';
 
 @Component({
   selector: 'app-quiz-answers',
@@ -16,15 +18,11 @@ import { QuizAnswerMultiplayerComponent } from '../quiz-answer-multiplayer/quiz-
 })
 export class QuizAnswersComponent {
 
-  private allAnswers: Answer[] = [];
-
-  private wrongAnswers: Answer[] = [];
-
-  private correctAnswers: Answer[] = [];
+  private answers: Answer[] = [];
 
   private selectedAnswers: Answer[] = [];
 
-  private wrongAnswerSelected: Answer[] = [];
+  private hiddenAnswers: Answer[] = [];
 
   private REMOVE_WRONG_ANSWER_INTERVAL: number = 0;
 
@@ -32,6 +30,9 @@ export class QuizAnswersComponent {
 
   @Output()
   correct_answer: EventEmitter<Boolean> = new EventEmitter<Boolean>();
+
+  @Output()
+  next_question: EventEmitter<Boolean> = new EventEmitter<Boolean>();
 
   constructor(
     private currentProfileService: CurrentProfileService,
@@ -42,8 +43,7 @@ export class QuizAnswersComponent {
       })
 
     this.quizService.question$.subscribe((question) => {
-      this.wrongAnswers = [...question.answers];
-      this.allAnswers = this.shuffle([...this.wrongAnswers]);
+      this.answers = this.shuffle(question.answers);
       this.selectedAnswers = [];
 
       // Nettoyage d'un éventuel intervalle précédent
@@ -52,13 +52,12 @@ export class QuizAnswersComponent {
       }
 
       this.removeWrongAnswerInterval = setInterval(() => {
-        if (this.wrongAnswers.length > 0) {
-          const answerToRemove = this.wrongAnswers.shift();
-          if (answerToRemove) {
-            const index = this.allAnswers.indexOf(answerToRemove);
-            if (index !== -1) {
-              this.wrongAnswerSelected.push(answerToRemove);
-            }
+        const wrongAnswers = (this.answers.filter((answer => !answer.isCorrect)))
+        if (wrongAnswers.length > 0) {
+          const answerToRemove = wrongAnswers.shift();
+          if(answerToRemove) {  
+            const index = this.answers.indexOf(answerToRemove)
+            this.answers.splice(index,1);
           }
         } else {
           clearInterval(this.removeWrongAnswerInterval); // stoppe l'intervalle si plus de mauvaises réponses
@@ -72,12 +71,13 @@ export class QuizAnswersComponent {
   }
 
   public getAnswers() {
-    return this.allAnswers;
+    this.answers.filter((answer) => !this.hiddenAnswers.includes(answer));
+    console.log(this.answers);
+    return this.answers;
   }
 
   public isWrongAnswer(answer: Answer) {
-    if (this.wrongAnswers.includes(answer)) return true;
-    return false;
+    return answer.isCorrect;
   }
 
   private shuffle(answers: Answer[]): Answer[] {
@@ -90,30 +90,28 @@ export class QuizAnswersComponent {
   }
 
   public answerSelected(answer: Answer) {
-    //this.correctAnswers.every(item => this.selectedAnswers.includes(item))
-    if (this.selectedAnswers.includes(answer)) {
-      this.correct_answer.emit(true);
-    }
-    else if (this.correctAnswers.includes(answer)) {
-      this.correct_answer.emit(true);
+    if(answer.isCorrect){
       this.quizService.increaseScore(answer);
       this.selectedAnswers.push(answer);
-    }
-
-    else {
-      this.wrongAnswerSelected.push(answer);
+      const lastCorrectAnswers = this.answers.filter((answer) => answer.isCorrect && !this.selectedAnswers.includes(answer));
+      this.correct_answer.emit(true);
+      if(lastCorrectAnswers.length == 0){
+        this.next_question.emit(true);
+      }
+    } else {
+      this.selectedAnswers.push(answer);
+      this.hiddenAnswers.push(answer);
     }
   }
-
-  public isWrongAnswerSelected(answer: Answer) {
-    if (this.wrongAnswerSelected.includes(answer)) return true;
-    return false;
+  
+  public isAnswerHidden(answer: Answer){
+    return this.hiddenAnswers.includes(answer);
   }
 
   public getMultiplayerAnswers() {
     const stats = [25, 15, 50, 10]
-    for (let i = 0; i < stats.length; i++) { this.allAnswers[i].stats = stats[i]; }
-    return this.allAnswers;
+    for (let i = 0; i < stats.length; i++) { this.answers[i].stats = stats[i]; }
+    return this.answers;
   }
 
 }

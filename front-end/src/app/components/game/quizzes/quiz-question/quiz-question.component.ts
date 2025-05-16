@@ -77,9 +77,7 @@ export class QuizQuestionComponent {
 
       if (this.getRole() === 'user') {
 
-        console.log("user ", this.currentProfileService.getCurrentProfile())
-
-        if (this.getGamemode() === 'Solo') {
+        if (this.getGamemode().id === 0) {
           //SHOW POP-UP TIMER
           this.clearPopUpTimer();
           this.popUpTimer = setTimeout(() => {
@@ -99,17 +97,14 @@ export class QuizQuestionComponent {
   }
 
   public getGamemode() {
-    this.gamemode = this.gamemodeService.getCurrentGamemode();
-    return this.gamemode.name;
+    return this.gamemodeService.getCurrentGamemode();
   }
 
   public getRole() {
     return this.currentProfileService.getCurrentProfile().role;
   }
 
-  ngOnChanges() {
-    this.resetQuestion();
-  }
+  ngOnChanges() { this.resetQuestion(); }
 
   private clearHintTimeOut() {
     if (this.hintTimer) {
@@ -135,14 +130,6 @@ export class QuizQuestionComponent {
     this.GIVEN_ANSWERS_COUNTER = 0;
   }
 
-  public getHints() {
-    return this.question.hints;
-  }
-
-  public getAnswers() {
-    return this.shuffledAnswers;
-  }
-
 
   public isWrongAnswer(answer: Answer): boolean {
     return this.wrongAnswers.some(
@@ -150,40 +137,27 @@ export class QuizQuestionComponent {
     );
   }
 
-  public getAllAnswers() {
-    return this.question.answers;
+  public getAllAnswers() { return this.question.answers; }
 
-  }
+  public getTitle() { return this.question.question; }
 
-  public getTitle() {
-    return this.question.question;
+  public getNbOfGivenAnswers(): number { return this.GIVEN_ANSWERS_COUNTER; }
 
-  }
-
-  public getNbOfGivenAnswers(): number {
-    return this.GIVEN_ANSWERS_COUNTER;
-  }
-
-  public getNbOfPlayers() {
-    return this.NUMBER_OF_PLAYER;
-  }
+  public getNbOfPlayers() { return this.NUMBER_OF_PLAYER; }
 
   public submitCorrectAnswer() {
-
-    if (this.gamemodeService.getCurrentGamemode().name === 'Solo') {
+    if (this.gamemodeService.getCurrentGamemode().id === 0) {
       this.showCorrectEffect = true;
-      this.clearHintTimeOut(); //a voir en fonction des préférences
       setTimeout(() => {
         this.showCorrectEffect = false;
-        this.clearHintTimeOut();
-        this.quizService.nextQuestion();
       }, this.CORRECT_ANSWER_DELAY);
     }
-    else if (this.gamemodeService.getCurrentGamemode().name === 'Multi') {
+    else if (this.gamemodeService.getCurrentGamemode().id === 1) {
       this.router.navigate(["/answer-submitted"]);
     }
-
   }
+
+
 
 
   public getAnswersPercents() {
@@ -200,7 +174,16 @@ export class QuizQuestionComponent {
 
   public nextQuestion() {
     this.wrongAnswers = [];
+    this.clearHintTimeOut();
     this.quizService.nextQuestion();
+  }
+
+  public validateQuestion() {
+    if (this.gamemodeService.getCurrentGamemode().id == 0) {
+      setTimeout(() => {
+        this.nextQuestion();
+      }, this.CORRECT_ANSWER_DELAY);
+    }
   }
 
   public previousQuestion() {

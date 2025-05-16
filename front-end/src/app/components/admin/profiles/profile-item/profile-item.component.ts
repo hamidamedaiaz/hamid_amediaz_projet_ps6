@@ -63,4 +63,13 @@ export class ProfileItemComponent {
   public getRole(){
     return this.currentProfileService.getCurrentProfile().name;
   }
+
+  public getInitials(profile:Profile): string {
+    if (!profile) return '';
+
+    const firstName = profile.name.charAt(0).toUpperCase();
+    const lastName = profile.lastName.charAt(0).toUpperCase();
+
+    return firstName + lastName;
+  }
 }

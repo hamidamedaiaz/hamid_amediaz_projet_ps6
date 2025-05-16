@@ -1,4 +1,3 @@
-
 <section *ngIf="currentPage==='admin'">
     <div class="admin-profile-header">
         <input type="text" id="search-bar" class="search-input" [(ngModel)]="searchQuery"
@@ -36,10 +35,13 @@
 
 
     <section class="profile-list-section">
-        <div *ngFor="let profile of filteredProfiles()" class="enhanced-profile-item" (click)="profileSelectedHandler(profile)">
+        <div *ngFor="let profile of filteredProfiles()" class="enhanced-profile-item"
+            (click)="profileSelectedHandler(profile)">
             <div class="profile-details">
-                <p class="profile-name">{{profile.name}} {{profile.lastName}}</p>
-                <p class="profile-id">ID: {{profile.id}}</p>
+                <span class="profile-avatar">{{ getInitials(profile) }}</span>
+                <section>
+                    <p class="profile-name">{{profile.name}} {{profile.lastName}}</p>
+                </section>
             </div>
             <div class="profile-actions" (click)="$event.stopPropagation()">
                 <button class="delete-btn" (click)="deleteProfile(profile)">Supprimer</button>
@@ -60,4 +62,3 @@
         </div>
     </section>
 </section>
-

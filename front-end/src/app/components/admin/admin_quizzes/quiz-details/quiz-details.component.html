@@ -4,8 +4,7 @@
 
     <div id="quiz-title">
       <h2 class="title-quiz-template">Titre :</h2>
-      <input type="text" class="question-input" placeholder="Entrez le titre du quiz..."
-             [(ngModel)]="this.quiz.title">
+      <input type="text" class="question-input" placeholder="Entrez le titre du quiz..." [(ngModel)]="this.quiz.title">
     </div>
 
     <div id="question-list">
@@ -15,7 +14,7 @@
           {{ question.question }}
         </button>
       </div>
-      <button id="add-listQ" class="simple-btn" (click)="addQuestion()" >+ Ajouter question</button>
+      <button id="add-listQ" class="simple-btn" (click)="addQuestion()">+ Ajouter question</button>
       <button id="end-quiz" class="simple-btn" (click)="saveQuiz()">Enregistrer ce quiz</button>
     </div>
   </div>
@@ -32,13 +31,14 @@
 
   <!-- Section de création de question et de réponses -->
   <div class="quiz-creation-left-container" *ngIf="selectedQuestion">
+    <button class="delete-btn" (click)="deleteQuestion()">Supprimer le question</button>
     <div id="quiz-creation-section">
       <!-- Section de création de question -->
       <div id="question-section">
         <h2 class="title-quiz-template">Question :</h2>
-        <div class="question-with-audio"  *ngIf="this.selectedQuestion.question != null">
+        <div class="question-with-audio" *ngIf="this.selectedQuestion.question != null">
           <input type="text" class="question-input" placeholder="Entrez la question..."
-                 [(ngModel)]="this.selectedQuestion.question">
+            [(ngModel)]="this.selectedQuestion.question">
 
           <label class="audio-upload-label">
             + Ajouter une musique
@@ -54,11 +54,9 @@
       <div id="answer-section">
         <h2 class="title-quiz-template">Réponses :</h2>
         <div *ngFor="let answer of selectedQuestion.answers; let j = index">
-          <app-answer [answer]="answer.answerContent"
-                      [isCorrect]="answer.isCorrect"
-                      (answerChange)="updateAnswerText(j, $event)"
-                      (deleteEvent)="deleteAnswer(answer)"
-                      (correctChange)="answerCorrectChange($event, j)">
+          <app-answer [answer]="answer.answerContent" [isCorrect]="answer.isCorrect"
+            (answerChange)="updateAnswerText(j, $event)" (deleteEvent)="deleteAnswer(answer)"
+            (correctChange)="answerCorrectChange($event, j)">
           </app-answer>
         </div>
 
@@ -70,16 +68,17 @@
       <div id="hint-section">
         <h2 class="title-quiz-template">Indices :</h2>
 
-        <div *ngFor="let hint of selectedQuestion.hints; let k = index">
-          <input type="text" [(ngModel)]="selectedQuestion.hints[k]" placeholder="Entrez un indice..." class="hint-input">
+        <div *ngFor="let hint of selectedQuestion.hints; let k = index; trackBy: trackByIndex">
+          <input type="text" [(ngModel)]="selectedQuestion.hints[k]" placeholder="Entrez un indice..."
+            class="hint-input">
           <button class="delete-btn" (click)="deleteHint(k)">Supprimer</button>
         </div>
+
 
 
         <!-- On place le bouton ici, en bas -->
         <button id="add-hint" class="simple-btn" (click)="addHint()">+ Ajouter indice</button>
       </div>
-
 
     </div>
   </div>

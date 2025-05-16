@@ -2,14 +2,17 @@ import { Gamemode } from "../models/gamemode.model";
 
 export const GAMEMODE_LIST: Gamemode[] = [
     {
-        name: "Solo"
+        id:0,
+        name: "Seul"
     },
     {
-        name: "Multi"
+        id:1,
+        name: "En Groupe"
     },
 ]
 
 export const GAMEMODE_UNDEFINED: Gamemode = {
-        name:"Undefined"
+    id:-1,
+    name:"Undefined"
 }
 

@@ -19,12 +19,15 @@ export class GamemodeListComponent {
     });
   }
 
-  gamemodeSelected(name: string) {
-    if(name === 'Solo'){
+  gamemodeSelected(id: number) {
+    console.log(id)
+    if(id === 0){
       this.gamemodeService.playSolo();
     }
-    else if(name === 'Multi'){
+    else if(id === 1){
       this.gamemodeService.playMulti();
+    } else {
+      console.log("Error : Undefied Gamemode")
     }
   }
 

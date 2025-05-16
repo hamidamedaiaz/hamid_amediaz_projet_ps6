@@ -43,12 +43,15 @@ module.exports = class BaseModel {
     return item
   }
 
-  create(obj = {}) {
-    const item = { ...obj, id: Date.now() }
+  create(obj = {}, customId = true) {
+    const item = { ...obj, id: Date.now() };
+    if (customId) { item.id = Date.now() }
+
     const { error } = Joi.validate(item, this.schema)
     if (error) throw new ValidationError(`Create Error : Object ${JSON.stringify(obj)} does not match schema of model ${this.name}`, error)
     this.items.push(item)
     this.save()
+
     return item
   }
 
@@ -65,7 +68,7 @@ module.exports = class BaseModel {
   }
 
   delete(id) {
-    if (typeof id === 'string') id = parseInt(id, 10) 
+    if (typeof id === 'string') id = parseInt(id, 10)
     const objIndex = this.items.findIndex((item) => item.id === id)
     if (objIndex === -1) throw new NotFoundError(`Cannot delete ${this.name} id=${id} : not found`)
     this.items = this.items.filter((item) => item.id !== id)

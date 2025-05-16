@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, ChangeDetectorRef } from '@angular/core';
 import { Profile } from 'src/models/profile.model';
 import {FormsModule} from "@angular/forms";
+import { ProfileService } from 'src/services/profile.service';
 
 @Component({
   selector: 'app-profile-configuration',
@@ -12,31 +13,29 @@ import {FormsModule} from "@angular/forms";
   styleUrl: './profile-configuration.component.scss'
 })
 export class ProfileConfigurationComponent implements OnChanges {
-  @Input()
-  profile: Profile | undefined;
 
   @Output()
   closeConfigPanel = new EventEmitter<void>();
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  //Copie Simple et efficace pour des types simples
+  public currentProfileCopy: Profile | null = null;
+
+  constructor(private cdr: ChangeDetectorRef, private profileService:ProfileService) {
+    this.profileService.profileToEdit$.subscribe((profile) => {
+      this.currentProfileCopy = JSON.parse(JSON.stringify(profile));
+    })
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['profile'] && changes['profile'].currentValue) {
-      console.log('Profile configuration changed to:', this.profile?.name);
+      console.log('Profile configuration changed to:', this.currentProfileCopy?.name);
       setTimeout(() => {
         this.cdr.detectChanges();
       }, 0);
     }
   }
 
-  getInitials(): string {
-    if (!this.profile) return '';
-
-    const firstName = this.profile.name.charAt(0).toUpperCase();
-    const lastName = this.profile.lastName.charAt(0).toUpperCase();
-
-    return firstName + lastName;
-  }
+  //resetEmptyProfile():void{ this.profileTemplate = JSON.parse(JSON.stringify("j")); }
 
   closeConfiguration() {
     console.log('Fermeture du panneau de configuration');
@@ -44,8 +43,7 @@ export class ProfileConfigurationComponent implements OnChanges {
   }
 
   saveConfiguration() {
-    console.log('Configuration sauvegardée pour:', this.profile?.name);
-    //TO DO UPDATE LE PROFILE
+    this.profileService.updateProfile(this.currentProfileCopy!);
     this.closeConfiguration();
   }
 }

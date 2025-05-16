@@ -1,7 +1,8 @@
 @import '/src/app/color-palette.scss';
 
 #add-profile {
-  background-color: $primary-blue-btn; /* Vert doux */
+  background-color: $primary-blue-btn;
+  /* Vert doux */
   color: $primary-btn-white-text;
   padding: 10px 20px;
   border: none;
@@ -12,13 +13,30 @@
 }
 
 #add-profile:hover {
-  background-color: $primary-btn-blue-hover; /* Vert un peu plus foncé au survol */
+  background-color: $primary-btn-blue-hover;
+  /* Vert un peu plus foncé au survol */
   transform: scale(1.05);
+}
+
+.profile-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background-color: $primary-blue-bg;
+  color: $primary-white-text;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 600;
+  margin-right: 16px;
+  flex-shrink: 0;
 }
 
 app-profile-list {
   list-style-type: none;
   padding: 0;
+
   a {
     text-decoration: none;
     color: $primary-black-text;
@@ -88,7 +106,8 @@ app-profile-list {
   margin-top: 20px;
 }
 
-.save-btn, .cancel-btn {
+.save-btn,
+.cancel-btn {
   padding: 10px 15px;
   border: none;
   border-radius: 5px;
@@ -135,6 +154,8 @@ app-profile-list {
 
 .profile-details {
   flex: 1;
+  display: flex;
+  align-items: center;
 }
 
 .profile-name {
@@ -155,7 +176,8 @@ app-profile-list {
   gap: 8px;
 }
 
-.edit-btn, .delete-btn {
+.edit-btn,
+.delete-btn {
   padding: 8px 12px;
   border: none;
   border-radius: 5px;
@@ -233,6 +255,7 @@ app-profile-list {
 .cancel-delete-btn:hover {
   background-color: $primary-btn-white-hover;
 }
+
 .delete-buttons {
   display: flex;
   justify-content: center;

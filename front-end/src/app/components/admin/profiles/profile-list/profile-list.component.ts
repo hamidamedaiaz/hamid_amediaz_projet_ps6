@@ -28,6 +28,9 @@ export class ProfileListComponent {
   @Output()
   profileSelected: EventEmitter<Profile> = new EventEmitter<Profile>();
 
+  @Output()
+  profileDeleted: EventEmitter<Boolean> = new EventEmitter<Boolean>();
+
   public searchQuery: String = '';
 
   @Input()
@@ -38,18 +41,21 @@ export class ProfileListComponent {
   public isEditing: boolean = false;
   public currentProfile: Profile = GUEST_PROFILE;
   public showDeleteConfirm: boolean = false;
-  public profileToDelete: Profile | null = null;
+  public profileToDelete: Profile | null = null;  
 
   constructor(
     public profileService: ProfileService,
     private currentProfileService: CurrentProfileService,
     private cdr: ChangeDetectorRef,
-    private currentPageService: CurrentPageService
-  ) {
+    private currentPageService: CurrentPageService) {
     this.profileService.profiles$.subscribe((profiles) => {
       this.profileList = profiles;
       console.log("Liste de profils mise à jour:", this.profileList.length, "profils");
     });
+
+    this.profileService.profileToEdit$.subscribe((profile) => {
+      this.currentProfile = profile;
+    })
   }
 
   filteredProfiles() {
@@ -64,12 +70,12 @@ export class ProfileListComponent {
 
   profileSelectedHandler(profile: Profile) {
     console.log("Profil sélectionné dans contexte:", this.context, profile.name);
-
+    
     setTimeout(() => {
       if (this.context === 'home') {
         this.currentProfileService.setCurrentProfile(profile);
       } else if (this.context === 'admin') {
-
+        this.profileService.selectProfileForEdition(profile);
         this.profileSelected.emit(profile);
         console.log("Événement profileSelected émis pour:", profile.name);
       } else {
@@ -110,7 +116,7 @@ export class ProfileListComponent {
 
   public editProfile(profile: Profile) {
     this.isEditing = true;
-    this.currentProfile = { ...profile };
+    this.profileService.selectProfileForEdition(profile);
     this.showProfileForm = true;
   }
 
@@ -124,12 +130,22 @@ export class ProfileListComponent {
       this.profileService.deleteProfile(this.profileToDelete.id);
       this.showDeleteConfirm = false;
       this.profileToDelete = null;
+      this.profileDeleted.emit(true)
     }
   }
 
   public cancelDelete() {
     this.showDeleteConfirm = false;
     this.profileToDelete = null;
+  }
+
+  getInitials(profile:Profile): string {
+    if (!profile) return '';
+
+    const firstName = profile.name.charAt(0).toUpperCase();
+    const lastName = profile.lastName.charAt(0).toUpperCase();
+
+    return firstName + lastName;
   }
 
   public saveProfile() {

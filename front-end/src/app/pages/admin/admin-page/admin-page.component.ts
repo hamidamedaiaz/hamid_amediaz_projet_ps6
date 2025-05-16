@@ -41,7 +41,7 @@ import {PlayerStatsDetailsComponent} from "../player-stats-details/player-stats-
 export class AdminPageComponent implements OnInit {
   activeSection: string = 'home';
   activeQuiz: Quiz | null = null;
-  selectedProfile: Profile | null = null;
+  selectedProfile: Boolean = false;
   selectedQuizStat: Quiz | null = null;
   selectedIdAcceuilliStats: number = 0;
   showStatsSubmenu: boolean = false;
@@ -117,23 +117,16 @@ export class AdminPageComponent implements OnInit {
     this.activeSection = section;
     console.log('admin - setSection() :', this.activeSection);
     if (section !== 'acceuilli') {
-      this.selectedProfile = null;
+      this.selectedProfile = false;
     }
   }
 
   onProfileSelect(profile: Profile) {
-    console.log('Profil sélectionné:', profile.name, profile.lastName);
-
-    setTimeout(() => {
-      this.selectedProfile = profile;
-      this.cdr.detectChanges();
-      console.log('Profil défini avec succès:', this.selectedProfile?.name);
-    }, 0);
+    this.selectedProfile = true;
   }
 
   closeConfigPanel() {
-    this.selectedProfile = null;
+    this.selectedProfile = false;
     this.cdr.detectChanges();
   }
-
 }

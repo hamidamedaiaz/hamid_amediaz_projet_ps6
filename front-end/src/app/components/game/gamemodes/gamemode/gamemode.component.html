@@ -1,7 +1,7 @@
 <section *ngIf="gamemode">
     <div 
         class="gamemode-name" 
-        [ngClass]="gamemode.name === 'Solo' ? 'solo' : 'multiplayer'"
+        [ngClass]="gamemode.id === 0 ? 'solo' : 'multiplayer'"
         (click)="selectGamemode()">
         {{ gamemode.name }}
     </div>

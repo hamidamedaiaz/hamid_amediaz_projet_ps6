@@ -1,7 +1,7 @@
 <section class="scoreboard-container">
     <span class="scoreboard-title" [ngClass]="'font-size-' + fontSize">Félicitation, vous avez terminé le quiz !</span>
     <section class="scoreboard-section">
-        <span class="congrats-message" [ngClass]="'font-size-' + fontSize">Bravo, vous avez obtenu un score de : {{score}}/{{maxPoint}} !</span>
+        <span class="congrats-message" [ngClass]="'font-size-' + fontSize">Bravo, vous avez répondu à {{score}} sur {{maxPoint}} !</span>
         <section class="button-section">
             <button class="button" id="replay-btn" (click)="replay()" [ngClass]="'font-size-' + fontSize">Rejouer</button>
             <button class="button" id="leave-btn" (click)="exit()" [ngClass]="'font-size-' + fontSize">Quitter</button>
