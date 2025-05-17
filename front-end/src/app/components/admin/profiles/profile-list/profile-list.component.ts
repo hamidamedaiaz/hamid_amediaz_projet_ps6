@@ -36,6 +36,7 @@ export class ProfileListComponent {
   @Input()
   public context: string = '';
 
+   public avatarPreview: string | null = null;
 
   public showProfileForm: boolean = false;
   public isEditing: boolean = false;
@@ -98,6 +99,7 @@ export class ProfileListComponent {
 
   public createProfile() {
     this.isEditing = false;
+    this.avatarPreview = null;
     this.currentProfile = {
       id: Date.now(),
       name: '',
@@ -109,7 +111,8 @@ export class ProfileListComponent {
       NUMBER_OF_ANSWERS_DISPLAYED: 4,
       SHOW_HINT_TIMER: 5,
       NUMBER_OF_HINTS_DISPLAYED: 4,
-      profilePicture: "empty_path"
+      profilePicture: "empty_path",
+      birthDate: ''
     };
     this.showProfileForm = true;
   }
@@ -149,16 +152,29 @@ export class ProfileListComponent {
   }
 
   public saveProfile() {
-    if (this.isEditing) {
-      this.profileService.updateProfile(this.currentProfile);
-    } else {
-      this.profileService.createProfile(this.currentProfile.name, this.currentProfile.lastName);
+  console.log('Enregistrement du profil avec image:', 
+             this.currentProfile.profilePicture !== 'empty_path' ? 'Image présente hhhhhhh tres bien ' : 'Pas d\'image',
+             'Type:', typeof this.currentProfile.profilePicture);
+
+  if (this.isEditing) {
+    this.profileService.updateProfile(this.currentProfile);
+  } else {
+    if (!this.currentProfile.profilePicture || this.currentProfile.profilePicture === '') {
+      this.currentProfile.profilePicture = 'empty_path';
     }
-    this.cancelProfileForm();
+    
+    this.profileService.createProfile(
+      this.currentProfile.name, 
+      this.currentProfile.lastName,
+      this.currentProfile.profilePicture
+    );
   }
+  this.cancelProfileForm();
+}
 
   public cancelProfileForm() {
     this.showProfileForm = false;
+    this.avatarPreview = null;
     this.currentProfile = {
       id: 0,
       name: '',
@@ -173,4 +189,24 @@ export class ProfileListComponent {
       profilePicture: "empty_path"
     };
   }
+  public onAvatarSelected(event: any) {
+  const file = event.target.files[0];
+  if (file) {
+    if (!file.type.match('image.*')) {
+      console.error('Le fichier sélectionné n\'est pas une image');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (e: any) => {
+      this.avatarPreview = e.target.result;
+      this.currentProfile.profilePicture = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+}
+public getAvatarPreviewStyle() {
+  return this.avatarPreview ? `url(${this.avatarPreview})` : 'none';
+}
+
 }

@@ -79,14 +79,14 @@ export class AdminPageComponent implements OnInit {
       this.setSection(val);
     })
 
-    this.statsService.idAcceuilli$.subscribe((id) =>{
+    this.statsService.profileId$.subscribe((id) =>{
       if(id !== null){
         console.log("Demande stat sur acceuilli id = " + id);
         this.setSection('home');
       }
     })
 
-    this.statsService.idQuiz$.subscribe((id) =>{
+    this.statsService.quizId$.subscribe((id) =>{
       if(id !== null){
         console.log("Demande stat sur quiz id = " + id);
         // Pour l'instant on fait comme ça en attendant le SQL
@@ -99,7 +99,7 @@ export class AdminPageComponent implements OnInit {
       }
     })
 
-    this.statsService.idAcceuilli$.subscribe((id) =>{
+    this.statsService.profileId$.subscribe((id) =>{
       if(id !== null){
         console.log("Demande stat sur acceuilli id = " + id);
         // Pour l'instant on fait comme ça en attendant le SQL

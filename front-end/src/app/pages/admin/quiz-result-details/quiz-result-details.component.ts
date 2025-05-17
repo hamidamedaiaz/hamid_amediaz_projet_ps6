@@ -6,10 +6,14 @@ import { ProfileService } from 'src/services/profile.service';
 import { QuizResultService } from 'src/services/quiz-result.service';
 import { Quiz } from 'src/models/quiz.model';
 import { Profile } from 'src/models/profile.model';
-import { QuizResult, QuestionResult } from 'src/models/quiz-result.model';
+import { QuizResult } from 'src/models/quiz-result.model';
+import { QuestionResult } from 'src/models/question-result.model';
 import { QuizResultHeaderComponent } from 'src/app/components/admin/admin_statistics/quiz-results/quiz-result-header/quiz-result-header.component';
 import { QuizResultInfoComponent } from 'src/app/components/admin/admin_statistics/quiz-results/quiz-result-info/quiz-result-info.component';
 import { QuizResultQuestionsComponent } from 'src/app/components/admin/admin_statistics/quiz-results/quiz-result-questions/quiz-result-questions.component';
+import { ComputeStatisticService } from 'src/services/computeStatistic.service';
+import { StatsService } from 'src/services/stats.service';
+import { QUIZ_RESULT_EMPTY } from 'src/mocks/quiz-results.mock';
 
 @Component({
   selector: 'app-quiz-result-details',
@@ -24,111 +28,40 @@ import { QuizResultQuestionsComponent } from 'src/app/components/admin/admin_sta
   templateUrl: './quiz-result-details.component.html',
   styleUrl: './quiz-result-details.component.scss'
 })
-export class QuizResultDetailsComponent implements OnInit {
-  quizId: number = 0;
-  profileId: number = 0;
-  quiz: Quiz | null = null;
-  profile: Profile | null = null;
-  quizResult: QuizResult | null = null;
+export class QuizResultDetailsComponent {
 
-  quizDate: string = '';
-  score: number = 0;
-  totalQuestions: number = 0;
-  percentage: number = 0;
-  averageTimePerQuestion: number = 0;
-  totalIndiceUsed: number = 0;
-
-  questionResults: QuestionResult[] = [];
+  private profileId: number = -1;
+  private profile!: Profile;
+  private quizResult: QuizResult | null = null;
+  private quizSessionId:number = -1;
+  private quizId:number = -1;
+  private quiz!:Quiz;
 
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private quizService: QuizListService,
-    private profileService: ProfileService,
-    private quizResultService: QuizResultService
-  ) {}
+    private router:Router,
+    private statsService:StatsService,
+    private quizResultService:QuizResultService,
+    private profileService:ProfileService
+  ){
+    //RETRIEVE USER ID AND QUIZ ID
+    this.statsService.quizSessionId$.subscribe((quizSessionId) => this.quizSessionId = quizSessionId); //quizSessionId
+    this.statsService.profileId$.subscribe((profileId) => this.profileId = profileId);
 
-  ngOnInit() {
-    this.route.params.subscribe(params => {
-      this.profileId = Number(params['profileId']);
-      this.quizId = Number(params['quizId']);
+    //SAVE THEIRS INFORMATIONS
+    this.quizResult = QUIZ_RESULT_EMPTY // this.quizResultService.getQuizResultById(this.quizSessionId);
+    this.profile = this.profileService.getProfile(this.profileId);
+    this.quiz = this.quizResult!.quiz;
 
-      if (this.profileId && this.quizId) {
-        this.chargementDesDonne();
-      } else {
-        this.router.navigate(['/admin']);
-      }
-    });
   }
 
-  chargementDesDonne() {
-    this.profileService.profiles$.subscribe(profiles => {
-      this.profile = profiles.find(p => p.id === this.profileId) || null;
-      if (!this.profile) {
-        this.router.navigate(['/admin']);
-        return;
-      }
+  getProfile(){ return this.profile }
 
-      this.quizService.quizzes$.subscribe(quizzes => {
-        this.quiz = quizzes.find(q => q.id === this.quizId) || null;
-        if (!this.quiz) {
-          this.router.navigate(['/admin']);
-          return;
-        }
+  getQuiz(){ return this.quiz }
 
-        this.quizResult = this.quizResultService.getResultByProfileAndQuiz(this.profileId, this.quizId);
+  getQuestionResults(){ return this.quizResult!.questionResults }
 
-        if (this.quizResult) {
-          this.quizDate = this.formatDate(this.quizResult.date);
-          this.score = this.quizResult.score;
-          this.totalQuestions = this.quizResult.totalQuestions;
-          this.percentage = this.quizResultService.calculatePercentage(this.score, this.totalQuestions);
-          this.averageTimePerQuestion = this.quizResultService.calculateAverageTimePerQuestion(
-            this.quizResult.timeSpent,
-            this.totalQuestions
-          );
-          this.totalIndiceUsed = this.quizResult.hintsUsed;
-          this.questionResults = this.quizResult.questionResults;
-        } else {
-          this.creatNewResult();
-        }
-      });
-    });
-  }
+  getDate(){ return this.quizResult!.date }
 
-  creatNewResult() {
-    if (this.quiz) {
-      this.quizDate = this.formatDate(new Date());
-      this.score = Math.round(this.quiz.questions.length * 0.8);
-      this.totalQuestions = this.quiz.questions.length;
-      this.percentage = 80;
-      this.averageTimePerQuestion = 12.5;
-      this.totalIndiceUsed = 3;
+  navigateBack() { this.router.navigate(['/player-stats', this.profileId]); }
 
-      this.questionResults = this.quiz.questions.map((question, index) => {
-        const isCorrect = index < this.score;
-        return {
-          questionId: question.id,
-          question: question.question,
-          correctAnswer: question.answers[0],
-          userAnswer: isCorrect ? question.answers[0] : question.answers[0],
-          isCorrect: isCorrect,
-          timeSpent: Math.floor(Math.random() * 15) + 10,
-          hintsUsed: isCorrect ? 0 : 1
-        };
-      });
-    }
-  }
-
-  formatDate(date: Date): string {
-    return date.toLocaleDateString('fr-FR', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric'
-    });
-  }
-
-  navigateBack() {
-    this.router.navigate(['/player-stats', this.profileId]);
-  }
 }

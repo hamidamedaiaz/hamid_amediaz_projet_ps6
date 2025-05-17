@@ -1,25 +1,18 @@
-import { QuizResult, QuestionResult } from '../models/quiz-result.model';
-import { PROFILE_LIST } from './profile-list.mock';
-import { QUESTION, QUESTIONS } from './question.mock';
-import * as ANSWERS from './answer.mock';
+import { QuizResult } from "src/models/quiz-result.model"
+import { QUIZ_EXAMPLE } from "./quiz.mock"
+import  { GUEST_PROFILE } from "./profile-list.mock"
+import { QUESTION_RESULT } from "./question-result.mock"
+import { GAMEMODE_SOLO } from "./gamemode-list.mock"
 
-interface MonthlyStatsData {
-  month: string;
-  score: number;
-  hintUsage: number;
-  responseTime: number;
-  accuracy: number;
+export const QUIZ_RESULT_EMPTY :QuizResult = {
+    quizSessionId: 0,
+    quiz: QUIZ_EXAMPLE,
+    profile: GUEST_PROFILE,
+    date: Date.now(),
+    score: 0,
+    totalQuestions: 0,
+    timeSpent: 0,
+    hintsUsed: 0,
+    questionResults: QUESTION_RESULT,
+    gamemode:GAMEMODE_SOLO
 }
-
-interface PlayerStatsMap {
-  [key: number]: MonthlyStatsData[];
-}
-
-interface QuizStatsMap {
-  [key: number]: MonthlyStatsData[];
-}
-
-interface MonthlyStatsCollection {
-  players: PlayerStatsMap;
-}
-

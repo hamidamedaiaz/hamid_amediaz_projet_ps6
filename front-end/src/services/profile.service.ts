@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
-import { PROFILE_LIST } from "../mocks/profile-list.mock";
+import { GUEST_PROFILE, PROFILE_LIST } from "../mocks/profile-list.mock";
 import { Profile } from "src/models/profile.model";
 import { LocalStorageService } from "./localstorage.service";
 import { HttpClient } from '@angular/common/http';
@@ -37,43 +37,60 @@ export class ProfileService {
   }
 
 
-  public async createProfile(name: string, lastName: string): Promise<void> {
-    try {
-      const newProfile: Profile = {
-        id: this.generateNewId(),
-        name,
-        lastName,
-        role: 'user',
-        SHOW_POP_UP_TIMER: 15000,
-        HINT_DISPLAY_TIME_OUT_DURATION: 5000,
-        REMOVE_WRONG_ANSWER_INTERVAL: 10000,
-        NUMBER_OF_ANSWERS_DISPLAYED: 4,
-        SHOW_HINT_TIMER: 5,
-        NUMBER_OF_HINTS_DISPLAYED: 5,
-        profilePicture: "empty_path"
-      };
+  public async createProfile(
+  name: string, 
+  lastName: string, 
+  profilePicture: string = "empty_path",
+  birthDate: string = ""
+): Promise<void> {
+  try {
+    const newProfile: Profile = {
+      id: this.generateNewId(),
+      name,
+      lastName,
+      role: 'user',
+      SHOW_POP_UP_TIMER: 15000,
+      HINT_DISPLAY_TIME_OUT_DURATION: 5000,
+      REMOVE_WRONG_ANSWER_INTERVAL: 10000,
+      NUMBER_OF_ANSWERS_DISPLAYED: 4,
+      SHOW_HINT_TIMER: 5,
+      NUMBER_OF_HINTS_DISPLAYED: 5,
+      profilePicture: profilePicture,
+      birthDate: birthDate
+    };
 
-      this.http.post(this.apiUrl, newProfile).subscribe({
-        next: () => {
-          console.log(`New profile created: ${name} ${lastName} with ID: ${newProfile.id}`);
-          //Syncroniser la database
-          this.getProfileList();
-        },
-        error: (err) => {
-          console.error('Failed to create profile', err);
-        }
-      });
-    } catch (err) {
-      console.error('Failed to create profile', err);
-    }
+    this.http.post(this.apiUrl, newProfile).subscribe({
+      next: () => {
+        console.log(`New profile created: ${name} ${lastName} with ID: ${newProfile.id}`);
+        this.getProfileList();
+      },
+      error: (err) => {
+        console.error('Failed to create profile', err);
+      }
+    });
+  } catch (err) {
+    console.error('Failed to create profile', err);
   }
+}
 
 
+  //TODO TRIER PAR ORDER ALPHABETIQUE
   getProfileList() {
     this.http.get<Profile[]>(this.apiUrl).subscribe((profilesList: Profile[]) => {
       this.profiles = profilesList;
-      this.profiles$.next(profilesList);
+      this.profiles.sort()
+      this.profiles$.next(this.profiles);
     });
+  }
+
+  getProfile(profileId:number){
+    try{
+      const url = this.apiUrl + "/" + profileId;
+      this.http.get<Profile>(url).subscribe((profileFromServer) =>{
+        return profileFromServer
+      })
+    }catch(err) { console.log(err) }
+    return GUEST_PROFILE;
   }
 
   public deleteProfile(profileId: number): void {
@@ -82,7 +99,7 @@ export class ProfileService {
       console.log(url)
       this.http.delete<void>(url).subscribe({
         next: () => {
-          // Syncroniser la database
+
           this.getProfileList();
         },
         error: (err) => {

@@ -1,52 +1,22 @@
-<div class="player-stats-container" *ngIf="profile">
+<div class="player-stats-container" *ngIf="profile && !isQuizSelected">
 
-    <app-player-stats-header
-  [profile]="profile"
-  [profileId]="profileId">
-</app-player-stats-header>
+  <app-player-stats-header [profile]="profile" [profileId]="profileId">
+  </app-player-stats-header>
 
 
-  <!--
+  <app-player-stats-therapy-metrics [totalHintsUsed]="totalHintsUsed" [avgTimeBetweenAnswers]="avgTimeBetweenAnswers"
+    [correctAnswersPercent]="correctAnswersPercent" [incorrectAnswersPercent]="incorrectAnswersPercent">
+  </app-player-stats-therapy-metrics>
 
-  <app-player-stats-overview
-[totalGames]="totalGames"
-[bestScore]="bestScore"
-[averageScore]="averageScore">
-</app-player-stats-overview>
--->
-
-<app-player-stats-therapy-metrics
-    [totalHintsUsed]="totalHintsUsed"
-    [avgTimeBetweenAnswers]="avgTimeBetweenAnswers"
-    [correctAnswersPercent]="correctAnswersPercent"
-    [incorrectAnswersPercent]="incorrectAnswersPercent">
-</app-player-stats-therapy-metrics>
-
-
-<!--
-  <div class="answers-distribution">
-    <h3>Distribution des Réponses</h3>
-    <div class="answers-chart">
-      <div class="answer-segment correct" [style.width.%]="correctAnswersPercent">
-        <span class="segment-label">{{ correctAnswersPercent }}% Correctes</span>
-      </div>
-      <div class="answer-segment incorrect" [style.width.%]="incorrectAnswersPercent">
-        <span class="segment-label">{{ incorrectAnswersPercent }}% Incorrectes</span>
-      </div>
-    </div>
-  </div> -->
-
-
-
-  <app-player-stats-progression
-  [monthlyPerformance]="monthlyPerformance"
-  [activeTab]="activeTab"
-  (tabChange)="setActiveTab($event)">
+  <app-player-stats-progression [monthlyPerformance]="monthlyPerformance" [activeTab]="activeTab"
+    (tabChange)="setActiveTab($event)">
   </app-player-stats-progression>
 
 
-<app-player-stats-quiz-history
-[quizResults]="quizResults"
-(viewDetailsEvent)="viewQuizDetails($event)">
-</app-player-stats-quiz-history>
+  <app-player-stats-quiz-history [quizResults]="quizResults" (viewDetailsEvent)="viewQuizDetails($event)">
+  </app-player-stats-quiz-history>
+</div>
+
+<div *ngIf="profile && isQuizSelected">
+  <app-quiz-result-details></app-quiz-result-details>
 </div>

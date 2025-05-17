@@ -1,8 +1,9 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { QuestionResult } from 'src/models/quiz-result.model';
+import { QuestionResult } from 'src/models/question-result.model';
 import { Answer } from 'src/models/answer.model';
-import { QuizListService } from 'src/services/quiz-list.service';
+import { Quiz } from 'src/models/quiz.model';
+import { ComputeStatisticService } from 'src/services/computeStatistic.service';
 
 @Component({
   selector: 'app-quiz-result-questions',
@@ -12,37 +13,32 @@ import { QuizListService } from 'src/services/quiz-list.service';
   styleUrls: ['./quiz-result-questions.component.scss']
 })
 export class QuizResultQuestionsComponent {
+  @Input() quiz!: Quiz;
   @Input() questionResults: QuestionResult[] = [];
 
-  constructor(private quizService: QuizListService) {}
+  constructor(private computeStatisticService: ComputeStatisticService) { }
 
-  getScoreClass(isCorrect: boolean): string {
-    return isCorrect ? 'correct' : 'incorrect';
+  getScoreClass(isCorrect: boolean): string { return isCorrect ? 'correct' : 'incorrect'; }
+
+  isQuestionCorrect(result: QuestionResult) { return this.computeStatisticService.isQuestionCorrect(this.quiz, result) }
+
+  getQuestion(index: number) { return this.quiz.questions[index]; }
+
+  getQuizAnswers(index: number) { return this.quiz.questions[index].answers; }
+
+  isUserAnswer(answer: Answer, questionIndex: number): boolean {
+    try {
+      if (this.questionResults[questionIndex].answerIds.includes(answer.id)) return true;
+    } catch (err) { console.log(err); return false; }
+    return false;
   }
 
-  isUserAnswer(answer: Answer, userAnswer: Answer | null): boolean {
-    if (!userAnswer) return false;
-    return answer.id === userAnswer.id && answer.questionId === userAnswer.questionId;
-  }
+  isCorrectAnswer(answer: Answer): boolean { return answer.isCorrect; }
 
-  isCorrectAnswer(answer: Answer, correctAnswer: Answer): boolean {
-    return answer.id === correctAnswer.id && answer.questionId === correctAnswer.questionId;
-  }
+  getTimeSpent(result:QuestionResult){ return result.timeSpent }
+  
+  getHintsUsed(result: QuestionResult){ return result.numberOfHintsUsed }
 
-  getAllPossibleAnswers(result: QuestionResult): Answer[] {
-    const quizzes = this.quizService.quizzes$.getValue();
-    for (const quiz of quizzes) {
-      const question = quiz.questions.find(q => q.id === result.questionId);
-      if (question) {
-        return [...question.answers];
-      }
-    }
+  getQuestionResults(){ return this.questionResults}
 
-
-    const answers: Answer[] = [result.correctAnswer];
-    if (result.userAnswer && !this.isCorrectAnswer(result.userAnswer, result.correctAnswer)) {
-      answers.push(result.userAnswer);
-    }
-    return answers;
-  }
 }

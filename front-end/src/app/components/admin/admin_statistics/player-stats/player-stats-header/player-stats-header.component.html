@@ -9,8 +9,14 @@
 
 <div class="profile-section" *ngIf="profile">
   <div class="profile-card">
+    
+<ng-container *ngIf="profile?.profilePicture && profile.profilePicture !== 'empty_path'; else initialsTemplate">
+    <div class="profile-avatar" [style.background-image]="'url(' + profile.profilePicture + ')'"></div>
+</ng-container>
+<ng-template #initialsTemplate>
     <div class="profile-avatar">{{ getInitials(profile) }}</div>
-    <div class="profile-info">
+
+</ng-template>    <div class="profile-info">
       <h2 class="profile-name">{{ profile.name }} {{ profile.lastName }}</h2>
     </div>
   </div>

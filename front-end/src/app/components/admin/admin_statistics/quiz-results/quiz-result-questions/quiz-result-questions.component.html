@@ -2,30 +2,30 @@
     <h2 class="section-title">Détail des Réponses</h2>
     
     <div class="questions-list">
-      <div class="question-item" *ngFor="let result of questionResults; let i = index" [ngClass]="getScoreClass(result.isCorrect)">
+      <div class="question-item" *ngFor="let result of getQuestionResults(); let questionIndex = index" [ngClass]="getScoreClass(isQuestionCorrect(result))">
         <div class="question-header">
-          <span class="question-number">Question {{ i + 1 }}</span>
-          <span class="question-result-badge" [ngClass]="getScoreClass(result.isCorrect)">
-            {{ result.isCorrect ? 'Correct' : 'Incorrect' }}
+          <span class="question-number">Question {{ questionIndex + 1 }}</span>
+          <span class="question-result-badge" [ngClass]="getScoreClass(isQuestionCorrect(result))">
+            {{ isQuestionCorrect(result) ? 'Correct' : 'Incorrect' }}
           </span>
         </div>
         
         <div class="question-content">
-          <p class="question-text">{{ result.question }}</p>
+          <p class="question-text">{{ getQuestion(questionIndex).question }}</p>
           
           <div class="answers-container">
-            <div *ngFor="let answer of getAllPossibleAnswers(result)" class="answer-item" 
+            <div *ngFor="let answer of getQuizAnswers(questionIndex)" class="answer-item" 
                  [ngClass]="{
-                   'selected-answer': isUserAnswer(answer, result.userAnswer), 
-                   'correct-answer': isCorrectAnswer(answer, result.correctAnswer)
+                   'selected-answer': isUserAnswer(answer, questionIndex), 
+                   'correct-answer': isCorrectAnswer(answer)
                  }">
               <div class="answer-content">
                 <span class="answer-text">{{ answer.answerContent }}</span>
               </div>
               <div class="answer-indicator">
-                <i *ngIf="isUserAnswer(answer, result.userAnswer) && result.isCorrect" class="fa fa-check correct-icon"></i>
-                <i *ngIf="isUserAnswer(answer, result.userAnswer) && !result.isCorrect" class="fa fa-times incorrect-icon"></i>
-                <i *ngIf="isCorrectAnswer(answer, result.correctAnswer) && !isUserAnswer(answer, result.userAnswer)" class="fa fa-check-circle correct-answer-icon"></i>
+                <i *ngIf="isUserAnswer(answer, questionIndex) && isQuestionCorrect(result)" class="fa fa-check correct-icon"></i>
+                <i *ngIf="isUserAnswer(answer, questionIndex) && !isQuestionCorrect(result)" class="fa fa-times incorrect-icon"></i>
+                <i *ngIf="isCorrectAnswer(answer) && !isUserAnswer(answer, questionIndex)" class="fa fa-check-circle correct-answer-icon"></i>
               </div>
             </div>
           </div>
@@ -34,13 +34,13 @@
             <div class="metric-item">
               <span class="metric-icon time-small"></span>
               <span class="metric-label">Temps:</span>
-              <span class="metric-value">{{ result.timeSpent }}s</span>
+              <span class="metric-value">{{ getTimeSpent(result) }}s</span>
             </div>
             
             <div class="metric-item">
               <span class="metric-icon hint-small"></span>
               <span class="metric-label">Indices:</span>
-              <span class="metric-value">{{ result.hintsUsed }}</span>
+              <span class="metric-value">{{ getHintsUsed(result) }}</span>
             </div>
           </div>
         </div>

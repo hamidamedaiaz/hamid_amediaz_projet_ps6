@@ -102,7 +102,7 @@ export class SelectionListComponent implements OnInit{
 
 
   getAcceuilliStat(id: number){
-    this.statService.selectAcceuilli(id);
+    this.statService.selectProfile(id);
   }
 
   getQuizStat(id : number){

@@ -6,21 +6,55 @@
     </div>
 
 
-    <div *ngIf="showProfileForm" class="profile-form">
-        <h3>Ajouter un accueilli</h3>
-        <div class="form-group">
-            <label for="firstName">Prénom:</label>
-            <input type="text" id="firstName" class="form-input" [(ngModel)]="currentProfile.name" placeholder="Prénom">
-        </div>
-        <div class="form-group">
-            <label for="lastName">Nom:</label>
-            <input type="text" id="lastName" class="form-input" [(ngModel)]="currentProfile.lastName" placeholder="Nom">
-        </div>
-        <div class="form-buttons">
-            <button class="save-btn" (click)="saveProfile()">Enregistrer</button>
-            <button class="cancel-btn" (click)="cancelProfileForm()">Annuler</button>
-        </div>
+<div *ngIf="showProfileForm" class="modal-overlay">
+  <div class="modal-container">
+    <div class="modal-header">
+      <h3>{{ isEditing ? 'Modifier' : 'Ajouter' }} un accueilli</h3>
+      <button class="close-modal-btn" (click)="cancelProfileForm()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 6L6 18M6 6l12 12" />
+        </svg>
+      </button>
     </div>
+    
+    <div class="modal-body">
+      <div class="profile-avatar-upload">
+        <div class="avatar-preview" [ngStyle]="{'background-image': getAvatarPreviewStyle()}">
+          <div class="avatar-upload-icon" *ngIf="!avatarPreview">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </div>
+        </div>
+        <label for="avatar-upload" class="avatar-upload-button">
+          Choisir une photo
+          <input type="file" id="avatar-upload" accept="image/*" (change)="onAvatarSelected($event)" style="display:none;">
+        </label>
+      </div>
+      
+      <div class="form-group">
+        <label for="firstName">Prénom:</label>
+        <input type="text" id="firstName" class="form-input" [(ngModel)]="currentProfile.name" placeholder="Prénom">
+      </div>
+      
+      <div class="form-group">
+        <label for="lastName">Nom:</label>
+        <input type="text" id="lastName" class="form-input" [(ngModel)]="currentProfile.lastName" placeholder="Nom">
+      </div>
+      
+      <div class="form-group">
+        <label for="birthDate">Date de naissance:</label>
+        <input type="date" id="birthDate" class="form-input" [(ngModel)]="currentProfile.birthDate">
+      </div>
+    </div>
+    
+    <div class="modal-footer">
+      <button class="cancel-btn" (click)="cancelProfileForm()">Annuler</button>
+      <button class="save-btn" (click)="saveProfile()">Enregistrer</button>
+    </div>
+  </div>
+</div>
 
 
     <div *ngIf="showDeleteConfirm" class="delete-confirm">
@@ -38,7 +72,14 @@
         <div *ngFor="let profile of filteredProfiles()" class="enhanced-profile-item"
             (click)="profileSelectedHandler(profile)">
             <div class="profile-details">
-                <span class="profile-avatar">{{ getInitials(profile) }}</span>
+
+<ng-container *ngIf="profile.profilePicture && profile.profilePicture !== 'empty_path'; else initialsTemplate">
+    <div class="profile-avatar" [ngStyle]="{'background-image': 'url(' + profile.profilePicture + ')'}"></div>
+</ng-container>
+<ng-template #initialsTemplate>
+    <div class="profile-avatar-text">{{ getInitials(profile) }}</div>
+</ng-template>
+
                 <section>
                     <p class="profile-name">{{profile.name}} {{profile.lastName}}</p>
                 </section>

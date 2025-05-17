@@ -15,18 +15,18 @@
         </thead>
 
         <tbody>
-          <tr class="quiz-table-row" *ngFor="let game of quizResults" (click)="viewQuizDetails(game.quizId)">
-            <td class="quiz-title">{{ game.quizTitle }}</td>
-            <td>{{ game.date }}</td>
+          <tr class="quiz-table-row" *ngFor="let quizResult of quizResults" (click)="viewQuizDetails(getQuizId(quizResult))">
+            <td class="quiz-title">{{ getQuizTitle(quizResult) }}</td>
+            <td>{{ quizResult.date }}</td>
             <td>
-              <div class="score-display" [ngClass]="getScoreColor(game.percentageCorrect)">
-                {{ game.score }}/{{ game.totalQuestions }}
-                <span class="score-percentage">({{ game.percentageCorrect }}%)</span>
+              <div class="score-display" [ngClass]="getScoreColor(getPercent(quizResult))">
+                {{ getQuizScore(quizResult) }}/{{ getQuizNbOfQuestions(quizResult) }}
+                <span class="score-percentage">({{ getPercent(quizResult) }}%)</span>
               </div>
             </td>
-            <td>{{ game.timeSpent }}s</td>
-            <td>{{ game.hintsUsed }}</td>
-            <td>Seul</td>
+            <td>{{ getTimeSpent(quizResult) }}s</td>
+            <td>{{ getHintsUsed(quizResult) }}</td>
+            <td>{{getQuizGamemodeName(quizResult)}}</td>
           </tr>
 
         </tbody>

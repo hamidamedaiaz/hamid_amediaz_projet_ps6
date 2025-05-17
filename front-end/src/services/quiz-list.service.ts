@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { Quiz } from "../models/quiz.model";
+import { EMPTY_QUIZ } from 'src/mocks/quiz.mock';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,15 @@ export class QuizListService {
       console.log("Quizzes récupérés :", quizzes);
       this.quizzes$.next(quizzes)
     });
+  }
+
+  public getQuiz(quizId: number):Quiz{
+    try {
+      this.http.get<Quiz>(this.apiUrl + "/" + quizId).subscribe((quizFromServer: Quiz) => {
+        return quizFromServer;
+      })
+    } catch (err) { console.log(err) }
+    return EMPTY_QUIZ;
   }
 
   public RequestEditQuizzes(q: Quiz): void {
@@ -56,8 +66,8 @@ export class QuizListService {
         },
         error: (err) => console.error("SERVER ERROR - ", err)
       });
-    } catch (err) { console.error("Error - ", err)}
-    
+    } catch (err) { console.error("Error - ", err) }
+
   }
 
 }

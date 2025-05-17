@@ -1,5 +1,19 @@
 <div class="profile-configuration">
     <div class="header">
+<div class="profile-avatar-upload">
+    <div class="avatar-preview" [ngStyle]="{'background-image': getAvatarPreviewStyle()}">
+        <div class="avatar-upload-icon" *ngIf="!avatarPreview">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+        </div>
+    </div>
+    <label for="profile-avatar-upload" class="avatar-upload-button">
+        Changer la photo
+        <input type="file" id="profile-avatar-upload" accept="image/*" (change)="onAvatarSelected($event)" style="display:none;">
+    </label>
+</div>
         <h2 class="title">Configuration de l'acceuilli</h2>
         <button class="close-button" (click)="closeConfiguration()" aria-label="Fermer">
             <svg viewBox="0 0 24 24" width="24" height="24">

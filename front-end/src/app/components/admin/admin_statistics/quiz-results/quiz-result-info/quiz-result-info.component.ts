@@ -2,6 +2,8 @@ import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Quiz } from 'src/models/quiz.model';
 import { Profile } from 'src/models/profile.model';
+import { QuestionResult } from 'src/models/question-result.model';
+import { ComputeStatisticService } from 'src/services/computeStatistic.service';
 
 @Component({
   selector: 'app-quiz-result-info',
@@ -11,22 +13,34 @@ import { Profile } from 'src/models/profile.model';
   styleUrls: ['./quiz-result-info.component.scss']
 })
 export class QuizResultInfoComponent {
-  @Input() quiz: Quiz| null= null;
-  @Input() profile: Profile | null = null;
-  @Input() quizDate: string = '';
-  @Input() score: number = 0;
-  @Input() totalQuestions: number = 0;
-  @Input() percentage: number = 0;
-  @Input() averageTimePerQuestion: number = 0;
-  @Input() totalindIceUsed: number = 0;
+  @Input() quiz!: Quiz;
+  @Input() profile!: Profile;
+  @Input() date!:number;
+  @Input() questionResults!: QuestionResult[];
+
+  constructor(private computeStatisticService:ComputeStatisticService){}
   
+  getScore(){ console.log(this.computeStatisticService.getScore(this.quiz, this.questionResults)); return this.computeStatisticService.getScore(this.quiz, this.questionResults) }
+
+  getTotalQuestions():number{ return this.quiz.questions.length; }
+
+  getPercentages(){
+    return this.computeStatisticService.getPercentages(this.getScore(), this.getTotalQuestions())
+  }
+
+  getAverageTimePerQuestions(){ return this.computeStatisticService.getAverageTime(this.questionResults); }
+
+  getTotalHintsUsed(){ return this.computeStatisticService.getTotalHintUsed(this.questionResults) }
 
   getScoreClass(): string {
+    let percent:number = this.computeStatisticService.getPercentages(this.getScore(),this.getTotalQuestions())
+    if ( percent >= 70) return 'grande-score';
 
-    if (this.percentage >= 70) return 'grande-score';
-
-    if (this.percentage >= 50) return 'moyenne-score';
+    else if (percent >= 50) return 'moyenne-score';
     
     return 'petite-score';
   }
+
+  
+
 }

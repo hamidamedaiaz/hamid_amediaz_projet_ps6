@@ -1,19 +1,16 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ProfileService } from 'src/services/profile.service';
 import { QuizResultService } from 'src/services/quiz-result.service';
 import { Profile } from 'src/models/profile.model';
-
-
-import {PlayerStatsHeaderComponent} from 'src/app/components/admin/admin_statistics/player-stats/player-stats-header/player-stats-header.component';
+import { PlayerStatsHeaderComponent } from 'src/app/components/admin/admin_statistics/player-stats/player-stats-header/player-stats-header.component';
 import { PlayerStatsOverviewComponent } from 'src/app/components/admin/admin_statistics/player-stats/player-stats-overview/player-stats-overview.component';
-
-import { PlayerStatsTherapyMetricsComponent} from 'src/app/components/admin/admin_statistics/player-stats/player-stats-therapy-metrics/player-stats-therapy-metrics.component';
-
+import { PlayerStatsTherapyMetricsComponent } from 'src/app/components/admin/admin_statistics/player-stats/player-stats-therapy-metrics/player-stats-therapy-metrics.component';
 import { PlayerStatsProgressionComponent } from 'src/app/components/admin/admin_statistics/player-stats/player-stats-progression/player-stats-progression.component';
 import { PlayerStatsQuizHistoryComponent } from 'src/app/components/admin/admin_statistics/player-stats/player-stats-quiz-history/player-stats-quiz-history.component';
-
+import { QUIZ_RESULT_EMPTY } from 'src/mocks/quiz-results.mock';
+import { QuizResultDetailsComponent } from '../quiz-result-details/quiz-result-details.component';
 
 @Component({
   selector: 'app-player-stats-details',
@@ -23,9 +20,9 @@ import { PlayerStatsQuizHistoryComponent } from 'src/app/components/admin/admin_
     RouterLink,
 
     PlayerStatsHeaderComponent,
-    PlayerStatsOverviewComponent ,
+    PlayerStatsOverviewComponent,
     PlayerStatsTherapyMetricsComponent,
-
+    QuizResultDetailsComponent,
     PlayerStatsProgressionComponent,
 
     PlayerStatsQuizHistoryComponent
@@ -49,29 +46,34 @@ export class PlayerStatsDetailsComponent implements OnInit {
   correctAnswersPercent: number = 0;
   incorrectAnswersPercent: number = 0;
 
+  isQuizSelected: boolean = false;
+
   monthlyPerformance: any[] = [];
   quizResults: any[] = [];
 
   activeTab: 'score' | 'hints' | 'time' | 'accuracy' = 'score';
 
-  Math = Math;
+  selectedQuizId: number = -1;
 
-  @Input() profileId:number = 0;
+
+  @Input() profileId: number = 0;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private profileService: ProfileService,
     private quizResultService: QuizResultService
-  ) {}
+  ) {
+    this.isQuizSelected = false;
+  }
 
   ngOnInit() {
-      if (this.profileId) {
-        this.loadProfileData();
-        this.statistics();
-      } else {
-        this.router.navigate(['/admin']);
-      }
+    if (this.profileId) {
+      this.loadProfileData();
+      this.statistics();
+    } else {
+      this.router.navigate(['/admin']);
+    }
   }
 
   loadProfileData() {
@@ -91,17 +93,17 @@ export class PlayerStatsDetailsComponent implements OnInit {
     this.averageScore = playerStats.averageScore;
     this.averageTimePerQuestion = playerStats.averageTimePerQuestion;
     this.totalHintsUsed = playerStats.totalHintsUsed;
-    this.avgTimeBetweenAnswers = playerStats.averageTimePerQuestion;
+    this.averageTimePerQuestion = playerStats.averageTimePerQuestion;
     this.correctAnswersPercent = playerStats.correctAnswersPercent;
     this.incorrectAnswersPercent = playerStats.incorrectAnswersPercent;
 
-    this.chargementDesdoneeMonsuelle();
+    this.loadMonthlyData();
 
-    this.quizResults = this.quizResultService.getQuizHistoryForPlayer(this.profileId);
+    this.quizResults = [QUIZ_RESULT_EMPTY]//this.quizResultService.getQuizHistoryForPlayer(this.profileId);
   }
 
 
-  chargementDesdoneeMonsuelle() {
+  loadMonthlyData() {
     this.setActiveTab(this.activeTab);
   }
 
@@ -116,7 +118,7 @@ export class PlayerStatsDetailsComponent implements OnInit {
 
     const monthlyData = this.quizResultService.getPlayerMonthlyStats(this.profileId);
 
-    switch(tab) {
+    switch (tab) {
       case 'score':
         this.monthlyPerformance = monthlyData.map((data: any) => ({
           month: data.month,
@@ -146,14 +148,13 @@ export class PlayerStatsDetailsComponent implements OnInit {
 
 
   viewQuizDetails(quizId: number) {
-    this.router.navigate(['/quiz-result', this.profileId, quizId]);
+    this.isQuizSelected = true;
+    this.selectedQuizId = quizId
   }
 
 
   navigateBack() {
-    this.router.navigate(['/admin'], {
-
-      queryParams: { section: 'stats-accueilli' }
-    });
+    this.isQuizSelected = false;
+    this.selectedQuizId = -1
   }
 }
