@@ -94,7 +94,7 @@
 
 <section *ngIf="currentPage==='home'">
     <input type="text" id="search-bar" class="search-input" [(ngModel)]="searchQuery"
-        placeholder="Rechercher un joueur..." (click)="showProfileList()">
+        placeholder="Rechercher un thérapeute..." (click)="showProfileList()">
     <section *ngIf="isProfileListActivated" class="profile-list-section">
         <div class="profile-list-container" *ngFor="let profile of filteredProfiles()">
             <app-profile-item [profile]="profile" [context]="context"

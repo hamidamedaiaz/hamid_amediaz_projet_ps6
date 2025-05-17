@@ -74,14 +74,19 @@ export class ProfileService {
 }
 
 
-  //TODO TRIER PAR ORDER ALPHABETIQUE
-  getProfileList() {
-    this.http.get<Profile[]>(this.apiUrl).subscribe((profilesList: Profile[]) => {
-      this.profiles = profilesList;
-      this.profiles.sort()
-      this.profiles$.next(this.profiles);
+ getProfileList() {
+  this.http.get<Profile[]>(this.apiUrl).subscribe((profilesList: Profile[]) => {
+    this.profiles = profilesList;
+    this.profiles.sort((a, b) => {
+      const lastNameComparison = a.lastName.localeCompare(b.lastName);
+      if (lastNameComparison === 0) {
+        return a.name.localeCompare(b.name);
+      }
+      return lastNameComparison;
     });
-  }
+    this.profiles$.next(this.profiles);
+  });
+}
 
   getProfile(profileId:number){
     try{
