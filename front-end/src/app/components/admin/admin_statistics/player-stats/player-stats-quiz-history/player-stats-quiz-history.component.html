@@ -15,9 +15,9 @@
         </thead>
 
         <tbody>
-          <tr class="quiz-table-row" *ngFor="let quizResult of quizResults" (click)="viewQuizDetails(getQuizId(quizResult))">
-            <td class="quiz-title">{{ getQuizTitle(quizResult) }}</td>
-            <td>{{ quizResult.date }}</td>
+          <tr class="quiz-table-row" *ngFor="let quizResult of quizResults" (click)="viewQuizDetails(quizResult.id)">
+            <td class="quiz-title">{{ getQuizTitle(getQuizId(quizResult)) }}</td>
+            <td>{{ getQuizResultDateDebut(quizResult) }}</td>
             <td>
               <div class="score-display" [ngClass]="getScoreColor(getPercent(quizResult))">
                 {{ getQuizScore(quizResult) }}/{{ getQuizNbOfQuestions(quizResult) }}

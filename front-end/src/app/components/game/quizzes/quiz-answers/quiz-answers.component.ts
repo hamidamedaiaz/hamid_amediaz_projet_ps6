@@ -4,10 +4,8 @@ import { CurrentProfileService } from 'src/services/currentProfile.service';
 import { QuizService } from 'src/services/quiz.service';
 import { Answer } from 'src/models/answer.model';
 import { QuizAnswerComponent } from '../quiz-answer/quiz-answer.component';
-import { MultiPlayerGameService } from 'src/services/multiplayer-game.service';
 import { QuizAnswerMultiplayerComponent } from '../quiz-answer-multiplayer/quiz-answer-multiplayer.component';
-import { findIndex, last } from 'rxjs';
-import { each } from 'chart.js/dist/helpers/helpers.core';
+
 
 @Component({
   selector: 'app-quiz-answers',

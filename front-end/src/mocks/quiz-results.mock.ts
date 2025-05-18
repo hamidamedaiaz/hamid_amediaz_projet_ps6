@@ -1,18 +1,24 @@
 import { QuizResult } from "src/models/quiz-result.model"
-import { QUIZ_EXAMPLE } from "./quiz.mock"
-import  { GUEST_PROFILE } from "./profile-list.mock"
-import { QUESTION_RESULT } from "./question-result.mock"
+import { QUIZ_EXAMPLE, QUIZ_EXAMPLE2 } from "./quiz.mock"
+import { QUESTION_RESULT, QUESTION_RESULT2 } from "./question-result.mock"
 import { GAMEMODE_SOLO } from "./gamemode-list.mock"
 
 export const QUIZ_RESULT_EMPTY :QuizResult = {
-    quizSessionId: 0,
-    quiz: QUIZ_EXAMPLE,
-    profile: GUEST_PROFILE,
-    date: Date.now(),
-    score: 0,
-    totalQuestions: 0,
-    timeSpent: 0,
-    hintsUsed: 0,
+    id: 0,
+    quizId: QUIZ_EXAMPLE.id,
+    profileId: 1,
+    dateDebut: Date.now(),
+    dateFin: Date.now(),
     questionResults: QUESTION_RESULT,
+    gamemode:GAMEMODE_SOLO
+}
+
+export const QUIZ_RESULT_EMPTY2: QuizResult = {
+    id: 1,
+    quizId: QUIZ_EXAMPLE2.id,
+    profileId: 2,
+    dateDebut: Date.now() +1,
+    dateFin: Date.now() +2,
+    questionResults: QUESTION_RESULT2,
     gamemode:GAMEMODE_SOLO
 }

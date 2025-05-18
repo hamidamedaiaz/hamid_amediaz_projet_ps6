@@ -7,17 +7,17 @@
 
 
 
-<div class="profile-section" *ngIf="profile">
+<div class="profile-section" *ngIf="getProfile()">
   <div class="profile-card">
     
-<ng-container *ngIf="profile?.profilePicture && profile.profilePicture !== 'empty_path'; else initialsTemplate">
-    <div class="profile-avatar" [style.background-image]="'url(' + profile.profilePicture + ')'"></div>
+<ng-container *ngIf="getProfile().profilePicture && getProfile().profilePicture !== 'empty_path'; else initialsTemplate">
+    <div class="profile-avatar" [style.background-image]="'url(' + getProfile().profilePicture + ')'"></div>
 </ng-container>
 <ng-template #initialsTemplate>
-    <div class="profile-avatar">{{ getInitials(profile) }}</div>
+    <div class="profile-avatar">{{ getInitials() }}</div>
 
 </ng-template>    <div class="profile-info">
-      <h2 class="profile-name">{{ profile.name }} {{ profile.lastName }}</h2>
+      <h2 class="profile-name">{{ getProfile().name }} {{ getProfile().lastName }}</h2>
     </div>
   </div>
 </div>

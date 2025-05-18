@@ -38,7 +38,7 @@ export class ProfileItemComponent {
   selectProfile() {
     if (this.profile) {
       if (this.currentPage === 'home') {
-       
+
         this.profileSelected.emit(this.profile);
         this.cdr.detectChanges();
         setTimeout(() => {
@@ -64,11 +64,11 @@ export class ProfileItemComponent {
     return this.currentProfileService.getCurrentProfile().name;
   }
 
-  public getInitials(profile:Profile): string {
-    if (!profile) return '';
+  public getInitials(): string {
+    if (!this.profile) return '';
 
-    const firstName = profile.name.charAt(0).toUpperCase();
-    const lastName = profile.lastName.charAt(0).toUpperCase();
+    const firstName = this.profile.name.charAt(0).toUpperCase();
+    const lastName = this.profile.lastName.charAt(0).toUpperCase();
 
     return firstName + lastName;
   }

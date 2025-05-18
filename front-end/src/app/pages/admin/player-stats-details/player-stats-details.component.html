@@ -1,11 +1,10 @@
-<div class="player-stats-container" *ngIf="profile && !isQuizSelected">
+<div class="player-stats-container" *ngIf="getProfile() && !isQuizSelected">
 
-  <app-player-stats-header [profile]="profile" [profileId]="profileId">
+  <app-player-stats-header [profile]="getProfile()">
   </app-player-stats-header>
 
 
-  <app-player-stats-therapy-metrics [totalHintsUsed]="totalHintsUsed" [avgTimeBetweenAnswers]="avgTimeBetweenAnswers"
-    [correctAnswersPercent]="correctAnswersPercent" [incorrectAnswersPercent]="incorrectAnswersPercent">
+  <app-player-stats-therapy-metrics [quizResults]="getQuizResults()">
   </app-player-stats-therapy-metrics>
 
   <app-player-stats-progression [monthlyPerformance]="monthlyPerformance" [activeTab]="activeTab"
@@ -17,6 +16,6 @@
   </app-player-stats-quiz-history>
 </div>
 
-<div *ngIf="profile && isQuizSelected">
-  <app-quiz-result-details></app-quiz-result-details>
+<div *ngIf="getProfile() && isQuizSelected">
+  <app-quiz-result-details (go_back)="hideResultDetails()"></app-quiz-result-details>
 </div>

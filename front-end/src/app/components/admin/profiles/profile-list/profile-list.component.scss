@@ -440,3 +440,97 @@ app-profile-list {
   from { transform: translateY(-50px); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
 }
+
+
+.home-search-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+
+.search-input.enhanced {
+  flex-shrink: 0;
+  font-size: 2.2vh;
+  padding: 1.2em;
+  width: 100%;
+  border: 2px solid $primary-border-white;
+  border-radius: 1vh;
+  background-color: $primary-white-bg;
+  color: $primary-black-text;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  margin-bottom: 10px;
+}
+
+
+.search-input.enhanced:focus {
+  border-color: $primary-blue-btn;
+  box-shadow: 0 0 0 3px rgba($primary-blue-btn, 0.2);
+}
+
+.card-grid {
+  flex-grow: 1;
+  overflow-y: auto;
+  display: grid;
+  padding-top: 10px;
+  padding-left: 10px;
+  grid-template-columns: repeat(auto-fit, 250px);
+  grid-template-rows: repeat(auto-fit, 160px);
+  gap: 20px;
+  padding-right: 10px;
+  background-color: #f8f8f8;
+  border-radius: 10px;
+}
+
+
+.profile-card {
+  background-color: $primary-white-bg;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: $primary-box-shadow;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.2s, background-color 0.3s;
+  cursor: pointer;
+}
+
+.profile-card:hover {
+  transform: translateY(-5px);
+  background-color: $primary-btn-white-hover;
+}
+
+.profile-card-avatar {
+  margin-bottom: 15px;
+}
+
+.profile-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  background-color: $primary-blue-bg;
+}
+
+.profile-initials {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: $primary-blue-bg;
+  color: $primary-white-text;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.profile-card-name {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+  color: $primary-black-text;
+}

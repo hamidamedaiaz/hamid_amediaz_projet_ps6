@@ -1,6 +1,10 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { LocalStorageService } from "./localstorage.service";
+import { EMPTY_QUIZ } from "src/mocks/quiz.mock";
+import { QuizResult } from "src/models/quiz-result.model";
+import { QUIZ_RESULT_EMPTY } from "src/mocks/quiz-results.mock";
+import { Quiz } from "src/models/quiz.model";
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +13,7 @@ import { LocalStorageService } from "./localstorage.service";
 export class StatsService {
 
   public profileId$ = new BehaviorSubject<number>(-1);
-  public quizSessionId$ = new BehaviorSubject<number>(-1);
+  public quizResultId$ = new BehaviorSubject<number>(-1);
   public quizId$ = new BehaviorSubject<number>(-1);
 
   private PROFILE_ID_KEY: string = "PROFILE_ID_KEY";
@@ -19,18 +23,23 @@ export class StatsService {
   constructor(private localStorageService: LocalStorageService) { this.loadFromStorage(); }
 
   public selectProfile(id: number) {
-    this.profileId$.next(id); 
-    this.localStorageService.storeItem(this.PROFILE_ID_KEY, JSON.stringify(id));
+    this.profileId$.next(id);
+    this.storeIntoStorage(this.PROFILE_ID_KEY, JSON.stringify(id));
   }
 
-  public selectQuizSession(id: number) { 
-    this.quizSessionId$.next(id);
-    this.localStorageService.storeItem(this.QUIZ_SESSION_ID_KEY, JSON.stringify(id));
-   }
+  public selectQuizResult(id: number) {
+    this.quizResultId$.next(id);
+    this.storeIntoStorage(this.QUIZ_SESSION_ID_KEY, JSON.stringify(id));
+  }
 
-  public selectQuiz(id: number) { 
+  public selectQuiz(id: number) {
     this.quizId$.next(id);
-    this.localStorageService.storeItem(this.QUIZ_ID_KEY, JSON.stringify(id));
+    this.storeIntoStorage(this.QUIZ_ID_KEY, JSON.stringify(id));
+  }
+
+  private storeIntoStorage(key: string, content: string) {
+    this.localStorageService.removeItem(key);
+    this.localStorageService.storeItem(key, content);
   }
 
   private loadFromStorage(): void {
@@ -38,10 +47,9 @@ export class StatsService {
     const savedQuizSessionId = this.localStorageService.getItem(this.QUIZ_SESSION_ID_KEY);
     const savedQuizId = this.localStorageService.getItem(this.QUIZ_ID_KEY);
 
-    if (savedProfileId) this.profileId$.next(savedProfileId);
-    if (savedQuizSessionId) this.quizSessionId$ = savedQuizSessionId;
-    if (savedQuizId) this.quizId$ = savedQuizId;
-
+    if (savedProfileId) this.profileId$.next(JSON.parse(savedProfileId));
+    if (savedQuizSessionId) this.quizResultId$.next(JSON.parse(savedQuizSessionId));
+    if (savedQuizId) this.quizId$.next(JSON.parse(savedQuizId));
   }
 
 }

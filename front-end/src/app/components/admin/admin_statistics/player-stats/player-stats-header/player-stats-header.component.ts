@@ -1,7 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Profile } from 'src/models/profile.model';
-import {CurrentPageService} from "src/services/currentPage.service";
+import { CurrentPageService } from "src/services/currentPage.service";
+import { ProfileService } from 'src/services/profile.service';
+import { GUEST_PROFILE } from 'src/mocks/profile-list.mock';
 
 
 
@@ -22,22 +24,24 @@ import {CurrentPageService} from "src/services/currentPage.service";
 export class PlayerStatsHeaderComponent {
 
 
-  @Input() profile: Profile | null = null;
-  @Input() profileId: number = 0;
+  @Input() profile!:Profile;
 
-  constructor(private navigation : CurrentPageService){}
+  constructor(private navigation: CurrentPageService) { }
 
-  navigateBack() {
-    this.navigation.adminNav('selection-stat-acceuilli')
-  }
+  navigateBack() { this.navigation.adminNav('selection-stat-acceuilli') }
 
+  getProfile(){ return this.profile }
 
 
-  getInitials(profile: Profile | null): string {
-    if (!profile) return '';
+  getInitials(): string {
 
-    const firstName = profile.name.charAt(0).toUpperCase();
-    const lastName = profile.lastName.charAt(0).toUpperCase();
+    if (!this.profile) {
+      console.log("Error - Profile not found"); 
+      return '';
+    }
+
+    const firstName = this.profile.name.charAt(0).toUpperCase();
+    const lastName = this.profile.lastName.charAt(0).toUpperCase();
 
     return firstName + lastName;
   }

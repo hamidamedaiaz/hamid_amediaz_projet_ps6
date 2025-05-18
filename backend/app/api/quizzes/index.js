@@ -13,6 +13,15 @@ router.get('/', (req, res) => {
   }
 })
 
+router.get('/:id', (req, res) => {
+  try {
+    res.status(200).json(Quizzes.getById(req.params.id));
+  } catch(err){
+    res.status(500).json(err);
+    console.log(err);
+  }
+})
+
 router.post('/', (req, res) => {
   try {
     try {

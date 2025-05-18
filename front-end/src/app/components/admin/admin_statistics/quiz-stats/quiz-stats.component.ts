@@ -1,8 +1,11 @@
-import { Component, Input, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, Input, OnInit, AfterViewInit, ViewChild, ElementRef, EventEmitter, Output } from '@angular/core';
 import { CommonModule, NgForOf } from '@angular/common';
 import { Chart, registerables } from 'chart.js';
 import { Quiz } from 'src/models/quiz.model';
-import {CurrentPageService} from "src/services/currentPage.service";
+import { CurrentPageService } from "src/services/currentPage.service";
+import { EMPTY_QUIZ } from 'src/mocks/quiz.mock';
+import { StatsService } from 'src/services/stats.service';
+import { QuizListService } from 'src/services/quiz-list.service';
 
 Chart.register(...registerables);
 
@@ -23,30 +26,48 @@ interface QuestionStat {
   templateUrl: './quiz-stats.component.html',
   styleUrls: ['./quiz-stats.component.scss']
 })
-export class QuizStatsComponent implements OnInit, AfterViewInit {
-  @Input() quiz!: Quiz;
+export class QuizStatsComponent {
+  private quiz: Quiz = EMPTY_QUIZ;
+  private quizId: number = this.quiz.id;
 
-  totalPlays      = Math.floor(Math.random() * 1000);
-  averageTime     = Math.floor(Math.random() * 60) + 20;
-  averageHints    = Math.floor(Math.random() * 4);
+  totalPlays = Math.floor(Math.random() * 1000);
+  averageTime = Math.floor(Math.random() * 60) + 20;
+  averageHints = Math.floor(Math.random() * 4);
   averageAttempts = Math.floor(Math.random() * 3) + 1;
 
   questionsStats: QuestionStat[] = [];
-  selectedIndex = 0;
+  selectedIndex: number = 0;
+
+  @Output()
+  go_back: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   @ViewChild('groupChart') groupChartRef!: ElementRef<HTMLCanvasElement>;
   private chart!: Chart;
 
-  constructor(private pageService : CurrentPageService) {
+  constructor(private pageService: CurrentPageService, private statsService: StatsService, private quizListService: QuizListService) {
+    this.statsService.quizId$.subscribe((quizId) => {
+      this.quizId = quizId;
+    });
+
+    this.quiz = this.quizListService.getQuiz(this.quizId)
+    this.selectedIndex = 0;
+    this.loadQuestions();
+    this.renderChart();
+    setTimeout(() => {
+      if (this.groupChartRef) {
+        this.renderChart();
+      }
+    });
 
   }
 
-  goBack(){
-    console.log("Test");
-    this.pageService.adminNav("home")
+  public getQuiz() { return this.quiz }
+
+  goBack() {
+    { this.pageService.adminNav('selection-stat-quiz') }
   }
 
-  ngOnInit(): void {
+  loadQuestions(): void {
     this.questionsStats = this.quiz.questions.map(q => {
       // Construis la liste complète des réponses
       const opts = [
@@ -85,9 +106,6 @@ export class QuizStatsComponent implements OnInit, AfterViewInit {
     });
   }
 
-  ngAfterViewInit(): void {
-    this.renderChart();
-  }
 
   selectQuestion(idx: number) {
     this.selectedIndex = idx;
@@ -98,8 +116,9 @@ export class QuizStatsComponent implements OnInit, AfterViewInit {
   }
 
   private renderChart() {
-    const ctx = this.groupChartRef.nativeElement.getContext('2d');
+    const ctx = this.groupChartRef?.nativeElement?.getContext('2d');
     if (!ctx) return;
+
     this.chart = new Chart(ctx, {
       type: 'bar',
       data: this.getChartData(this.selectedIndex),
@@ -120,9 +139,9 @@ export class QuizStatsComponent implements OnInit, AfterViewInit {
     return {
       labels: stat.options,
       datasets: [
-        { label: '1er essai', data: stat.pctFirst,  backgroundColor: '#28a745' },
+        { label: '1er essai', data: stat.pctFirst, backgroundColor: '#28a745' },
         { label: '2e essai', data: stat.pctSecond, backgroundColor: '#ffc107' },
-        { label: '3e essai', data: stat.pctThird,  backgroundColor: '#dc3545' }
+        { label: '3e essai', data: stat.pctThird, backgroundColor: '#dc3545' }
       ]
     };
   }

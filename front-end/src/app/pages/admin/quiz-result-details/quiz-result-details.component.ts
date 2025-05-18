@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { QuizListService } from 'src/services/quiz-list.service';
@@ -33,35 +33,45 @@ export class QuizResultDetailsComponent {
   private profileId: number = -1;
   private profile!: Profile;
   private quizResult: QuizResult | null = null;
-  private quizSessionId:number = -1;
-  private quizId:number = -1;
-  private quiz!:Quiz;
+  private quizSessionId: number = -1;
+  private quizId: number = -1;
+  private quiz!: Quiz;
+
+  @Output()
+  go_back:EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(
-    private router:Router,
-    private statsService:StatsService,
-    private quizResultService:QuizResultService,
-    private profileService:ProfileService
-  ){
+    private statsService: StatsService,
+    private profileService: ProfileService,
+    private quizListService: QuizListService,
+    private QuizResultService: QuizResultService
+  ) {
     //RETRIEVE USER ID AND QUIZ ID
-    this.statsService.quizSessionId$.subscribe((quizSessionId) => this.quizSessionId = quizSessionId); //quizSessionId
+    this.statsService.quizResultId$.subscribe((quizResultId) => this.quizSessionId = quizResultId); //quizSessionId
     this.statsService.profileId$.subscribe((profileId) => this.profileId = profileId);
 
     //SAVE THEIRS INFORMATIONS
-    this.quizResult = QUIZ_RESULT_EMPTY // this.quizResultService.getQuizResultById(this.quizSessionId);
-    this.profile = this.profileService.getProfile(this.profileId);
-    this.quiz = this.quizResult!.quiz;
 
+    this.quizResult = this.QuizResultService.getQuizResult(this.quizSessionId) // this.quizResultService.getQuizResultById(this.quizSessionId);
+
+    this.profileService.getProfile(this.profileId).subscribe((profile) => this.profile = profile);
+
+    this.quiz = this.quizListService.getQuiz(this.quizResult!.quizId)
+    
   }
 
-  getProfile(){ return this.profile }
 
-  getQuiz(){ return this.quiz }
 
-  getQuestionResults(){ return this.quizResult!.questionResults }
+  getProfile() { return this.profile }
 
-  getDate(){ return this.quizResult!.date }
+  getQuiz() { return this.quiz }
 
-  navigateBack() { this.router.navigate(['/player-stats', this.profileId]); }
+  getQuestionResults() { return this.quizResult!.questionResults }
+
+  getDateDebut() { return this.quizResult!.dateDebut; }
+
+  navigateBack() { 
+    this.go_back.emit(true);
+  }
 
 }

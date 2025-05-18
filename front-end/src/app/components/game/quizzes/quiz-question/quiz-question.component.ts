@@ -37,8 +37,6 @@ export class QuizQuestionComponent {
 
   private question!: Question;
 
-  private gamemode: Gamemode = GAMEMODE_UNDEFINED
-
   private wrongAnswers: Answer[] = [];
 
   public showCorrectEffect: Boolean = false;

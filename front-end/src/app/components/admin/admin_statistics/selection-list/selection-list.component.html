@@ -28,7 +28,7 @@
         <tbody>
         <tr *ngFor="let profile of filteredProfiles()"
             [class.highlighted]="selectedProfile?.id === profile.id"
-            (click)="getAcceuilliStat(profile.id)"
+            (click)="getProfileStats(profile.id)"
             class="clickable-row">
           <td>{{ profile.id }}</td>
           <td>{{ profile.lastName }}</td>

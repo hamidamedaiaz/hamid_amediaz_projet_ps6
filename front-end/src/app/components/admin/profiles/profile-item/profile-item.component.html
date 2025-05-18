@@ -1,5 +1,12 @@
-<div *ngIf="currentPage==='home' || currentPage==='admin'" class="result-item" (click)="selectProfile()">
-    {{profile?.name }} {{ profile?.lastName }}
+<div *ngIf="currentPage==='home' || currentPage==='admin' && profile" class="result-item" (click)="selectProfile()" >
+
+  <div class="profile-picture-container">
+    <img [src]="profile?.profilePicture" class="profile-picture" *ngIf="profile?.profilePicture !== 'empty_path'">
+    <div class="profile-picture initials" *ngIf="profile?.profilePicture === 'empty_path'">
+      {{ getInitials() }}
+    </div>
+  </div>
+  <div class="profile-name">{{profile?.name }} {{ profile?.lastName }}</div>
 </div>
 
 <section class="profile-item-section"  *ngIf="context==='multi'">

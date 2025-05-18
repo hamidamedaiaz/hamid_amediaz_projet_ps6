@@ -134,22 +134,27 @@
 }
 
 .profile-list-container {
-  width: 60vw;
+  width: 71vw;
+  margin: 0 auto;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
-  background-color: $primary-blue-bg;
-  position: absolute;
-  margin-top: 13vh;
-  top: 30%;
-  border-radius: 1vh;
-  padding: 2vh 2vh;
+  gap: 2rem;
 
-  animation: slideInUp 0.5s ease-in-out forwards;
+  position: relative;
+
+  animation: slideInUp 1.5s ease-in-out forwards;
   opacity: 0;
   transform: translateY(-3vh);
   z-index: 3;
-  box-shadow: $primary-box-shadow;
+
+  min-height: 50vh;
+  overflow: hidden;
+
+  max-height: 70vh;
 }
+
+
 
 
 @keyframes slideInUp {
@@ -164,11 +169,11 @@
   font-weight: bold;
   color: $primary-blue-text;
   font-family: "Unbounded", sans-serif;
-  position: absolute;
-  top:30%;
-  user-select: none;
+
+  text-align: center;
+
   animation: slideOutDown 0.4s ease-in-out forwards;
-  transform: translateY(7vh);
+  transform: translateY(0);
   user-select: none;
 }
 

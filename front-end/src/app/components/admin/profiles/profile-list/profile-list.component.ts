@@ -42,7 +42,7 @@ export class ProfileListComponent {
   public isEditing: boolean = false;
   public currentProfile: Profile = GUEST_PROFILE;
   public showDeleteConfirm: boolean = false;
-  public profileToDelete: Profile | null = null;  
+  public profileToDelete: Profile | null = null;
 
   constructor(
     public profileService: ProfileService,
@@ -65,13 +65,9 @@ export class ProfileListComponent {
     );
   }
 
-  ngOnInit() {
-    console.log("ProfileListComponent initialisé avec contexte:", this.context);
-  }
-
   profileSelectedHandler(profile: Profile) {
     console.log("Profil sélectionné dans contexte:", this.context, profile.name);
-    
+
     setTimeout(() => {
       if (this.context === 'home') {
         this.currentProfileService.setCurrentProfile(profile);
@@ -152,8 +148,8 @@ export class ProfileListComponent {
   }
 
   public saveProfile() {
-  console.log('Enregistrement du profil avec image:', 
-             this.currentProfile.profilePicture !== 'empty_path' ? 'Image présente hhhhhhh tres bien ' : 'Pas d\'image',
+  console.log('Enregistrement du profil avec image:',
+             this.currentProfile.profilePicture !== 'empty_path' ? 'Image présente ' : 'Pas dimage',
              'Type:', typeof this.currentProfile.profilePicture);
 
   if (this.isEditing) {
@@ -162,9 +158,9 @@ export class ProfileListComponent {
     if (!this.currentProfile.profilePicture || this.currentProfile.profilePicture === '') {
       this.currentProfile.profilePicture = 'empty_path';
     }
-    
+
     this.profileService.createProfile(
-      this.currentProfile.name, 
+      this.currentProfile.name,
       this.currentProfile.lastName,
       this.currentProfile.profilePicture
     );

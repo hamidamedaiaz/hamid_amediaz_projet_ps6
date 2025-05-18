@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, of } from 'rxjs';
 import { Quiz } from "../models/quiz.model";
 import { EMPTY_QUIZ } from 'src/mocks/quiz.mock';
 
@@ -10,6 +10,7 @@ import { EMPTY_QUIZ } from 'src/mocks/quiz.mock';
 export class QuizListService {
   private apiUrl = 'http://localhost:9428/api/quizzes';
   public quizzes$: BehaviorSubject<Quiz[]> = new BehaviorSubject<Quiz[]>([]);
+  private quizzes: Quiz[] = []
   public selectedEditQuiz$ = new BehaviorSubject<Quiz | null>(null);
 
   constructor(private http: HttpClient) {
@@ -19,16 +20,14 @@ export class QuizListService {
   public getQuizzes(): void {
     this.http.get<Quiz[]>(this.apiUrl).subscribe((quizzes: Quiz[]) => {
       console.log("Quizzes récupérés :", quizzes);
+      this.quizzes = quizzes;
       this.quizzes$.next(quizzes)
     });
   }
 
-  public getQuiz(quizId: number):Quiz{
-    try {
-      this.http.get<Quiz>(this.apiUrl + "/" + quizId).subscribe((quizFromServer: Quiz) => {
-        return quizFromServer;
-      })
-    } catch (err) { console.log(err) }
+  public getQuiz(quizId: number): Quiz {
+    let quiz = this.quizzes.find((quiz) => quiz.id === quizId)
+    if(quiz) return quiz;
     return EMPTY_QUIZ;
   }
 

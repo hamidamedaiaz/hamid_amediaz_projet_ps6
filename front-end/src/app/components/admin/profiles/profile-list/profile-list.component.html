@@ -16,7 +16,7 @@
         </svg>
       </button>
     </div>
-    
+
     <div class="modal-body">
       <div class="profile-avatar-upload">
         <div class="avatar-preview" [ngStyle]="{'background-image': getAvatarPreviewStyle()}">
@@ -32,23 +32,23 @@
           <input type="file" id="avatar-upload" accept="image/*" (change)="onAvatarSelected($event)" style="display:none;">
         </label>
       </div>
-      
+
       <div class="form-group">
         <label for="firstName">Prénom:</label>
         <input type="text" id="firstName" class="form-input" [(ngModel)]="currentProfile.name" placeholder="Prénom">
       </div>
-      
+
       <div class="form-group">
         <label for="lastName">Nom:</label>
         <input type="text" id="lastName" class="form-input" [(ngModel)]="currentProfile.lastName" placeholder="Nom">
       </div>
-      
+
       <div class="form-group">
         <label for="birthDate">Date de naissance:</label>
         <input type="date" id="birthDate" class="form-input" [(ngModel)]="currentProfile.birthDate">
       </div>
     </div>
-    
+
     <div class="modal-footer">
       <button class="cancel-btn" (click)="cancelProfileForm()">Annuler</button>
       <button class="save-btn" (click)="saveProfile()">Enregistrer</button>
@@ -92,14 +92,26 @@
 </section>
 
 
-<section *ngIf="currentPage==='home'">
-    <input type="text" id="search-bar" class="search-input" [(ngModel)]="searchQuery"
-        placeholder="Rechercher un thérapeute..." (click)="showProfileList()">
-    <section *ngIf="isProfileListActivated" class="profile-list-section">
-        <div class="profile-list-container" *ngFor="let profile of filteredProfiles()">
-            <app-profile-item [profile]="profile" [context]="context"
-                (profileSelected)="profileSelectedHandler(profile)">
-            </app-profile-item>
+<section *ngIf="currentPage === 'home'" class="home-search-container">
+  <input type="text" id="search-bar" class="search-input enhanced" [(ngModel)]="searchQuery" placeholder="Rechercher un accueilli..." (click)="showProfileList()"
+  />
+
+  <section *ngIf="isProfileListActivated" class="card-grid">
+    <div class="profile-card" *ngFor="let profile of filteredProfiles()" (click)="profileSelectedHandler(profile)">
+      <div class="profile-card-avatar">
+        <div *ngIf="profile.profilePicture && profile.profilePicture !== 'empty_path'">
+          <div class="profile-img" [ngStyle]="{'background-image': 'url(' + profile.profilePicture + ')'}"></div>
         </div>
-    </section>
+
+        <div *ngIf="profile.profilePicture && profile.profilePicture === 'empty_path'">
+          <div class="profile-initials">{{ getInitials(profile) }}</div>
+        </div>
+
+      </div>
+      <div class="profile-card-name">
+        {{ profile.name }} <br> {{ profile.lastName }}
+      </div>
+    </div>
+  </section>
 </section>
+

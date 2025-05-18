@@ -11,6 +11,8 @@ import { PlayerStatsProgressionComponent } from 'src/app/components/admin/admin_
 import { PlayerStatsQuizHistoryComponent } from 'src/app/components/admin/admin_statistics/player-stats/player-stats-quiz-history/player-stats-quiz-history.component';
 import { QUIZ_RESULT_EMPTY } from 'src/mocks/quiz-results.mock';
 import { QuizResultDetailsComponent } from '../quiz-result-details/quiz-result-details.component';
+import { GUEST_PROFILE } from 'src/mocks/profile-list.mock';
+import { StatsService } from 'src/services/stats.service';
 
 @Component({
   selector: 'app-player-stats-details',
@@ -18,13 +20,11 @@ import { QuizResultDetailsComponent } from '../quiz-result-details/quiz-result-d
   imports: [
     CommonModule,
     RouterLink,
-
     PlayerStatsHeaderComponent,
     PlayerStatsOverviewComponent,
     PlayerStatsTherapyMetricsComponent,
     QuizResultDetailsComponent,
     PlayerStatsProgressionComponent,
-
     PlayerStatsQuizHistoryComponent
   ],
 
@@ -32,8 +32,8 @@ import { QuizResultDetailsComponent } from '../quiz-result-details/quiz-result-d
   styleUrl: './player-stats-details.component.scss'
 })
 
-export class PlayerStatsDetailsComponent implements OnInit {
-  profile: Profile | null = null;
+export class PlayerStatsDetailsComponent { //implements OnInit {
+  profile: Profile = GUEST_PROFILE;
 
   totalGames: number = 0;
   bestScore: number = 0;
@@ -56,62 +56,68 @@ export class PlayerStatsDetailsComponent implements OnInit {
   selectedQuizId: number = -1;
 
 
-  @Input() profileId: number = 0;
+  private profileId: number = -1;
 
   constructor(
-    private route: ActivatedRoute,
     private router: Router,
     private profileService: ProfileService,
-    private quizResultService: QuizResultService
+    private quizResultService: QuizResultService,
+    private statsService: StatsService
   ) {
     this.isQuizSelected = false;
-  }
 
-  ngOnInit() {
-    if (this.profileId) {
-      this.loadProfileData();
-      this.statistics();
-    } else {
-      this.router.navigate(['/admin']);
-    }
-  }
+    this.statsService.profileId$.subscribe((profileId) => {
+      this.profileId = profileId
+    })
 
-  loadProfileData() {
-    this.profileService.profiles$.subscribe(profiles => {
-      this.profile = profiles.find(p => p.id === this.profileId) || null;
-      if (!this.profile) {
-        this.router.navigate(['/admin']);
-      }
-    });
-  }
+    this.quizResultService.results$.subscribe(() => {
+      this.quizResults = this.quizResultService.getQuizResultsByProfile(this.profileId);
+    })
 
-  statistics() {
-    const playerStats = this.quizResultService.getPlayerTotalStats(this.profileId);
-
-    this.totalGames = playerStats.totalGames;
-    this.bestScore = playerStats.bestScore;
-    this.averageScore = playerStats.averageScore;
-    this.averageTimePerQuestion = playerStats.averageTimePerQuestion;
-    this.totalHintsUsed = playerStats.totalHintsUsed;
-    this.averageTimePerQuestion = playerStats.averageTimePerQuestion;
-    this.correctAnswersPercent = playerStats.correctAnswersPercent;
-    this.incorrectAnswersPercent = playerStats.incorrectAnswersPercent;
-
-    this.loadMonthlyData();
-
-    this.quizResults = [QUIZ_RESULT_EMPTY]//this.quizResultService.getQuizHistoryForPlayer(this.profileId);
+    this.profileService.getProfile(this.profileId).subscribe((profile) => this.profile = profile);
   }
 
 
-  loadMonthlyData() {
-    this.setActiveTab(this.activeTab);
-  }
+  // ngOnInit() {
+  //   if (this.profileId) {
+  //     this.loadProfileData();
+  //     this.statistics();
+  //   } else {
+  //     this.router.navigate(['/admin']);
+  //   }
+  // }
 
-  getScoreColor(score: number): string {
-    if (score >= 70) return 'correct';
-    if (score >= 50) return 'warning';
-    return 'incorrect';
-  }
+  // loadProfileData() {
+  //   // this.profileService.profiles$.subscribe(profiles => {
+  //   //   console.log("profileId; ",this.profileId)
+  //   //   this.profile = profiles.find(p => p.id === this.profileId) || null;
+  //   //   if (!this.profile) {
+  //   //     this.router.navigate(['/admin']);
+  //   //   }
+  //   // });
+  // }
+
+  // statistics() {
+  //   const playerStats = this.quizResultService.getPlayerTotalStats(this.profileId);
+  //   this.totalGames = playerStats.totalGames;
+  //   this.bestScore = playerStats.bestScore;
+  //   this.averageScore = playerStats.averageScore;
+  //   this.averageTimePerQuestion = playerStats.averageTimePerQuestion;
+  //   this.totalHintsUsed = playerStats.totalHintsUsed;
+  //   this.averageTimePerQuestion = playerStats.averageTimePerQuestion;
+  //   this.correctAnswersPercent = playerStats.correctAnswersPercent;
+  //   this.incorrectAnswersPercent = playerStats.incorrectAnswersPercent;
+  //   this.loadMonthlyData();
+  //   this.quizResults = [QUIZ_RESULT_EMPTY]//this.quizResultService.getQuizHistoryForPlayer(this.profileId);
+  // }
+
+
+  // loadMonthlyData() {
+  //   this.setActiveTab(this.activeTab);
+  // }
+
+  getProfile() { return this.profile; }
+
 
   setActiveTab(tab: 'score' | 'hints' | 'time' | 'accuracy') {
     this.activeTab = tab;
@@ -147,14 +153,25 @@ export class PlayerStatsDetailsComponent implements OnInit {
   }
 
 
-  viewQuizDetails(quizId: number) {
+  viewQuizDetails(quizResultId: number) {
     this.isQuizSelected = true;
-    this.selectedQuizId = quizId
+    this.selectedQuizId = quizResultId
+    this.statsService.selectQuizResult(quizResultId);
   }
+
+  hideResultDetails() { this.isQuizSelected = false }
 
 
   navigateBack() {
     this.isQuizSelected = false;
     this.selectedQuizId = -1
   }
+
+  getScoreColor(score: number): string {
+    if (score >= 70) return 'correct';
+    if (score >= 50) return 'warning';
+    return 'incorrect';
+  }
+
+  getQuizResults() { return this.quizResults; }
 }

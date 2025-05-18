@@ -20,12 +20,14 @@ export class QuizResultInfoComponent {
 
   constructor(private computeStatisticService:ComputeStatisticService){}
   
-  getScore(){ console.log(this.computeStatisticService.getScore(this.quiz, this.questionResults)); return this.computeStatisticService.getScore(this.quiz, this.questionResults) }
+  getScore(){ console.log(this.computeStatisticService.getScore(this.questionResults)); return this.computeStatisticService.getScore(this.questionResults) }
 
   getTotalQuestions():number{ return this.quiz.questions.length; }
 
-  getPercentages(){
-    return this.computeStatisticService.getPercentages(this.getScore(), this.getTotalQuestions())
+  getPercentages(){ return this.computeStatisticService.getPercentages(this.getScore(), this.getTotalQuestions()) }
+  
+  getDate(){
+    return this.computeStatisticService.convertTimeStampToDate(this.date);
   }
 
   getAverageTimePerQuestions(){ return this.computeStatisticService.getAverageTime(this.questionResults); }

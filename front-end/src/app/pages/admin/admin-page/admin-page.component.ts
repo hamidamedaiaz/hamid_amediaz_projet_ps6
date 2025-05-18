@@ -9,11 +9,12 @@ import { Quiz } from "../../../../models/quiz.model";
 import { QuizDetailsComponent } from "../../../components/admin/admin_quizzes/quiz-details/quiz-details.component";
 import { Profile } from 'src/models/profile.model';
 import { CurrentPageService } from 'src/services/currentPage.service';
-import {SelectionListComponent} from "../../../components/admin/admin_statistics/selection-list/selection-list.component";
-import {StatsService} from "../../../../services/stats.service";
-import {QuizStatsComponent} from "../../../components/admin/admin_statistics/quiz-stats/quiz-stats.component";
-import {ActivatedRoute } from "@angular/router";
-import {PlayerStatsDetailsComponent} from "../player-stats-details/player-stats-details.component";
+import { SelectionListComponent } from "../../../components/admin/admin_statistics/selection-list/selection-list.component";
+import { StatsService } from "../../../../services/stats.service";
+import { QuizStatsComponent } from "../../../components/admin/admin_statistics/quiz-stats/quiz-stats.component";
+import { ActivatedRoute } from "@angular/router";
+import { PlayerStatsDetailsComponent } from "../player-stats-details/player-stats-details.component";
+import { QuizResultService } from 'src/services/quiz-result.service';
 //import {QuizSectionComponent} from "src/app/components/admin/admin_quizzes/q"
 //
 
@@ -32,7 +33,7 @@ import {PlayerStatsDetailsComponent} from "../player-stats-details/player-stats-
     QuizDetailsComponent,
     SelectionListComponent,
     QuizStatsComponent,
-    PlayerStatsDetailsComponent,
+    PlayerStatsDetailsComponent
   ],
 
   templateUrl: './admin-page.component.html',
@@ -43,7 +44,7 @@ export class AdminPageComponent implements OnInit {
   activeQuiz: Quiz | null = null;
   selectedProfile: Boolean = false;
   selectedQuizStat: Quiz | null = null;
-  selectedIdAcceuilliStats: number = 0;
+  selectedIdAcceuilliStats: number = -1;
   showStatsSubmenu: boolean = false;
 
   @Input()
@@ -52,11 +53,11 @@ export class AdminPageComponent implements OnInit {
   constructor(
     private quizService: QuizListService,
     private statsService: StatsService,
-    private cdr: ChangeDetectorRef,private currentPageService: CurrentPageService,
+    private cdr: ChangeDetectorRef, private currentPageService: CurrentPageService,
     private route: ActivatedRoute,
   ) {
     this.currentPageService.setCurrentPage("admin");
-   }
+  }
 
   ngOnInit() {
 
@@ -75,43 +76,16 @@ export class AdminPageComponent implements OnInit {
       }
     });
 
-    this.currentPageService.admin_navigation$.subscribe((val) =>{
+    this.currentPageService.admin_navigation$.subscribe((val) => {
       this.setSection(val);
     })
-
-    this.statsService.profileId$.subscribe((id) =>{
-      if(id !== null){
-        console.log("Demande stat sur acceuilli id = " + id);
-        this.setSection('home');
-      }
-    })
-
-    this.statsService.quizId$.subscribe((id) =>{
-      if(id !== null){
-        console.log("Demande stat sur quiz id = " + id);
-        // Pour l'instant on fait comme ça en attendant le SQL
-        for(const q of this.quizService.quizzes$.getValue()){
-          if(q.id == id){
-            this.selectedQuizStat = q;
-          }
-        }
-        this.setSection('quiz-stats');
-      }
-    })
-
-    this.statsService.profileId$.subscribe((id) =>{
-      if(id !== null){
-        console.log("Demande stat sur acceuilli id = " + id);
-        // Pour l'instant on fait comme ça en attendant le SQL
-        this.selectedIdAcceuilliStats = id;
-        this.setSection('acceuilli-stats');
-      }
-    })
-
   }
-  toggleStatsMenu() {
-    this.showStatsSubmenu = !this.showStatsSubmenu;
-  }
+
+  selectQuizStatistics() { this.setSection('quiz-stats'); }
+
+  selectProfileStatistics() { this.setSection('acceuilli-stats'); }
+
+  toggleStatsMenu() { this.showStatsSubmenu = !this.showStatsSubmenu; }
 
   setSection(section: string) {
     this.activeSection = section;
@@ -121,7 +95,12 @@ export class AdminPageComponent implements OnInit {
     }
   }
 
-  onProfileSelect(profile: Profile) {
+  onProfileStatsSelected(id: number) {
+    this.selectedIdAcceuilliStats = id;
+    this.statsService.selectProfile(id);
+  }
+
+  onProfileSelect() {
     this.selectedProfile = true;
   }
 

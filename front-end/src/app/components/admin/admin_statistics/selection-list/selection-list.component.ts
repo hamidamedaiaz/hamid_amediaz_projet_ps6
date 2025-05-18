@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {NgForOf, NgIf} from "@angular/common";
 import {Profile} from "../../../../../models/profile.model";
@@ -8,6 +8,7 @@ import {QuizListService} from "../../../../../services/quiz-list.service";
 import {Router} from "@angular/router";
 import {CurrentPageService} from "../../../../../services/currentPage.service";
 import {StatsService} from "../../../../../services/stats.service";
+import { QuizResultService } from 'src/services/quiz-result.service';
 
 @Component({
   selector: 'app-selection-list',
@@ -32,14 +33,15 @@ export class SelectionListComponent implements OnInit{
 
   @Input() context : string = "";
 
+  @Output() profile_selected: EventEmitter<number> = new EventEmitter<number>();
+  @Output() quiz_selected: EventEmitter<boolean> = new EventEmitter<boolean>();
 
 
   constructor(
     private profileService: ProfileService,
     private quizService: QuizListService,
     private statService: StatsService,
-    private router: Router,
-    private currentPageService: CurrentPageService,
+    private quizResultService:QuizResultService, // Laisser le quizResultService pour qu'il charge les données # Sparadra 
   ) {}
 
 
@@ -101,11 +103,14 @@ export class SelectionListComponent implements OnInit{
   }
 
 
-  getAcceuilliStat(id: number){
+  getProfileStats(id: number){
+    this.profile_selected.emit(id);
+    console.log("profile selected, ", id);
     this.statService.selectProfile(id);
   }
 
   getQuizStat(id : number){
+    this.quiz_selected.emit(true);
     this.statService.selectQuiz(id);
   }
 

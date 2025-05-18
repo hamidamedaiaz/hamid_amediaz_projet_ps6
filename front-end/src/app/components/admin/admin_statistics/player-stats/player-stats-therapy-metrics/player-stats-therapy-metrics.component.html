@@ -8,7 +8,7 @@
 
         </div>
         <div class="stat-details">
-          <span class="stat-value">{{ totalHintsUsed }}</span>
+          <span class="stat-value">{{ getTotalHints() }}</span>
           <span class="stat-label">Indices utilisés en moyenne</span>
           <div class="stat-trend positive">
             <span>Tendance: -0.5 par rapport au mois dernier</span>
@@ -22,7 +22,7 @@
           <i class="fa fa-clock-o"></i>
         </div>
         <div class="stat-details">
-          <span class="stat-value">{{ avgTimeBetweenAnswers.toFixed(1) }}s</span>
+          <span class="stat-value">{{ getAverageTimeSpent().toFixed(1) }}s</span>
           <span class="stat-label">Temps moyen entre réponses</span>
           <div class="stat-trend negative">
             <span>Tendance: +2.3s par rapport au mois dernier</span>
@@ -36,7 +36,7 @@
           <i class="fa fa-check"></i>
         </div>
         <div class="stat-details">
-          <span class="stat-value">{{ correctAnswersPercent }}%</span>
+          <span class="stat-value">{{ getCorrectAnswerPercent() }}%</span>
           <span class="stat-label">Réponses correctes</span>
           <div class="stat-trend positive">
             <span>Tendance: +5% par rapport au mois dernier</span>
@@ -50,7 +50,7 @@
           <i class="fa fa-times"></i>
         </div>
         <div class="stat-details">
-          <span class="stat-value">{{ incorrectAnswersPercent }}%</span>
+          <span class="stat-value">{{ getIncorrectAnswerPercent() }}%</span>
           <span class="stat-label">Réponses incorrectes</span>
           <div class="stat-trend positive">
             <span>Tendance: -5% par rapport au mois dernier</span>

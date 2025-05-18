@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, catchError, Observable, of } from "rxjs";
 import { GUEST_PROFILE, PROFILE_LIST } from "../mocks/profile-list.mock";
 import { Profile } from "src/models/profile.model";
 import { LocalStorageService } from "./localstorage.service";
@@ -27,51 +27,51 @@ export class ProfileService {
 
 
 
-  public selectProfileForEdition(profileToEdit:Profile){
-      this.profileToEdit$.next(profileToEdit);
+  public selectProfileForEdition(profileToEdit: Profile) {
+    this.profileToEdit$.next(profileToEdit);
   }
 
-  public getSelectedProfileForEdition(){ 
-    if(this.profileToEdit$) return this.profileToEdit$;
+  public getSelectedProfileForEdition() {
+    if (this.profileToEdit$) return this.profileToEdit$;
     return null;
   }
 
 
   public async createProfile(
-  name: string, 
-  lastName: string, 
-  profilePicture: string = "empty_path",
-  birthDate: string = ""
-): Promise<void> {
-  try {
-    const newProfile: Profile = {
-      id: this.generateNewId(),
-      name,
-      lastName,
-      role: 'user',
-      SHOW_POP_UP_TIMER: 15000,
-      HINT_DISPLAY_TIME_OUT_DURATION: 5000,
-      REMOVE_WRONG_ANSWER_INTERVAL: 10000,
-      NUMBER_OF_ANSWERS_DISPLAYED: 4,
-      SHOW_HINT_TIMER: 5,
-      NUMBER_OF_HINTS_DISPLAYED: 5,
-      profilePicture: profilePicture,
-      birthDate: birthDate
-    };
+    name: string,
+    lastName: string,
+    profilePicture: string = "empty_path",
+    birthDate: string = ""
+  ): Promise<void> {
+    try {
+      const newProfile: Profile = {
+        id: this.generateNewId(),
+        name,
+        lastName,
+        role: 'user',
+        SHOW_POP_UP_TIMER: 15000,
+        HINT_DISPLAY_TIME_OUT_DURATION: 5000,
+        REMOVE_WRONG_ANSWER_INTERVAL: 10000,
+        NUMBER_OF_ANSWERS_DISPLAYED: 4,
+        SHOW_HINT_TIMER: 5,
+        NUMBER_OF_HINTS_DISPLAYED: 5,
+        profilePicture: profilePicture,
+        birthDate: birthDate
+      };
 
-    this.http.post(this.apiUrl, newProfile).subscribe({
-      next: () => {
-        console.log(`New profile created: ${name} ${lastName} with ID: ${newProfile.id}`);
-        this.getProfileList();
-      },
-      error: (err) => {
-        console.error('Failed to create profile', err);
-      }
-    });
-  } catch (err) {
-    console.error('Failed to create profile', err);
+      this.http.post(this.apiUrl, newProfile).subscribe({
+        next: () => {
+          console.log(`New profile created: ${name} ${lastName} with ID: ${newProfile.id}`);
+          this.getProfileList();
+        },
+        error: (err) => {
+          console.error('Failed to create profile', err);
+        }
+      });
+    } catch (err) {
+      console.error('Failed to create profile', err);
+    }
   }
-}
 
 
  getProfileList() {
@@ -88,15 +88,19 @@ export class ProfileService {
   });
 }
 
-  getProfile(profileId:number){
-    try{
-      const url = this.apiUrl + "/" + profileId;
-      this.http.get<Profile>(url).subscribe((profileFromServer) =>{
-        return profileFromServer
+// On return un Observable pour gérer le cas ou la base de donnée met du tps à retourner le profile 
+// Comme await/async
+// Implique que l'on se subscribe à cette donnée pour obtenir ce contenu
+  getProfile(profileId: number): Observable<Profile> {
+    const url = this.apiUrl + "/" + profileId;
+    return this.http.get<Profile>(url).pipe(
+      catchError((err) => {
+        console.log("Error - Something went wrong when trying to retrieve account ID:", profileId, err);
+        return of(GUEST_PROFILE);
       })
-    }catch(err) { console.log(err) }
-    return GUEST_PROFILE;
+    );
   }
+
 
   public deleteProfile(profileId: number): void {
     try {
@@ -130,18 +134,18 @@ export class ProfileService {
           console.log(`Failed to update profile with ID: ${updatedProfile.id} `, err);
         }
       });
-    } catch(err) { console.log(`Failed to update profile with ID: ${updatedProfile.id} `, err); }
+    } catch (err) { console.log(`Failed to update profile with ID: ${updatedProfile.id} `, err); }
 
-}
+  }
 
 
 
 
   private generateNewId(): number {
-  return this.profiles.length > 0
-    ? Math.max(...this.profiles.map(profile => profile.id)) + 1
-    : 1;
-}
+    return this.profiles.length > 0
+      ? Math.max(...this.profiles.map(profile => profile.id)) + 1
+      : 1;
+  }
 
 
 }

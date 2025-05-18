@@ -54,3 +54,29 @@
 .delete-user-btn:hover {
   background-color: $primary-btn-delete-hover;
 }
+
+.profile-picture-container {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.profile-picture {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.initials {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: $secondary-blue-bg;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+}
+
