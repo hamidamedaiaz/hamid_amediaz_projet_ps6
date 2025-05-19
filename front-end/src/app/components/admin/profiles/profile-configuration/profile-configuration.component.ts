@@ -77,6 +77,7 @@ public getAvatarPreviewStyle() {
   }
 
   saveConfiguration() {
+    console.log("heho ", this.currentProfileCopy)
     this.profileService.updateProfile(this.currentProfileCopy!);
     this.closeConfiguration();
   }

@@ -53,7 +53,7 @@ export class ProfileService {
         HINT_DISPLAY_TIME_OUT_DURATION: 5000,
         REMOVE_WRONG_ANSWER_INTERVAL: 10000,
         NUMBER_OF_ANSWERS_DISPLAYED: 4,
-        SHOW_HINT_TIMER: 5,
+        SHOW_HINT_TIMER: 5000,
         NUMBER_OF_HINTS_DISPLAYED: 5,
         profilePicture: profilePicture,
         birthDate: birthDate

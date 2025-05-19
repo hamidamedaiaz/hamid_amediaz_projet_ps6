@@ -26,7 +26,7 @@ export class SelectionListComponent implements OnInit{
   profiles: Profile[] = [];
   quizzes: Quiz[] = [];
   selectedProfile: Profile | null = null;
-  ITEMS_PER_PAGE = 4;
+  ITEMS_PER_PAGE = 10;
   currentPage = 1;
   searchQuery = '';
   numberOfPages: number = 1;
@@ -41,7 +41,7 @@ export class SelectionListComponent implements OnInit{
     private profileService: ProfileService,
     private quizService: QuizListService,
     private statService: StatsService,
-    private quizResultService:QuizResultService, // Laisser le quizResultService pour qu'il charge les données # Sparadra 
+    private quizResultService:QuizResultService, // Laisser le quizResultService pour qu'il charge les données # Sparadra
   ) {}
 
 

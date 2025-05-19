@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from "@angular/common";
 import { QuizItemComponent } from "../quiz-item/quiz-item.component";
 import { FormsModule } from '@angular/forms';
@@ -27,6 +27,9 @@ export class QuizAppComponent {
   @Input()
   context: String | undefined;
 
+  @Output()
+  quiz_launched:EventEmitter<boolean> = new EventEmitter<boolean>();
+
   public showDeleteConfirm: Boolean = false;
 
   public quizToDelete: Quiz | undefined;
@@ -47,6 +50,7 @@ export class QuizAppComponent {
 
   launchMultiGame(quiz: Quiz) {
     console.log("Launching this quiz in multiplayer mode ", quiz);
+    this.quiz_launched.emit(true);
     this.quizService.setQuiz(quiz);
     this.router.navigate(['/multiplayer-game-setup'])
   }
@@ -78,10 +82,6 @@ export class QuizAppComponent {
   cancelDelete() {
     this.showDeleteConfirm = false;
     console.log("Suppresson canceled");
-  }
-
-
-  requestEditQuiz() {
   }
 
 }

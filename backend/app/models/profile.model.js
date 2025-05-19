@@ -7,7 +7,6 @@ module.exports = new BaseModel('Profile', {
     lastName: Joi.string().required(),
     role:Joi.string().required(),
     profilePicture:Joi.string().required(),
-    birthDate: Joi.string().allow('').required(),
 
     HINT_DISPLAY_TIME_OUT_DURATION:  Joi.number().required(),
     SHOW_POP_UP_TIMER:  Joi.number().required(),

@@ -3,6 +3,7 @@ import { Gamemode } from './gamemode.model';
 
 export interface QuizResult {
   id: number;
+  sessionId:number;
   quizId: number;
   profileId:number
   dateDebut: number;

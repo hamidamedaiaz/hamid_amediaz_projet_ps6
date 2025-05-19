@@ -9,20 +9,24 @@ import { Router } from "@angular/router";
 import { GamemodeService } from "./gamemode.service";
 import { EMPTY_QUIZ } from "src/mocks/quiz.mock";
 import { QuizConfigurationService } from "./quizConfiguration.service";
+import { RecordResultService } from "./record-result.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuizService {
-  public quiz: Quiz | null = null;
+
+  public quiz: Quiz = EMPTY_QUIZ;
+  public sessionId: number = -1;
   public question: Question | undefined
   public questionId: number = 0;
   private givenCorrectAnswers: Answer[] = [];
+  public isQuizRunning = false;
+
   private readonly QUIZ_KEY = 'current_quiz';
   private readonly GIVEN_ANSWERS_KEY = 'current_score';
   private readonly QUESTION_ID_KEY = '0';
   private readonly IS_QUIZ_RUNNING_KEY = "is_quiz_running"
-  public isQuizRunning = false;
 
   public question$: BehaviorSubject<Question> = new BehaviorSubject<Question>(EMPTY_QUESTION);
   public quiz$: BehaviorSubject<Quiz> = new BehaviorSubject<Quiz>(EMPTY_QUIZ);
@@ -30,7 +34,8 @@ export class QuizService {
   constructor(private localStorageService: LocalStorageService,
     private router: Router,
     private gamemodeService: GamemodeService,
-    private quizConfigurationService: QuizConfigurationService) {
+    private quizConfigurationService: QuizConfigurationService,
+    private recordResultService: RecordResultService) {
 
     this.loadFromStorage();
     this.question = this.quiz?.questions?.[this.questionId];
@@ -65,6 +70,11 @@ export class QuizService {
       this.localStorageService.removeItem(this.GIVEN_ANSWERS_KEY);
       this.localStorageService.storeItem(this.GIVEN_ANSWERS_KEY, JSON.stringify(this.givenCorrectAnswers));
     }
+  }
+
+  public getQuizId(): number {
+    if (this.quiz) return this.quiz.id;
+    return -1;
   }
 
   public setQuiz(quiz: Quiz) {
@@ -108,11 +118,8 @@ export class QuizService {
     return this.givenCorrectAnswers.length;
   }
 
-  public getQuestions(): Question[] | null {
-    if (this.quiz && this.quiz.questions) {
-      return this.quiz.questions;
-    }
-    return null;
+  public getQuestions(): Question[] {
+    return this.quiz.questions;
   }
 
   public getNumberOfQuestions() {
@@ -141,8 +148,10 @@ export class QuizService {
       if (this.questionId >= this.quiz.questions.length - 1) {
         this.isQuizRunning = false;
         this.localStorageService.storeItem(this.IS_QUIZ_RUNNING_KEY, JSON.stringify(this.isQuizRunning));
-        console.log("Next Question - Gamemode: ",this.gamemodeService.getCurrentGamemode().name)
+        console.log("Next Question - Gamemode: ", this.gamemodeService.getCurrentGamemode().name)
         if (this.gamemodeService.getCurrentGamemode().id === 0) {
+          this.recordResultService.stopRecording();
+          console.log(this.recordResultService.getQuizResult())
           this.router.navigate(["/quiz-scoreboard"]);
         } else if (this.gamemodeService.getCurrentGamemode().id === 1) {
           this.router.navigate(['/quiz-multiplayer-scoreboard']);
@@ -162,6 +171,7 @@ export class QuizService {
   }
 
   public startQuiz() {
+
     if (!this.quiz) {
       console.error('Impossible de démarrer: quiz non défini');
       this.router.navigate(['/']);
@@ -169,6 +179,11 @@ export class QuizService {
     }
 
     this.resetCurrentQuiz();
+
+    this.recordResultService.setQuiz(this.quiz);
+
+    this.recordResultService.startRecording()
+
     this.quiz = this.quizConfigurationService.applyProfileConfiguration(this.quiz);
 
 

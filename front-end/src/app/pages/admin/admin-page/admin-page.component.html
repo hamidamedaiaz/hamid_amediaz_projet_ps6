@@ -39,7 +39,7 @@
 
     <main class="content">
       <div *ngIf="activeSection === 'home'">
-        <span class="home-page-title">Octave - Admin</span>
+        <span class="home-page-title">Octave - Panel de Gestion</span>
 
         <p id="subText">Utilisez la barre latérale pour naviguer</p>
       </div>
@@ -61,7 +61,7 @@
 
       <div *ngIf="activeSection === 'quiz'" class="select-quiz-container">
         <span class="select-quiz-title">Selectionner un quiz</span>
-        <app-quiz-app [context]="'admin'" ></app-quiz-app>
+        <app-quiz-app [context]="'admin'" (quiz_launched)="setSection('quiz')" ></app-quiz-app>
       </div>
 
       <div *ngIf="activeSection === 'acceuilli'" class="acceuilli-section">

@@ -15,6 +15,7 @@ import { MusicControlComponent } from '../music-control/music-control.component'
 import { QuizQuestionHeaderComponent } from '../quiz-question-header/quiz-question-header.component';
 import { QuizQuestionPopUpComponent } from '../quiz-question-pop-up/quiz-question-pop-up.component';
 import { QuizAnswersComponent } from '../quiz-answers/quiz-answers.component';
+import { RecordResultService } from 'src/services/record-result.service';
 
 
 @Component({
@@ -47,7 +48,6 @@ export class QuizQuestionComponent {
 
   public showQuestionPopUp: Boolean = false;
 
-
   private CORRECT_ANSWER_DELAY = 1500;
 
   private SHOW_POP_UP_TIMER = 10000;
@@ -60,10 +60,15 @@ export class QuizQuestionComponent {
 
   private GIVEN_ANSWERS_COUNTER: number = 5;
 
+  private startTimeDate: number = -1;
+
+  private endTimeDate: number = -1;
+
   constructor(private router: Router,
     private currentProfileService: CurrentProfileService,
     private quizService: QuizService,
-    private gamemodeService: GamemodeService) {
+    private gamemodeService: GamemodeService,
+    private recordResultService: RecordResultService) {
 
     this.currentProfileService.current_profile$.subscribe((profile) => {
       this.SHOW_POP_UP_TIMER = profile.SHOW_POP_UP_TIMER;
@@ -71,6 +76,8 @@ export class QuizQuestionComponent {
 
     this.quizService.question$.subscribe((question) => {
       this.question = question;
+
+      this.startTimeDate = Date.now();
 
 
       if (this.getRole() === 'user') {
@@ -146,6 +153,7 @@ export class QuizQuestionComponent {
   public submitCorrectAnswer() {
     if (this.gamemodeService.getCurrentGamemode().id === 0) {
       this.showCorrectEffect = true;
+
       setTimeout(() => {
         this.showCorrectEffect = false;
       }, this.CORRECT_ANSWER_DELAY);
@@ -207,4 +215,6 @@ export class QuizQuestionComponent {
   public isQuizRunning() {
     return this.quizService.isQuizRunning;
   }
+
+  private recordQuestion() { }
 }

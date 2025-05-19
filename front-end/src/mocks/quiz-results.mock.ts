@@ -5,6 +5,7 @@ import { GAMEMODE_SOLO } from "./gamemode-list.mock"
 
 export const QUIZ_RESULT_EMPTY :QuizResult = {
     id: 0,
+    sessionId:0,
     quizId: QUIZ_EXAMPLE.id,
     profileId: 1,
     dateDebut: Date.now(),
@@ -15,6 +16,7 @@ export const QUIZ_RESULT_EMPTY :QuizResult = {
 
 export const QUIZ_RESULT_EMPTY2: QuizResult = {
     id: 1,
+    sessionId:1,
     quizId: QUIZ_EXAMPLE2.id,
     profileId: 2,
     dateDebut: Date.now() +1,

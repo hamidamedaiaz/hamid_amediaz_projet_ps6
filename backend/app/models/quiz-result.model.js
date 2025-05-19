@@ -5,6 +5,7 @@ const GamemodeModel = require('./gamemode.model.js')
 
 module.exports = new BaseModel('Question', {
   id: Joi.number().required(),
+  sessionId: Joi.number().required(),
   quizId: Joi.number().required(),
   profileId: Joi.number().required(),
   dateDebut: Joi.number().required(),

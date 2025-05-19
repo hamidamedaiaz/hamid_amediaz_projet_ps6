@@ -1,7 +1,6 @@
 const { Router } = require('express')
 const Quizzes = require('../../models/quiz.model')
 
-
 const router = new Router()
 
 router.get('/', (req, res) => {
