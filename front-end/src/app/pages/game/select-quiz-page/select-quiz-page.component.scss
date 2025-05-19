@@ -1,59 +1,66 @@
 @import '/src/app/color-palette.scss';
 
 .select-quiz-section{
-   background-color: $primary-white-bg;
-    height: 100vh;
-    width: 100%;
-    color: $primary-black-text;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 3vh;
+  background-color: $primary-white-bg;
+  height: 100vh;
+  width: 100%;
+  color: $primary-black-text;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3vh;
 }
 
 .select-quiz-title{
-    font-size: 3vw;
-    font-family: Arial, Helvetica, sans-serif;
-    color:$primary-black-text;
-    font-weight: bold;
-    margin-top: 5vh;
+  position:absolute;
+  top: calc(15% - min(6vh,6vw));
+  font-size: min(6vh,6vw);
+  font-family: Arial, Helvetica, sans-serif;
+  color:$primary-black-text;
+  font-weight: bold;
 }
 
 .button{
-    padding: 10px 20px;
-    width: 8rem;
-    height: 3rem;
-    background-color: $third-blue-btn;
-    color: $primary-btn-white-text;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    font-size: 20px;
-    font-weight: bold;
+  width: 16vh;
+  height: 6vh;
+  padding: 1.2vh 2.4vh;
+  background-color: $third-blue-btn;
+  color: $primary-btn-white-text;
+  border: none;
+  border-radius: 1vh;
+  font-size: 1.8vh;
+  font-weight: 600;
+  font-family: 'Arial', sans-serif;
+  cursor: pointer;
+  letter-spacing: 0.05vh;
+  transition: all 0.3s ease-in-out;
+  box-shadow: $primary-box-shadow;
 }
 
 .button:hover{
-    background: $secondary-btn-blue-hover;
+  background: $secondary-btn-blue-hover;
+  transform: translateY(-0.3vh);
+  box-shadow: $primary-box-shadow;
 }
 
-
 #leave-btn{
-    position: fixed;
-    left: 5%;
-    bottom: 5%;
-    z-index: 15;
+  position: absolute;
+  left: 5vh;
+  bottom: 5vh;
+  z-index: 15;
 }
 
 .select-quiz-container{
-    //background-color: $secondary-blue-bg;
-    padding: 0px 2vw 3vh 2vw;
-    border-radius: 10px;
-    //box-shadow: $primary-box-shadow;
+  width: 90%;
+  height: 85%;
+  position: absolute;
+  padding: 0vh 2vw 3vh 2vw;
+  border-radius: 1vh;
+  top: 15%;
 }
 
 .wave{
-    position: fixed;
-    bottom: 0px;
-    transform: translateY(5vh);
+  position: fixed;
+  bottom: 0vh;
+  transform: translateY(5vh);
 }

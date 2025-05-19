@@ -91,7 +91,59 @@ export const PROFILE_LIST: Profile[] = [
         SHOW_HINT_TIMER: 5,
         NUMBER_OF_HINTS_DISPLAYED: 5,
         profilePicture: "empty_path"
-    }
+    },
+  {
+    id: 0,
+    name: 'Admin',
+    lastName: 'Root',
+    role: 'admin',
+    HINT_DISPLAY_TIME_OUT_DURATION: 0,
+    SHOW_POP_UP_TIMER: 99999999999,
+    NUMBER_OF_ANSWERS_DISPLAYED: 10,
+    REMOVE_WRONG_ANSWER_INTERVAL: 999999999,
+    SHOW_HINT_TIMER: 5,
+    NUMBER_OF_HINTS_DISPLAYED: 9999,
+    profilePicture: "empty_path"
+  },
+  {
+    id: 0,
+    name: 'Admin',
+    lastName: 'Root',
+    role: 'admin',
+    HINT_DISPLAY_TIME_OUT_DURATION: 0,
+    SHOW_POP_UP_TIMER: 99999999999,
+    NUMBER_OF_ANSWERS_DISPLAYED: 10,
+    REMOVE_WRONG_ANSWER_INTERVAL: 999999999,
+    SHOW_HINT_TIMER: 5,
+    NUMBER_OF_HINTS_DISPLAYED: 9999,
+    profilePicture: "empty_path"
+  },
+  {
+    id: 0,
+    name: 'Admin',
+    lastName: 'Root',
+    role: 'admin',
+    HINT_DISPLAY_TIME_OUT_DURATION: 0,
+    SHOW_POP_UP_TIMER: 99999999999,
+    NUMBER_OF_ANSWERS_DISPLAYED: 10,
+    REMOVE_WRONG_ANSWER_INTERVAL: 999999999,
+    SHOW_HINT_TIMER: 5,
+    NUMBER_OF_HINTS_DISPLAYED: 9999,
+    profilePicture: "empty_path"
+  },
+  {
+    id: 0,
+    name: 'Admin',
+    lastName: 'Root',
+    role: 'admin',
+    HINT_DISPLAY_TIME_OUT_DURATION: 0,
+    SHOW_POP_UP_TIMER: 99999999999,
+    NUMBER_OF_ANSWERS_DISPLAYED: 10,
+    REMOVE_WRONG_ANSWER_INTERVAL: 999999999,
+    SHOW_HINT_TIMER: 5,
+    NUMBER_OF_HINTS_DISPLAYED: 9999,
+    profilePicture: "empty_path"
+  },
 ]
 
 export const GUEST_PROFILE: Profile = {

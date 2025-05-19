@@ -24,7 +24,7 @@ export class MultiPlayerGameService {
 
   private quiz:Quiz | null = null;
 
-  constructor(private localStorageService:LocalStorageService, private quizService:QuizService) { 
+  constructor(private localStorageService:LocalStorageService, private quizService:QuizService) {
     this.loadFromStorage();
   }
 
@@ -68,5 +68,5 @@ export class MultiPlayerGameService {
 
   public selectQuiz(quiz:Quiz){
     this.quiz = quiz;
-  }  
+  }
 }

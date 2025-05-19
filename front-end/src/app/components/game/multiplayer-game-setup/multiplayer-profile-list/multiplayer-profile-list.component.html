@@ -3,7 +3,7 @@
         placeholder="Rechercher un thérapeute...">
     <section class="profile-list-section setup">
         <div class="profile-list-container" *ngFor="let player of filteredPlayers()">
-            <app-profile-item [profile]="player" [context]="'multi'" (delete_profile)="removePlayer(player)">
+            <app-profile-item [profile]="player" [context]="'multi'" (delete_profile)="removePlayer(player)" class="item">
             </app-profile-item>
         </div>
     </section>

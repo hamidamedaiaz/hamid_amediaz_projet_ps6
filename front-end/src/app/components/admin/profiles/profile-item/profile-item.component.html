@@ -1,17 +1,11 @@
-<div *ngIf="currentPage==='home' || currentPage==='admin' && profile" class="result-item" (click)="selectProfile()" >
+<div *ngIf="profile" class="result-item" (click)="selectProfile()" >
 
   <div class="profile-picture-container">
-    <img [src]="profile?.profilePicture" class="profile-picture" *ngIf="profile?.profilePicture !== 'empty_path'">
-    <div class="profile-picture initials" *ngIf="profile?.profilePicture === 'empty_path'">
+    <img [src]="profile.profilePicture" class="profile-picture" *ngIf="profile.profilePicture !== 'empty_path'">
+    <div class="profile-picture initials" *ngIf="profile.profilePicture === 'empty_path'">
       {{ getInitials() }}
     </div>
   </div>
-  <div class="profile-name">{{profile?.name }} {{ profile?.lastName }}</div>
+  <div class="profile-name">{{profile.name }} {{ profile.lastName }}</div>
+  <div class="delete-user-btn" (click)="deletePlayer()" *ngIf="context === 'multi'">Retirer</div>
 </div>
-
-<section class="profile-item-section"  *ngIf="context==='multi'">
-    <div class="result-item multi">
-        {{profile?.name }} {{ profile?.lastName }}
-    </div>
-    <button *ngIf="getRole() === 'Admin'" class="delete-user-btn" (click)="deletePlayer()">Supprimer</button>
-</section>

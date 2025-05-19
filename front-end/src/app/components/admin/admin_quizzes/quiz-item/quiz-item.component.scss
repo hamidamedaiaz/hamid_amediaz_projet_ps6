@@ -2,28 +2,32 @@
 
 .header-card-section{
   display: flex;
-  gap: 10px;
+  gap: 1vh;
   align-items: center;
   height: 50%;
 }
 
 .quiz-item {
-  width: 20vw;
-  height: 15vh;
-  padding: 20px;
-  border-radius: 5px;
+  width: 50vh;
+  height: 20vh;
+  padding: 3vh;
+  border-radius: 1.5vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 10px;
+  align-items: center;
+  gap: 2vh;
   border: $primary-border-white;
   background-color: $secondary-white-bg;
   transition: all 0.2s ease-in-out;
+  box-shadow: $primary-box-shadow;
 }
 
 .quiz-item-title{
-  margin: 0px;
-  width: 70%;
+  margin: 0vh;
+  width: 100%;
+  text-align: center;
+  font-size: 4vh;
   font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -34,8 +38,8 @@
 .button{
   border: none;
   background: none;
-  padding: 5px;
-  border-radius: 5px;
+  padding: 1vh;
+  border-radius: 1vh;
 }
 
 
@@ -48,11 +52,12 @@
   background-color: $secondary-blue-bg;
   border: none;
   color: $primary-white-text;
-  padding: 10px;
+  padding: 1vh 8vh;
   transition: background-color 0.2s ease-in-out;
-  border-radius: 10px;
-  font-size: 17px;
-  height: 40%;
+  border-radius: 1vh;
+  font-size: 3vh;
+  font-weight: bold;
+  height: 7vh;
 }
 
 .launch-game-btn:hover{

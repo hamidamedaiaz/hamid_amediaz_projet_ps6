@@ -1,6 +1,6 @@
 <div class="global-question-container" [ngClass]="{'correct-flash': showCorrectEffect}">
     <div class="question-left-side">
-        <div [ngClass]="getRole() === 'admin' ? 'question-admin-container': ''">
+        <div class="game-section" [ngClass]="getRole() === 'admin' ? 'question-admin-container': ''">
             <div class="button-section" *ngIf="getGamemode().id === 0 || getRole() === 'admin'">
                 <app-music-control [volume]="getVolume()" [audio_path]="getAudioPath()"></app-music-control>
             </div>
@@ -19,6 +19,6 @@
         class="next-question-btn button">Question suivante</button>
     <button *ngIf="(getGamemode().id === 0 || getRole() ==='admin') && isQuizRunning()" (click)="previousQuestion()"
         class="previous-question-btn button">Question précédente</button>
-        
+
     <app-quiz-question-pop-up *ngIf="showQuestionPopUp" (cancel_pop_pup)="CancelPopPup()" (continue_pop_pup)="nextQuestion()"></app-quiz-question-pop-up>
 </div>

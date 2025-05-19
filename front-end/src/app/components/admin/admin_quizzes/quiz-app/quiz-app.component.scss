@@ -11,6 +11,8 @@
 
 .quiz-list {
   display: flex;
+  align-items: center; /* Centre tout horizontalement */
+  justify-content: center;
   flex-wrap: wrap;
   gap: 20px;
   width: 100%;
@@ -18,13 +20,12 @@
 }
 
 .search-bar {
-  width: 100%;
-  max-width: 600px;
-  padding: 10px;
-  margin:5vh;
+  width: min(90vh,80vw);
+  padding: 1vh;
+  margin: 5vh;
   border: $primary-border-white;
-  border-radius: 8px;
-  font-size: 16px;
+  border-radius: 1vh;
+  font-size: 2vh;
 }
 
 .solo-selection-quiz-item:hover{
