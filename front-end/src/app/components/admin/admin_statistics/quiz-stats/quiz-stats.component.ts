@@ -6,6 +6,9 @@ import { CurrentPageService } from "src/services/currentPage.service";
 import { EMPTY_QUIZ } from 'src/mocks/quiz.mock';
 import { StatsService } from 'src/services/stats.service';
 import { QuizListService } from 'src/services/quiz-list.service';
+import { ComputeStatisticService } from 'src/services/computeStatistic.service';
+import { QuizResultService } from 'src/services/quiz-result.service';
+import { QuizResult } from 'src/models/quiz-result.model';
 
 Chart.register(...registerables);
 
@@ -30,10 +33,11 @@ export class QuizStatsComponent {
   private quiz: Quiz = EMPTY_QUIZ;
   private quizId: number = this.quiz.id;
 
-  totalPlays = Math.floor(Math.random() * 1000);
-  averageTime = Math.floor(Math.random() * 60) + 20;
-  averageHints = Math.floor(Math.random() * 4);
-  averageAttempts = Math.floor(Math.random() * 3) + 1;
+  totalPlays = 0 ;
+  averageTime = 0 ; 
+  averageHints = 0 ; 
+  averageAttempts = 0 ;
+  quizResults:QuizResult[] =  [];
 
   questionsStats: QuestionStat[] = [];
   selectedIndex: number = 0;
@@ -44,12 +48,23 @@ export class QuizStatsComponent {
   @ViewChild('groupChart') groupChartRef!: ElementRef<HTMLCanvasElement>;
   private chart!: Chart;
 
-  constructor(private pageService: CurrentPageService, private statsService: StatsService, private quizListService: QuizListService) {
+  constructor(private pageService: CurrentPageService, 
+              private statsService: StatsService, 
+              private quizListService: QuizListService,
+              private computeStatisticService: ComputeStatisticService,
+              private quizResultService: QuizResultService) {
     this.statsService.quizId$.subscribe((quizId) => {
       this.quizId = quizId;
     });
 
     this.quiz = this.quizListService.getQuiz(this.quizId)
+    this.quizResults = this.quizResultService.getQuizResultsByQuiz(this.quizId);
+
+    this.totalPlays = this.computeStatisticService.getNumberOfPlays(this.quizResults);
+    this.averageTime = this.computeStatisticService.getAverageTotalTimeSpent(this.quizResults);
+    this.averageHints = this.computeStatisticService.getAverageTotalHintsUsed(this.quizResults);
+    this.averageAttempts = this.computeStatisticService.getAllAverageAttempts(this.quizResults)
+
     this.selectedIndex = 0;
     this.loadQuestions();
     this.renderChart();
@@ -58,6 +73,7 @@ export class QuizStatsComponent {
         this.renderChart();
       }
     });
+
 
   }
 
@@ -89,6 +105,7 @@ export class QuizStatsComponent {
         arr[0] += diff;
         return arr;
       };
+
       first = fix(first);
       second = fix(second);
       third = fix(third);
@@ -99,8 +116,8 @@ export class QuizStatsComponent {
         pctFirst: first,
         pctSecond: second,
         pctThird: third,
-        avgTime: Math.floor(Math.random() * 30) + 5,
-        hintsUsed: Math.floor(Math.random() * 4)
+        avgTime: 0 ,//this.computeStatisticService(),
+        hintsUsed: 0 //this.computeStatisticService
       };
 
     });

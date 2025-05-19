@@ -44,5 +44,51 @@
       "id": 0,
       "name": "Seul"
     }
+  },
+  {
+    "id": 1747602792557,
+    "quizId": 1747172294366,
+    "profileId": 1,
+    "dateDebut": 1715636224365,
+    "dateFin": 1747172224366,
+    "questionResults": [
+      {
+        "id": 0,
+        "quizId": 1747172294366,
+        "questionId": 101,
+        "answerIds": [
+          2,
+          4,
+          1
+        ],
+        "timeSpent": 15,
+        "numberOfHintsUsed": 1
+      },
+      {
+        "id": 1,
+        "quizId": 1747172294366,
+        "questionId": 102,
+        "answerIds": [
+          7,
+          4
+        ],
+        "timeSpent": 35,
+        "numberOfHintsUsed": 1
+      },
+      {
+        "id": 2,
+        "quizId": 1747172294366,
+        "questionId": 103,
+        "answerIds": [
+          9
+        ],
+        "timeSpent": 12,
+        "numberOfHintsUsed": 1
+      }
+    ],
+    "gamemode": {
+      "id": 0,
+      "name": "Seul"
+    }
   }
 ]

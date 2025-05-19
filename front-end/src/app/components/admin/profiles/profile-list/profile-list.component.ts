@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { CurrentProfileService } from 'src/services/currentProfile.service';
 import { CurrentPageService } from 'src/services/currentPage.service';
 import { GUEST_PROFILE } from 'src/mocks/profile-list.mock';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile-list',
@@ -36,7 +37,7 @@ export class ProfileListComponent {
   @Input()
   public context: string = '';
 
-   public avatarPreview: string | null = null;
+  public avatarPreview: string | null = null;
 
   public showProfileForm: boolean = false;
   public isEditing: boolean = false;
@@ -48,7 +49,8 @@ export class ProfileListComponent {
     public profileService: ProfileService,
     private currentProfileService: CurrentProfileService,
     private cdr: ChangeDetectorRef,
-    private currentPageService: CurrentPageService) {
+    private currentPageService: CurrentPageService,
+    private router: Router) {
     this.profileService.profiles$.subscribe((profiles) => {
       this.profileList = profiles;
       console.log("Liste de profils mise à jour:", this.profileList.length, "profils");
@@ -71,6 +73,9 @@ export class ProfileListComponent {
     setTimeout(() => {
       if (this.context === 'home') {
         this.currentProfileService.setCurrentProfile(profile);
+        setTimeout(() => {
+          this.router.navigate(['/gamemode-selection']);
+        }, 100);
       } else if (this.context === 'admin') {
         this.profileService.selectProfileForEdition(profile);
         this.profileSelected.emit(profile);
@@ -138,7 +143,7 @@ export class ProfileListComponent {
     this.profileToDelete = null;
   }
 
-  getInitials(profile:Profile): string {
+  getInitials(profile: Profile): string {
     if (!profile) return '';
 
     const firstName = profile.name.charAt(0).toUpperCase();
@@ -148,25 +153,25 @@ export class ProfileListComponent {
   }
 
   public saveProfile() {
-  console.log('Enregistrement du profil avec image:',
-             this.currentProfile.profilePicture !== 'empty_path' ? 'Image présente ' : 'Pas dimage',
-             'Type:', typeof this.currentProfile.profilePicture);
+    console.log('Enregistrement du profil avec image:',
+      this.currentProfile.profilePicture !== 'empty_path' ? 'Image présente ' : 'Pas dimage',
+      'Type:', typeof this.currentProfile.profilePicture);
 
-  if (this.isEditing) {
-    this.profileService.updateProfile(this.currentProfile);
-  } else {
-    if (!this.currentProfile.profilePicture || this.currentProfile.profilePicture === '') {
-      this.currentProfile.profilePicture = 'empty_path';
+    if (this.isEditing) {
+      this.profileService.updateProfile(this.currentProfile);
+    } else {
+      if (!this.currentProfile.profilePicture || this.currentProfile.profilePicture === '') {
+        this.currentProfile.profilePicture = 'empty_path';
+      }
+
+      this.profileService.createProfile(
+        this.currentProfile.name,
+        this.currentProfile.lastName,
+        this.currentProfile.profilePicture
+      );
     }
-
-    this.profileService.createProfile(
-      this.currentProfile.name,
-      this.currentProfile.lastName,
-      this.currentProfile.profilePicture
-    );
+    this.cancelProfileForm();
   }
-  this.cancelProfileForm();
-}
 
   public cancelProfileForm() {
     this.showProfileForm = false;
@@ -186,23 +191,23 @@ export class ProfileListComponent {
     };
   }
   public onAvatarSelected(event: any) {
-  const file = event.target.files[0];
-  if (file) {
-    if (!file.type.match('image.*')) {
-      console.error('Le fichier sélectionné n\'est pas une image');
-      return;
-    }
+    const file = event.target.files[0];
+    if (file) {
+      if (!file.type.match('image.*')) {
+        console.error('Le fichier sélectionné n\'est pas une image');
+        return;
+      }
 
-    const reader = new FileReader();
-    reader.onload = (e: any) => {
-      this.avatarPreview = e.target.result;
-      this.currentProfile.profilePicture = e.target.result;
-    };
-    reader.readAsDataURL(file);
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.avatarPreview = e.target.result;
+        this.currentProfile.profilePicture = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
   }
-}
-public getAvatarPreviewStyle() {
-  return this.avatarPreview ? `url(${this.avatarPreview})` : 'none';
-}
+  public getAvatarPreviewStyle() {
+    return this.avatarPreview ? `url(${this.avatarPreview})` : 'none';
+  }
 
 }

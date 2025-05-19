@@ -7,7 +7,7 @@ import { QuizService } from './quiz.service';
 import { HttpClient } from '@angular/common/http';
 import { GamemodeService } from './gamemode.service';
 import { Gamemode } from 'src/models/gamemode.model';
-import { QUIZ_RESULT_EMPTY, QUIZ_RESULT_EMPTY2 } from 'src/mocks/quiz-results.mock';
+import { QUIZ_RESULT_EMPTY } from 'src/mocks/quiz-results.mock';
 
 
 export interface MonthlyStatsData {
@@ -52,18 +52,20 @@ export class QuizResultService {
     return quizResults
   }
 
+  getQuizResultsByQuiz(quizId:number){
+    const quizResults = this.allResults.filter((quizResult) => {
+      quizResult.quizId === quizId
+    })
+    return quizResults;
+  }
+
   getQuizResult(quizResultId: number): QuizResult {
     const quizResult = this.allResults.find((result) => result.id === quizResultId);
     if (quizResult) return quizResult;
     return QUIZ_RESULT_EMPTY;
   }
 
-  getQuizResultsByQuiz(quizId: number) {
-    this.http.get<QuizResult[]>(this.apiUrl + "/quiz/" + quizId).subscribe((quizResults: QuizResult[]) => {
-      console.log("Quiz Results Retrieved: ", quizResults);
-      this.results$.next(quizResults);
-    })
-  }
+  
 
 
   // saveQuizResult(result: QuizResult): void {

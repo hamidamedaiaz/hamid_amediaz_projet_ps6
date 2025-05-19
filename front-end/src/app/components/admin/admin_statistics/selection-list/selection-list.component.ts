@@ -57,7 +57,6 @@ export class SelectionListComponent implements OnInit{
       this.quizService.quizzes$.subscribe(quizzes => {
         this.quizzes = quizzes;
         console.log('Stats, quiz , size :', this.quizzes.length);
-
       })
     }
 

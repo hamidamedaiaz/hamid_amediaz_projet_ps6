@@ -125,7 +125,7 @@ export class ComputeStatisticService {
   }
 
   public getAverageTotalHintsUsed(quizResults: QuizResult[]) {
-    if(quizResults.length === 0) return 0;
+    if (quizResults.length === 0) return 0;
     let numberOfHintsUsed = this.getTotalNumberOfHintsUsed(quizResults);
     let numberOfQuestion = this.getTotalNumberOfQuestion(quizResults);
     if (numberOfQuestion < 1) return 0; // Avoid dividing by 0
@@ -133,14 +133,14 @@ export class ComputeStatisticService {
   }
 
   public getAverageTotalTimeSpent(quizResults: QuizResult[]): number {
-    if(quizResults.length === 0) return 0;
+    if (quizResults.length === 0) return 0;
     let numberOfQuestion = this.getTotalNumberOfQuestion(quizResults);
     let totalTimeSpent = this.getTotalTimeSpent(quizResults)
     return Math.floor(totalTimeSpent / numberOfQuestion);
   }
 
   public getPercentageOfCorrectAnswer(quizResults: QuizResult[]): number {
-    if(quizResults.length === 0) return 0;
+    if (quizResults.length === 0) return 0;
     let percentage = 0;
     console.log("Quiz: ", quizResults)
     quizResults.forEach((quizResult) => {
@@ -148,14 +148,69 @@ export class ComputeStatisticService {
       if (quiz.id === -1) return;
       percentage += this.getPercentages(this.getScore(quizResult.questionResults), quizResult.questionResults.length)
     })
-    return Math.round(percentage/quizResults.length)
+    return Math.round(percentage / quizResults.length)
   }
 
   public getPercentageOfIncorrectAnswer(quizResults: QuizResult[]): number {
-    if(quizResults.length === 0) return 0;
+    if (quizResults.length === 0) return 0;
     return 100 - this.getPercentageOfCorrectAnswer(quizResults);
   }
 
+  public getDataPerMonth(quizResults: QuizResult[], year: number ): { [month: string]: QuizResult[] } {
+    const resultsByMonth: { [month: string]: QuizResult[] } = {};
 
+    quizResults.forEach(result => {
+      const date = new Date(result.dateDebut);
+      const resultYear = date.getFullYear();
+
+      if (resultYear === year) {
+        const monthKey = `${resultYear}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+
+        if (!resultsByMonth[monthKey]) {
+          resultsByMonth[monthKey] = [];
+        }
+
+        resultsByMonth[monthKey].push(result);
+      }
+    });
+
+    // Optionally sort each month's results by dateDebut
+    for (const month in resultsByMonth) {
+      resultsByMonth[month].sort((a, b) => a.dateDebut - b.dateDebut);
+    }
+
+    return resultsByMonth;
+  }
+
+  getYearsPlayed(quizResults:QuizResult[]):number[]{
+    let yearPlayed:number[] = []
+    quizResults.forEach((quizResults) => {
+      yearPlayed.push(new Date(quizResults.dateDebut).getFullYear());
+    })
+    let currentYear:number  =new Date(Date.now()).getFullYear();
+    if(!yearPlayed.includes(currentYear)) yearPlayed.push(currentYear)
+    return yearPlayed;
+  }
+
+  getNumberOfPlays(quizResults:QuizResult[]){
+    return quizResults.length;
+  }
+
+  getAverageAttempts(quizResult:QuizResult){
+    let counter = 0
+    quizResult.questionResults.forEach((questionResult) => {
+      counter += questionResult.answerIds.length;
+    })
+    return counter / quizResult.questionResults.length
+  }
+
+  getAllAverageAttempts(quizResults:QuizResult[]){
+    if(quizResults.length === 0) return 0;
+    let attempsCounter = 0;
+    quizResults.forEach((quizResult) => {
+      attempsCounter += this.getAverageAttempts(quizResult);
+    })
+    return Math.round(attempsCounter/quizResults.length)
+  }
 
 }

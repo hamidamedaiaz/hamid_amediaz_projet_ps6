@@ -9,10 +9,11 @@ import { PlayerStatsOverviewComponent } from 'src/app/components/admin/admin_sta
 import { PlayerStatsTherapyMetricsComponent } from 'src/app/components/admin/admin_statistics/player-stats/player-stats-therapy-metrics/player-stats-therapy-metrics.component';
 import { PlayerStatsProgressionComponent } from 'src/app/components/admin/admin_statistics/player-stats/player-stats-progression/player-stats-progression.component';
 import { PlayerStatsQuizHistoryComponent } from 'src/app/components/admin/admin_statistics/player-stats/player-stats-quiz-history/player-stats-quiz-history.component';
-import { QUIZ_RESULT_EMPTY } from 'src/mocks/quiz-results.mock';
 import { QuizResultDetailsComponent } from '../quiz-result-details/quiz-result-details.component';
 import { GUEST_PROFILE } from 'src/mocks/profile-list.mock';
 import { StatsService } from 'src/services/stats.service';
+import { ComputeStatisticService } from 'src/services/computeStatistic.service';
+import { QuizResult } from 'src/models/quiz-result.model';
 
 @Component({
   selector: 'app-player-stats-details',
@@ -46,25 +47,31 @@ export class PlayerStatsDetailsComponent { //implements OnInit {
   correctAnswersPercent: number = 0;
   incorrectAnswersPercent: number = 0;
 
-  isQuizSelected: boolean = false;
+  public isQuizSelected: boolean = false;
 
-  monthlyPerformance: any[] = [];
-  quizResults: any[] = [];
+  public monthlyPerformance: any[] = [];
+  public quizResults: any[] = [];
 
-  activeTab: 'score' | 'hints' | 'time' | 'accuracy' = 'score';
+  public activeTab: 'score' | 'hints' | 'time' | 'accuracy' = 'score';
 
-  selectedQuizId: number = -1;
+  public selectedQuizId: number = -1;
 
 
   private profileId: number = -1;
 
+  public activeYear: number = -1
+
+  public quizResultsOfTheYear:{ [month: string]: QuizResult[]; } = {};
+
   constructor(
-    private router: Router,
     private profileService: ProfileService,
     private quizResultService: QuizResultService,
-    private statsService: StatsService
+    private statsService: StatsService,
+    private computeStatisticService: ComputeStatisticService,
+    
   ) {
     this.isQuizSelected = false;
+    this.activeYear = new Date(Date.now()).getFullYear();
 
     this.statsService.profileId$.subscribe((profileId) => {
       this.profileId = profileId
@@ -75,46 +82,18 @@ export class PlayerStatsDetailsComponent { //implements OnInit {
     })
 
     this.profileService.getProfile(this.profileId).subscribe((profile) => this.profile = profile);
+
+    this.quizResultsOfTheYear = this.getQuizResultsOfTheYear(); // initialize par defaut les données de l'année en cours
   }
 
 
-  // ngOnInit() {
-  //   if (this.profileId) {
-  //     this.loadProfileData();
-  //     this.statistics();
-  //   } else {
-  //     this.router.navigate(['/admin']);
-  //   }
-  // }
+  getQuizResultsOfTheYear() {
+    return this.computeStatisticService.getDataPerMonth(this.quizResults, this.activeYear)
+  }
 
-  // loadProfileData() {
-  //   // this.profileService.profiles$.subscribe(profiles => {
-  //   //   console.log("profileId; ",this.profileId)
-  //   //   this.profile = profiles.find(p => p.id === this.profileId) || null;
-  //   //   if (!this.profile) {
-  //   //     this.router.navigate(['/admin']);
-  //   //   }
-  //   // });
-  // }
-
-  // statistics() {
-  //   const playerStats = this.quizResultService.getPlayerTotalStats(this.profileId);
-  //   this.totalGames = playerStats.totalGames;
-  //   this.bestScore = playerStats.bestScore;
-  //   this.averageScore = playerStats.averageScore;
-  //   this.averageTimePerQuestion = playerStats.averageTimePerQuestion;
-  //   this.totalHintsUsed = playerStats.totalHintsUsed;
-  //   this.averageTimePerQuestion = playerStats.averageTimePerQuestion;
-  //   this.correctAnswersPercent = playerStats.correctAnswersPercent;
-  //   this.incorrectAnswersPercent = playerStats.incorrectAnswersPercent;
-  //   this.loadMonthlyData();
-  //   this.quizResults = [QUIZ_RESULT_EMPTY]//this.quizResultService.getQuizHistoryForPlayer(this.profileId);
-  // }
-
-
-  // loadMonthlyData() {
-  //   this.setActiveTab(this.activeTab);
-  // }
+  getYearsPlayed(): number[] {
+    return this.computeStatisticService.getYearsPlayed(this.quizResults);
+  }
 
   getProfile() { return this.profile; }
 
@@ -151,6 +130,12 @@ export class PlayerStatsDetailsComponent { //implements OnInit {
         break;
     }
   }
+
+  setYearData(year: number) {
+    this.activeYear = year;
+    this.quizResultsOfTheYear = this.computeStatisticService.getDataPerMonth(this.quizResults, this.activeYear);
+  }
+
 
 
   viewQuizDetails(quizResultId: number) {

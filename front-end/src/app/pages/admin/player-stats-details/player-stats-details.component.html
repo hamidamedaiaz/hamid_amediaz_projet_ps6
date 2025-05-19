@@ -7,8 +7,8 @@
   <app-player-stats-therapy-metrics [quizResults]="getQuizResults()">
   </app-player-stats-therapy-metrics>
 
-  <app-player-stats-progression [monthlyPerformance]="monthlyPerformance" [activeTab]="activeTab"
-    (tabChange)="setActiveTab($event)">
+  <app-player-stats-progression [quizResultsOfTheYear]="quizResultsOfTheYear" [activeTab]="activeTab" [activeYear]="activeYear"
+    (tabChange)="setActiveTab($event)" (yearChange)="setYearData($event)" [yearsPlayed]="getYearsPlayed()">
   </app-player-stats-progression>
 
 
