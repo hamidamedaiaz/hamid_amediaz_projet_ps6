@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, OnDestroy,EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { QuizAnswerComponent } from '../quiz-answer/quiz-answer.component';
 import { QuizHintComponent } from '../quiz-hint/quiz-hint.component';
 import { QuizHintsComponent } from '../quiz-hints/quiz-hints.component';
@@ -16,6 +16,8 @@ import { QuizQuestionHeaderComponent } from '../quiz-question-header/quiz-questi
 import { QuizQuestionPopUpComponent } from '../quiz-question-pop-up/quiz-question-pop-up.component';
 import { QuizAnswersComponent } from '../quiz-answers/quiz-answers.component';
 import { RecordResultService } from 'src/services/record-result.service';
+import { Subscription } from 'rxjs';
+import { WebSocketService } from 'src/services/websocket.service';
 
 
 @Component({
@@ -32,21 +34,22 @@ import { RecordResultService } from 'src/services/record-result.service';
   styleUrl: './quiz-question.component.scss'
 })
 
-export class QuizQuestionComponent {
-
+export class QuizQuestionComponent implements OnInit, OnDestroy {
+  public showCorrectEffect: Boolean = false;
+  public hintsActive: Boolean = false;
+  public showQuestionPopUp: Boolean = false;
+  private answerStartTime: number = Date.now();
+  private subscriptions: Subscription[] = [];
   @ViewChild('audio') audio!: ElementRef<HTMLAudioElement>;
 
   private question!: Question;
 
   private wrongAnswers: Answer[] = [];
 
-  public showCorrectEffect: Boolean = false;
 
-  public hintsActive: Boolean = false;
 
   public shuffledAnswers: Answer[] = [];
 
-  public showQuestionPopUp: Boolean = false;
 
   private CORRECT_ANSWER_DELAY = 1500;
 
@@ -68,7 +71,8 @@ export class QuizQuestionComponent {
     private currentProfileService: CurrentProfileService,
     private quizService: QuizService,
     private gamemodeService: GamemodeService,
-    private recordResultService: RecordResultService) {
+    private recordResultService: RecordResultService,
+    private webSocketService: WebSocketService) {
 
     this.currentProfileService.current_profile$.subscribe((profile) => {
       this.SHOW_POP_UP_TIMER = profile.SHOW_POP_UP_TIMER;
@@ -99,6 +103,27 @@ export class QuizQuestionComponent {
         }
       }
     })
+  }
+  
+  ngOnInit() {
+    // Initialiser le chronomètre pour la réponse
+    this.answerStartTime = Date.now();
+    
+    if (this.getGamemode().id === 1) { // Si mode multijoueur
+      // S'abonner aux changements de question
+      this.subscriptions.push(
+        this.webSocketService.currentQuestion$.subscribe(questionIndex => {
+          if (questionIndex > 0) {
+            // Réinitialiser le chronomètre
+            this.answerStartTime = Date.now();
+          }
+        })
+      );
+    }
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
   public getGamemode() {
@@ -151,17 +176,63 @@ export class QuizQuestionComponent {
   public getNbOfPlayers() { return this.NUMBER_OF_PLAYER; }
 
   public submitCorrectAnswer() {
+    const currentQuestion = this.quizService.question;
+    
     if (this.gamemodeService.getCurrentGamemode().id === 0) {
+      // Mode solo - comportement existant
       this.showCorrectEffect = true;
-
       setTimeout(() => {
         this.showCorrectEffect = false;
-      }, this.CORRECT_ANSWER_DELAY);
-    }
-    else if (this.gamemodeService.getCurrentGamemode().id === 1) {
-      this.router.navigate(["/answer-submitted"]);
+      }, 1500);
+    } else if (this.gamemodeService.getCurrentGamemode().id === 1) {
+      // Mode multijoueur - utiliser WebSocket
+      if (currentQuestion) {
+        const timeTaken = Date.now() - this.answerStartTime;
+        const correctAnswers = currentQuestion.answers
+          .filter(answer => answer.isCorrect)
+          .map(answer => answer.id);
+        
+        // Si c'est l'admin, collecter les statistiques
+        if (this.getRole() === 'admin') {
+          this.webSocketService.showQuestionResults(currentQuestion.id, correctAnswers);
+        } else {
+          // Pour les joueurs, rediriger vers la page d'attente
+          this.router.navigate(["/answer-submitted"]);
+        }
+      }
     }
   }
+  public validateQuestion() {
+    if (this.gamemodeService.getCurrentGamemode().id === 0) {
+      // Mode solo - comportement existant
+      setTimeout(() => {
+        this.quizService.nextQuestion();
+      }, 1500);
+    }
+    // En mode multijoueur, c'est l'hôte qui décide de passer à la question suivante
+  }
+  
+  public nextQuestion() {
+    if (this.getGamemode().id === 0) {
+      // Mode solo - comportement existant
+      this.quizService.nextQuestion();
+    } else if (this.getGamemode().id === 1 && this.getRole() === 'admin') {
+      // Mode multijoueur - uniquement l'hôte peut passer à la question suivante
+      this.webSocketService.nextQuestion();
+    }
+  }
+  
+  public previousQuestion() {
+    if (this.getGamemode().id === 0 || this.getRole() === 'admin') {
+      this.quizService.previousQuestion();
+    }
+  }
+  
+  public areHintsActive(): Boolean {
+    return this.hintsActive;
+  }
+  
+
 
 
 
@@ -178,28 +249,7 @@ export class QuizQuestionComponent {
     return answerWithPercents;
   }
 
-  public nextQuestion() {
-    this.wrongAnswers = [];
-    this.clearHintTimeOut();
-    this.quizService.nextQuestion();
-  }
 
-  public validateQuestion() {
-    if (this.gamemodeService.getCurrentGamemode().id == 0) {
-      setTimeout(() => {
-        this.nextQuestion();
-      }, this.CORRECT_ANSWER_DELAY);
-    }
-  }
-
-  public previousQuestion() {
-    this.wrongAnswers = [];
-    this.quizService.previousQuestion();
-  }
-
-  public areHintsActive(): Boolean {
-    return this.hintsActive;
-  }
 
   public getAudioPath(): string {
     return this.question.audioPath;
@@ -208,13 +258,15 @@ export class QuizQuestionComponent {
 
   public getVolume(): number { return 50; }
 
-  public CancelPopPup() {
+
+  
+
+    public CancelPopPup() {
     this.showQuestionPopUp = false;
   }
-
+  
   public isQuizRunning() {
     return this.quizService.isQuizRunning;
   }
-
   private recordQuestion() { }
 }

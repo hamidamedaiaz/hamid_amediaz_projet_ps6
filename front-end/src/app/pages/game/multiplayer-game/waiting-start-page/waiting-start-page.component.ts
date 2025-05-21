@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { QuizService } from 'src/services/quiz.service'
 import { CurrentPageService } from 'src/services/currentPage.service';
 import { QuizListService } from 'src/services/quiz-list.service';
+import { Subscription } from 'rxjs';
+import { WebSocketService } from 'src/services/websocket.service';
 
 @Component({
   selector: 'app-waiting-start-page',
@@ -13,15 +15,15 @@ import { QuizListService } from 'src/services/quiz-list.service';
 })
 
 
-export class WaitingStartPageComponent {
-
+export class WaitingStartPageComponent implements OnInit, OnDestroy {
+  public waiting_message: string = "En attente du début de la partie";
+  private subscriptions: Subscription[] = [];
   private redirectionTimer:any = null;
 
   private gamefoundTimer:any = null;
 
-  public waiting_message:string = "En attente du début de la partie";
-
-  constructor(private router:Router, private quizService:QuizService, private quizListService:QuizListService, private currentPageService:CurrentPageService){
+  constructor(private router:Router, private quizService:QuizService, private quizListService:QuizListService, private currentPageService:CurrentPageService,    private webSocketService: WebSocketService
+){
     this.currentPageService.setCurrentPage("waiting-start-page")
     this.redirectionTimer = setTimeout(() => {
       this.redirectToOnlineGame();
@@ -38,8 +40,33 @@ export class WaitingStartPageComponent {
     this.router.navigate(['/multiplayer-game']);
   }
 
-  public leaveQueue(){
-    if(this.redirectionTimer) clearTimeout(this.redirectionTimer)
-    this.router.navigate(['/multiplayer-game-login'])
+  ngOnInit() {
+    // S'abonner au statut de la partie
+    this.subscriptions.push(
+      this.webSocketService.gameStatus$.subscribe(status => {
+        if (status === 'playing') {
+          this.router.navigate(['/multiplayer-game']);
+        }
+      })
+    );
+    
+    // S'abonner aux erreurs
+    this.subscriptions.push(
+      this.webSocketService.error$.subscribe(error => {
+        if (error) {
+          this.waiting_message = error;
+        }
+      })
+    );
+  }
+  
+  ngOnDestroy() {
+    this.subscriptions.forEach(sub => sub.unsubscribe());
+  }
+  
+  public leaveQueue() {
+    this.webSocketService.leaveGame();
+    this.router.navigate(['/multiplayer-game-login']);
   }
 }
+
