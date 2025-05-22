@@ -10,6 +10,7 @@ import { GamemodeService } from "./gamemode.service";
 import { EMPTY_QUIZ } from "src/mocks/quiz.mock";
 import { QuizConfigurationService } from "./quizConfiguration.service";
 import { RecordResultService } from "./record-result.service";
+import { QuizResultService } from "./quiz-result.service";
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,7 @@ export class QuizService {
   private givenCorrectAnswers: Answer[] = [];
   public isQuizRunning = false;
 
+
   private readonly QUIZ_KEY = 'current_quiz';
   private readonly GIVEN_ANSWERS_KEY = 'current_score';
   private readonly QUESTION_ID_KEY = '0';
@@ -30,12 +32,14 @@ export class QuizService {
 
   public question$: BehaviorSubject<Question> = new BehaviorSubject<Question>(EMPTY_QUESTION);
   public quiz$: BehaviorSubject<Quiz> = new BehaviorSubject<Quiz>(EMPTY_QUIZ);
+  public retrieveData$: BehaviorSubject<Boolean> = new BehaviorSubject<Boolean>(false);
 
   constructor(private localStorageService: LocalStorageService,
     private router: Router,
     private gamemodeService: GamemodeService,
     private quizConfigurationService: QuizConfigurationService,
-    private recordResultService: RecordResultService) {
+    private recordResultService: RecordResultService,
+    private quizResultService: QuizResultService) {
 
     this.loadFromStorage();
     this.question = this.quiz?.questions?.[this.questionId];
@@ -91,6 +95,8 @@ export class QuizService {
       this.question = this.quiz.questions[0];
     }
 
+    this.recordResultService.setQuiz(this.quiz);
+
     // CHANGE OBSERVABLE VALUES
     this.question$.next(this.question);
     this.quiz$.next(quiz);
@@ -145,15 +151,28 @@ export class QuizService {
         return;
       }
 
+      // Call all component to retrieve the data
+      this.retrieveData$.next(true);
+
+      // Check if the quiz is finished
       if (this.questionId >= this.quiz.questions.length - 1) {
-        this.isQuizRunning = false;
-        this.localStorageService.storeItem(this.IS_QUIZ_RUNNING_KEY, JSON.stringify(this.isQuizRunning));
-        console.log("Next Question - Gamemode: ", this.gamemodeService.getCurrentGamemode().name)
+
+        this.isQuizRunning = false; // If the quiz is done, then we stop the quiz
+        
+        this.localStorageService.storeItem(this.IS_QUIZ_RUNNING_KEY, JSON.stringify(this.isQuizRunning)); 
+
+        // Check the current gamemode to adapt the behavior
         if (this.gamemodeService.getCurrentGamemode().id === 0) {
+
+          // If the current gamemode is 'Seul' then stop the record and send the data to the server
           this.recordResultService.stopRecording();
-          console.log(this.recordResultService.getQuizResult())
+          this.quizResultService.sendQuizResult(this.recordResultService.getQuizResult())
+          
+          // Then navigate to the scoreboard
           this.router.navigate(["/quiz-scoreboard"]);
+
         } else if (this.gamemodeService.getCurrentGamemode().id === 1) {
+          
           this.router.navigate(['/quiz-multiplayer-scoreboard']);
         } else {
           this.router.navigate(['/']);
@@ -179,8 +198,6 @@ export class QuizService {
     }
 
     this.resetCurrentQuiz();
-
-    this.recordResultService.setQuiz(this.quiz);
 
     this.recordResultService.startRecording()
 

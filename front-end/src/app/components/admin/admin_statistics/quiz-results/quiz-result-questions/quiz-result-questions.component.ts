@@ -35,7 +35,7 @@ export class QuizResultQuestionsComponent {
 
   isCorrectAnswer(answer: Answer): boolean { return answer.isCorrect; }
 
-  getTimeSpent(result:QuestionResult){ return result.timeSpent }
+  getTimeSpent(result:QuestionResult){ return Math.round(result.timeSpent/1000) }
   
   getHintsUsed(result: QuestionResult){ return result.numberOfHintsUsed }
 

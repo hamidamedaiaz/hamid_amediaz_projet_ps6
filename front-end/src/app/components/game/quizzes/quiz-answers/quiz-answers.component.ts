@@ -5,6 +5,7 @@ import { QuizService } from 'src/services/quiz.service';
 import { Answer } from 'src/models/answer.model';
 import { QuizAnswerComponent } from '../quiz-answer/quiz-answer.component';
 import { QuizAnswerMultiplayerComponent } from '../quiz-answer-multiplayer/quiz-answer-multiplayer.component';
+import { RecordResultService } from 'src/services/record-result.service';
 
 
 @Component({
@@ -34,11 +35,19 @@ export class QuizAnswersComponent {
 
   constructor(
     private currentProfileService: CurrentProfileService,
-    private quizService: QuizService) {
-      
-      this.currentProfileService.current_profile$.subscribe((profile) =>{
-        this.REMOVE_WRONG_ANSWER_INTERVAL = profile.REMOVE_WRONG_ANSWER_INTERVAL;
-      })
+    private quizService: QuizService,
+    private recordResultService: RecordResultService) {
+
+    this.currentProfileService.current_profile$.subscribe((profile) => {
+      this.REMOVE_WRONG_ANSWER_INTERVAL = profile.REMOVE_WRONG_ANSWER_INTERVAL;
+    })
+
+    this.quizService.retrieveData$.subscribe((data) => {
+      if (data) {
+        let userAnswersIds = this.selectedAnswers.map(r => r.id);
+        this.recordResultService.setUserAnswersIds(this.quizService.questionId ,userAnswersIds)
+      }
+    })
 
     this.quizService.question$.subscribe((question) => {
       this.answers = this.shuffle(question.answers);
@@ -53,9 +62,9 @@ export class QuizAnswersComponent {
         const wrongAnswers = (this.answers.filter((answer => !answer.isCorrect)))
         if (wrongAnswers.length > 0) {
           const answerToRemove = wrongAnswers.shift();
-          if(answerToRemove) {  
+          if (answerToRemove) {
             const index = this.answers.indexOf(answerToRemove)
-            this.answers.splice(index,1);
+            this.answers.splice(index, 1);
           }
         } else {
           clearInterval(this.removeWrongAnswerInterval); // stoppe l'intervalle si plus de mauvaises réponses
@@ -88,12 +97,12 @@ export class QuizAnswersComponent {
   }
 
   public answerSelected(answer: Answer) {
-    if(answer.isCorrect){
+    if (answer.isCorrect) {
       this.quizService.increaseScore(answer);
       this.selectedAnswers.push(answer);
       const lastCorrectAnswers = this.answers.filter((answer) => answer.isCorrect && !this.selectedAnswers.includes(answer));
       this.correct_answer.emit(true);
-      if(lastCorrectAnswers.length == 0){
+      if (lastCorrectAnswers.length == 0) {
         this.next_question.emit(true);
       }
     } else {
@@ -101,8 +110,8 @@ export class QuizAnswersComponent {
       this.hiddenAnswers.push(answer);
     }
   }
-  
-  public isAnswerHidden(answer: Answer){
+
+  public isAnswerHidden(answer: Answer) {
     return this.hiddenAnswers.includes(answer);
   }
 

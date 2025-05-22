@@ -15,6 +15,7 @@ import { QuizStatsComponent } from "../../../components/admin/admin_statistics/q
 import { ActivatedRoute } from "@angular/router";
 import { PlayerStatsDetailsComponent } from "../player-stats-details/player-stats-details.component";
 import { QuizResultService } from 'src/services/quiz-result.service';
+import {PopupComponent} from "../../../components/popup/popup.component";
 //import {QuizSectionComponent} from "src/app/components/admin/admin_quizzes/q"
 //
 
@@ -33,7 +34,8 @@ import { QuizResultService } from 'src/services/quiz-result.service';
     QuizDetailsComponent,
     SelectionListComponent,
     QuizStatsComponent,
-    PlayerStatsDetailsComponent
+    PlayerStatsDetailsComponent,
+    PopupComponent
   ],
 
   templateUrl: './admin-page.component.html',

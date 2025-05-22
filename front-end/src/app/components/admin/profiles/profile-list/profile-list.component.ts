@@ -112,8 +112,7 @@ export class ProfileListComponent {
       NUMBER_OF_ANSWERS_DISPLAYED: 4,
       SHOW_HINT_TIMER: 5,
       NUMBER_OF_HINTS_DISPLAYED: 4,
-      profilePicture: "empty_path",
-      birthDate: ''
+      profilePicture: "empty_path"
     };
     this.showProfileForm = true;
   }

@@ -1,9 +1,7 @@
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CurrentPageService } from 'src/services/currentPage.service';
 import { FormsModule } from '@angular/forms';
-import { Subscription } from 'rxjs';
-import { WebSocketService } from 'src/services/websocket.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'app-multiplayer-game-login-page',
@@ -12,10 +10,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
   templateUrl: './multiplayer-game-login-page.component.html',
   styleUrl: './multiplayer-game-login-page.component.scss'
 })
-export class MultiplayerGameLoginPageComponent implements OnInit, OnDestroy {
-  public code: string = "";
-  public message: string = "Rejoindre une partie";
-  private subscriptions: Subscription[] = [];
+export class MultiplayerGameLoginPageComponent {
+
+  public code:string = "";
 
   private JOIN_GAME_MESSAGE:string = "Rejoindre une partie"
 
@@ -25,52 +22,32 @@ export class MultiplayerGameLoginPageComponent implements OnInit, OnDestroy {
 
   private INVALID_CODE:string="Code Invalide"
 
+  public message:string="";
 
-  constructor(private router:Router, private currentPageService:CurrentPageService,    private webSocketService: WebSocketService,
-){  
+  constructor(private router:Router, private currentPageService:CurrentPageService){  
     this.currentPageService.setCurrentPage("multiplayer-game-login-page")
     this.message = this.JOIN_GAME_MESSAGE;
   }
 
- 
-  ngOnInit() {
-    // S'abonner aux erreurs WebSocket
-    this.subscriptions.push(
-      this.webSocketService.error$.subscribe(error => {
-        if (error) {
-          this.message = error;
-        }
-      })
-    );
-    
-    // S'abonner au statut de la partie
-    this.subscriptions.push(
-      this.webSocketService.gameStatus$.subscribe(status => {
-        if (status === 'playing') {
-          this.router.navigate(['/multiplayer-game']);
-        } else if (status === 'waiting') {
-          this.router.navigate(['/waiting-start']);
-        }
-      })
-    );
-  }
-  
-  ngOnDestroy() {
-    this.subscriptions.forEach(sub => sub.unsubscribe());
-  }
-  
-  public joinGame() {
-    if (this.code === "") {
-      this.message = "Code Invalide";
-      return;
+  public joinGame(){
+    if(this.code===""){
+      this.message = this.INVALID_CODE;
     }
-    
-    // Tentative de rejoindre la partie
-    this.webSocketService.joinGame(this.code);
+    else if(this.code === "0000"){
+      console.log("code")
+      this.message = this.NO_GAME_FOUND;
+    } 
+    else if (this.code === "1111"){
+      this.message = this.NOT_ABLE_TO_JOIN
+    } 
+    else {
+      console.log("Game joined with the code: ", this.code);
+      this.router.navigate(["/waiting-start"]);
+    }
   }
-  
-  public leave() {
+
+  public leave(){
     this.router.navigate(["/"]);
   }
-}
 
+}

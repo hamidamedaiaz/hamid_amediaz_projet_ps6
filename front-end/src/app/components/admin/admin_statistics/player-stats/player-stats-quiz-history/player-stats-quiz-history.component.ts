@@ -67,7 +67,9 @@ export class PlayerStatsQuizHistoryComponent {
       .getPercentages(this.getQuizScore(quizResult), this.getQuizNbOfQuestions(quizResult))
   }
 
-  getTimeSpent(quizResult: QuizResult): number { return this.computeStatisticsService.getAverageTime(quizResult.questionResults) }
+  getTimeSpent(quizResult: QuizResult): number { 
+    return this.computeStatisticsService.getAverageTime(quizResult.questionResults) 
+  }
 
   getHintsUsed(quizResult: QuizResult): number { return this.computeStatisticsService.getTotalHintUsed(quizResult.questionResults) }
 

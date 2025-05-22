@@ -44,9 +44,9 @@ export class QuizResultService {
     return quizResults
   }
 
-  getQuizResultsByQuiz(quizId:number){
+  getQuizResultsByQuiz(quizId: number) {
     const quizResults = this.allResults.filter((quizResult) => {
-      quizResult.quizId === quizId
+      return quizResult.quizId === quizId
     })
     return quizResults;
   }
@@ -55,6 +55,19 @@ export class QuizResultService {
     const quizResult = this.allResults.find((result) => result.id === quizResultId);
     if (quizResult) return quizResult;
     return QUIZ_RESULT_EMPTY;
+  }
+
+  sendQuizResult(quizResult: QuizResult) {
+    this.http.post(this.apiUrl, quizResult).subscribe({
+      next: () => {
+        console.log(`New Quiz Result sent: ${quizResult.id}`);
+        this.requestResult();
+      },
+      error: (err) => {
+        console.error(`Failed to create Quiz Result ${quizResult.id} - ${err}`);
+      }
+    })
+
   }
   
 }

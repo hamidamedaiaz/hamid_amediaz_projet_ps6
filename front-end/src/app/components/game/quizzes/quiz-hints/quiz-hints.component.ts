@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy } from '@angular/core';
+import { Component, Input, OnDestroy, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { QuizHintComponent } from '../quiz-hint/quiz-hint.component';
 import { CurrentProfileService } from 'src/services/currentProfile.service';
@@ -6,6 +6,7 @@ import { QuizService } from 'src/services/quiz.service';
 import { GamemodeService } from 'src/services/gamemode.service';
 import { Subscription, interval } from 'rxjs';
 import { Question } from 'src/models/question.model';
+import { RecordResultService } from 'src/services/record-result.service';
 
 @Component({
   selector: 'app-quiz-hints',
@@ -24,11 +25,15 @@ export class QuizHintsComponent implements OnDestroy {
 
   private SHOW_HINT_TIMER: number = 5;
 
-  constructor(private quizService: QuizService, private currentProfileService: CurrentProfileService) {
+  constructor(private quizService: QuizService, private currentProfileService: CurrentProfileService, private recordResultService: RecordResultService) {
     this.currentProfileService.current_profile$.subscribe((profile) => {
       this.SHOW_HINT_TIMER = profile.SHOW_HINT_TIMER;
     })
-    
+
+    this.quizService.retrieveData$.subscribe((data) => {
+      if(data) this.recordResultService.setNumberOfHintsUsed(this.quizService.questionId, this.displayedHints.length);
+    })
+
     this.quizService.question$.subscribe((question) => {
       this.resetHints(question);
       if (this.currentProfileService.getCurrentProfile().role === "admin") {
@@ -54,7 +59,7 @@ export class QuizHintsComponent implements OnDestroy {
 
   private startTimer(): void {
 
-    this.value = Math.floor(this.currentProfileService.get_hint_display_time_out_duration()/1000 + this.SHOW_HINT_TIMER);
+    this.value = Math.floor(this.currentProfileService.get_hint_display_time_out_duration() / 1000 + this.SHOW_HINT_TIMER);
 
     this.timerSubscription = interval(1000).subscribe(() => {
       this.value--;
@@ -72,7 +77,7 @@ export class QuizHintsComponent implements OnDestroy {
           this.stopTimer();
           this.nextHints = false;
         }
-      } 
+      }
     });
   }
 

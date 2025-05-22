@@ -4,8 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { Question } from "src/models/question.model";
 import { CommonModule } from '@angular/common';
 import { Answer } from "src/models/answer.model";
+import { Popup } from "src/models/popup.model";
 import { AnswerComponent } from "../answer/answer.component";
 import { QuizListService } from "../../../../../services/quiz-list.service";
+import {EMPTY_QUIZ} from "../../../../../mocks/quiz.mock";
+import {PopUpService} from "../../../../../services/pop-up.service";
 
 @Component({
   selector: 'app-quiz-details',
@@ -21,28 +24,44 @@ export class QuizDetailsComponent implements OnChanges {
   selectedQuestion: Question | null = null;
   private currentQuestionIndex = 0;
 
-  constructor(private quizService: QuizListService) { }
+  quizCopy : Quiz = EMPTY_QUIZ;
+
+  errorPopup : Popup = {
+    message : "Erreur d'enregistrement",
+    type : 'error',
+    duration : 5000
+  }
+
+  succesPopup: Popup = {
+    message : "Quiz sauvegardé",
+    type:"success",
+    duration : 5000
+  }
+
+  constructor(private quizService: QuizListService, private popUpService : PopUpService) {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['quiz']) {
       // rien à faire ici si le quiz est bien passé via @Input
+      this.quizCopy = JSON.parse(JSON.stringify(this.quiz));
+
     }
   }
 
   selectQuestion(index: number) {
-    this.selectedQuestion = this.quiz.questions[index];
+    this.selectedQuestion = this.quizCopy.questions[index];
     this.currentQuestionIndex = index;
   }
 
   addQuestion() {
     const newQuestion: Question = {
-      id: this.quiz.questions.length + 1,
+      id: this.quizCopy.questions.length + 1,
       question: '',
       answers: [],
       hints: [],
       audioPath: ''
     };
-    this.quiz.questions.push(newQuestion);
+    this.quizCopy.questions.push(newQuestion);
   }
 
   addAnswer() {
@@ -88,13 +107,25 @@ export class QuizDetailsComponent implements OnChanges {
 
   saveQuiz() {
     // Quand on save on va emit le quiz modifie pour que quiz app puisse le post sur le serveur.
-    console.log("Quiz enregistré :", this.quiz);
-    this.quizService.RequestEditQuizzes(this.quiz);
-    this.quizSaved.emit(this.quiz);
+    console.log("Quiz enregistré :", this.quizCopy);
+    try {
+      this.quizService.RequestEditQuizzes(this.quizCopy);
+      this.popUpService.sendPopup(this.succesPopup);
+    }
+    catch(err){
+      this.popUpService.sendPopup(this.errorPopup);
+      console.log("ERROR QUIZ DETAILS")
+    }
+    this.quizSaved.emit(this.quizCopy);
   }
-  
+
   deleteQuestion() {
-    this.quiz.questions.splice(this.currentQuestionIndex, 1);
+    this.quizCopy.questions.splice(this.currentQuestionIndex, 1);
+    this.popUpService.sendPopup({
+      message : "Question supprimé",
+      type:"success",
+      duration : 2500
+    });
     this.selectedQuestion = null;
   }
 

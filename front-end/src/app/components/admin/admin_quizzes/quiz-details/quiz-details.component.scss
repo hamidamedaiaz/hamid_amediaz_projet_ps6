@@ -97,6 +97,35 @@
   background: $primary-delete-btn;
 }
 
+
+.question-row {
+  display: flex;
+  gap: 10px; // ou moins si tu veux que ce soit plus collé
+  margin-bottom: 10px;
+
+  .sidebar-btn {
+    flex: 1; // prend tout l’espace disponible
+  }
+
+  .delete-btn {
+    padding: 10px;
+    background-color: #e74c3c; // ou une couleur selon ton thème
+    color: white;
+    border: none;
+    border-radius: 6px;
+    box-shadow: $primary-box-shadow;
+    transition: background-color 0.3s;
+    margin-top : 5px;
+    height: fit-content;
+    width: fit-content;
+
+    &:hover {
+      background-color: darken(#e74c3c, 10%);
+      cursor: pointer;
+    }
+  }
+}
+
 .sidebar-btn {
   width: 100%;
   padding: 15px;
@@ -227,23 +256,6 @@
 .hint-input:focus {
   border-color: $primary-blue-bg;
   box-shadow: 0 0 5px $primary-blue-bg;
-}
-
-.delete-btn {
-  background: $primary-delete-btn;
-  border: none;
-  width: fit-content;
-  border-radius: 6px;
-  padding: 10px 20px;
-  color: $primary-btn-white-text;
-  cursor: pointer;
-  font-size: 14px;
-  transition: background-color 0.3s;
-  box-shadow: $primary-box-shadow;
-}
-
-.delete-btn:hover {
-  background-color: $primary-btn-delete-hover;
 }
 
 

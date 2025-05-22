@@ -59,8 +59,7 @@
         <app-quiz-stats></app-quiz-stats>
       </div>
 
-      <div *ngIf="activeSection === 'quiz'" class="select-quiz-container">
-        <span class="select-quiz-title">Selectionner un quiz</span>
+      <div *ngIf="activeSection === 'quiz'">
         <app-quiz-app [context]="'admin'" (quiz_launched)="setSection('quiz')" ></app-quiz-app>
       </div>
 

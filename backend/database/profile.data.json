@@ -34,7 +34,7 @@
     "SHOW_POP_UP_TIMER": 15000,
     "REMOVE_WRONG_ANSWER_INTERVAL": 5000,
     "NUMBER_OF_ANSWERS_DISPLAYED": 3,
-    "SHOW_HINT_TIMER": 5,
+    "SHOW_HINT_TIMER": "15000",
     "NUMBER_OF_HINTS_DISPLAYED": 0,
     "profilePicture": "empty_path"
   },
@@ -47,7 +47,7 @@
     "SHOW_POP_UP_TIMER": 15000,
     "REMOVE_WRONG_ANSWER_INTERVAL": 10000,
     "NUMBER_OF_ANSWERS_DISPLAYED": 3,
-    "SHOW_HINT_TIMER": 5,
+    "SHOW_HINT_TIMER": "10000",
     "NUMBER_OF_HINTS_DISPLAYED": "4",
     "profilePicture": "empty_path"
   },
@@ -99,7 +99,20 @@
     "HINT_DISPLAY_TIME_OUT_DURATION": 5000,
     "REMOVE_WRONG_ANSWER_INTERVAL": 10000,
     "NUMBER_OF_ANSWERS_DISPLAYED": 4,
-    "SHOW_HINT_TIMER": 5,
+    "SHOW_HINT_TIMER": "15000",
+    "NUMBER_OF_HINTS_DISPLAYED": 5,
+    "profilePicture": "empty_path"
+  },
+  {
+    "id": 1747691387848,
+    "name": "Zinedine",
+    "lastName": "Zizou",
+    "role": "user",
+    "SHOW_POP_UP_TIMER": 15000,
+    "HINT_DISPLAY_TIME_OUT_DURATION": 5000,
+    "REMOVE_WRONG_ANSWER_INTERVAL": 10000,
+    "NUMBER_OF_ANSWERS_DISPLAYED": 4,
+    "SHOW_HINT_TIMER": 5000,
     "NUMBER_OF_HINTS_DISPLAYED": 5,
     "profilePicture": "empty_path"
   }

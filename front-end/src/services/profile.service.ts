@@ -40,8 +40,7 @@ export class ProfileService {
   public async createProfile(
     name: string,
     lastName: string,
-    profilePicture: string = "empty_path",
-    birthDate: string = ""
+    profilePicture: string = "empty_path"
   ): Promise<void> {
     try {
       const newProfile: Profile = {
@@ -55,8 +54,7 @@ export class ProfileService {
         NUMBER_OF_ANSWERS_DISPLAYED: 4,
         SHOW_HINT_TIMER: 5000,
         NUMBER_OF_HINTS_DISPLAYED: 5,
-        profilePicture: profilePicture,
-        birthDate: birthDate
+        profilePicture: profilePicture
       };
 
       this.http.post(this.apiUrl, newProfile).subscribe({

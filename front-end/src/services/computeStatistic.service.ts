@@ -19,14 +19,16 @@ export class ComputeStatisticService {
   }
 
   public getAverageTime(questionResults: QuestionResult[]) {
+    if(questionResults.length === 0) return 0;
     let totalTime = 0;
     questionResults.forEach(element => {
       totalTime += element.timeSpent;
     });
-    return Math.floor(totalTime / questionResults.length)
+    return Math.round((totalTime / questionResults.length)/1000)
   }
 
   public getAverageHintUsed(questionResults: QuestionResult[]): number {
+     if(questionResults.length === 0) return 0;
     let numberOfHintsUsed = 0;
     questionResults.forEach(element => {
       numberOfHintsUsed += element.numberOfHintsUsed;
@@ -36,6 +38,7 @@ export class ComputeStatisticService {
 
 
   public getAverageNumberOfTries(questionResults: QuestionResult[]): number {
+     if(questionResults.length === 0) return 0;
     let numberOfAnswersSubmitted = 0;
     questionResults.forEach(element => {
       numberOfAnswersSubmitted += element.answerIds.length;
@@ -44,6 +47,7 @@ export class ComputeStatisticService {
   }
 
   public getTotalHintUsed(questionResults: QuestionResult[]): number {
+    
     let hintCounter: number = 0;
     questionResults.forEach(element => {
       hintCounter += element.numberOfHintsUsed;
@@ -67,6 +71,7 @@ export class ComputeStatisticService {
   }
 
   public getPercentages(score: number, numberOfQuestions: number): number {
+    if(numberOfQuestions === 0) return 0;
     return Math.floor((score / numberOfQuestions) * 100);
   }
 
@@ -136,7 +141,7 @@ export class ComputeStatisticService {
     if (quizResults.length === 0) return 0;
     let numberOfQuestion = this.getTotalNumberOfQuestion(quizResults);
     let totalTimeSpent = this.getTotalTimeSpent(quizResults)
-    return Math.floor(totalTimeSpent / numberOfQuestion);
+    return Math.round((totalTimeSpent / numberOfQuestion)/1000);
   }
 
   public getPercentageOfCorrectAnswer(quizResults: QuizResult[]): number {
@@ -183,10 +188,7 @@ export class ComputeStatisticService {
   }
 
   getYearsPlayed(quizResults:QuizResult[]):number[]{
-    let yearPlayed:number[] = []
-    quizResults.forEach((quizResults) => {
-      yearPlayed.push(new Date(quizResults.dateDebut).getFullYear());
-    })
+    const yearPlayed = [...new Set(quizResults.map(r => new Date(r.dateDebut).getFullYear()))];
     let currentYear:number  =new Date(Date.now()).getFullYear();
     if(!yearPlayed.includes(currentYear)) yearPlayed.push(currentYear)
     return yearPlayed;
@@ -212,5 +214,28 @@ export class ComputeStatisticService {
     })
     return Math.round(attempsCounter/quizResults.length)
   }
+
+  countAllAnswersAtIndex(index: number, questionResults: QuestionResult[], answerId: number): number {
+  let count = 0;
+
+  questionResults.forEach((qr) => {
+    if (index <= 2) {
+      if (qr.answerIds.length > index && qr.answerIds[index] === answerId) {
+        count++;
+      }
+    } else {
+      // On cherche si l'answerId apparaît dans une position supérieure à 3
+      const hasMatchAfterIndex3 = qr.answerIds
+        .slice(4) // positions 4 et au-delà
+        .includes(answerId);
+
+      if (hasMatchAfterIndex3) {
+        count++;
+      }
+    }
+  });
+
+  return count;
+}
 
 }

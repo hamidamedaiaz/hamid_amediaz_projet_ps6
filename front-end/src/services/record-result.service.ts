@@ -58,7 +58,7 @@ export class RecordResultService {
 
   public setNumberOfHintsUsed(questionId: number, numberOfHintsUsed: number) {
     console.log(questionId," - ", numberOfHintsUsed)
-    if (questionId !== -1) {
+    if (questionId !== -1 && numberOfHintsUsed > this.quizResult.questionResults[questionId].numberOfHintsUsed) {
       this.quizResult.questionResults[questionId].numberOfHintsUsed = numberOfHintsUsed;
     }
   }

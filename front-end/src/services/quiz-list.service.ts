@@ -32,7 +32,11 @@ export class QuizListService {
   }
 
   public RequestEditQuizzes(q: Quiz): void {
+
+    this.isQuizCorrect(q);
+
     console.log("[SERVER REQUEST] - Request edition : ", q)
+
     this.http.post<Quiz>(this.apiUrl, q).subscribe({
       next: (res) => {
         console.log("[SERVER RESPONSE] - ", res)
@@ -50,6 +54,28 @@ export class QuizListService {
       questions: []
     };
     this.selectedEditQuiz$.next(newQuiz);
+  }
+
+
+  public isQuizCorrect(q : Quiz) : void{
+    if(q.questions.length == 0){
+      throw new Error("Quiz lenght error");
+    }
+    q.questions.forEach(q => {
+
+      if(q.question.length == 0){
+        throw new Error("Question title incorrect");
+      }
+      let correctAnswerCount = 0;
+      q.answers.forEach(a => {
+        if(a.isCorrect){
+          correctAnswerCount+=1;
+        }
+      })
+      if(correctAnswerCount == 0){
+        throw new Error("No correct answer in a question");
+      }
+    })
   }
 
   public selectQuizForEdition(quiz: Quiz): void {
