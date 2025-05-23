@@ -3,6 +3,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { QuizResult } from '../models/quiz-result.model';
 import { HttpClient } from '@angular/common/http';
 import { QUIZ_RESULT_EMPTY } from 'src/mocks/quiz-results.mock';
+import { ProfileService } from './profile.service';
+import { Profile } from 'src/models/profile.model';
 
 
 export interface MonthlyStatsData {
@@ -25,7 +27,7 @@ export class QuizResultService {
   public results$: BehaviorSubject<QuizResult[]> = new BehaviorSubject<QuizResult[]>([]);
 
   constructor(
-    private http: HttpClient) {
+    private http: HttpClient, private profileService:ProfileService) {
     this.requestResult()
   }
 
@@ -67,6 +69,14 @@ export class QuizResultService {
         console.error(`Failed to create Quiz Result ${quizResult.id} - ${err}`);
       }
     })
+  }
+
+  getProfilesInSession(sessionId:number){
+    const profileIds:number[] = []
+    this.allResults.filter((quizResult) => {
+      if(quizResult.sessionId === sessionId) profileIds.push(quizResult.profileId);
+    })    
+    return this.profileService.getProfiles(profileIds);
 
   }
   

@@ -9,6 +9,5 @@ export interface Profile {
     REMOVE_WRONG_ANSWER_INTERVAL: number,
     NUMBER_OF_ANSWERS_DISPLAYED:number,
     NUMBER_OF_HINTS_DISPLAYED:number,
-    profilePicture:string,
-    birthDate?: string;
+    profilePicture:string
 }

@@ -11,6 +11,8 @@ import { QuestionResult } from 'src/models/question-result.model';
 import { QuizResultHeaderComponent } from 'src/app/components/admin/admin_statistics/quiz-results/quiz-result-header/quiz-result-header.component';
 import { QuizResultInfoComponent } from 'src/app/components/admin/admin_statistics/quiz-results/quiz-result-info/quiz-result-info.component';
 import { QuizResultQuestionsComponent } from 'src/app/components/admin/admin_statistics/quiz-results/quiz-result-questions/quiz-result-questions.component';
+import { QuizPlayersListComponent } from 'src/app/components/admin/admin_statistics/quiz-results/quiz-players-list/quiz-players-list.component';
+import { QuizDetailsComponent } from 'src/app/components/admin/admin_statistics/quiz-details/quiz-details.component';
 import { ComputeStatisticService } from 'src/services/computeStatistic.service';
 import { StatsService } from 'src/services/stats.service';
 import { QUIZ_RESULT_EMPTY } from 'src/mocks/quiz-results.mock';
@@ -23,7 +25,9 @@ import { QUIZ_RESULT_EMPTY } from 'src/mocks/quiz-results.mock';
     RouterLink,
     QuizResultHeaderComponent,
     QuizResultInfoComponent,
-    QuizResultQuestionsComponent
+    QuizResultQuestionsComponent,
+    QuizPlayersListComponent,
+    QuizDetailsComponent
   ],
   templateUrl: './quiz-result-details.component.html',
   styleUrl: './quiz-result-details.component.scss'
@@ -36,6 +40,7 @@ export class QuizResultDetailsComponent {
   private quizSessionId: number = -1;
   private quizId: number = -1;
   private quiz!: Quiz;
+  private isQuizMulti:Boolean = false;
 
   @Output()
   go_back:EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -44,7 +49,7 @@ export class QuizResultDetailsComponent {
     private statsService: StatsService,
     private profileService: ProfileService,
     private quizListService: QuizListService,
-    private QuizResultService: QuizResultService
+    private quizResultService: QuizResultService
   ) {
     //RETRIEVE USER ID AND QUIZ ID
     this.statsService.quizResultId$.subscribe((quizResultId) => this.quizSessionId = quizResultId); //quizSessionId
@@ -52,12 +57,20 @@ export class QuizResultDetailsComponent {
 
     //SAVE THEIRS INFORMATIONS
 
-    this.quizResult = this.QuizResultService.getQuizResult(this.quizSessionId) // this.quizResultService.getQuizResultById(this.quizSessionId);
+    this.quizResult = this.quizResultService.getQuizResult(this.quizSessionId) // this.quizResultService.getQuizResultById(this.quizSessionId);
+
+    if(this.quizResult.gamemode.id === 1){
+      this.isQuizMulti = true;
+    }
 
     this.profileService.getProfile(this.profileId).subscribe((profile) => this.profile = profile);
 
     this.quiz = this.quizListService.getQuiz(this.quizResult!.quizId)
-    
+  }
+
+  public getProfileListFromQuizResult(){
+    if(this.quizResult) return this.quizResultService.getProfilesInSession(this.quizResult.sessionId)
+    return [];
   }
 
 
@@ -70,7 +83,7 @@ export class QuizResultDetailsComponent {
 
   getDateDebut() { return this.quizResult!.dateDebut; }
 
-  navigateBack() { 
+  navigateBack() {
     this.go_back.emit(true);
   }
 

@@ -474,21 +474,20 @@ app-profile-list {
   flex-grow: 1;
   overflow-y: auto;
   display: grid;
-  padding-top: 10px;
-  padding-left: 10px;
-  grid-template-columns: repeat(auto-fit, 250px);
-  grid-template-rows: repeat(auto-fit, 160px);
-  gap: 20px;
-  padding-right: 10px;
-  background-color: rgba(#FFFFFF, 0.9);
-  border-radius: 10px;
+  grid-template-columns: repeat(auto-fit, 30vh);
+  grid-template-rows: repeat(auto-fit, 16vh);
+  justify-content: center;
+  gap: 2vh;
+  padding: 2vh;
+  background-color: #f8f8f8;
+  border-radius: 1vh;
 }
 
 
 .profile-card {
   background-color: $primary-white-bg;
-  border-radius: 10px;
-  padding: 20px;
+  border-radius: 1vh;
+  padding: 1.5vh;
   box-shadow: $primary-box-shadow;
   display: flex;
   flex-direction: column;
@@ -503,12 +502,12 @@ app-profile-list {
 }
 
 .profile-card-avatar {
-  margin-bottom: 15px;
+  margin-bottom: 1.5vh;
 }
 
 .profile-img {
-  width: 80px;
-  height: 80px;
+  width: 8vh;
+  height: 8vh;
   border-radius: 50%;
   background-size: cover;
   background-position: center;
@@ -516,21 +515,21 @@ app-profile-list {
 }
 
 .profile-initials {
-  width: 80px;
-  height: 80px;
+  width: 8vh;
+  height: 8vh;
   border-radius: 50%;
   background-color: $primary-blue-bg;
   color: $primary-white-text;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 24px;
+  font-size: 2.5vh;
   font-weight: bold;
 }
 
 .profile-card-name {
   text-align: center;
-  font-size: 16px;
+  font-size: 1.5vh;
   font-weight: 500;
   color: $primary-black-text;
 }

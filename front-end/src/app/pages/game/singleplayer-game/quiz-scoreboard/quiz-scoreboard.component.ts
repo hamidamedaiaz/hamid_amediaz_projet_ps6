@@ -19,7 +19,7 @@ export class QuizScoreboardComponent implements OnInit {
   public fontSize:string= '';
 
   constructor(
-    private router: Router, 
+    private router: Router,
     private QuizService: QuizService, private currentProfileService:CurrentProfileService) {
     this.score = this.QuizService.getScore();
     this.maxPoint = this.QuizService.getNumberOfQuestions();
@@ -40,22 +40,22 @@ export class QuizScoreboardComponent implements OnInit {
 
   triggerConfetti(): void {
 
-    // :) 
+    // :)
 
     // @ts-ignore
     const confetti = window.confetti;
     if (typeof confetti === 'function') {
       confetti({
         particleCount: 1000,
-        spread: 700000,
-        origin: { y:0.5}
+        spread: 180,
+        origin: { y:0.4}
       });
-      
+
       setTimeout(() => {
         confetti({
           particleCount: 1000,
           spread: 100,
-          origin: { y:0.6 }
+          origin: { y:0.5 }
         });
       }, 700);
     }
@@ -72,5 +72,5 @@ export class QuizScoreboardComponent implements OnInit {
     this.QuizService.resetCurrentQuiz();
     this.router.navigate(["/"]);
   }
-  
+
 }

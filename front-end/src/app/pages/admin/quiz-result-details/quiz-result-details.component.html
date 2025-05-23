@@ -1,14 +1,18 @@
 <div class="quiz-result-container" *ngIf="getQuiz() && getProfile()">
   <app-quiz-result-header (goBack)="navigateBack()"></app-quiz-result-header>
-  
+
   <app-quiz-result-info
     [quiz]="getQuiz()"
     [profile]="getProfile()"
     [questionResults]="getQuestionResults()"
     [date]="getDateDebut()">
   </app-quiz-result-info>
-  
+
+  <!-- ngIf si le quiz est en groupe TODO -->
+  <!-- <app-quiz-details [activeTab]="answers" (tabChange)="setActiveTab($event)"></app-quiz-details> -->
+  <app-quiz-details></app-quiz-details>
   <app-quiz-result-questions [quiz]="getQuiz()" [questionResults]="getQuestionResults()" class="quiz-result-questions"></app-quiz-result-questions>
+  <app-quiz-players-list [profileList]="getProfileListFromQuizResult()"></app-quiz-players-list>
 </div>
 
 <div class="loading-container" *ngIf="!getQuiz() || !getProfile()">

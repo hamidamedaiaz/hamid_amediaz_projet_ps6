@@ -86,6 +86,11 @@ export class ProfileService {
   });
 }
 
+getProfiles(profileIds: number[]): Profile[] {
+    return this.profiles.filter(profile => profileIds.includes(profile.id));
+}
+
+
 // On return un Observable pour gérer le cas ou la base de donnée met du tps à retourner le profile 
 // Comme await/async
 // Implique que l'on se subscribe à cette donnée pour obtenir ce contenu
@@ -98,6 +103,12 @@ export class ProfileService {
       })
     );
   }
+
+  // getProfile(profileId:number):Profile{
+  //   const profile = this.profiles.find((profile) => profile.id === profileId)
+  //   if(profile)  return profile
+  //   return GUEST_PROFILE;
+  // }
 
 
   public deleteProfile(profileId: number): void {

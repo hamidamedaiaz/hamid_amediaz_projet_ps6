@@ -44,14 +44,14 @@
 }
 
 #leave-btn{
-  position: absolute;
+  position: fixed;
   left: 5vh;
   bottom: 5vh;
   z-index: 15;
 }
 
 .select-quiz-container{
-  width: 90%;
+  width: 80%;
   height: 85%;
   position: absolute;
   padding: 0vh 2vw 3vh 2vw;
