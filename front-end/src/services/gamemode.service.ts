@@ -45,10 +45,12 @@ export class GamemodeService {
     }
 
     playSolo(){
-      console.log(this.currentProfileService.getCurrentProfile(), " is playing singleplayer");
-      this.setCurrentGamemode(0)
-      this.router.navigate(['/select-quiz']);
-    }
+  console.log(this.currentProfileService.getCurrentProfile(), " is playing singleplayer");
+  this.setCurrentGamemode(0)
+  
+  ///  on  Rediriger vers le tutorial au lieu de select-quiz directement
+  this.router.navigate(['/solo-tutorial']);
+}
 
     playMulti(){
       console.log(this.currentProfileService.getCurrentProfile(), " is playing multiplayer");

@@ -11,10 +11,11 @@
 #quiz-creation-right-container {
   width: 34%;
   height: 100%;
-  background-color: $primary-white-bg;
+  background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
   padding: 2%;
   box-sizing: border-box;
-  border-right: $primary-border-black;
+  border-right: 1px solid #e9ecef;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
   position: relative;
 }
 
@@ -312,4 +313,30 @@
 .audio-upload-label input[type="file"] {
   // on enleve le parcourir les fichier qui est moche
   display: none;
+}
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 10px;
+}
+
+.save-question-btn {
+  background-color: $primary-blue-btn;
+  color: $primary-btn-white-text;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: $primary-box-shadow;
+  white-space: nowrap;
+
+  &:hover {
+    background-color: $primary-btn-blue-hover;
+    transform: translateY(-1px);
+  }
 }

@@ -36,8 +36,12 @@
     <div id="quiz-creation-section">
       <!-- Section de création de question -->
       <div id="question-section">
-        <h2 class="title-quiz-template">Question :</h2>
-        <div class="question-with-audio" *ngIf="this.selectedQuestion.question != null">
+     <div class="question-header">
+  <h2 class="title-quiz-template">Question :</h2>
+  <button class="save-question-btn" (click)="saveQuestion()" title="Sauvegarder cette question">
+    💾 Sauvegarder
+  </button>
+          </div>        <div class="question-with-audio" *ngIf="this.selectedQuestion.question != null">
           <input type="text" class="question-input" placeholder="Entrez la question..."
             [(ngModel)]="this.selectedQuestion.question">
 

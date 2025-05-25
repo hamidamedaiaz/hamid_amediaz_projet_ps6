@@ -15,6 +15,7 @@ import { QuizScoreboardComponent } from './pages/game/singleplayer-game/quiz-sco
 import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.component';
 import { AnswerSubmittedPageComponent } from './pages/game/multiplayer-game/answer-submitted-page/answer-submitted-page.component';
 import { QuizMultiplayerScoreboardComponent } from './pages/game/multiplayer-game/quiz-multiplayer-scoreboard/quiz-multiplayer-scoreboard.component';
+import { SoloTutorialComponent } from './pages/game/solo-tutorial/solo-tutorial.component';
 
 
 const routes: Routes = [
@@ -33,6 +34,8 @@ const routes: Routes = [
   {path:'quiz-scoreboard',component:QuizScoreboardComponent},
   {path: 'answer-submitted', component:AnswerSubmittedPageComponent},
   {path: 'quiz-multiplayer-scoreboard', component:QuizMultiplayerScoreboardComponent},
+  {path:'solo-tutorial', component: SoloTutorialComponent},
+
 
 
   {path:'**',component: NotFoundPageComponent},

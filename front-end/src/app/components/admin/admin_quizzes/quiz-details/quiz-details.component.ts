@@ -38,6 +38,18 @@ export class QuizDetailsComponent implements OnChanges {
     duration : 5000
   }
 
+  questionSavedPopup: Popup = {
+  message : "Question sauvegardée",
+  type : "success",
+  duration : 3000
+}
+
+questionErrorPopup: Popup = {
+  message : "Erreur lors de la sauvegarde de la question",
+  type : "error",
+  duration : 5000
+}
+
   constructor(private quizService: QuizListService, private popUpService : PopUpService) {}
 
   ngOnChanges(changes: SimpleChanges) {
@@ -133,4 +145,31 @@ export class QuizDetailsComponent implements OnChanges {
     return index;
   }
 
+saveQuestion() {
+  if (!this.selectedQuestion) {
+    this.popUpService.sendPopup({
+      message: "Aucune question sélectionnée",
+      type: "warning",
+      duration: 3000
+    });
+    return;
+  }
+
+  try {
+    //on  Mettre à jour la question dans le quiz
+    this.quizCopy.questions[this.currentQuestionIndex] = { ...this.selectedQuestion };
+    
+    // on Utiliser la validation existante du service
+    this.quizService.isQuizCorrect(this.quizCopy);
+    
+    // laors Sauvegarder le quiz complet
+    this.quizService.RequestEditQuizzes(this.quizCopy);
+    this.popUpService.sendPopup(this.questionSavedPopup);
+    console.log("Question sauvegardée :", this.selectedQuestion);
+  }
+  catch(err) {
+    this.popUpService.sendPopup(this.questionErrorPopup);
+    console.log("ERROR SAVING QUESTION:", err);
+  }
+}
 }
