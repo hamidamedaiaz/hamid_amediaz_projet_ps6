@@ -1,6 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ProfileService } from 'src/services/profile.service';
 import { QuizResultService } from 'src/services/quiz-result.service';
 import { Profile } from 'src/models/profile.model';
@@ -20,7 +19,6 @@ import { QuizResult } from 'src/models/quiz-result.model';
   standalone: true,
   imports: [
     CommonModule,
-    RouterLink,
     PlayerStatsHeaderComponent,
     PlayerStatsOverviewComponent,
     PlayerStatsTherapyMetricsComponent,
@@ -33,7 +31,7 @@ import { QuizResult } from 'src/models/quiz-result.model';
   styleUrl: './player-stats-details.component.scss'
 })
 
-export class PlayerStatsDetailsComponent { //implements OnInit {
+export class PlayerStatsDetailsComponent {
   profile: Profile = GUEST_PROFILE;
 
   totalGames: number = 0;
@@ -61,14 +59,14 @@ export class PlayerStatsDetailsComponent { //implements OnInit {
 
   public activeYear: number = -1
 
-  public quizResultsOfTheYear:{ [month: string]: QuizResult[]; } = {};
+  public quizResultsOfTheYear: { [month: string]: QuizResult[]; } = {};
 
   constructor(
     private profileService: ProfileService,
     private quizResultService: QuizResultService,
     private statsService: StatsService,
     private computeStatisticService: ComputeStatisticService,
-    
+
   ) {
     this.isQuizSelected = false;
     this.activeYear = new Date(Date.now()).getFullYear();
@@ -79,13 +77,12 @@ export class PlayerStatsDetailsComponent { //implements OnInit {
 
     this.quizResultService.results$.subscribe(() => {
       this.quizResults = this.quizResultService.getQuizResultsByProfile(this.profileId);
+      this.quizResultsOfTheYear = this.getQuizResultsOfTheYear(); // initialize par defaut les données de l'année en cours
     })
 
     this.profileService.getProfile(this.profileId).subscribe((profile) => this.profile = profile);
 
-    this.quizResultsOfTheYear = this.getQuizResultsOfTheYear(); // initialize par defaut les données de l'année en cours
   }
-
 
   getQuizResultsOfTheYear() {
     return this.computeStatisticService.getDataPerMonth(this.quizResults, this.activeYear)

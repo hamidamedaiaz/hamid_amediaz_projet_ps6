@@ -684,27 +684,5 @@
         "audioPath": ""
       }
     ]
-  },
-  {
-    "id": 1747327081034,
-    "title": "Nouveau Quiz",
-    "questions": [
-      {
-        "id": 1,
-        "question": "Nouvelle Question",
-        "answers": [
-          {
-            "questionId": 1,
-            "id": 1,
-            "answerContent": "Réponse A",
-            "isCorrect": true
-          }
-        ],
-        "hints": [
-          "Ind"
-        ],
-        "audioPath": ""
-      }
-    ]
   }
 ]

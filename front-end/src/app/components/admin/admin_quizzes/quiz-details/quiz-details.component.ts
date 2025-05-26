@@ -131,14 +131,21 @@ questionErrorPopup: Popup = {
     this.quizSaved.emit(this.quizCopy);
   }
 
-  deleteQuestion() {
-    this.quizCopy.questions.splice(this.currentQuestionIndex, 1);
+  deleteQuestion(index : number) {
+
+
+    //Si l'utilisateur supprime la question actuellement séléctionné
+    if(this.selectedQuestion == this.quizCopy.questions[index]){
+      this.selectedQuestion = null;
+    }
+
+    this.quizCopy.questions.splice(index, 1);
     this.popUpService.sendPopup({
       message : "Question supprimé",
       type:"success",
       duration : 2500
     });
-    this.selectedQuestion = null;
+
   }
 
   trackByIndex(index: number, item: any): number {
@@ -158,10 +165,10 @@ saveQuestion() {
   try {
     //on  Mettre à jour la question dans le quiz
     this.quizCopy.questions[this.currentQuestionIndex] = { ...this.selectedQuestion };
-    
+
     // on Utiliser la validation existante du service
     this.quizService.isQuizCorrect(this.quizCopy);
-    
+
     // laors Sauvegarder le quiz complet
     this.quizService.RequestEditQuizzes(this.quizCopy);
     this.popUpService.sendPopup(this.questionSavedPopup);

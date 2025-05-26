@@ -17,7 +17,6 @@ import { CommonModule } from '@angular/common';
 export class PlayerStatsOverviewComponent {
 
   @Input() totalGames: number = 0;
-
   @Input() bestScore: number = 0;
   @Input() averageScore: number = 0;
 

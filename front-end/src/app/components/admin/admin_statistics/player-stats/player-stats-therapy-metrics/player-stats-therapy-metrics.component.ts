@@ -39,8 +39,11 @@ export class PlayerStatsTherapyMetricsComponent implements OnInit {
     this.averageTimeSpent = this.computeStatisticService.getAverageTotalTimeSpent(this.quizResults)
     this.correctAnswersPercent = this.computeStatisticService.getPercentageOfCorrectAnswer(this.quizResults);
     this.incorrectAnswersPercent = this.computeStatisticService.getPercentageOfIncorrectAnswer(this.quizResults);
-       this.calculateTrends();
-
+    console.log("hints ", this.totalHintsUsed)
+    console.log("time: ", this.averageTimeSpent)
+    console.log("correct_answer: ", this.correctAnswersPercent)
+    console.log("incorrect answers: ", this.incorrectAnswersPercent)
+    this.calculateTrends();
   }
 
   public getTotalHints() { return this.totalHintsUsed }
@@ -56,18 +59,14 @@ export class PlayerStatsTherapyMetricsComponent implements OnInit {
     const { currentMonthResults, previousMonthResults } = this.getMonthlyResults();
 
     /// je supose que si  c'est sa premier mois donc les donnee sont des 0
-    const currentHints = currentMonthResults.length > 0 
-      ? this.computeStatisticService.getAverageTotalHintsUsed(currentMonthResults) 
-      : 0;
-    const currentTime = currentMonthResults.length > 0 
-      ? this.computeStatisticService.getAverageTotalTimeSpent(currentMonthResults) 
-      : 0;
-    const currentCorrect = currentMonthResults.length > 0 
-      ? this.computeStatisticService.getPercentageOfCorrectAnswer(currentMonthResults) 
-      : 0;
-    const currentIncorrect = currentMonthResults.length > 0 
-      ? this.computeStatisticService.getPercentageOfIncorrectAnswer(currentMonthResults) 
-      : 0;
+    const currentHints = currentMonthResults.length > 0 ?
+      this.computeStatisticService.getAverageTotalHintsUsed(currentMonthResults) : 0;
+    const currentTime = currentMonthResults.length > 0 ?
+      this.computeStatisticService.getAverageTotalTimeSpent(currentMonthResults) : 0;
+    const currentCorrect = currentMonthResults.length > 0 ?
+      this.computeStatisticService.getPercentageOfCorrectAnswer(currentMonthResults) : 0;
+    const currentIncorrect = currentMonthResults.length > 0 ?
+      this.computeStatisticService.getPercentageOfIncorrectAnswer(currentMonthResults) : 0;
 
     /// Calculer les valeurs précédentes ou 0 si ya pas de donnees mois precedent
     const previousHints = previousMonthResults.length > 0 

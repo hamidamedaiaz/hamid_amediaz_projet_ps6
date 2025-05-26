@@ -7,15 +7,11 @@ import { QuizResultService } from 'src/services/quiz-result.service';
 import { Quiz } from 'src/models/quiz.model';
 import { Profile } from 'src/models/profile.model';
 import { QuizResult } from 'src/models/quiz-result.model';
-import { QuestionResult } from 'src/models/question-result.model';
 import { QuizResultHeaderComponent } from 'src/app/components/admin/admin_statistics/quiz-results/quiz-result-header/quiz-result-header.component';
 import { QuizResultInfoComponent } from 'src/app/components/admin/admin_statistics/quiz-results/quiz-result-info/quiz-result-info.component';
 import { QuizResultQuestionsComponent } from 'src/app/components/admin/admin_statistics/quiz-results/quiz-result-questions/quiz-result-questions.component';
 import { QuizPlayersListComponent } from 'src/app/components/admin/admin_statistics/quiz-results/quiz-players-list/quiz-players-list.component';
-import { QuizDetailsComponent } from 'src/app/components/admin/admin_statistics/quiz-details/quiz-details.component';
-import { ComputeStatisticService } from 'src/services/computeStatistic.service';
 import { StatsService } from 'src/services/stats.service';
-import { QUIZ_RESULT_EMPTY } from 'src/mocks/quiz-results.mock';
 
 @Component({
   selector: 'app-quiz-result-details',
@@ -27,7 +23,6 @@ import { QUIZ_RESULT_EMPTY } from 'src/mocks/quiz-results.mock';
     QuizResultInfoComponent,
     QuizResultQuestionsComponent,
     QuizPlayersListComponent,
-    QuizDetailsComponent
   ],
   templateUrl: './quiz-result-details.component.html',
   styleUrl: './quiz-result-details.component.scss'
@@ -38,12 +33,12 @@ export class QuizResultDetailsComponent {
   private profile!: Profile;
   private quizResult: QuizResult | null = null;
   private quizSessionId: number = -1;
-  private quizId: number = -1;
   private quiz!: Quiz;
-  private isQuizMulti:Boolean = false;
+  public isQuizMulti: Boolean = true;
+  public activeTab: string = "questions"
 
   @Output()
-  go_back:EventEmitter<boolean> = new EventEmitter<boolean>();
+  go_back: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(
     private statsService: StatsService,
@@ -57,19 +52,17 @@ export class QuizResultDetailsComponent {
 
     //SAVE THEIRS INFORMATIONS
 
-    this.quizResult = this.quizResultService.getQuizResult(this.quizSessionId) // this.quizResultService.getQuizResultById(this.quizSessionId);
+    this.quizResult = this.quizResultService.getQuizResult(this.quizSessionId) //this.quizResultService.getQuizResultById(this.quizSessionId);
 
-    if(this.quizResult.gamemode.id === 1){
-      this.isQuizMulti = true;
-    }
+    this.quizResult.gamemode.id === 1 ? this.isQuizMulti = true : this.isQuizMulti = false;
 
     this.profileService.getProfile(this.profileId).subscribe((profile) => this.profile = profile);
 
     this.quiz = this.quizListService.getQuiz(this.quizResult!.quizId)
   }
 
-  public getProfileListFromQuizResult(){
-    if(this.quizResult) return this.quizResultService.getProfilesInSession(this.quizResult.sessionId)
+  public getProfileListFromQuizResult() {
+    if (this.quizResult) return this.quizResultService.getProfilesInSession(this.quizResult.sessionId)
     return [];
   }
 
@@ -83,8 +76,10 @@ export class QuizResultDetailsComponent {
 
   getDateDebut() { return this.quizResult!.dateDebut; }
 
-  navigateBack() {
-    this.go_back.emit(true);
-  }
+  setActiveTab(tabName: string) { if (tabName === 'questions' || tabName === 'players') this.activeTab = tabName }
+
+  navigateBack() { this.go_back.emit(true); }
 
 }
+
+

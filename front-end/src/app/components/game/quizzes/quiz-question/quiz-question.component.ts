@@ -14,6 +14,7 @@ import { QuizQuestionHeaderComponent } from '../quiz-question-header/quiz-questi
 import { QuizQuestionPopUpComponent } from '../quiz-question-pop-up/quiz-question-pop-up.component';
 import { QuizAnswersComponent } from '../quiz-answers/quiz-answers.component';
 import { RecordResultService } from 'src/services/record-result.service';
+import { MultiPlayerInGameListComponent } from '../../multiplayer/multi-player-in-game-list/multiplayer-in-game-list.component';
 
 
 @Component({
@@ -25,6 +26,7 @@ import { RecordResultService } from 'src/services/record-result.service';
     QuizHintsComponent,
     QuizQuestionHeaderComponent,
     QuizQuestionPopUpComponent,
+    MultiPlayerInGameListComponent,
     QuizAnswersComponent],
   templateUrl: './quiz-question.component.html',
   styleUrl: './quiz-question.component.scss'
@@ -60,6 +62,8 @@ export class QuizQuestionComponent {
 
   private startTimeDate: number = -1;
 
+  public isInteractionDisabled: boolean = false;
+
 
   constructor(private router: Router,
     private currentProfileService: CurrentProfileService,
@@ -67,12 +71,14 @@ export class QuizQuestionComponent {
     private gamemodeService: GamemodeService,
     private recordResultService: RecordResultService) {
 
+    this.startTimeDate = Date.now();
+
     this.currentProfileService.current_profile$.subscribe((profile) => {
       this.SHOW_POP_UP_TIMER = profile.SHOW_POP_UP_TIMER;
     })
 
     this.quizService.retrieveData$.subscribe((data) => {
-      if(data) this.recordResultService.setTimeSpent(this.quizService.questionId, Date.now() - this.startTimeDate)
+      if (data) this.recordResultService.setTimeSpent(this.quizService.questionId, Date.now() - this.startTimeDate)
     })
 
     this.quizService.question$.subscribe((question) => {
@@ -153,9 +159,10 @@ export class QuizQuestionComponent {
   public submitCorrectAnswer() {
     if (this.gamemodeService.getCurrentGamemode().id === 0) {
       this.showCorrectEffect = true;
-
+      this.isInteractionDisabled = true;
       setTimeout(() => {
         this.showCorrectEffect = false;
+        this.isInteractionDisabled = false;
       }, this.CORRECT_ANSWER_DELAY);
     }
     else if (this.gamemodeService.getCurrentGamemode().id === 1) {
@@ -179,15 +186,20 @@ export class QuizQuestionComponent {
   }
 
   public nextQuestion() {
-    this.wrongAnswers = [];
-    this.clearHintTimeOut();
-    this.quizService.nextQuestion();
+    console.log("question suivante : ", this.isInteractionDisabled)
+    if (!this.isInteractionDisabled) {
+      this.wrongAnswers = [];
+      this.clearHintTimeOut();
+      this.quizService.nextQuestion();
+    }
   }
 
   public validateQuestion() {
     if (this.gamemodeService.getCurrentGamemode().id == 0) {
+      this.isInteractionDisabled = true;
       setTimeout(() => {
         this.nextQuestion();
+        this.isInteractionDisabled = false;
       }, this.CORRECT_ANSWER_DELAY);
     }
   }

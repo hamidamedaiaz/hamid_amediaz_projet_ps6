@@ -1,10 +1,11 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { StatsService } from 'src/services/stats.service';
 
 
 
 @Component({
-    
+
   selector: 'app-quiz-result-header',
   standalone: true,
   imports: [CommonModule],
@@ -14,9 +15,16 @@ import { CommonModule } from '@angular/common';
 })
 export class QuizResultHeaderComponent {
   title: string = 'Résultat du Quiz';
-   @Output() goBack = new EventEmitter();
+  @Output() goBack = new EventEmitter();
+
+  constructor(private statsService:StatsService){}
   
-  goback() : void {
+  goback(): void {
     this.goBack.emit()
+  }
+
+  deleteQuizResult() {
+    this.goback();
+    this.statsService.deleteQuizResult();
   }
 }

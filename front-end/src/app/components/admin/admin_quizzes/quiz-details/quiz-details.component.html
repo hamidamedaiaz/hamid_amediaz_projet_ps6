@@ -13,7 +13,7 @@
         <button class="sidebar-btn" (click)="selectQuestion(i)">
           {{ question.question }}
         </button>
-        <button class="delete-btn" (click)="deleteQuestion()"><img src="assets/icons/delete.png" width="24" height="24"></button>
+        <button class="delete-btn" (click)="deleteQuestion(i)"><img src="assets/icons/delete.png" width="24" height="24"></button>
 
       </div>
       <button id="add-listQ" class="simple-btn" (click)="addQuestion()">+ Ajouter question</button>
@@ -37,11 +37,12 @@
       <!-- Section de création de question -->
       <div id="question-section">
      <div class="question-header">
-  <h2 class="title-quiz-template">Question :</h2>
-  <button class="save-question-btn" (click)="saveQuestion()" title="Sauvegarder cette question">
-    💾 Sauvegarder
-  </button>
-          </div>        <div class="question-with-audio" *ngIf="this.selectedQuestion.question != null">
+      <h2 class="title-quiz-template">Question :</h2>
+      <button class="save-question-btn" (click)="saveQuestion()" title="Sauvegarder cette question">
+        💾 Sauvegarder
+      </button>
+     </div>
+        <div class="question-with-audio" *ngIf="this.selectedQuestion.question != null">
           <input type="text" class="question-input" placeholder="Entrez la question..."
             [(ngModel)]="this.selectedQuestion.question">
 

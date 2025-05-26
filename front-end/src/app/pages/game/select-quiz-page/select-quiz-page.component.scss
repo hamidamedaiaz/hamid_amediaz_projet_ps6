@@ -20,6 +20,30 @@
   font-weight: bold;
 }
 
+#tuto-btn {
+  position: absolute;
+  top: calc(17% - min(6vh,6vw)); // je reprend le code fait au dessus mais wtf ??
+  right: 5vw;
+  padding: 1.2vh 2.4vh;
+  background-color: transparent;
+  color: $third-blue-btn;
+  border: 0.3vh solid $third-blue-btn;
+  border-radius: 1vh;
+  font-size: 1.8vh;
+  font-weight: 600;
+  font-family: 'Arial', sans-serif;
+  cursor: pointer;
+  letter-spacing: 0.05vh;
+  transition: all 0.3s ease-in-out;
+}
+
+#tuto-btn:hover {
+  background-color: $third-blue-btn;
+  color: $primary-btn-white-text;
+  transform: translateY(-0.3vh);
+}
+
+
 .button{
   width: 16vh;
   height: 6vh;

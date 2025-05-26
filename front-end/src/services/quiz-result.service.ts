@@ -19,7 +19,8 @@ export interface MonthlyStatsData {
   providedIn: 'root'
 })
 
-export class QuizResultService {
+export class QuizResultService implements OnInit{
+
   private allResults: QuizResult[] = [];
 
   private apiUrl: string = "http://localhost:9428/api/quiz-results/"
@@ -28,12 +29,16 @@ export class QuizResultService {
 
   constructor(
     private http: HttpClient, private profileService:ProfileService) {
-    this.requestResult()
+    this.requestResult();
+  }
+  ngOnInit(): void {
+    this.requestResult();
   }
 
   private requestResult() {
     this.http.get<QuizResult[]>(this.apiUrl).subscribe((quizResults) => {
       this.allResults = quizResults;
+      this.results$.next(this.allResults);
     })
   }
 
@@ -71,13 +76,23 @@ export class QuizResultService {
     })
   }
 
+  deleteQuizResult(quizResultIndex: number) {
+    this.http.delete(this.apiUrl +"/"+quizResultIndex ).subscribe({
+      next:(res) => {
+        this.allResults = this.allResults.filter((result) => {result.id !== quizResultIndex})
+        this.requestResult();
+      },
+      error: (err) => console.error("[SERVER ERROR] - ", err)
+    });
+  }
+
   getProfilesInSession(sessionId:number){
     const profileIds:number[] = []
     this.allResults.filter((quizResult) => {
       if(quizResult.sessionId === sessionId) profileIds.push(quizResult.profileId);
-    })    
+    })
     return this.profileService.getProfiles(profileIds);
 
   }
-  
+
 }

@@ -27,6 +27,7 @@ export class PlayerStatsProgressionComponent implements AfterViewInit, OnChanges
   @Input() activeTab: 'score' | 'hints' | 'time' | 'accuracy' = 'score';
   @Input() yearsPlayed:number[] = [];
   @Input() activeYear: number = this.getCurrentYear();
+  
   @Output() tabChange = new EventEmitter<'score' | 'hints' | 'time' | 'accuracy'>();
   @Output() yearChange = new EventEmitter<number>();
 

@@ -47,53 +47,6 @@
     }
   },
   {
-    "id": 1747602792557,
-    "sessionId": 9876545623,
-    "quizId": 1747172294366,
-    "profileId": 1,
-    "dateDebut": 1715636224365,
-    "dateFin": 1747172224366,
-    "questionResults": [
-      {
-        "id": 0,
-        "quizId": 1747172294366,
-        "questionId": 101,
-        "answerIds": [
-          2,
-          4,
-          1
-        ],
-        "timeSpent": 15,
-        "numberOfHintsUsed": 1
-      },
-      {
-        "id": 1,
-        "quizId": 1747172294366,
-        "questionId": 102,
-        "answerIds": [
-          7,
-          4
-        ],
-        "timeSpent": 35,
-        "numberOfHintsUsed": 1
-      },
-      {
-        "id": 2,
-        "quizId": 1747172294366,
-        "questionId": 103,
-        "answerIds": [
-          9
-        ],
-        "timeSpent": 12,
-        "numberOfHintsUsed": 1
-      }
-    ],
-    "gamemode": {
-      "id": 0,
-      "name": "Seul"
-    }
-  },
-  {
     "id": 1747686413998,
     "sessionId": 1018158095052,
     "quizId": 1747172294366,
@@ -227,32 +180,31 @@
     }
   },
   {
-    "id": 1747726270145,
-    "sessionId": 739643511531,
-    "quizId": 1747172294368,
-    "profileId": 1747691387848,
-    "dateDebut": 1747726249575,
-    "dateFin": 1747726270066,
+    "id": 1748204591158,
+    "sessionId": 668167738321,
+    "quizId": 1747172294370,
+    "profileId": 1747471940431,
+    "dateDebut": 1748204586489,
+    "dateFin": 1748204591100,
     "questionResults": [
       {
-        "id": 575407976858,
-        "quizId": 1747172294368,
-        "questionId": 301,
+        "id": 333382632153,
+        "quizId": 1747172294370,
+        "questionId": 501,
         "answerIds": [
-          20
+          40
         ],
-        "timeSpent": 4176,
+        "timeSpent": 7013,
         "numberOfHintsUsed": 0
       },
       {
-        "id": 752988103206,
-        "quizId": 1747172294368,
-        "questionId": 302,
+        "id": 1460338913648,
+        "quizId": 1747172294370,
+        "questionId": 502,
         "answerIds": [
-          26,
-          24
+          46
         ],
-        "timeSpent": 16297,
+        "timeSpent": 6814,
         "numberOfHintsUsed": 0
       }
     ],
@@ -262,47 +214,209 @@
     }
   },
   {
-    "id": 1747726433743,
-    "sessionId": 460792026144,
-    "quizId": 1747172294373,
-    "profileId": 1747726378306,
-    "dateDebut": 1747726393818,
-    "dateFin": 1747726433673,
+    "id": 1748204597650,
+    "sessionId": 511865784529,
+    "quizId": 1747172294371,
+    "profileId": 1747471940431,
+    "dateDebut": 1748204592985,
+    "dateFin": 1748204597630,
     "questionResults": [
       {
-        "id": 1403459711384,
-        "quizId": 1747172294373,
-        "questionId": 801,
+        "id": 1591758964354,
+        "quizId": 1747172294371,
+        "questionId": 601,
         "answerIds": [
-          70
+          53,
+          50
         ],
-        "timeSpent": 1747726420725,
+        "timeSpent": 10077,
         "numberOfHintsUsed": 0
       },
       {
-        "id": 1049114247146,
-        "quizId": 1747172294373,
-        "questionId": 802,
-        "answerIds": [],
-        "timeSpent": 33593,
-        "numberOfHintsUsed": 0
-      },
-      {
-        "id": 1284618745724,
-        "quizId": 1747172294373,
-        "questionId": 3,
+        "id": 1744200028285,
+        "quizId": 1747172294371,
+        "questionId": 602,
         "answerIds": [
-          4,
-          3,
-          2
+          54
         ],
-        "timeSpent": 19204,
+        "timeSpent": 8496,
         "numberOfHintsUsed": 0
       }
     ],
     "gamemode": {
       "id": 0,
       "name": "Seul"
+    }
+  },
+  {
+    "id": 1748211186010,
+    "sessionId": 1684366644400,
+    "quizId": 1747172294366,
+    "profileId": 1,
+    "dateDebut": 1748211182788,
+    "dateFin": 1748211185981,
+    "questionResults": [
+      {
+        "id": 1453478834665,
+        "quizId": 1747172294366,
+        "questionId": 101,
+        "answerIds": [
+          1
+        ],
+        "timeSpent": 9253,
+        "numberOfHintsUsed": 0
+      },
+      {
+        "id": 1375177598275,
+        "quizId": 1747172294366,
+        "questionId": 102,
+        "answerIds": [],
+        "timeSpent": 1672,
+        "numberOfHintsUsed": 0
+      },
+      {
+        "id": 244986295915,
+        "quizId": 1747172294366,
+        "questionId": 103,
+        "answerIds": [],
+        "timeSpent": 1840,
+        "numberOfHintsUsed": 0
+      }
+    ],
+    "gamemode": {
+      "id": 0,
+      "name": "Seul"
+    }
+  },
+  {
+    "id": 1748241392970,
+    "sessionId": 424485226036,
+    "quizId": 1747172294366,
+    "profileId": 4,
+    "dateDebut": 1748241387678,
+    "dateFin": 1748241392923,
+    "questionResults": [
+      {
+        "id": 402194422087,
+        "quizId": 1747172294366,
+        "questionId": 101,
+        "answerIds": [
+          3,
+          1
+        ],
+        "timeSpent": 5227,
+        "numberOfHintsUsed": 0
+      },
+      {
+        "id": 495774667743,
+        "quizId": 1747172294366,
+        "questionId": 102,
+        "answerIds": [
+          4
+        ],
+        "timeSpent": 4559,
+        "numberOfHintsUsed": 0
+      },
+      {
+        "id": 1711929372346,
+        "quizId": 1747172294366,
+        "questionId": 103,
+        "answerIds": [],
+        "timeSpent": 696,
+        "numberOfHintsUsed": 0
+      }
+    ],
+    "gamemode": {
+      "id": 0,
+      "name": "Seul"
+    }
+  },
+  {
+    "id": 1748241499014,
+    "sessionId": 825656100050,
+    "quizId": 1747172294366,
+    "profileId": 4,
+    "dateDebut": 1748241494169,
+    "dateFin": 1748241498958,
+    "questionResults": [
+      {
+        "id": 1035903529867,
+        "quizId": 1747172294366,
+        "questionId": 101,
+        "answerIds": [
+          1
+        ],
+        "timeSpent": 2541,
+        "numberOfHintsUsed": 0
+      },
+      {
+        "id": 1497752973046,
+        "quizId": 1747172294366,
+        "questionId": 102,
+        "answerIds": [
+          4
+        ],
+        "timeSpent": 2162,
+        "numberOfHintsUsed": 0
+      },
+      {
+        "id": 1183634013148,
+        "quizId": 1747172294366,
+        "questionId": 103,
+        "answerIds": [],
+        "timeSpent": 68,
+        "numberOfHintsUsed": 0
+      }
+    ],
+    "gamemode": {
+      "id": 1,
+      "name": "En groupe"
+    }
+  },
+  {
+    "id": 1748241929389,
+    "sessionId": 836400829131,
+    "quizId": 1747172294366,
+    "profileId": 4,
+    "dateDebut": 1748241921522,
+    "dateFin": 1748241929253,
+    "questionResults": [
+      {
+        "id": 135545823797,
+        "quizId": 1747172294366,
+        "questionId": 101,
+        "answerIds": [
+          1
+        ],
+        "timeSpent": 2473,
+        "numberOfHintsUsed": 0
+      },
+      {
+        "id": 1580358299699,
+        "quizId": 1747172294366,
+        "questionId": 102,
+        "answerIds": [
+          4
+        ],
+        "timeSpent": 2065,
+        "numberOfHintsUsed": 0
+      },
+      {
+        "id": 122976616488,
+        "quizId": 1747172294366,
+        "questionId": 103,
+        "answerIds": [
+          10,
+          8,
+          7
+        ],
+        "timeSpent": 3169,
+        "numberOfHintsUsed": 0
+      }
+    ],
+    "gamemode": {
+      "id": 1,
+      "name": "En Groupe"
     }
   }
 ]

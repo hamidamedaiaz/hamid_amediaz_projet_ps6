@@ -4,12 +4,15 @@
             <div class="button-section" *ngIf="getGamemode().id === 0 || getRole() === 'admin'">
                 <app-music-control [volume]="getVolume()" [audio_path]="getAudioPath()"></app-music-control>
             </div>
+            <div *ngIf="getGamemode().id === 1" class="multiplayer-list">
+                <app-multiplayer-in-game-list></app-multiplayer-in-game-list>
+            </div>
 
             <app-quiz-question-header [title]="getTitle()" (show_hints)="showHints()"></app-quiz-question-header>
 
             <hr class="left-side-separator">
 
-            <app-quiz-answers (correct_answer)="submitCorrectAnswer()" (next_question)="validateQuestion()"></app-quiz-answers>
+            <app-quiz-answers [isInteractionDisabled]="isInteractionDisabled" (correct_answer)="submitCorrectAnswer()" (next_question)="validateQuestion()"></app-quiz-answers>
         </div>
     </div>
 
@@ -17,8 +20,9 @@
 
     <button *ngIf="(getGamemode().id === 0 || getRole() ==='admin') && isQuizRunning()" (click)="nextQuestion()"
         class="next-question-btn button">Question suivante</button>
-    <button *ngIf="(getGamemode().id === 0 || getRole() ==='admin') && isQuizRunning()" (click)="previousQuestion()"
-        class="previous-question-btn button">Question précédente</button>
+
+  <!--<button *ngIf="(getGamemode().id === 0 || getRole() ==='admin') && isQuizRunning()" (click)="previousQuestion()"
+        class="previous-question-btn button">Question précédente</button>-->
 
     <app-quiz-question-pop-up *ngIf="showQuestionPopUp" (cancel_pop_pup)="CancelPopPup()" (continue_pop_pup)="nextQuestion()"></app-quiz-question-pop-up>
 </div>

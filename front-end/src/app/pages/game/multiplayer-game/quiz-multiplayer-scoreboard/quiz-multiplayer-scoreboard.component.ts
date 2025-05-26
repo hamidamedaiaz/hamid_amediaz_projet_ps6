@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MultiplayerProfileListComponent } from 'src/app/components/game/multiplayer-game-setup/multiplayer-profile-list/multiplayer-profile-list.component';
+import { MultiplayerProfileListComponent } from 'src/app/components/game/multiplayer/multiplayer-game-setup/multiplayer-profile-list/multiplayer-profile-list.component';
 import { Quiz } from 'src/models/quiz.model';
 import { QuizService } from 'src/services/quiz.service';
 import { CommonModule } from '@angular/common';

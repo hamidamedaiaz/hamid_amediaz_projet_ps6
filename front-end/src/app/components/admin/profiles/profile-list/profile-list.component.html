@@ -1,7 +1,7 @@
 <section *ngIf="currentPage==='admin'">
   <div class="admin-profile-header">
     <input type="text" id="search-bar" class="search-input" [(ngModel)]="searchQuery"
-      placeholder="Rechercher un acceuilli...">
+      placeholder="Rechercher un accueilli...">
     <button id="add-profile" (click)="createProfile()">+ Ajouter un accueilli</button>
   </div>
 
@@ -92,7 +92,7 @@
 
 <section *ngIf="currentPage === 'home'" class="home-search-container">
   <input type="text" id="search-bar" class="search-input enhanced" [(ngModel)]="searchQuery"
-    placeholder="Rechercher un accueilli..." (click)="showProfileList()" />
+    placeholder="Sélectionner un accueilli pour jouer..." (click)="showProfileList()" />
 
   <section *ngIf="isProfileListActivated" class="card-grid">
     <div class="profile-card" *ngFor="let profile of filteredProfiles()" (click)="profileSelectedHandler(profile)">

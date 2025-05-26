@@ -5,9 +5,15 @@
 
     <div class="stats-header">
       <div class="stats-search">
-        <input
+        <input *ngIf="context === 'acceuilli'"
           type="text"
-          placeholder="Rechercher ..."
+          placeholder="Rechercher un accueilli..."
+          [(ngModel)]="searchQuery"
+          class="search-input"
+        />
+        <input *ngIf="context === 'quiz'"
+          type="text"
+          placeholder="Rechercher un quiz..."
           [(ngModel)]="searchQuery"
           class="search-input"
         />

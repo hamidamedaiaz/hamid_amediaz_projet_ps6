@@ -3,21 +3,22 @@
 .global-question-container {
   display: flex;
   align-items: center;
-  height: 100%;
-  width: 100%;
+  justify-content: center;
+  height: 100vh; /* Assurez-vous que le conteneur parent a une hauteur définie */
   overflow: hidden;
-  position: relative;
 }
 
 .game-section {
-  position: absolute;
-  top: 16vh;
-  height: 64vh;
-  width: 90%;
+  display: flex;
+  margin-left:10%;
+  margin-right: 5%;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
 }
 
 /* --- Buttons --- */
-.button{
+.button {
   width: 16vh;
   height: 6vh;
   padding: 1.2vh 2.4vh;
@@ -34,7 +35,7 @@
   box-shadow: $primary-box-shadow;
 }
 
-.button:hover{
+.button:hover {
   background: $secondary-btn-blue-hover;
   transform: translateY(-0.3vh);
   box-shadow: $primary-box-shadow;
@@ -56,11 +57,9 @@
   height: 10vh;
 }
 
-
 .question-admin-container {
   width: 80%;
 }
-
 
 .question-right-side {
   background-color: $third-blue-bg;
@@ -71,14 +70,11 @@
   padding-top: 5vh;
   height: 100%;
   width: 20%;
-  position: absolute;
-  right: 0;
-  transform: translateX(100%);
-  opacity: 0;
   transition: transform 0.7s ease-out, opacity 0.3s ease-out;
 }
 
 .question-right-side.active {
+  display: flex;
   transform: translateX(0);
   opacity: 1;
 }
@@ -111,7 +107,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  width: 80%;
   height: 100%;
   transition: width 0.7s ease-out, padding 0.7s ease-out;
 }
@@ -138,7 +134,7 @@
     background-color: transparent;
   }
 
-  50% {
+  70% {
     background-color: rgba(0, 255, 0, 0.3);
   }
 
@@ -175,7 +171,6 @@
   grid-template-rows: repeat(2, 1fr);
   gap: 50px;
   margin-top: 50px;
-
 }
 
 .answers-section-admin-view {
@@ -290,7 +285,7 @@
   transition: transform 0.5s ease-in-out;
 }
 
-.hints-container{
+.hints-container {
   overflow-y: auto;
 }
 
@@ -298,10 +293,8 @@
   opacity: 0;
 }
 
-
 /* --- Responsive --- */
 @media (max-width: 992px) {
-
   .global-question-container:has(.question-right-side.active) .question-left-side,
   .question-right-side.active~.question-left-side {
     width: 75%;
@@ -328,7 +321,6 @@
 }
 
 @media (max-width: 768px) {
-
   .global-question-container:has(.question-right-side.active) .question-left-side,
   .question-right-side.active~.question-left-side {
     width: 70%;
@@ -344,6 +336,6 @@
   }
 }
 
-app-music-control{
+app-music-control {
   width: 100%;
 }

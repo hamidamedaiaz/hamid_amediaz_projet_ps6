@@ -4,11 +4,11 @@
   background-color: $primary-blue-btn;
   /* Vert doux */
   color: $primary-btn-white-text;
-  padding: 10px 20px;
+  padding: 1.0vh 2.0vh;
   border: none;
-  border-radius: 8px;
+  border-radius: .8vh;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 1.4vh;
   transition: background-color 0.3s, transform 0.2s;
 }
 
@@ -19,17 +19,17 @@
 }
 
 .profile-avatar {
-  width: 64px;
-  height: 64px;
+  width: 6.4vh;
+  height: 6.4vh;
   border-radius: 50%;
   background-color: $primary-blue-bg;
   color: $primary-white-text;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 24px;
+  font-size: 2.4vh;
   font-weight: 600;
-  margin-right: 16px;
+  margin-right: 1.6vh;
   flex-shrink: 0;
 }
 
@@ -52,16 +52,16 @@ app-profile-list {
   border-radius: 1vh;
   background-color: $primary-white-bg;
   color: $primary-black-text;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: inset 0 .2vh .4vh rgba(0, 0, 0, 0.05);
 }
 
 .profile-list-section {
-  margin-top: 20px;
+  margin-top: 2.0vh;
 }
 
 .setup {
   padding: 2em;
-  border-radius: 10px;
+  border-radius: 1.0vh;
   box-shadow: $primary-box-shadow;
 }
 
@@ -69,50 +69,50 @@ app-profile-list {
 .admin-profile-header {
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
-  gap: 10px;
+  margin-bottom: 2.0vh;
+  gap: 1.0vh;
 }
 
 .profile-form {
   background-color: $primary-white-bg;
-  border-radius: 10px;
-  padding: 20px;
-  margin: 20px 0;
+  border-radius: 1.0vh;
+  padding: 2.0vh;
+  margin: 2.0vh 0;
   box-shadow: $primary-box-shadow;
 }
 
 .form-group {
-  margin-bottom: 15px;
+  margin-bottom: 1.5vh;
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 5px;
+  margin-bottom: .5vh;
   font-weight: 500;
   color: $primary-black-text;
 }
 
 .form-input {
   width: 100%;
-  padding: 10px;
+  padding: 1.0vh;
   border: $primary-border-white;
-  border-radius: 6px;
-  font-size: 16px;
+  border-radius: .6vh;
+  font-size: 1.6vh;
 }
 
 .form-buttons {
   display: flex;
-  gap: 10px;
-  margin-top: 20px;
+  gap: 1.0vh;
+  margin-top: 2.0vh;
 }
 
 .save-btn,
 .cancel-btn {
-  padding: 10px 15px;
+  padding: 1.0vh 1.5vh;
   border: none;
-  border-radius: 5px;
+  border-radius: .5vh;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 1.4vh;
   transition: all 0.2s;
 }
 
@@ -139,16 +139,16 @@ app-profile-list {
   justify-content: space-between;
   align-items: center;
   background-color: $primary-white-bg;
-  padding: 15px;
-  border-radius: 8px;
-  margin-bottom: 10px;
+  padding: 1.5vh;
+  border-radius: .8vh;
+  margin-bottom: 1.0vh;
   box-shadow: $primary-box-shadow;
   transition: transform 0.2s;
   cursor: pointer;
 }
 
 .enhanced-profile-item:hover {
-  transform: translateY(-2px);
+  transform: translateY(-.2vh);
   background-color: $primary-btn-white-hover;
 }
 
@@ -159,30 +159,30 @@ app-profile-list {
 }
 
 .profile-name {
-  margin: 0 0 5px 0;
-  font-size: 16px;
+  margin: 0 0 .5vh 0;
+  font-size: 1.6vh;
   font-weight: 500;
   color: $primary-black-text;
 }
 
 .profile-id {
   margin: 0;
-  font-size: 14px;
+  font-size: 1.4vh;
   color: $secondary-black-text;
 }
 
 .profile-actions {
   display: flex;
-  gap: 8px;
+  gap: .8vh;
 }
 
 .edit-btn,
 .delete-btn {
-  padding: 8px 12px;
+  padding: .8vh 1.2vh;
   border: none;
-  border-radius: 5px;
+  border-radius: .5vh;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 1.4vh;
   transition: all 0.2s;
 }
 
@@ -220,12 +220,12 @@ app-profile-list {
 
 .delete-confirm-content {
   background-color: $primary-white-bg;
-  border-radius: 10px;
-  padding: 20px;
-  width: 400px;
+  border-radius: 1.0vh;
+  padding: 2.0vh;
+  width: 40.0vh;
   max-width: 90%;
   text-align: center;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 .4vh 1.5vh rgba(0, 0, 0, 0.2);
 }
 
 
@@ -234,8 +234,8 @@ app-profile-list {
   background-color: $primary-delete-btn;
   color: $primary-white-text;
   border: none;
-  border-radius: 5px;
-  padding: 10px 15px;
+  border-radius: .5vh;
+  padding: 1.0vh 1.5vh;
   cursor: pointer;
 }
 
@@ -247,8 +247,8 @@ app-profile-list {
   background-color: $primary-white-btn;
   color: $primary-black-text;
   border: none;
-  border-radius: 5px;
-  padding: 10px 15px;
+  border-radius: .5vh;
+  padding: 1.0vh 1.5vh;
   cursor: pointer;
 }
 
@@ -259,11 +259,11 @@ app-profile-list {
 .delete-buttons {
   display: flex;
   justify-content: center;
-  gap: 15px;
-  margin-top: 20px;
+  gap: 1.5vh;
+  margin-top: 2.0vh;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 76.8vh) {
   .admin-profile-header {
     flex-direction: column;
     align-items: flex-start;
@@ -271,7 +271,7 @@ app-profile-list {
 
   #add-profile {
     margin-left: 0;
-    margin-top: 10px;
+    margin-top: 1.0vh;
     width: 100%;
   }
 
@@ -281,7 +281,7 @@ app-profile-list {
   }
 
   .profile-actions {
-    margin-top: 10px;
+    margin-top: 1.0vh;
     width: 100%;
     justify-content: flex-end;
   }
@@ -291,16 +291,16 @@ app-profile-list {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 20px;
-  gap: 15px;
+  margin-bottom: 2.0vh;
+  gap: 1.5vh;
 }
 
 .avatar-preview {
-  width: 120px;
-  height: 120px;
+  width: 12.0vh;
+  height: 12.0vh;
   border-radius: 50%;
   background-color: #f8f9fa;
-  border: 1px solid #0099ff;
+  border: .1vh solid #0099ff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -317,9 +317,9 @@ app-profile-list {
 .avatar-upload-button {
   background-color: #0099ff;
   color: white;
-  padding: 8px 16px;
-  border-radius: 6px;
-  font-size: 14px;
+  padding: .8vh 1.6vh;
+  border-radius: .6vh;
+  font-size: 1.4vh;
   cursor: pointer;
   transition: background-color 0.3s;
 }
@@ -329,30 +329,30 @@ app-profile-list {
 }
 
 .profile-avatar-text {
-  width: 64px;
-  height: 64px;
+  width: 6.4vh;
+  height: 6.4vh;
   border-radius: 50%;
   background-color: #0099ff;
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 24px;
+  font-size: 2.4vh;
   font-weight: 600;
-  margin-right: 16px;
+  margin-right: 1.6vh;
   flex-shrink: 0;
 }
 
 .profile-avatar {
-  width: 64px;
-  height: 64px;
+  width: 6.4vh;
+  height: 6.4vh;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 24px;
+  font-size: 2.4vh;
   font-weight: 600;
-  margin-right: 16px;
+  margin-right: 1.6vh;
   flex-shrink: 0;
   background-size: cover;
   background-position: center;
@@ -374,12 +374,12 @@ app-profile-list {
 }
 
 .modal-container {
-  width: 500px;
+  width: 50.0vh;
   max-width: 90%;
   max-height: 90vh;
   background-color: $primary-white-bg;
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  border-radius: 1.0vh;
+  box-shadow: 0 .5vh 1.5vh rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: column;
   animation: slideIn 0.3s ease-out;
@@ -390,8 +390,8 @@ app-profile-list {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 20px;
-  border-bottom: 1px solid #eee;
+  padding: 1.5vh 2.0vh;
+  border-bottom: .1vh solid #eee;
 }
 
 .modal-header h3 {
@@ -405,7 +405,7 @@ app-profile-list {
   border: none;
   cursor: pointer;
   color: $secondary-black-text;
-  padding: 5px;
+  padding: .5vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -419,16 +419,16 @@ app-profile-list {
 }
 
 .modal-body {
-  padding: 20px;
+  padding: 2.0vh;
   overflow-y: auto;
 }
 
 .modal-footer {
   display: flex;
   justify-content: flex-end;
-  padding: 15px 20px;
-  border-top: 1px solid #eee;
-  gap: 10px;
+  padding: 1.5vh 2.0vh;
+  border-top: .1vh solid #eee;
+  gap: 1.0vh;
 }
 
 @keyframes fadeIn {
@@ -437,7 +437,7 @@ app-profile-list {
 }
 
 @keyframes slideIn {
-  from { transform: translateY(-50px); opacity: 0; }
+  from { transform: translateY(-5.0vh); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
 }
 
@@ -455,19 +455,19 @@ app-profile-list {
   font-size: 2.2vh;
   padding: 1.2em;
   width: 100%;
-  border: 2px solid $primary-border-white;
+  border: .2vh solid $primary-border-white;
   border-radius: 1vh;
   background-color: $primary-white-bg;
   color: $primary-black-text;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 .4vh .8vh rgba(0, 0, 0, 0.08);
   transition: all 0.3s ease;
-  margin-bottom: 10px;
+  margin-bottom: 1.0vh;
 }
 
 
 .search-input.enhanced:focus {
   border-color: $primary-blue-btn;
-  box-shadow: 0 0 0 3px rgba($primary-blue-btn, 0.2);
+  box-shadow: 0 0 0 .3vh rgba($primary-blue-btn, 0.2);
 }
 
 .card-grid {
@@ -487,27 +487,28 @@ app-profile-list {
 .profile-card {
   background-color: $primary-white-bg;
   border-radius: 1vh;
-  padding: 1.5vh;
+  padding: 0.5vh;
   box-shadow: $primary-box-shadow;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   transition: transform 0.2s, background-color 0.3s;
   cursor: pointer;
 }
 
 .profile-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-0.5vh);
   background-color: $primary-btn-white-hover;
 }
 
 .profile-card-avatar {
-  margin-bottom: 1.5vh;
+  padding-left: 2vh;
+  padding-right: 3vh;
 }
 
 .profile-img {
-  width: 8vh;
-  height: 8vh;
+  width: 9vh;
+  height: 9vh;
   border-radius: 50%;
   background-size: cover;
   background-position: center;
@@ -515,8 +516,8 @@ app-profile-list {
 }
 
 .profile-initials {
-  width: 8vh;
-  height: 8vh;
+  width: 9vh;
+  height: 9vh;
   border-radius: 50%;
   background-color: $primary-blue-bg;
   color: $primary-white-text;
@@ -529,7 +530,7 @@ app-profile-list {
 
 .profile-card-name {
   text-align: center;
-  font-size: 1.5vh;
+  font-size: 2.5vh;
   font-weight: 500;
   color: $primary-black-text;
 }

@@ -25,8 +25,39 @@
     border-radius: 50%;
     animation: spin 1s linear infinite;
   }
-  
 
+
+}
+
+
+
+.tabs-container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.tab-btn {
+  padding: 8px 15px;
+  background-color: $secondary-white-bg;
+  border: $primary-border-white;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  color: $primary-black-text;
+  transition: all 0.2s;
+
+
+  &:hover {
+    background-color: $primary-btn-white-hover;
+    cursor: pointer;
+  }
+
+  &.active {
+    background-color: $fourth-blue-btn;
+    color: $primary-btn-white-text;
+    border-color: $primary-border-black;
+  }
 }
 
 @keyframes spin {

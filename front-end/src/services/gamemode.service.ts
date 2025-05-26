@@ -26,30 +26,29 @@ export class GamemodeService {
       this.loadFromStorage();
       this.getGamemodes();
     }
-    
+
     private getGamemodes():void{
        this.http.get<Gamemode[]>(this.apiUrl).subscribe((gamemodes: Gamemode[]) => {
             console.log("Gamemodes récupérés :", gamemodes);
             this.gamemodes = gamemodes
             this.gamemodes$.next(gamemodes)
-            
+
       });
     }
 
     private loadFromStorage(): void {
       const savedGamemode = this.localStorageService.getItem('Gamemode');
-      
+
       if (savedGamemode) {
         this.current_gamemode = savedGamemode;
       }
     }
 
     playSolo(){
-  console.log(this.currentProfileService.getCurrentProfile(), " is playing singleplayer");
-  this.setCurrentGamemode(0)
-  
-  ///  on  Rediriger vers le tutorial au lieu de select-quiz directement
-  this.router.navigate(['/solo-tutorial']);
+      console.log(this.currentProfileService.getCurrentProfile(), " is playing singleplayer");
+      this.setCurrentGamemode(0)
+      ///  on  Rediriger vers le tutorial au lieu de select-quiz directement
+      this.router.navigate(['/select-quiz']);
 }
 
     playMulti(){
@@ -64,7 +63,7 @@ export class GamemodeService {
 
     public setCurrentGamemode(gamemode_id : number): void {
       const foundGamemode = this.gamemodes.find(gamemode => gamemode.id === gamemode_id);
-    
+
       console.log("gamemode Id ", this.gamemodes)
 
       if (foundGamemode) {
@@ -76,9 +75,9 @@ export class GamemodeService {
         console.log("No gamemode found with name: ", gamemode_id);
         this.localStorageService.storeItem("Gamemode",JSON.stringify(GAMEMODE_UNDEFINED))
       }
-      
+
     }
 
-    
+
 
 }

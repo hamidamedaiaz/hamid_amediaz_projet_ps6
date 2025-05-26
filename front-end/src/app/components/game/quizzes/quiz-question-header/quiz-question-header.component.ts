@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { QuizService } from 'src/services/quiz.service';
-import { MultiPlayerGameService } from 'src/services/multiplayer-game.service';
+import { MultiPlayerQuizService } from 'src/services/multiplayer-quiz.service';
 import { CurrentProfileService } from 'src/services/currentProfile.service';
 import { GamemodeService } from 'src/services/gamemode.service';
 
@@ -29,7 +29,7 @@ export class QuizQuestionHeaderComponent {
 
   public showHintButtonContent:string = this.DISPLAY_HINTS
 
-  constructor(private multiplayerQuizService:MultiPlayerGameService, 
+  constructor(private multiplayerQuizService:MultiPlayerQuizService, 
               private curretProfileService:CurrentProfileService,
               private gamemodeService:GamemodeService,
               private quizService:QuizService){}

@@ -15,7 +15,7 @@
         </thead>
 
         <tbody>
-          <tr class="quiz-table-row" *ngFor="let quizResult of quizResults" (click)="viewQuizDetails(quizResult.id)">
+          <tr class="quiz-table-row" *ngFor="let quizResult of quizResults, let i = index" (click)="viewQuizDetails(quizResult.id)">
             <td class="quiz-title">{{ getQuizTitle(getQuizId(quizResult)) }}</td>
             <td>{{ getQuizResultDateDebut(quizResult) }}</td>
             <td>

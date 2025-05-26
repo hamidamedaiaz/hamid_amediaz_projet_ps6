@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { ProfileListComponent } from 'src/app/components/admin/profiles/profile-list/profile-list.component';
-import { MultiplayerGameSetupSidebarComponent } from 'src/app/components/game/multiplayer-game-setup/multiplayer-game-setup-sidebar/multiplayer-game-setup-sidebar.component';
+import { MultiplayerGameSetupSidebarComponent } from 'src/app/components/game/multiplayer/multiplayer-game-setup/multiplayer-game-setup-sidebar/multiplayer-game-setup-sidebar.component';
 import { CurrentPageService } from 'src/services/currentPage.service';
-import { MultiplayerProfileListComponent } from 'src/app/components/game/multiplayer-game-setup/multiplayer-profile-list/multiplayer-profile-list.component';
-import { MultiPlayerGameService } from 'src/services/multiplayer-game.service';
+import { MultiplayerProfileListComponent } from 'src/app/components/game/multiplayer/multiplayer-game-setup/multiplayer-profile-list/multiplayer-profile-list.component';
+import { MultiPlayerQuizService } from 'src/services/multiplayer-quiz.service';
 import { Router } from '@angular/router';
 import { GamemodeService } from 'src/services/gamemode.service';
 import { QuizService } from 'src/services/quiz.service';
@@ -23,7 +23,7 @@ import { QuizService } from 'src/services/quiz.service';
 export class MultiplayerGameSetupComponent {
   constructor(private gamemodeService:GamemodeService,
               private currentPageService:CurrentPageService, 
-              private multiPlayerQuizService: MultiPlayerGameService, 
+              private multiPlayerQuizService: MultiPlayerQuizService, 
               private quizService:QuizService,
               private router:Router){
     this.currentPageService.setCurrentPage("multiplayer-setup");

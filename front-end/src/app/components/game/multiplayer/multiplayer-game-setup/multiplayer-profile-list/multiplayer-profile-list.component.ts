@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MultiPlayerGameService } from 'src/services/multiplayer-game.service';
+import { MultiPlayerQuizService } from 'src/services/multiplayer-quiz.service';
 import { ProfileItemComponent } from 'src/app/components/admin/profiles/profile-item/profile-item.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -18,7 +18,7 @@ export class MultiplayerProfileListComponent {
 
   private players:Profile[] = [];
 
-  constructor(private multiplayerQuizService:MultiPlayerGameService){
+  constructor(private multiplayerQuizService:MultiPlayerQuizService){
     this.multiplayerQuizService.players$.subscribe((players) => {
       this.players = players;
     })

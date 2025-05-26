@@ -13,7 +13,7 @@ import { CurrentPageService } from 'src/services/currentPage.service';
 export class SoloTutorialComponent {
 
   public currentStep: number = 1;
-  public totalSteps: number = 3;
+  public totalSteps: number = 6;
 
   constructor(
     private router: Router,
@@ -26,7 +26,18 @@ export class SoloTutorialComponent {
     this.router.navigate(['/select-quiz']);
   }
 
-  public goBack(): void {
-    this.router.navigate(['/gamemode-selection']);
+
+  public nextStep(): void {
+    if (this.currentStep < this.totalSteps) {
+      this.currentStep++;
+    } else {
+      this.startQuiz();
+    }
+  }
+
+  public previousStep(): void {
+    if (this.currentStep > 1) {
+      this.currentStep--;
+    }
   }
 }

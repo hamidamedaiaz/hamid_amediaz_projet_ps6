@@ -1,28 +1,142 @@
 <svg class="wave" id="top-wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-    <path fill="#0099ff" fill-opacity="1" d="M0,192L120,170.7C240,149,480,107,720,90.7C960,75,1200,85,1320,90.7L1440,96L1440,0L1320,0C1200,0,960,0,720,0C480,0,240,0,120,0L0,0Z">
+    <path fill="#0099ff" fill-opacity="1"
+        d="M0,192L120,170.7C240,149,480,107,720,90.7C960,75,1200,85,1320,90.7L1440,96L1440,0L1320,0C1200,0,960,0,720,0C480,0,240,0,120,0L0,0Z">
     </path>
 </svg>
 
 <section class="tutorial-page-section">
     <div class="tutorial-container">
+        <h1>Tutoriel : Comment jouer au Quiz Musique </h1>
+        <p class="intro"> Bienvenue dans ce guide pas-à-pas </p>
+        <div *ngIf="currentStep === 1" class="step">
+            <h2> 1.Sélectionner un quiz</h2>
 
+            <div class="step-content">
+                <p>• Vous verrez l'écran de sélection avec tous les quiz disponibles</p>
+                <p>• Utilisez la barre de recherche "Rechercher un quiz..."</p>
+                <p>• Cliquez sur <strong>Démarrer</strong> pour choisir votre quiz</p>
 
-        <div class="example-container" [ngSwitch]="currentStep"> </div>
-
-        <div class="navigation-section">
-           
-            <div class="button-section">
-              
-                
-                <button *ngIf="currentStep < totalSteps" 
-                        class="button" (click)="startQuiz()">
-                    Suivant
-                </button>
-                
-              
+                <div class="example-screen">
+                    <div class="search"> Rechercher un quiz...</div>
+                    <div class="quiz">
+                        <div class="quiz-title">Quiz Rock des ann ées 70-80</div>
+                        <button class="start-btn"> Démarrer </button>
+                    </div>
+                </div>
             </div>
-
-            <button class="button" id="back-btn" (click)="goBack()">Retour</button>
         </div>
+        <div *ngIf="currentStep === 2" class="step">
+            <h2>2.Lancer le quiz</h2>
+
+            <div class="step-content">
+                <p>• deamarez La musique </p>
+                <p>• Une question s'affiche : Exemple "Qui a chanté cette chanson ?"</p>
+                <p>• Cliquez sur la bonne réponse parmi les choix proposés</p>
+
+                <div class="example-screen">
+                    <div class="question">Qui a chanté "La Vie en Rose" ?</div>
+                    <div class="answers">
+                        <button class="answer">Dalida</button>
+                        <button class="answer">Édith Piaf</button>
+                        <button class="answer">Yves Montand</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="currentStep === 3" class="step">
+
+            <h2>3.Contrôles audio</h2>
+
+            <div class="step-content">
+                <p>• Utilisez les boutons pour contrôler la musique :</p>
+
+                <div class="example-screen">
+                    <div class="audio-controls">
+                        <button class="control-btn"> Jouer la musique</button>
+                        <button class="control-btn"> Arrêter la musique</button>
+                        <button class="control-btn"> Rejouer la musique</button>
+                    </div>
+                    <div class="volume-controls">
+                        <button class="control-btn"> Diminuer Le Volume -</button>
+                        <button class="control-btn"> Augmenter Le Volume +</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="currentStep === 4" class="step">
+            <h2>4.Afficher les indices</h2>
+
+            <div class="step-content">
+                <p>• Un panneau d'indices apparaît sur le côté</p>
+                <p>• De nouveaux indices s'affichent automatiquement</p>
+                <p>• Plus vous attendez, plus vous avez d'aide !</p>
+
+                <div class="example-screen">
+                    <div class="hints-panel">
+                        <h3> Indices</h3>
+                        <div class="hint">• Surnommée "la Môme"</div>
+                        <div class="hint">• ........</div>
+                        <div class="next-hint"> Exemple : Prochain indice dans 60s</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="currentStep === 5" class="step">
+            <h2>5.Navigation entre questions</h2>
+
+            <div class="step-content">
+                <p>• Naviguez librement entre les questions</p>
+                <p>• La musique continue de jouer pendant la navigation</p>
+
+                <div class="example-screen">
+                    <div class="navigation">
+                        <button class="nav-btn">Question précédente</button>
+                        <button class="nav-btn">Question suivante</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="currentStep === 6" class="step">
+            <h2>6.Résultat final</h2>
+
+            <div class="step-content">
+                <p>• À la fin, voir votre score</p>
+                <p>• Choisir de rejouer ou quitter</p>
+
+                <div class="example-screen">
+                    <div class="result-screen">
+                        <h3> Félicitations !</h3>
+                        <p>Vous avez répondu à <strong> (Exemple ) : 3 sur 3 </strong> !</p>
+                        <div class="result-buttons">
+                            <button class="result-btn"> Rejouer</button>
+                            <button class="result-btn"> Quitter</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tutorial-nav">
+            <button *ngIf="currentStep > 1" class="nav-button" (click)="previousStep()">
+                Précédent
+            </button>
+
+            <span class="step-counter">{{ currentStep }} / {{ totalSteps }}</span>
+
+            <button *ngIf="currentStep < totalSteps" class="nav-button" (click)="nextStep()">
+                Suivant
+            </button>
+
+            <button *ngIf="currentStep === totalSteps" class="start-button" (click)="startQuiz()">
+                Commencer à jouer !
+            </button>
+        </div>
+
+    </div>
+    <div>
+        <button class="skip-button" (click)="startQuiz()">Passer le tutoriel</button>
     </div>
 </section>

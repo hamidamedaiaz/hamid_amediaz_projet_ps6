@@ -4,7 +4,7 @@ import { QuizResult } from 'src/models/quiz-result.model';
 import { ComputeStatisticService } from 'src/services/computeStatistic.service';
 import { QuizListService } from 'src/services/quiz-list.service';
 import { Quiz } from 'src/models/quiz.model';
-import { EMPTY_QUIZ } from 'src/mocks/quiz.mock';
+import _default from "chart.js/dist/core/core.interaction";
 
 @Component({
   selector: 'app-player-stats-quiz-history',
@@ -67,11 +67,15 @@ export class PlayerStatsQuizHistoryComponent {
       .getPercentages(this.getQuizScore(quizResult), this.getQuizNbOfQuestions(quizResult))
   }
 
-  getTimeSpent(quizResult: QuizResult): number { 
-    return this.computeStatisticsService.getAverageTime(quizResult.questionResults) 
+  getTimeSpent(quizResult: QuizResult): number {
+    return this.computeStatisticsService.getAverageTime(quizResult.questionResults)
   }
 
   getHintsUsed(quizResult: QuizResult): number { return this.computeStatisticsService.getTotalHintUsed(quizResult.questionResults) }
 
   getQuizGamemodeName(quizResult: QuizResult): string { return quizResult.gamemode.name }
+
+
+
+  
 }

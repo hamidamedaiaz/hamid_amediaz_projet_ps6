@@ -27,7 +27,8 @@ export class QuizHintsComponent implements OnDestroy {
 
   constructor(private quizService: QuizService, private currentProfileService: CurrentProfileService, private recordResultService: RecordResultService) {
     this.currentProfileService.current_profile$.subscribe((profile) => {
-      this.SHOW_HINT_TIMER = profile.SHOW_HINT_TIMER;
+      // On divise par 1000 pour passer de MS en S
+      this.SHOW_HINT_TIMER = profile.SHOW_HINT_TIMER/1000;
     })
 
     this.quizService.retrieveData$.subscribe((data) => {

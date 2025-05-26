@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CurrentProfileService } from 'src/services/currentProfile.service';
 import { QuizService } from 'src/services/quiz.service';
@@ -27,6 +27,10 @@ export class QuizAnswersComponent {
 
   private removeWrongAnswerInterval: any;
 
+
+  @Input()
+  isInteractionDisabled: boolean = false;
+
   @Output()
   correct_answer: EventEmitter<Boolean> = new EventEmitter<Boolean>();
 
@@ -45,7 +49,7 @@ export class QuizAnswersComponent {
     this.quizService.retrieveData$.subscribe((data) => {
       if (data) {
         let userAnswersIds = this.selectedAnswers.map(r => r.id);
-        this.recordResultService.setUserAnswersIds(this.quizService.questionId ,userAnswersIds)
+        this.recordResultService.setUserAnswersIds(this.quizService.questionId, userAnswersIds)
       }
     })
 
@@ -79,7 +83,7 @@ export class QuizAnswersComponent {
 
   public getAnswers() {
     this.answers.filter((answer) => !this.hiddenAnswers.includes(answer));
-    console.log(this.answers);
+    //console.log(this.answers);
     return this.answers;
   }
 
@@ -97,17 +101,19 @@ export class QuizAnswersComponent {
   }
 
   public answerSelected(answer: Answer) {
-    if (answer.isCorrect) {
-      this.quizService.increaseScore(answer);
-      this.selectedAnswers.push(answer);
-      const lastCorrectAnswers = this.answers.filter((answer) => answer.isCorrect && !this.selectedAnswers.includes(answer));
-      this.correct_answer.emit(true);
-      if (lastCorrectAnswers.length == 0) {
-        this.next_question.emit(true);
+    if (!this.isInteractionDisabled) {
+      if (answer.isCorrect) {
+        this.quizService.increaseScore(answer);
+        this.selectedAnswers.push(answer);
+        const lastCorrectAnswers = this.answers.filter((answer) => answer.isCorrect && !this.selectedAnswers.includes(answer));
+        this.correct_answer.emit(true);
+        if (lastCorrectAnswers.length == 0) {
+          this.next_question.emit(true);
+        }
+      } else {
+        this.selectedAnswers.push(answer);
+        this.hiddenAnswers.push(answer);
       }
-    } else {
-      this.selectedAnswers.push(answer);
-      this.hiddenAnswers.push(answer);
     }
   }
 

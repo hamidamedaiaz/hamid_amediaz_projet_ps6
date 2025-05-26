@@ -20,6 +20,7 @@ export class QuizAnswerComponent {
   
   @Input()
   answer!:Answer;
+
   
   @Input()
   percent?:any;

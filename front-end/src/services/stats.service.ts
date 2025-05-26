@@ -5,6 +5,7 @@ import { EMPTY_QUIZ } from "src/mocks/quiz.mock";
 import { QuizResult } from "src/models/quiz-result.model";
 import { QUIZ_RESULT_EMPTY } from "src/mocks/quiz-results.mock";
 import { Quiz } from "src/models/quiz.model";
+import { QuizResultService } from "./quiz-result.service";
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class StatsService {
   private QUIZ_SESSION_ID_KEY: string = "QUIZ_SESSION_ID_KEY";
   private QUIZ_ID_KEY: string = "QUIZ_ID_KEY";
 
-  constructor(private localStorageService: LocalStorageService) { this.loadFromStorage(); }
+  constructor(private localStorageService: LocalStorageService, private quizResultService:QuizResultService) { this.loadFromStorage(); }
 
   public selectProfile(id: number) {
     this.profileId$.next(id);
@@ -50,6 +51,11 @@ export class StatsService {
     if (savedProfileId) this.profileId$.next(JSON.parse(savedProfileId));
     if (savedQuizSessionId) this.quizResultId$.next(JSON.parse(savedQuizSessionId));
     if (savedQuizId) this.quizId$.next(JSON.parse(savedQuizId));
+  }
+
+  public deleteQuizResult() {
+    this.quizResultService.deleteQuizResult(this.quizResultId$.getValue())
+    this.quizResultId$.next(-1);
   }
 
 }

@@ -17,6 +17,10 @@ export class SelectQuizPageComponent {
     this.currentPageService.setCurrentPage("select-quiz-page");
   }
 
+  public goTutorial(){
+    this.router.navigate(["/solo-tutorial"])
+  }
+
   public leavePage(){
     this.router.navigate(["/gamemode-selection"])
   }

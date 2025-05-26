@@ -16,6 +16,4 @@ export class PopUpService {
     console.log("[POPUP SERVICE] - Send popUp")
     this.popup$.next(pop);
   }
-
-
 }

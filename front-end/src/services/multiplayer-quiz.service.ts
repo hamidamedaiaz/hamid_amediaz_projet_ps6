@@ -6,25 +6,30 @@ import { QuizService } from './quiz.service';
 import { PROFILE_LIST } from 'src/mocks/profile-list.mock';
 import { BehaviorSubject } from 'rxjs';
 import { Quiz } from 'src/models/quiz.model';
+import { ProfileService } from './profile.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class MultiPlayerGameService {
+export class MultiPlayerQuizService {
 
   private readonly GIVEN_ANSWERS_KEY = 'current_score';
 
   private givenAnswersAnswer:Answer[] = [];
 
-  private players:Profile[] = PROFILE_LIST;
+  private players:Profile[] = [];
 
-  public players$:BehaviorSubject<Profile[]> = new BehaviorSubject<Profile[]>(PROFILE_LIST);
+  public players$:BehaviorSubject<Profile[]> = new BehaviorSubject<Profile[]>([]);
 
   private PLAYERS_KEY:string = "PLAYERS";
 
   private quiz:Quiz | null = null;
 
-  constructor(private localStorageService:LocalStorageService, private quizService:QuizService) {
+  constructor(private localStorageService:LocalStorageService, private quizService:QuizService,private profileService:ProfileService) {
+    this.profileService.profiles$.subscribe((profiles) => {
+      this.players = profiles
+      this.players$.next(this.players)
+    })
     this.loadFromStorage();
   }
 
@@ -54,8 +59,6 @@ export class MultiPlayerGameService {
   public getNumberOfPlayers():number{ return this.players.length; }
 
   public getPlayers():Profile[]{ return this.players; }
-
-  public getAnswersWithStats(questionId:number){}
 
   public removePlayer(player: Profile) {
     this.players = this.players.filter((p) => p !== player);

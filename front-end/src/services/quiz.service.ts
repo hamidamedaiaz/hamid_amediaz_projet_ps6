@@ -178,6 +178,7 @@ export class QuizService {
           this.router.navigate(['/']);
         }
       } else if (this.questionId < this.quiz.questions.length - 1) {
+        // If the quiz is still runinng, then we change the current question and all params that belongs to her
         this.questionId++;
         this.question = this.quiz.questions[this.questionId];
         this.question$.next(this.question);
