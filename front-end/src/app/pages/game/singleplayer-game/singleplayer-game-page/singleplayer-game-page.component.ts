@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-singleplayer-page',
-  standalone:true,
+  standalone: true,
   imports: [QuizQuestionComponent, CommonModule],
   templateUrl: './singleplayer-game-page.component.html',
   styleUrl: './singleplayer-game-page.component.scss'
@@ -18,23 +18,17 @@ import { CommonModule } from '@angular/common';
 
 export class SingleplayerGamePageComponent {
 
-  private currentProfile: Profile | undefined;
+  public fontSize: string = '';
 
-  public fontSize:string= '';
-
-  constructor(private router: Router, private currentProfileService: CurrentProfileService, 
-              private currentPageService: CurrentPageService,
-              private quizService: QuizService){
-    this.currentProfileService.current_profile$.subscribe((currentProfile) => {
-      this.currentProfile = currentProfile;
-    })
+  constructor(private router: Router,
+    private currentPageService: CurrentPageService,
+    private quizService: QuizService) {
     this.currentPageService.setCurrentPage("singleplayer-game")
   }
 
-  
-  public leaveQuiz(){
+  public leaveQuiz() {
     this.quizService.resetCurrentQuiz();
-    this.router.navigate(["/"]);
+    this.router.navigate(["/select-quiz"]);
   }
 
 }

@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CurrentPageService } from 'src/services/currentPage.service';
 import { FormsModule } from '@angular/forms';
+import { PopUpCodeComponent } from 'src/app/popup-code/popup-code.component';
 
 @Component({
   selector: 'app-multiplayer-game-login-page',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, PopUpCodeComponent],
   templateUrl: './multiplayer-game-login-page.component.html',
   styleUrl: './multiplayer-game-login-page.component.scss'
 })
@@ -46,8 +47,18 @@ export class MultiplayerGameLoginPageComponent {
     }
   }
 
-  public leave(){
-    this.router.navigate(["/"]);
+ public popUp: boolean = false;
+
+
+  public leavePage() { this.router.navigate(["/"]) }
+
+  closePopUp() {
+    console.log("close")
+    this.popUp = false;
   }
+
+  public showPopUp() { this.popUp = true; }
+
+
 
 }

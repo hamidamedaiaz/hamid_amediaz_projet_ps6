@@ -32,7 +32,7 @@ export class ProfileConfigurationComponent implements OnChanges {
     } else {
       this.avatarPreview = null;
     }
-  
+
     })
   }
 
@@ -44,7 +44,7 @@ export class ProfileConfigurationComponent implements OnChanges {
       console.error('Le fichier sélectionné n\'est pas une image');
       return;
     }
-    
+
     const reader = new FileReader();
     reader.onload = (e: any) => {
       this.avatarPreview = e.target.result;
@@ -77,7 +77,6 @@ public getAvatarPreviewStyle() {
   }
 
   saveConfiguration() {
-    console.log("heho ", this.currentProfileCopy)
     this.profileService.updateProfile(this.currentProfileCopy!);
     this.closeConfiguration();
   }

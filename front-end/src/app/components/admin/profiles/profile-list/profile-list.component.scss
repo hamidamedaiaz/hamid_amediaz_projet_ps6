@@ -8,7 +8,7 @@
   border: none;
   border-radius: .8vh;
   cursor: pointer;
-  font-size: 1.4vh;
+  font-size: 2.1vh;
   transition: background-color 0.3s, transform 0.2s;
 }
 
@@ -159,8 +159,8 @@ app-profile-list {
 }
 
 .profile-name {
-  margin: 0 0 .5vh 0;
-  font-size: 1.6vh;
+  margin-left: 0.5vh ;
+  font-size: 2.5vh;
   font-weight: 500;
   color: $primary-black-text;
 }
@@ -178,11 +178,11 @@ app-profile-list {
 
 .edit-btn,
 .delete-btn {
-  padding: .8vh 1.2vh;
+  padding: 1.6vh 2.4vh;
   border: none;
   border-radius: .5vh;
   cursor: pointer;
-  font-size: 1.4vh;
+  font-size: 2.0vh;
   transition: all 0.2s;
 }
 
@@ -329,8 +329,8 @@ app-profile-list {
 }
 
 .profile-avatar-text {
-  width: 6.4vh;
-  height: 6.4vh;
+  width: 10.4vh;
+  height: 10.4vh;
   border-radius: 50%;
   background-color: #0099ff;
   color: white;
@@ -529,7 +529,6 @@ app-profile-list {
 }
 
 .profile-card-name {
-  text-align: center;
   font-size: 2.5vh;
   font-weight: 500;
   color: $primary-black-text;

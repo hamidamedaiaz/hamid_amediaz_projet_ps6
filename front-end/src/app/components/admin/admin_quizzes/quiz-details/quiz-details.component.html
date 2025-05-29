@@ -4,20 +4,28 @@
 
     <div id="quiz-title">
       <h2 class="title-quiz-template">Titre :</h2>
-      <input type="text" class="question-input" placeholder="Entrez le titre du quiz..." [(ngModel)]="this.quizCopy.title">
+      <input type="text" class="question-input" placeholder="Entrez le titre du quiz..."
+        [(ngModel)]="this.quizCopy.title">
     </div>
 
     <div id="question-list">
-      <h2 class="title-quiz-template">Liste des questions :</h2>
-      <div *ngFor="let question of quizCopy.questions; let i = index" class="question-row">
-        <button class="sidebar-btn" (click)="selectQuestion(i)">
-          {{ question.question }}
-        </button>
-        <button class="delete-btn" (click)="deleteQuestion(i)"><img src="assets/icons/delete.png" width="24" height="24"></button>
 
-      </div>
-      <button id="add-listQ" class="simple-btn" (click)="addQuestion()">+ Ajouter question</button>
-      <button id="end-quiz" class="simple-btn" (click)="saveQuiz()">Enregistrer ce quiz</button>
+      <section class="question-list-section">
+        <h2 class="title-quiz-template">Liste des questions :</h2>
+        <div *ngFor="let question of quizCopy.questions; let i = index" class="question-row">
+          <button class="sidebar-btn" (click)="selectQuestion(i)">
+            {{ question.question }}
+          </button>
+          <button class="delete-btn" (click)="deleteQuestion(i)"><img src="assets/icons/delete.png" width="24"
+              height="24"></button>
+        </div>
+
+        <button id="add-listQ" class="simple-btn" (click)="addQuestion()">+ Ajouter question</button>
+      </section>
+      <section class="bottom-btn-section">
+        <button id="end-quiz" class="simple-btn" (click)="saveQuiz()">Enregistrer ce quiz</button>
+        <button class="cancel-btn" (click)="cancelQuizEditing()">Annuler</button>
+      </section>
     </div>
   </div>
 
@@ -36,12 +44,15 @@
     <div id="quiz-creation-section">
       <!-- Section de création de question -->
       <div id="question-section">
-     <div class="question-header">
-      <h2 class="title-quiz-template">Question :</h2>
-      <button class="save-question-btn" (click)="saveQuestion()" title="Sauvegarder cette question">
-        💾 Sauvegarder
-      </button>
-     </div>
+        <div class="question-header">
+          <h2 class="title-quiz-template">Question :</h2>
+          <section class="question-btn-section">
+            <button class="save-question-btn" (click)="saveQuestion()" title="Sauvegarder cette question">
+              Enregistrer cette question
+            </button>
+            <button (click)="cancelQuestionEditing()" class="cancel-btn">Annuler</button>
+          </section>
+        </div>
         <div class="question-with-audio" *ngIf="this.selectedQuestion.question != null">
           <input type="text" class="question-input" placeholder="Entrez la question..."
             [(ngModel)]="this.selectedQuestion.question">
@@ -74,7 +85,7 @@
       <div id="hint-section">
         <h2 class="title-quiz-template">Indices :</h2>
 
-        <div *ngFor="let hint of selectedQuestion.hints; let k = index; trackBy: trackByIndex">
+        <div class="hint-item" *ngFor="let hint of selectedQuestion.hints; let k = index; trackBy: trackByIndex">
           <input type="text" [(ngModel)]="selectedQuestion.hints[k]" placeholder="Entrez un indice..."
             class="hint-input">
           <button class="delete-btn" (click)="deleteHint(k)">Supprimer</button>

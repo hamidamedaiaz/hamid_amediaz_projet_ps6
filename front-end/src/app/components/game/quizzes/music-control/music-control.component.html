@@ -1,5 +1,5 @@
 <div class="music-control-container">
-    <section class="music-control-section">
+    <section class="music-control-section" *ngIf="role==='user'">
         <section class="play-control-btn-section">
             <button id="play-btn" class="button" (click)="playMusic()">Jouer la musique</button>
             <button id="pause-btn" class="button" (click)="pauseMusic()">Arrêter la musique</button>

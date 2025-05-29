@@ -28,6 +28,9 @@
   left: 5vh;
   top: 5vh;
   z-index: 15;
-  background-color: rgba(182, 30, 30, 0.8);
+  background-color: $primary-btn-leave;
 }
 
+.leave-btn:hover{
+  background-color: $primary-btn-leave-hover;
+}

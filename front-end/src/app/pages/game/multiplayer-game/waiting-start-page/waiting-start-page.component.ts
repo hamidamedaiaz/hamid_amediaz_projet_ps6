@@ -3,11 +3,12 @@ import { Router } from '@angular/router';
 import { QuizService } from 'src/services/quiz.service'
 import { CurrentPageService } from 'src/services/currentPage.service';
 import { QuizListService } from 'src/services/quiz-list.service';
+import { GameTutorialComponent } from 'src/app/components/game/game-tutorial/game-tutorial.component';
 
 @Component({
   selector: 'app-waiting-start-page',
   standalone: true,
-  imports: [],
+  imports: [ GameTutorialComponent ],
   templateUrl: './waiting-start-page.component.html',
   styleUrl: './waiting-start-page.component.scss'
 })
@@ -25,10 +26,10 @@ export class WaitingStartPageComponent {
     this.currentPageService.setCurrentPage("waiting-start-page")
     this.redirectionTimer = setTimeout(() => {
       this.redirectToOnlineGame();
-    }, 3000);
+    }, 8000);
     this.gamefoundTimer = setTimeout(() => {
       this.waiting_message = "Partie trouvée !"
-    }, 2000);
+    }, 6000);
   }
 
   public redirectToOnlineGame(){

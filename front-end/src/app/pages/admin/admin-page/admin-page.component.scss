@@ -17,7 +17,6 @@ html {
 
 .sidebar {
   width: 14%;
-  min-width: 220px;
   background-color: $secondary-blue-bg;
   padding: 20px;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
@@ -25,6 +24,10 @@ html {
   flex-direction: column;
   justify-content: flex-start;
   z-index: 10;
+  width: 300px;
+  min-width: 300px; 
+  max-width: 300px;
+  transition: none; 
 }
 
 .home-btn {
@@ -248,7 +251,7 @@ html {
   position: absolute;
   top: 45%;
   left: 38%;
-  font-size: 20px;
+  font-size: 3vh;
   color: $secondary-white-text;
   user-select: none;
 }

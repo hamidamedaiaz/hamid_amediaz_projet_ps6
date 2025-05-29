@@ -52,17 +52,20 @@
 }
 
 #replay-btn{
-    background-color: $secondary-blue-btn;
-    color: $primary-btn-white-text;
+    background-color:$primary-btn-white-text;
+    color: $secondary-blue-btn;
     transition: all 0.2s ease-in-out;
 }
 
 #replay-btn:hover{
     transform: scale(1.03);
-    background-color:$secondary-btn-blue-hover;
+    background-color:$primary-btn-white-hover;
 }
 
 #leave-btn{
+    position: fixed;
+    top: 5vh;
+    right: 5vh;
     background-color: $primary-white-btn;
     color: $primary-btn-black-text;
     transition: all 0.2s ease-in-out;

@@ -69,9 +69,14 @@
 
 #leave-btn{
   position: fixed;
+  background-color: $primary-btn-leave;
   left: 5vh;
-  bottom: 5vh;
+  top: 5vh;
   z-index: 15;
+}
+
+#leave-btn:hover{
+  background-color: $primary-btn-leave-hover;
 }
 
 .select-quiz-container{

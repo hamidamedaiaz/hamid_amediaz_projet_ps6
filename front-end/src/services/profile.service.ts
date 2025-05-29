@@ -49,7 +49,6 @@ export class ProfileService {
         lastName,
         role: 'user',
         SHOW_POP_UP_TIMER: 15000,
-        HINT_DISPLAY_TIME_OUT_DURATION: 5000,
         REMOVE_WRONG_ANSWER_INTERVAL: 10000,
         NUMBER_OF_ANSWERS_DISPLAYED: 4,
         SHOW_HINT_TIMER: 5000,
@@ -91,7 +90,7 @@ getProfiles(profileIds: number[]): Profile[] {
 }
 
 
-// On return un Observable pour gérer le cas ou la base de donnée met du tps à retourner le profile 
+// On return un Observable pour gérer le cas ou la base de donnée met du tps à retourner le profile
 // Comme await/async
 // Implique que l'on se subscribe à cette donnée pour obtenir ce contenu
   getProfile(profileId: number): Observable<Profile> {

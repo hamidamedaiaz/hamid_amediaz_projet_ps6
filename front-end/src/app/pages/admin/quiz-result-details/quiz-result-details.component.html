@@ -1,5 +1,5 @@
 <div class="quiz-result-container" *ngIf="getQuiz() && getProfile()">
-  <app-quiz-result-header (goBack)="navigateBack()"></app-quiz-result-header>
+  <app-quiz-result-header (goBack)="navigateBack()" (show_pop_up)="showPopUp()"></app-quiz-result-header>
 
   <app-quiz-result-info [quiz]="getQuiz()" [profile]="getProfile()" [questionResults]="getQuestionResults()"
     [date]="getDateDebut()">
@@ -24,3 +24,5 @@
 <div class="loading-container" *ngIf="!getQuiz() || !getProfile()">
   <div class="spinner"></div>
 </div>
+
+ <app-popup-code [show]="popUp" (close)="closePopUp()" (success)="deleteQuizResult()"></app-popup-code>

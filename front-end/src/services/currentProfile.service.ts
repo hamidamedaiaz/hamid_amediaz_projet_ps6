@@ -16,7 +16,7 @@ export class CurrentProfileService {
     public current_profile$: BehaviorSubject<Profile> = new BehaviorSubject<Profile>(this.current_profile);
 
     private CURRENT_PROFILE_KEY:string= "CURRENT_PROFILE";
-    
+
     constructor(private localStorageService: LocalStorageService) {
         this.loadFromStorage();
     }
@@ -41,16 +41,6 @@ export class CurrentProfileService {
         this.localStorageService.removeItem(this.CURRENT_PROFILE_KEY);
         this.current_profile=GUEST_PROFILE;
     }
-
-    public get_hint_display_time_out_duration(){
-        return this.current_profile.HINT_DISPLAY_TIME_OUT_DURATION;
-    }
-
-    public get_show_hint_timer(){
-        return this.current_profile.SHOW_HINT_TIMER;
-    }
-
-
 
     public setAdmin(){
         this.current_profile = ADMIN_PROFILE;

@@ -20,7 +20,7 @@ import { MultiPlayerInGameListComponent } from '../../multiplayer/multi-player-i
 @Component({
   selector: 'app-quiz-question',
   standalone: true,
-  imports: [QuizAnswerComponent,
+  imports: [
     CommonModule,
     MusicControlComponent,
     QuizHintsComponent,
@@ -99,9 +99,6 @@ export class QuizQuestionComponent {
 
           //SHOW HINT TIMER
           this.clearHintTimeOut();
-          this.hintTimer = setTimeout(() => {
-            this.hintsActive = true;
-          }, this.currentProfileService.get_hint_display_time_out_duration());
         }
       }
     })

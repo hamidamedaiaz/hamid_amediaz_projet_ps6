@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { QUIZ_RESULT_EMPTY } from 'src/mocks/quiz-results.mock';
 import { ProfileService } from './profile.service';
 import { Profile } from 'src/models/profile.model';
+import { firstValueFrom } from 'rxjs';
 
 
 export interface MonthlyStatsData {
@@ -19,7 +20,7 @@ export interface MonthlyStatsData {
   providedIn: 'root'
 })
 
-export class QuizResultService implements OnInit{
+export class QuizResultService implements OnInit {
 
   private allResults: QuizResult[] = [];
 
@@ -28,19 +29,30 @@ export class QuizResultService implements OnInit{
   public results$: BehaviorSubject<QuizResult[]> = new BehaviorSubject<QuizResult[]>([]);
 
   constructor(
-    private http: HttpClient, private profileService:ProfileService) {
+    private http: HttpClient, private profileService: ProfileService) {
     this.requestResult();
   }
   ngOnInit(): void {
     this.requestResult();
   }
 
-  private requestResult() {
-    this.http.get<QuizResult[]>(this.apiUrl).subscribe((quizResults) => {
-      this.allResults = quizResults;
-      this.results$.next(this.allResults);
-    })
+
+
+  private async requestResult(): Promise<void> {
+    const quizResults = await firstValueFrom(this.http.get<QuizResult[]>(this.apiUrl));
+    this.allResults = quizResults;
+    this.results$.next(this.allResults);
+    console.log(this.allResults);
   }
+
+
+  //   private requestResult() {
+  //   this.http.get<QuizResult[]>(this.apiUrl).subscribe((quizResults) => {
+  //     this.allResults = quizResults;
+  //     this.results$.next(this.allResults);
+  //     console.log(this.allResults);
+  //   })
+  // }
 
   getPlayerMonthlyStats(profileId: number): MonthlyStatsData[] { return []; }
 
@@ -76,20 +88,23 @@ export class QuizResultService implements OnInit{
     })
   }
 
-  deleteQuizResult(quizResultIndex: number) {
-    this.http.delete(this.apiUrl +"/"+quizResultIndex ).subscribe({
-      next:(res) => {
-        this.allResults = this.allResults.filter((result) => {result.id !== quizResultIndex})
-        this.requestResult();
-      },
-      error: (err) => console.error("[SERVER ERROR] - ", err)
-    });
+  async deleteQuizResult(quizResultIndex: number): Promise<void> {
+    try {
+      await firstValueFrom(this.http.delete(this.apiUrl + "/" + quizResultIndex));
+      this.allResults = this.allResults.filter((result) => result.id !== quizResultIndex);
+      await this.requestResult();
+    } catch (error) {
+      console.error("[SERVER ERROR] - ", error);
+      throw error; // On propage l'erreur à l'appelant
+    }
   }
 
-  getProfilesInSession(sessionId:number){
-    const profileIds:number[] = []
+
+
+  getProfilesInSession(sessionId: number) {
+    const profileIds: number[] = []
     this.allResults.filter((quizResult) => {
-      if(quizResult.sessionId === sessionId) profileIds.push(quizResult.profileId);
+      if (quizResult.sessionId === sessionId) profileIds.push(quizResult.profileId);
     })
     return this.profileService.getProfiles(profileIds);
 

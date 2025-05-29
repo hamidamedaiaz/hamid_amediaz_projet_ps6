@@ -33,9 +33,8 @@
 
 .hasAnswered {
   opacity: 1;
-  border: 4px solid rgba(28, 199, 28, 0.8);
   border-radius: 50%;
-  animation: appearBorder 1s ease forwards;
+  animation: appear 0.5s ease forwards;
 }
 
 
@@ -67,11 +66,11 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 
-@keyframes appearBorder {
+@keyframes appear {
   0% {
-    border-color: transparent;
+    opacity: 0;
   }
   100% {
-    border-color: rgba(28, 199, 28, 0.8);
+    opacity: 1;
   }
 }

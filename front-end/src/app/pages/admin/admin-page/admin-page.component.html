@@ -78,7 +78,7 @@
       </div>
 
       <div *ngIf="activeSection === 'quiz-details'">
-        <app-quiz-details *ngIf="activeQuiz" [quiz]="activeQuiz" (quizSaved)="setSection('quiz')"></app-quiz-details>
+        <app-quiz-details *ngIf="activeQuiz" [quiz]="activeQuiz" (quizSaved)="setSection('quiz')" (leaveQuizEdition)="setSection('quiz')"></app-quiz-details>
       </div>
     </main>
   </div>

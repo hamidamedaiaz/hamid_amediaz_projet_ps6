@@ -13,6 +13,9 @@ import { GamemodeService } from 'src/services/gamemode.service';
 export class MusicControlComponent implements AfterViewInit {
   @Input()
   volume: number = 50; // Default volume
+
+  @Input()
+  role:String = "User";
   
   @Input()
   audio_path!: string;

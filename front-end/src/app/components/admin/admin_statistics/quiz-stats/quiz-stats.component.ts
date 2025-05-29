@@ -153,8 +153,8 @@ export class QuizStatsComponent {
         maintainAspectRatio: false,
         scales: {
           y: { beginAtZero: true, max: Math.round(maxValue*1.50), ticks: { callback: v => v } },
-          x: { ticks: { autoSkip: false, font: { size: 10 } } } }, 
-          plugins: { legend: { position: 'bottom' } 
+          x: { ticks: { autoSkip: false, font: { size: 10 } } } },
+          plugins: { legend: { position: 'bottom' }
         }
       }
     });
@@ -169,7 +169,7 @@ export class QuizStatsComponent {
         { label: '1er essai', data: stat.pctFirst, backgroundColor: '#28a745' },
         { label: '2e essai', data: stat.pctSecond, backgroundColor: '#ffc107' },
         { label: '3e essai', data: stat.pctThird, backgroundColor: '#dc3545' },
-        { label: 'autres', data: stat.pctFourth, backgourndColor: '#EE7B26' }
+        { label: '+ de 3 essais', data: stat.pctFourth, backgourndColor: '#EE7B26' }
       ]
     };
   }

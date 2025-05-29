@@ -12,6 +12,7 @@ import { QuizResultInfoComponent } from 'src/app/components/admin/admin_statisti
 import { QuizResultQuestionsComponent } from 'src/app/components/admin/admin_statistics/quiz-results/quiz-result-questions/quiz-result-questions.component';
 import { QuizPlayersListComponent } from 'src/app/components/admin/admin_statistics/quiz-results/quiz-players-list/quiz-players-list.component';
 import { StatsService } from 'src/services/stats.service';
+import { PopUpCodeComponent } from 'src/app/popup-code/popup-code.component';
 
 @Component({
   selector: 'app-quiz-result-details',
@@ -23,6 +24,7 @@ import { StatsService } from 'src/services/stats.service';
     QuizResultInfoComponent,
     QuizResultQuestionsComponent,
     QuizPlayersListComponent,
+    PopUpCodeComponent
   ],
   templateUrl: './quiz-result-details.component.html',
   styleUrl: './quiz-result-details.component.scss'
@@ -36,6 +38,8 @@ export class QuizResultDetailsComponent {
   private quiz!: Quiz;
   public isQuizMulti: Boolean = true;
   public activeTab: string = "questions"
+
+  public popUp: boolean = false;
 
   @Output()
   go_back: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -80,6 +84,27 @@ export class QuizResultDetailsComponent {
 
   navigateBack() { this.go_back.emit(true); }
 
+  goToQuizResultDetails() {
+
+  }
+
+  closePopUp() {
+    this.popUp = false;
+  }
+
+  public showPopUp() {
+    this.popUp = true;
+  }
+
+  async deleteQuizResult() {
+    try {
+      await this.statsService.deleteQuizResult();
+      this.navigateBack(); // Seulement après succès
+    } catch (err) {
+      alert("Erreur lors de la suppression !");
+      console.error(err);
+    }
+  }
 }
 
 

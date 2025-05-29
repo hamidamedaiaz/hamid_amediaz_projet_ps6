@@ -26,6 +26,11 @@
 #leave-btn{
   position: absolute;
   left: 5vh;
-  bottom: 5vh;
+  top: 5vh;
   z-index: 20;
+  background-color: $primary-btn-leave;
+}
+
+#leave-btn:hover{
+  background-color: $primary-btn-leave-hover;
 }

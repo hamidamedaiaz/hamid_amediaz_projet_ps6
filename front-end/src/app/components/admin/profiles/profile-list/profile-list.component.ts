@@ -15,7 +15,6 @@ import { Router } from '@angular/router';
   styleUrl: './profile-list.component.scss',
   standalone: true,
   imports: [
-    ProfileItemComponent,
     CommonModule,
     FormsModule
   ],
@@ -89,9 +88,6 @@ export class ProfileListComponent {
     }, 0);
   }
 
-  public showProfileList() {
-    this.isProfileListActivated = !this.isProfileListActivated;
-  }
 
   public removeProfile(profileToRemove: Profile) {
     this.profileList = this.profileList.filter(profile => profile != profileToRemove);
@@ -107,7 +103,6 @@ export class ProfileListComponent {
       lastName: '',
       role: 'user',
       SHOW_POP_UP_TIMER: 15000,
-      HINT_DISPLAY_TIME_OUT_DURATION: 5000,
       REMOVE_WRONG_ANSWER_INTERVAL: 10000,
       NUMBER_OF_ANSWERS_DISPLAYED: 4,
       SHOW_HINT_TIMER: 5,
@@ -181,7 +176,6 @@ export class ProfileListComponent {
       lastName: '',
       role: 'user',
       SHOW_POP_UP_TIMER: 15000,
-      HINT_DISPLAY_TIME_OUT_DURATION: 5000,
       REMOVE_WRONG_ANSWER_INTERVAL: 10000,
       SHOW_HINT_TIMER: 5,
       NUMBER_OF_ANSWERS_DISPLAYED: 4,

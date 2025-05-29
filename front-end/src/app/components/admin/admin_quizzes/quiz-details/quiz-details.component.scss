@@ -50,6 +50,9 @@
   height: 80%;
   overflow-y: auto;
   padding-right: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .title-quiz-template {
@@ -64,14 +67,15 @@
 
 
 .question-input,
-.answer-input {
+.answer-input,
+.hint-input {
   width: 100%;
   min-height: 40px;
   border: $primary-border-white;
   border-radius: 6px;
   padding: 10px;
   outline: none;
-  font-size: 1.1em;
+  font-size: 1.1rem;
   transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
   background-color: $primary-white-bg;
 }
@@ -99,38 +103,43 @@
 }
 
 
+.question-list-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5vh;
+  margin-bottom: 1.5vh;
+}
+
 .question-row {
   display: flex;
   gap: 10px; // ou moins si tu veux que ce soit plus collé
-  margin-bottom: 10px;
+  align-items: center;
 
   .sidebar-btn {
-    flex: 1; // prend tout l’espace disponible
+    flex: 1;
   }
+}
 
-  .delete-btn {
-    padding: 10px;
-    background-color: #e74c3c; // ou une couleur selon ton thème
-    color: white;
-    border: none;
-    border-radius: 6px;
-    box-shadow: $primary-box-shadow;
-    transition: background-color 0.3s;
-    margin-top : 5px;
-    height: fit-content;
-    width: fit-content;
+.delete-btn {
+  padding: 10px;
+  background-color: #e74c3c; // ou une couleur selon ton thème
+  color: white;
+  border: none;
+  border-radius: 6px;
+  box-shadow: $primary-box-shadow;
+  transition: background-color 0.3s;
+  height: fit-content;
+  width: fit-content;
 
-    &:hover {
-      background-color: darken(#e74c3c, 10%);
-      cursor: pointer;
-    }
+  &:hover {
+    background-color: darken(#e74c3c, 10%);
+    cursor: pointer;
   }
 }
 
 .sidebar-btn {
   width: 100%;
   padding: 15px;
-  margin-bottom: 10px;
   background-color: $primary-white-bg;
   border: $primary-border-white;
   border-radius: 6px;
@@ -152,7 +161,7 @@
 }
 
 #add-listQ {
-  background: $secondary-blue-bg;
+  background: $secondary-blue-btn;
   color: $primary-white-text;
   font-weight: bold;
   width: 100%;
@@ -160,32 +169,60 @@
   border-radius: 6px;
   border: none;
   transition: background-color 0.3s;
+  border: 1px solid $secondary-blue-bg;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+.question-btn-section {
+  display: flex;
+  gap: 1.5vh;
+}
+
 #add-listQ:hover {
-  background-color: $secondary-btn-blue-hover;
+  background-color: $third-blue-bg;
   cursor: pointer;
 }
 
 #end-quiz {
-  position: absolute;
-  bottom: 5%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80%;
+  width: 100%;
   padding: 15px;
-  background: $primary-white-bg;
+  background: $primary-blue-bg;
+  color: $primary-white-text;
   border: $primary-border-white;
   border-radius: 6px;
   font-size: 1.1em;
   transition: background-color 0.3s;
-  box-shadow: $primary-box-shadow;
 }
 
 #end-quiz:hover {
-  background-color: $primary-btn-white-hover;
+  background-color: $primary-btn-blue-hover;
   cursor: pointer;
+}
+
+.cancel-btn {
+
+  background-color: #f8f9fa;
+  color: $secondary-white-bg;
+  color: #676767;
+  border: 1px #ccc solid;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 1rem;
+}
+
+.cancel-btn:hover {
+  background-color: $primary-btn-white-hover;
+}
+
+
+
+.bottom-btn-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1vh;
 }
 
 .simple-btn {
@@ -205,7 +242,7 @@
 }
 
 .button-info {
-  color: $secondary-white-text;
+  color: $primary-black-text;
   font-style: italic;
   margin-top: 10px;
 }
@@ -239,19 +276,7 @@
   display: flex;
   align-items: center;
   margin-bottom: 15px;
-}
-
-.hint-input {
-  flex-grow: 1;
-  height: 40px;
-  border: $primary-border-white;
-  border-radius: 6px;
-  padding: 10px;
-  outline: none;
-  font-size: 14px;
-  transition: border-color 0.3s, box-shadow 0.3s;
-  margin-right: 10px;
-  background-color: $primary-white-bg;
+  gap: 1.5vh;
 }
 
 .hint-input:focus {
@@ -314,6 +339,7 @@
   // on enleve le parcourir les fichier qui est moche
   display: none;
 }
+
 .question-header {
   display: flex;
   justify-content: space-between;
@@ -337,6 +363,6 @@
 
   &:hover {
     background-color: $primary-btn-blue-hover;
-    transform: translateY(-1px);
+    //    transform: translateY(-1px);
   }
 }

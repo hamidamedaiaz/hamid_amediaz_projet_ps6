@@ -21,7 +21,7 @@ export class StatsService {
   private QUIZ_SESSION_ID_KEY: string = "QUIZ_SESSION_ID_KEY";
   private QUIZ_ID_KEY: string = "QUIZ_ID_KEY";
 
-  constructor(private localStorageService: LocalStorageService, private quizResultService:QuizResultService) { this.loadFromStorage(); }
+  constructor(private localStorageService: LocalStorageService, private quizResultService: QuizResultService) { this.loadFromStorage(); }
 
   public selectProfile(id: number) {
     this.profileId$.next(id);
@@ -53,9 +53,15 @@ export class StatsService {
     if (savedQuizId) this.quizId$.next(JSON.parse(savedQuizId));
   }
 
-  public deleteQuizResult() {
-    this.quizResultService.deleteQuizResult(this.quizResultId$.getValue())
-    this.quizResultId$.next(-1);
+  async deleteQuizResult(): Promise<void> {
+    try {
+      await this.quizResultService.deleteQuizResult(this.quizResultId$.getValue());
+      this.quizResultId$.next(-1);
+    } catch (error) {
+      // On laisse la gestion à l'appelant
+      throw error;
+    }
   }
+
 
 }

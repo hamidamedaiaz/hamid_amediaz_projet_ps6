@@ -37,25 +37,14 @@
 
     </div>
 
-    
+
         <div class="configuration-section">
             <h3 class="section-title">Paramètres de jeu</h3>
 
             <div class="settings-group">
                 <div class="setting-item">
-                    <label for="hint-timer-selector">Temps avant d'afficher les indices</label>
-                    <select id="hint-timer-selector" class="configuration-select" [(ngModel)]="currentProfileCopy!.HINT_DISPLAY_TIME_OUT_DURATION">
-                        <option [value]="30000" selected>30 secondes</option>
-                        <option [value]="15000">15 secondes</option>
-                        <option [value]="10000">10 secondes</option>
-                        <option [value]="5000">5 secondes</option>
-                        <option [value]="0">Afficher directement</option>
-                    </select>
-                </div>
-
-                <div class="setting-item">
-                    <label for="hint-timer-selector">Temps entre chaque indices</label>
-    <select id="show-hint-timer-selector" class="configuration-select" [(ngModel)]="currentProfileCopy!.SHOW_HINT_TIMER">
+                    <label for="show-hint-timer-selector">Temps entre chaque indices</label>
+                        <select id="show-hint-timer-selector" class="configuration-select" [(ngModel)]="currentProfileCopy!.SHOW_HINT_TIMER">
                         <option [value]="30000" selected>30 secondes</option>
                         <option [value]="15000">15 secondes</option>
                         <option [value]="10000">10 secondes</option>

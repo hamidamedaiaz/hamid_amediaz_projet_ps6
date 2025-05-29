@@ -2,7 +2,7 @@
 
 .questions-section {
     margin-bottom: 40px;
-    
+
     .section-title {
       margin: 0 0 20px 0;
       color: $primary-black-text;
@@ -10,72 +10,72 @@
       border-bottom: $primary-border-white;
       padding-bottom: 10px;
     }
-    
+
     .questions-list {
       display: flex;
       flex-direction: column;
       gap: 20px;
-      
+
       .question-item {
         background-color: $secondary-white-bg;
         border-radius: 12px;
         overflow: hidden;
         box-shadow: $primary-box-shadow;
         border-left: 5px solid $secondary-white-bg;
-        
+
         &.correct {
           border-left-color: $primary-blue-bg;
         }
-        
+
         &.incorrect {
           border-left-color: #e74c3c;
         }
-        
+
         .question-header {
           display: flex;
           justify-content: space-between;
           align-items: center;
           padding: 15px 20px;
           background-color: rgba(0, 0, 0, 0.03);
-          
+
           .question-number {
             font-weight: 600;
             color: $primary-black-text;
           }
-          
+
           .question-result-badge {
             padding: 5px 10px;
             border-radius: 4px;
             font-size: 0.9rem;
             font-weight: 600;
-            
+
             &.correct {
               background-color: rgba(46, 204, 113, 0.1);
               color: #27ae60;
             }
-            
+
             &.incorrect {
               background-color: rgba(231, 76, 60, 0.1);
               color: #c0392b;
             }
           }
         }
-        
+
         .question-content {
           padding: 20px;
-          
+
           .question-text {
             margin: 0 0 20px 0;
             font-size: 1.1rem;
             color: $primary-black-text;
           }
-          
+
           .answers-container {
             display: flex;
             flex-direction: column;
             gap: 10px;
             margin-bottom: 15px;
-            
+
             .answer-item {
               padding: 10px 15px;
               border-radius: 6px;
@@ -86,30 +86,30 @@
               align-items: center;
               position: relative;
               overflow: hidden;
-              
+
               &.selected-answer {
-                background-color: rgba(52, 152, 219, 0.1);
-                border-color: rgba(52, 152, 219, 0.3);
+                background-color: rgba(52, 152, 219, 0.15);
+                border-color: rgba(52, 152, 219, 0.35);
                 font-weight: 500;
               }
-              
+
               &.correct-answer {
-                background-color: rgba(46, 204, 113, 0.05);
-                border-color: rgba(46, 204, 113, 0.3);
+                background-color: rgba(46, 204, 113, 0.25);
+                border-color: rgba(46, 204, 113, 0.35);
               }
-              
+
               .answer-content {
                 position: relative;
                 width: 100%;
                 z-index: 1;
                 display: flex;
                 justify-content: space-between;
-                
+
                 .answer-text {
                   position: relative;
                   z-index: 1;
                 }
-                
+
                 .answer-percentage-bar {
                   position: absolute;
                   top: 0;
@@ -119,7 +119,7 @@
                   z-index: 0;
                   transition: width 0.5s ease;
                 }
-                
+
                 .answer-percentage {
                   font-size: 0.85rem;
                   color: $secondary-white-text;
@@ -128,20 +128,20 @@
                   font-weight: 600;
                 }
               }
-              
+
               .answer-indicator {
                 margin-left: 10px;
-                
+
                 .correct-icon {
                   color: #2ecc71;
                   font-size: 1.1rem;
                 }
-                
+
                 .incorrect-icon {
                   color: #e74c3c;
                   font-size: 1.1rem;
                 }
-                
+
                 .correct-answer-icon {
                   color: #2ecc71;
                   font-size: 1.1rem;
@@ -150,18 +150,18 @@
               }
             }
           }
-          
+
           .question-metrics {
             display: flex;
             flex-wrap: wrap;
             gap: 15px;
             margin-top: 20px;
-            
+
             .metric-item {
               display: flex;
               align-items: center;
               gap: 8px;
-              
+
               .metric-icon {
                 width: 18px;
                 height: 18px;
@@ -169,22 +169,22 @@
                 background-position: center;
                 background-repeat: no-repeat;
                 background-size: 10px;
-                
+
                 &.time-small {
                   background-color: #3498db;
                 }
-                
+
                 &.hint-small {
                   background-color: #9b59b6;
-                  
+
                 }
               }
-              
+
               .metric-label {
                 font-size: 0.85rem;
                 color: $secondary-black-text;
               }
-              
+
               .metric-value {
                 font-size: 0.9rem;
                 font-weight: 600;
@@ -196,18 +196,18 @@
       }
     }
   }
-  
+
   @media (max-width: 768px) {
     .questions-section {
       .question-header {
         flex-direction: column;
         align-items: flex-start;
-        
+
         .question-result-badge {
           margin-top: 5px;
         }
       }
-      
+
       .question-metrics {
         flex-direction: column;
       }

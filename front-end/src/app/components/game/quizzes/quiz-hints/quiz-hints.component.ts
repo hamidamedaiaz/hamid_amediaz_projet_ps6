@@ -60,7 +60,7 @@ export class QuizHintsComponent implements OnDestroy {
 
   private startTimer(): void {
 
-    this.value = Math.floor(this.currentProfileService.get_hint_display_time_out_duration() / 1000 + this.SHOW_HINT_TIMER);
+    this.value = Math.floor(this.SHOW_HINT_TIMER);
 
     this.timerSubscription = interval(1000).subscribe(() => {
       this.value--;

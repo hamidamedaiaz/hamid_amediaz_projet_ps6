@@ -2,19 +2,19 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { CurrentPageService } from 'src/services/currentPage.service';
-import { GameTutorialComponent } from 'src/app/components/game/game-tutorial/game-tutorial.component';
 
 @Component({
-  selector: 'app-solo-tutorial',
+  selector: 'app-game-tutorial',
   standalone: true,
-  imports: [ CommonModule, GameTutorialComponent ],
-  templateUrl: './solo-tutorial.component.html',
-  styleUrl: './solo-tutorial.component.scss'
+  imports: [CommonModule],
+  templateUrl: './game-tutorial.component.html',
+  styleUrl: './game-tutorial.component.scss'
 })
-export class SoloTutorialComponent {
+export class GameTutorialComponent {
 
   public currentStep: number = 1;
   public totalSteps: number = 5;
+  public currentPage: String = this.currentPageService.getCurrentPage();
 
   constructor(
     private router: Router,

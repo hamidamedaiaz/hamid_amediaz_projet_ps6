@@ -15,16 +15,30 @@ import { StatsService } from 'src/services/stats.service';
 })
 export class QuizResultHeaderComponent {
   title: string = 'Résultat du Quiz';
+
+  @Output() show_pop_up = new EventEmitter();
   @Output() goBack = new EventEmitter();
 
-  constructor(private statsService:StatsService){}
-  
+  constructor(private statsService: StatsService) { }
+
   goback(): void {
+    console.log("go back")
     this.goBack.emit()
   }
 
-  deleteQuizResult() {
-    this.goback();
-    this.statsService.deleteQuizResult();
+  showPopUp() {
+    this.show_pop_up.emit(true);
   }
+
+
+//     async deleteQuizResult() {
+//   try {
+//     await this.statsService.deleteQuizResult();
+//     this.goback(); // Seulement après succès
+//   } catch (err) {
+//     alert("Erreur lors de la suppression !");
+//     console.error(err);
+//   }
+// }
+
 }
